@@ -1,0 +1,30 @@
+[package]
+authors = ["FL03 <jo3mccain@icloud.com>", "Scattered-Systems (https://scattered-systems.com)"]
+categories = []
+description = "scsys"
+edition = "2021"
+homepage = "https://scattered-systems.github.io/scsys/"
+keywords = []
+license = "MIT"
+name = "scsys"
+readme = "README.md"
+repository = "https://github.com/scattered-systems/scsys"
+version = "0.1.0"
+
+[features]
+default = []
+full = []
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+test = true
+
+[build-dependencies]
+
+[dependencies]
+
+[dev-dependencies]
+
+[package.metadata.docs.rs]
+all-features = true
+rustc-args = ["--cfg", "docsrs"]
