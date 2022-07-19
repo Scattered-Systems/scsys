@@ -1,10 +1,11 @@
+/*
+    Appellation: scsys <library>
+    Creator: FL03 <jo3mccain@icloud.com>
+    Description:
+        ... Summary ...
+*/
+#[doc(inline)]
+#[cfg(feature = "default")]
+pub use crate::core::*;
 
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
-    }
-}
+mod core;
