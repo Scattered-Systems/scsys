@@ -1,5 +1,5 @@
 /*
-    Appellation: mod <module>
+    Appellation: interfaces <module>
     Creator: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...
