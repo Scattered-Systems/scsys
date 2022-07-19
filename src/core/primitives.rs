@@ -4,8 +4,10 @@
     Description:
         ... Summary ...
 */
+pub use utils::*;
 
 pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
+pub type Dictionary<T = String> = std::collections::HashMap<String, Box<T>>;
 
 mod utils {
     pub fn extractor<T>(string: String, breakpoint: char) -> Vec<T>
@@ -19,5 +21,17 @@ mod utils {
             .split(breakpoint)
             .map(|i| i.trim_matches(exclude).parse::<T>().unwrap())
             .collect()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_extractor() {
+        let a: Vec<u8> = extractor("0.0.0.0".to_string(), '.');
+        let b: Vec<u8> = extractor("[0, 0, 0, 0]".to_string(), ',');
+        assert_eq!(&a, &b)
     }
 }
