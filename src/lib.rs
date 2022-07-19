@@ -1,10 +1,14 @@
+/*
+    Appellation: scsys <library>
+    Creator: FL03 <jo3mccain@icloud.com>
+    Description:
+        ... Summary ...
+*/
+#[doc(inline)]
+#[cfg(feature = "default")]
+pub use crate::{actors::*, core::*, cyber::*, data::*};
 
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
-    }
-}
+mod actors;
+mod core;
+mod cyber;
+mod data;
