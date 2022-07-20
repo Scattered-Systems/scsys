@@ -6,7 +6,7 @@
 */
 
 mod api {
-    use axum::{Router, Server};
+    use axum::Router;
     use std::net::SocketAddr;
     use tower_http::{
         compression::CompressionLayer, propagate_header::PropagateHeaderLayer,
@@ -15,8 +15,7 @@ mod api {
 
     pub struct Context;
 
-    pub fn create_server<C: Clone + std::marker::Send + std::marker::Sync + 'static>(
-        address: SocketAddr,
+    pub fn create_router<C: Clone + std::marker::Send + std::marker::Sync + 'static>(
         context: C,
     ) -> axum::Router {
         Router::new()
