@@ -4,19 +4,16 @@
     Description:
         ... Summary ...
 */
+pub use api::*;
 
 mod api {
-    use axum::{Router, Server};
-    use std::net::SocketAddr;
+    use axum::Router;
     use tower_http::{
         compression::CompressionLayer, propagate_header::PropagateHeaderLayer,
         sensitive_headers::SetSensitiveHeadersLayer, trace,
     };
 
-    pub struct Context;
-
-    pub fn create_server<C: Clone + std::marker::Send + std::marker::Sync + 'static>(
-        address: SocketAddr,
+    pub fn create_router<C: Clone + std::marker::Send + std::marker::Sync + 'static>(
         context: C,
     ) -> axum::Router {
         Router::new()

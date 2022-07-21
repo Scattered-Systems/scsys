@@ -6,8 +6,23 @@
 */
 pub use utils::*;
 
+use hyper::server::conn::AddrIncoming;
+
+pub type AxumServer = axum::Server<AddrIncoming, axum::routing::IntoMakeService<axum::Router>>;
 pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
 pub type Dictionary<T = String> = std::collections::HashMap<String, Box<T>>;
+
+#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+pub enum Id<T = String> {
+    Obj(bson::oid::ObjectId),
+    Other(T),
+    Std(u64),
+}
+
+#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+pub enum Containers {
+    KV(crate::KeyValue),
+}
 
 mod utils {
     pub fn extractor<T>(string: String, breakpoint: char) -> Vec<T>

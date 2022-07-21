@@ -7,9 +7,9 @@ currently being supported with security updates.
 
 | Package | Current | Supported |
 |---------|---------|-----------|
-| scsys   | 0.1.0   | <=0.1.0   |
+| scsys   | 0.1.4   | <=0.1.0   |
 
 
 ## Reporting a Vulnerability
 
-[Scattered-Systems](https://scattered-systems.com)
+[Company](https://scattered-systems.com)
