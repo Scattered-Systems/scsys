@@ -9,7 +9,3 @@ pub use primitives::*;
 
 mod interfaces;
 mod primitives;
-
-pub fn create_wallet(address: String) {
-    todo!()
-}
