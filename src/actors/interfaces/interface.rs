@@ -6,8 +6,8 @@
 */
 
 pub trait InterfaceSpec<Cnf, Con, Data>
-    where
-        Self:,
+where
+    Self:,
 {
     fn appellation(&self, name: String, label: Vec<String>) -> (String, Vec<String>)
         where
