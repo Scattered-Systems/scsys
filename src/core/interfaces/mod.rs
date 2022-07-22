@@ -15,7 +15,7 @@ pub trait ApplicationProgramInterface<Client = axum::Router> {
     fn constructor(&self) -> Result<Self, crate::BoxError>
         where
             Self: Sized;
-    async fn run(&self) -> Self
+    async fn run(&self) -> Result<(), crate::BoxError>
         where
             Self: Sized;
 }

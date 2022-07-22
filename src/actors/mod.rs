@@ -7,7 +7,6 @@
 pub use api::*;
 
 mod api {
-    use axum::Router;
     use tower_http::{
         compression::CompressionLayer, propagate_header::PropagateHeaderLayer,
         sensitive_headers::SetSensitiveHeadersLayer, trace,
@@ -16,7 +15,7 @@ mod api {
     pub fn create_router<C: Clone + std::marker::Send + std::marker::Sync + 'static>(
         context: C,
     ) -> axum::Router {
-        Router::new()
+        axum::Router::new()
             .layer(
                 trace::TraceLayer::new_for_http()
                     .make_span_with(trace::DefaultMakeSpan::new().include_headers(true))
