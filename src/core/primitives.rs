@@ -4,24 +4,54 @@
     Description:
         ... Summary ...
 */
+pub use constants::*;
+pub use types::*;
 pub use utils::*;
 
-use hyper::server::conn::AddrIncoming;
-
-pub type AxumServer = axum::Server<AddrIncoming, axum::routing::IntoMakeService<axum::Router>>;
-pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
-pub type Dictionary<T = String> = std::collections::HashMap<String, Box<T>>;
-
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
-pub enum Id<T = String> {
-    Obj(bson::oid::ObjectId),
-    Other(T),
-    Std(u64),
+mod constants {
+    const DIFFICULTY_PREFIX: &str = "00";
+    const EPOCH: usize = 16;
 }
 
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
-pub enum Containers {
-    KV(crate::KeyValue),
+mod types {
+    pub use bson::oid::ObjectId;
+    use hyper::server::conn::AddrIncoming;
+
+    pub type AxumServer = axum::Server<AddrIncoming, axum::routing::IntoMakeService<axum::Router>>;
+
+    /// Describes the type expected when considering a block id from a blockchain
+    pub type BlockId = u64;
+    /// Describes the type expected when considering a block nonce from a block on-chain.
+    pub type BlockNc = u64;
+    /// Describes the type expected when considering a block timestamp from a block on-chain.
+    pub type BlockTs = i64;
+    /// Defines the timezone implemented for each temporal ledger on-chain.
+    pub type BlockTz = chrono::Utc;
+    /// Describes the standard type to implement across the ecosystem
+    pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
+    /// A simplistic wrapper for the HashMap
+    /// Assigns a <key>(string) -> <value>(Box<T>) where T defaults to a String
+    pub type Dictionary<T = String> = std::collections::HashMap<String, Box<T>>;
+
+    /// A collection of time-related data structures
+    #[derive(Clone, Debug, Hash, PartialEq)]
+    pub enum Clock<TimeZone: chrono::TimeZone = chrono::Utc> {
+        Dt(bson::DateTime),
+        Ts(i64),
+        Tz(TimeZone),
+    }
+
+    #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+    pub enum Containers {
+        KV(crate::KeyValue),
+    }
+
+    #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+    pub enum Id<T = String> {
+        Obj(ObjectId),
+        Other(T),
+        Std(u64),
+    }
 }
 
 mod utils {

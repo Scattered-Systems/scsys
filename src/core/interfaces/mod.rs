@@ -6,9 +6,9 @@
 */
 use async_trait::async_trait;
 
-/// Implements the standard interface for APIs
+/// An asynchronous trait designed to simplify the creation of Axum APIs
 #[async_trait]
-pub trait ApplicationProgramInterface<Client = axum::Router> {
+pub trait ApiSpec<Client = axum::Router> {
     async fn client(&self) -> Result<Client, crate::BoxError>
         where
             Self: Sized;
@@ -21,7 +21,7 @@ pub trait ApplicationProgramInterface<Client = axum::Router> {
 }
 
 /// Scaffold the framework for the swift implementation of a CLI application built on top of clap
-pub trait CommandLineInterface<Args, Conf, Data, Cont> {
+pub trait CliSpec<Args, Conf, Data, Cont> {
     fn arguments(&self) -> Result<Args, crate::BoxError>
         where
             Self: Sized;

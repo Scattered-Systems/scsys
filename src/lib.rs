@@ -6,9 +6,9 @@
 */
 #[doc(inline)]
 #[cfg(feature = "default")]
-pub use crate::{actors::*, core::*, cyber::*, data::*};
+pub use crate::{actors::*, components::*, core::*, data::*};
 
 mod actors;
+mod components;
 mod core;
-mod cyber;
 mod data;
