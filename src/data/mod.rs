@@ -5,7 +5,5 @@
         ... Summary ...
 */
 pub use containers::*;
-pub use structures::*;
 
 mod containers;
-mod structures;
