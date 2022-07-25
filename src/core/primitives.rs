@@ -50,11 +50,6 @@ mod types {
     }
 
     #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
-    pub enum Containers {
-        KV(crate::KeyValue),
-    }
-
-    #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
     pub enum Id<T = String> {
         Obj(ObjectId),
         Other(T),

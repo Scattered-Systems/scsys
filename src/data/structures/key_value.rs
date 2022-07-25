@@ -18,7 +18,7 @@ impl KeyValue {
     pub fn new(key: String, value: Vec<String>) -> Self {
         match Self::constructor(key, value) {
             Ok(v) => v,
-            Err(e) => panic!("KeyValue Error: {}", e)
+            Err(e) => panic!("KeyValue Error: {}", e),
         }
     }
     pub fn from(key: &str, value: Vec<&str>) -> Self {
