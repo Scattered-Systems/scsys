@@ -40,16 +40,16 @@ mod utils {
     {
         pub data: Vec<Dt>,
     }
+}
 
-    #[cfg(test)]
-    mod tests {
-        use super::*;
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-        #[test]
-        fn test_extractor() {
-            let a: Vec<u8> = extractor("0.0.0.0".to_string(), '.');
-            let b: Vec<u8> = extractor("[0, 0, 0, 0]".to_string(), ',');
-            assert_eq!(&a, &b)
-        }
+    #[test]
+    fn test_extractor() {
+        let a: Vec<u8> = extractor("0.0.0.0".to_string(), '.');
+        let b: Vec<u8> = extractor("[0, 0, 0, 0]".to_string(), ',');
+        assert_eq!(&a, &b)
     }
 }

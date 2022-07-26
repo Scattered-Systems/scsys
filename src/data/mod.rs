@@ -11,6 +11,4 @@ pub mod models;
 pub mod schemas;
 pub mod structures;
 
-mod utils {
-
-}
+mod utils {}

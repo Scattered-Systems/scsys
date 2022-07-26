@@ -21,7 +21,6 @@ impl FileHandler {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     #[test]
