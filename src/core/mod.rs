@@ -32,14 +32,6 @@ mod utils {
             .map(|i| i.trim_matches(exclude).parse::<T>().unwrap())
             .collect()
     }
-
-    pub struct Extract<Dt>
-        where
-            Dt: Clone + std::str::FromStr,
-            <Dt as std::str::FromStr>::Err: std::fmt::Debug,
-    {
-        pub data: Vec<Dt>,
-    }
 }
 
 #[cfg(test)]
