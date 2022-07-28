@@ -16,11 +16,6 @@ mod types {
     pub use bson::oid::ObjectId;
     pub use chrono::{DateTime, Utc};
 
-    use axum::{routing::IntoMakeService, Router, Server};
-    use hyper::server::conn::AddrIncoming;
-
-    /// Defines the type expected when returning a server instance from the Axum library
-    pub type AxumServer = Server<AddrIncoming, IntoMakeService<Router>>;
     /// Outlines the expected type for a block hash
     pub type BlockHs = String;
     /// Describes the type expected when considering a block id from a blockchain

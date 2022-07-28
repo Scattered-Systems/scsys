@@ -23,13 +23,12 @@ test = true
 
 [dependencies]
 async-trait = "0.1.56"
-axum = "0.5.14"
 bson = { features = ["chrono-0_4", "serde_with"], version = "2.3.0" }
 chrono = "0.4.19"
 config = "0.13.1"
 futures = "0.3.21"
 glob = "0.3.0"
-hyper = { features = ["full"], version = "0.14.20" }
+lazy_static = "1.4.0"
 serde = { features = ["derive"], version = "1.0.139" }
 serde_json = "1.0.82"
 
