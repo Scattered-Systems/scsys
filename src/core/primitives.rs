@@ -14,9 +14,8 @@ mod constants {
 
 mod types {
     pub use bson::oid::ObjectId;
-    use hyper::server::conn::AddrIncoming;
+    pub use chrono::{DateTime, Utc};
 
-    pub type AxumServer = axum::Server<AddrIncoming, axum::routing::IntoMakeService<axum::Router>>;
     /// Outlines the expected type for a block hash
     pub type BlockHs = String;
     /// Describes the type expected when considering a block id from a blockchain
@@ -37,21 +36,31 @@ mod types {
     /// Assigns a <key>(string) -> <value>(Box<T>) where T defaults to a String
     pub type Dictionary<T = String> = std::collections::HashMap<String, Box<T>>;
     // Describes a boxed dynamic error
-    pub type StandardError = Box<dyn std::error::Error>;
+    pub type StdError = Box<dyn std::error::Error>;
     /// Describes the result of a collection of configuration files
     pub type ConfigFileVec = Vec<config::File<config::FileSourceFile, config::FileFormat>>;
 
     /// A collection of time-related data structures
     #[derive(Clone, Debug, Hash, PartialEq)]
-    pub enum Clock<TimeZone: chrono::TimeZone = chrono::Utc> {
+    pub enum Clock {
         Dt(bson::DateTime),
         Ts(i64),
-        Tz(TimeZone),
+        Tz(DateTime<Utc>),
     }
 
-    #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
-    pub enum Containers {
-        KV(crate::KeyValue),
+    impl Clock {
+        fn now() -> DateTime<Utc> {
+            Utc::now()
+        }
+        pub fn bson_datetime() -> Self {
+            Self::Dt(Self::now().into())
+        }
+        pub fn datetime() -> Self {
+            Self::Tz(Self::now())
+        }
+        pub fn timestamp() -> Self {
+            Self::Ts(Self::now().timestamp())
+        }
     }
 
     #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
@@ -59,5 +68,11 @@ mod types {
         Obj(ObjectId),
         Other(T),
         Std(u64),
+    }
+
+    impl Id {
+        pub fn generate_object_id() -> Self {
+            Self::Obj(ObjectId::new())
+        }
     }
 }

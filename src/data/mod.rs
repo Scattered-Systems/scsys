@@ -4,6 +4,18 @@
     Description:
         ... Summary ...
 */
-pub use containers::*;
+pub use utils::*;
 
-mod containers;
+pub mod handlers;
+pub mod models;
+pub mod schemas;
+
+mod utils {
+    pub struct Extract<Dt>
+        where
+            Dt: Clone + std::str::FromStr,
+            <Dt as std::str::FromStr>::Err: std::fmt::Debug,
+    {
+        pub data: Vec<Dt>,
+    }
+}
