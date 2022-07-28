@@ -20,6 +20,6 @@ mod tests {
         let actual: Vec<u8> = Extractor::new('.', "0.0.0.0".to_string()).extract();
         let expected: Vec<u8> = vec![0, 0, 0, 0];
 
-        assert_eq!(&actual, &ttt)
+        assert_eq!(&actual, &expected)
     }
 }
