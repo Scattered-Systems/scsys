@@ -3,9 +3,9 @@
 [![Code Analysis](https://github.com/scattered-systems/scsys/actions/workflows/rust-clippy.yml/badge.svg)](https://github.com/scattered-systems/scsys/actions/workflows/rust-clippy.yml)
 [![Rust](https://github.com/scattered-systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/scattered-systems/scsys/actions/workflows/rust.yml)
 
-## Abstract
+## About
 
-scsys is a collection of critical primitives for the Scattered-Systems Ecosystem
+scsys lays the foundation for the Scattered-Systems ecosystem, delivering critical primitives throughout
 
 ## Concepts
 

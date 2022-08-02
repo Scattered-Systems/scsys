@@ -5,9 +5,11 @@
 
 ## Abstract
 
-scsys is a collection of critical primitives for the Scattered-Systems Ecosystem
+scsys is a collection of primitives used throughout the Scattered-Systems Ecosystem.
 
 ## Concepts
+
+
 
 ## Developers
 
@@ -18,16 +20,13 @@ scsys is a collection of critical primitives for the Scattered-Systems Ecosystem
     cargo build --release --workspace
     cargo test --all-features --release
 
-## Contents
+## References
 
-### _References_
+### Crate (_scsys_)
 
-* [Bitcoin](https://bitcoin.org)
-* [Ethereum](https://ethereum.org)
-* [IPFS](https://ipfs.io)
-
-### _Websites_
-
-* [Company](https://scattered-systems.com)
 * [Crate](https://crates.io/crates/scsys)
 * [Docs](https://docs.rs/scsys)
+
+### _Scattered-Systems, LLC_
+
+* [Company](https://scattered-systems.com)

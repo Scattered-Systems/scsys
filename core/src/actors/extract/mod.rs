@@ -5,11 +5,8 @@
         ... Summary ...
 */
 pub use extractor::*;
-pub use utils::*;
 
-mod extractor;
-
-mod utils {}
+pub(crate) mod extractor;
 
 #[cfg(test)]
 mod tests {
@@ -20,6 +17,6 @@ mod tests {
         let actual: Vec<u8> = Extractor::new('.', "0.0.0.0".to_string()).extract();
         let expected: Vec<u8> = vec![0, 0, 0, 0];
 
-        assert_eq!(&actual, &expected)
+        assert_eq!(actual, expected)
     }
 }

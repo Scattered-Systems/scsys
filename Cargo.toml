@@ -3,5 +3,30 @@ default-members = [
     "scsys"
 ]
 members = [
-    "scsys"
+    "scsys",
+    "core"
 ]
+
+[profile.dev]
+opt-level = 0
+debug = true
+split-debuginfo = '...'  # Platform-specific.
+debug-assertions = true
+overflow-checks = true
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 256
+rpath = false
+
+[profile.release]
+opt-level = "z"
+debug = false
+split-debuginfo = '...'  # Platform-specific.
+debug-assertions = false
+overflow-checks = false
+lto = false
+panic = 'unwind'
+incremental = false
+codegen-units = 16
+rpath = false
