@@ -4,9 +4,6 @@
     Description:
         ... Summary ...
 */
-pub use appellation::*;
-
-pub(crate) mod appellation;
 
 #[cfg(test)]
 mod tests {

@@ -13,8 +13,8 @@ pub(crate) mod core;
 pub(crate) mod data;
 
 pub mod prelude {
-    pub use super::actors::{extract::*, parse::*};
-    pub use super::components::appellations::*;
+    pub use super::actors::{compile::*, crud::*, extract::*, generate::*, parse::*, scaffold::*};
+    pub use super::components::{addresses::*, appellations::*};
     pub use super::core::{primitives::*, utils::*};
     pub use super::data::{handlers::*, models::*};
 }

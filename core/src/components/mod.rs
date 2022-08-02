@@ -4,4 +4,5 @@
     Description:
         ... Summary ...
 */
+pub mod addresses;
 pub mod appellations;

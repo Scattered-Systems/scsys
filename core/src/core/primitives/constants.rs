@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Hash, PartialEq, crate::Deserialize, crate::Serialize)]
 pub struct Constants {
     pub difficulty_prefix: String,
     pub epoch: usize,
@@ -32,3 +32,15 @@ impl Default for Constants {
 pub const DIFFICULTY_PREFIX: &str = "00";
 ///
 pub const EPOCH: usize = 16;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_constants() {
+        let actual = Constants::default();
+        let expected = Constants::new(DIFFICULTY_PREFIX.to_string(), EPOCH);
+        assert_eq!(actual, expected)
+    }
+}

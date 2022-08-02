@@ -6,4 +6,4 @@
 */
 pub use parser::*;
 
-mod parser;
+pub(crate) mod parser;

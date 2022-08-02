@@ -8,6 +8,14 @@ pub use constants::*;
 pub use types::*;
 pub use variants::*;
 
+pub use bson::{oid::ObjectId, DateTime as BsonDateTime};
+pub use chrono::{DateTime, Utc};
+pub use config::{
+    builder::{AsyncState as AsyncConfigState, DefaultState as ConfigDefaultState},
+    AsyncConfigBuilder, Config, ConfigBuilder, ConfigError, File as ConfigFile,
+};
+pub use serde::{Deserialize, Serialize};
+
 mod constants;
 mod types;
 mod variants;
@@ -32,14 +40,7 @@ impl Default for Prefix {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
-    #[test]
-    fn test_ids() {
-        let actual = Id::generate_object_id();
-        let expected = actual.clone();
-        assert_eq!(&actual, &expected)
-    }
+    use super::Prefix;
 
     #[test]
     fn test_prefix() {

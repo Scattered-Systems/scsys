@@ -32,15 +32,15 @@ impl Temporal {
 
 impl Default for Temporal {
     fn default() -> Self {
-        Self::Timestamp(crate::Utc::now().timestamp())
+        Self::Timestamp(Self::now().timestamp())
     }
 }
 
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
-pub enum Id<T = String> {
+#[derive(Clone, Debug, Hash, PartialEq, crate::Deserialize, crate::Serialize)]
+pub enum Id {
     Obj(crate::ObjectId),
-    Other(T),
     Std(u64),
+    Str(String),
 }
 
 impl Id {
@@ -59,5 +59,24 @@ impl Id {
 impl Default for Id {
     fn default() -> Self {
         Self::Std(Self::random_u64())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Id, Temporal};
+
+    #[test]
+    fn test_ids() {
+        let actual = Id::generate_object_id();
+        let expected = actual.clone();
+        assert_eq!(actual, expected)
+    }
+
+    #[test]
+    fn test_temporal() {
+        let actual = Temporal::default();
+        let expected = actual.clone();
+        assert_eq!(&actual, &expected)
     }
 }

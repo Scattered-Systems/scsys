@@ -4,6 +4,23 @@
     Description:
         ... Summary ...
 */
+#[derive(Copy, Clone, Debug, Hash, PartialEq, crate::Deserialize, crate::Serialize)]
+pub enum ExtractorAction {
+    Cut,
+    Join,
+    Skip,
+    Split,
+    Strip,
+    Trim,
+}
+
+#[derive(Copy, Clone, Debug, Hash, PartialEq, crate::Deserialize, crate::Serialize)]
+pub enum ExtractorState {
+    Complete,
+    Parsing,
+    Start,
+}
+
 ///
 #[derive(Clone, Debug, Hash, PartialEq)]
 pub struct Extractor<'a> {
