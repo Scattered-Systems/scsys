@@ -4,3 +4,4 @@
     Description:
         ... Summary ...
 */
+pub mod appellations;
