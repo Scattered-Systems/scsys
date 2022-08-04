@@ -28,8 +28,8 @@ where
 }
 
 impl<T> Default for StdGenerator<T>
-    where
-        Standard: Distribution<T>,
+where
+    Standard: Distribution<T>,
 {
     fn default() -> Self {
         Self::new(crate::random_number::<T>())
