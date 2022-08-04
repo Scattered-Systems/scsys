@@ -1,0 +1,26 @@
+[package]
+authors = [
+    "FL03 <jo3mccain@icloud.com> (https://github.com/FL03)",
+    "Scattered-Systems (https://github.com/scattered-systems)"
+]
+categories = []
+description = "Derive macros created for fluidity"
+edition = "2021"
+homepage = "https://scattered-systems.github.io/scsys"
+keywords = ["derive", "proc-macros"]
+license = "MIT"
+name = "scsys-derive"
+repository = "https://github.com/scattered-systems/scsys"
+version = "0.1.0" # TODO - Update cargo package version
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1.0.40"
+quote = "1.0.20"
+syn = { features = ["full"], version = "1.0.98" }
+
+[package.metadata.docs.rs]
+all-features = true
+rustc-args = ["--cfg", "docsrs"]

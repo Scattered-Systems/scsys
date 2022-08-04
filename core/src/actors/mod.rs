@@ -4,7 +4,6 @@
     Description:
         ... Summary ...
 */
-pub mod compile;
 pub mod crud;
 pub mod extract;
 pub mod generate;

@@ -10,8 +10,8 @@ use rand::distributions::{Distribution, Standard};
 pub struct StdGenerator<T>(T);
 
 impl<T> StdGenerator<T>
-    where
-        Standard: Distribution<T>,
+where
+    Standard: Distribution<T>,
 {
     fn constructor(data: T) -> Result<Self, crate::BoxError> {
         Ok(Self(data))

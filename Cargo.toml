@@ -4,7 +4,9 @@ default-members = [
 ]
 members = [
     "scsys",
-    "core"
+    "core",
+    "derive",
+    "macros"
 ]
 
 [profile.dev]

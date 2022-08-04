@@ -15,8 +15,8 @@ pub fn collect_config_files(pattern: &str, required: bool) -> crate::ConfigFileV
 
 /// Consolidate resources required for generating random numbers
 pub fn random_number<T>() -> T
-    where
-        rand::distributions::Standard: rand::prelude::Distribution<T>,
+where
+    rand::distributions::Standard: rand::prelude::Distribution<T>,
 {
     use rand::Rng;
     let mut rnd = rand::thread_rng();
