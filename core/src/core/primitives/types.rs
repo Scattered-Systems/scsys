@@ -38,19 +38,31 @@ mod collections {
 
 mod errors {
     /// Type alias for a boxed standard error
+    pub type BaseError = Box<dyn std::error::Error>;
+    /// Type alias for a boxed error with send, sync, and static flags enabled
     pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
 }
 
 mod misc {
     /// Type alias for [config::File]
     pub type ConfigFile<Src, Fmt> = config::File<Src, Fmt>;
+
+    pub type ChronoDateTime<T = DefaultTimezone> = chrono::DateTime<T>;
     /// Type alias implementing a [ConfigBuilder] in its default state
     pub type DefaultConfigBuilder = crate::ConfigBuilder<crate::ConfigDefaultState>;
+    /// Type alias for the default timestamp
+    pub type DefaultTimestamp = i64;
+    /// Type alias for the default timezone, [chrono::Utc]
+    pub type DefaultTimezone = chrono::Utc;
 }
 
 mod results {
     use super::BoxError;
 
+    /// Type alias of a result implementing the [super::BaseError]
+    pub type BaseResult<T> = Result<T, super::BaseError>;
     /// Type alias for the standard result used
-    pub type StandardResult<T> = Result<T, BoxError>;
+    pub type BoxResult<T> = Result<T, BoxError>;
+    /// Type alias for [std::io::Result]
+    pub type IOResult<T> = std::io::Result<T>;
 }

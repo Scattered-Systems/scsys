@@ -1,5 +1,5 @@
 /*
-    Appellation: rs-sandbox-macros <library>
+    Appellation: scsys-macros <library>
     Creator: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...

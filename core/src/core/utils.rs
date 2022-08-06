@@ -25,9 +25,17 @@ where
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
-    fn test() {
-        let f = |x: usize, y: usize| x + y;
-        assert_eq!(f(4, 2), 6)
+    fn test_collect_config_files() {
+        let actual = collect_config_files("**/*.config.*", false);
+        let expected = actual.clone().len();
+        assert_eq!(actual.len(), expected)
+    }
+
+    #[test]
+    fn test_random_number() {
+        assert_ne!(random_number::<f64>(), random_number::<f64>())
     }
 }
