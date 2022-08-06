@@ -9,7 +9,7 @@
 pub fn collect_config_files(pattern: &str, required: bool) -> crate::ConfigFileVec {
     glob::glob(pattern)
         .unwrap()
-        .map(|path| config::File::from(path.unwrap()).required(required))
+        .map(|path| crate::ConfigFile::from(path.unwrap()).required(required))
         .collect::<Vec<_>>()
 }
 

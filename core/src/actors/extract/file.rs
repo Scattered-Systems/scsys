@@ -61,7 +61,6 @@ mod tests {
         let path = "../README.md";
         let actual = FileExtractor::from(path);
         let expected = actual.clone();
-        println!("{:#?}", actual.clone().file_lines());
         assert_eq!(actual.file_lines(), expected.file_lines())
     }
 }

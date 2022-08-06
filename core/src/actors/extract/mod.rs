@@ -10,6 +10,11 @@ pub use file::*;
 pub(crate) mod extractor;
 pub(crate) mod file;
 
+pub trait IExtractor<Dt>: Clone + PartialEq + std::fmt::Debug {
+    fn cache(&self) -> Vec<String>;
+    fn extract(&self) -> Vec<Dt>;
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

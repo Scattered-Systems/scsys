@@ -4,26 +4,27 @@
     Description:
         ... Summary ...
 */
+use chrono::{DateTime, Utc};
 use rand::Rng;
+use serde::{Deserialize, Serialize};
 
 /// A collection of time-related data structures
 #[derive(Clone, Debug, PartialEq)]
 pub enum Temporal {
-    Bson(crate::BsonDateTime),
-    Datetime(crate::DateTime<crate::Utc>),
+    Bson(bson::DateTime),
+    Datetime(DateTime<Utc>),
     Timestamp(i64),
-    Timezone(crate::Utc),
 }
 
 impl Temporal {
-    pub fn now() -> crate::DateTime<crate::Utc> {
-        crate::Utc::now()
+    pub fn now() -> DateTime<Utc> {
+        Utc::now()
     }
     pub fn bson_datetime() -> Self {
         Self::Bson(Self::now().into())
     }
     pub fn datetime() -> Self {
-        Self::Datetime(Self::now())
+        Self::Datetime(DateTime::from(Self::now()))
     }
     pub fn timestamp() -> Self {
         Self::Timestamp(Self::now().timestamp())
@@ -36,9 +37,9 @@ impl Default for Temporal {
     }
 }
 
-#[derive(Clone, Debug, Hash, PartialEq, crate::Deserialize, crate::Serialize)]
+#[derive(Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
 pub enum Id {
-    Obj(crate::ObjectId),
+    Obj(bson::oid::ObjectId),
     Std(u64),
     Str(String),
 }
@@ -49,7 +50,7 @@ impl Id {
         rnd.gen::<u64>()
     }
     pub fn generate_object_id() -> Self {
-        Self::Obj(crate::ObjectId::new())
+        Self::Obj(bson::oid::ObjectId::new())
     }
     pub fn random_std() -> Self {
         Self::Std(Self::random_u64())

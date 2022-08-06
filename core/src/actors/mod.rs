@@ -7,5 +7,3 @@
 pub mod crud;
 pub mod extract;
 pub mod generate;
-pub mod parse;
-pub mod scaffold;

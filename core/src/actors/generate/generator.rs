@@ -5,8 +5,9 @@
         ... Summary ...
 */
 use rand::distributions::{Distribution, Standard};
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Copy, Debug, Hash, PartialEq, crate::Deserialize, crate::Serialize)]
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Deserialize, Serialize)]
 pub struct StdGenerator<T>(T);
 
 impl<T> StdGenerator<T>

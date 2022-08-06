@@ -4,8 +4,9 @@
     Description:
         ... Summary ...
 */
+use serde::{Deserialize, Serialize};
 
-#[derive(Hash, PartialEq, crate::Deserialize, crate::Serialize)]
+#[derive(Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
 pub enum CRUDState {
     Create,
     Read,

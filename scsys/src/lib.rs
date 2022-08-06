@@ -16,7 +16,6 @@ pub mod prelude {
     #[cfg(feature = "core")]
     pub use super::{
         addresses::*, appellations::*, crud::*, extract::*, generate::*, handlers::*, models::*,
-        parse::*, scaffold::*,
     };
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;

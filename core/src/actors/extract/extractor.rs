@@ -4,7 +4,9 @@
     Description:
         ... Summary ...
 */
-#[derive(Copy, Clone, Debug, Hash, PartialEq, crate::Deserialize, crate::Serialize)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Copy, Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
 pub enum ExtractorAction {
     Cut,
     Join,
@@ -14,7 +16,7 @@ pub enum ExtractorAction {
     Trim,
 }
 
-#[derive(Copy, Clone, Debug, Hash, PartialEq, crate::Deserialize, crate::Serialize)]
+#[derive(Copy, Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
 pub enum ExtractorState {
     Complete,
     Parsing,
