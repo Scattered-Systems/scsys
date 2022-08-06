@@ -5,8 +5,10 @@
         ... Summary ...
 */
 pub use extractor::*;
+pub use file::*;
 
 pub(crate) mod extractor;
+pub(crate) mod file;
 
 #[cfg(test)]
 mod tests {
