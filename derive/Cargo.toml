@@ -4,14 +4,14 @@ authors = [
     "Scattered-Systems (https://github.com/scattered-systems)"
 ]
 categories = []
-description = "Derive macros created for fluidity"
+description = "Derive macros created for scsys"
 edition = "2021"
 homepage = "https://scattered-systems.github.io/scsys"
 keywords = ["derive", "proc-macros"]
 license = "MIT"
 name = "scsys-derive"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.0" # TODO - Update cargo package version
+version = "0.1.1" # TODO - Update cargo package version
 
 [lib]
 proc-macro = true

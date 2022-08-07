@@ -51,16 +51,3 @@ impl FileInterface for FileExtractor {
         Box::from(std::path::Path::new(self.filepath.as_str()))
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test() {
-        let path = "../README.md";
-        let actual = FileExtractor::from(path);
-        let expected = actual.clone();
-        assert_eq!(actual.file_lines(), expected.file_lines())
-    }
-}

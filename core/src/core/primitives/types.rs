@@ -37,6 +37,9 @@ mod collections {
 }
 
 mod errors {
+    #[derive(Clone, Copy, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+    pub enum Errors {}
+
     /// Type alias for a boxed standard error
     pub type BaseError = Box<dyn std::error::Error>;
     /// Type alias for a boxed error with send, sync, and static flags enabled
@@ -60,9 +63,9 @@ mod results {
     use super::BoxError;
 
     /// Type alias of a result implementing the [super::BaseError]
-    pub type BaseResult<T> = Result<T, super::BaseError>;
+    pub type BaseResult<T = ()> = Result<T, super::BaseError>;
     /// Type alias for the standard result used
-    pub type BoxResult<T> = Result<T, BoxError>;
+    pub type BoxResult<T = ()> = Result<T, BoxError>;
     /// Type alias for [std::io::Result]
-    pub type IOResult<T> = std::io::Result<T>;
+    pub type IOResult<T = ()> = std::io::Result<T>;
 }

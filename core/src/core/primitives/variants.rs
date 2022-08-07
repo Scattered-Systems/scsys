@@ -66,7 +66,7 @@ pub enum Id {
 
 impl Id {
     pub fn new_nid() -> Self {
-        Self::Num(crate::random_number())
+        Self::Num(crate::generate::generate_random_number::<u64>())
     }
     pub fn new_oid() -> Self {
         Self::Obj(bson::oid::ObjectId::new())
