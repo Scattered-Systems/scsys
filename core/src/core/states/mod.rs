@@ -10,8 +10,6 @@ pub(crate) mod crud;
 pub(crate) mod power;
 
 pub(crate) mod state {
-    use crate::{Deserialize, Serialize};
-
     pub trait Stateful<Cnt>: Clone + PartialEq + std::fmt::Debug + std::hash::Hash {
         fn active(&self) -> bool;
         fn context(&self, state: String) -> Cnt;
@@ -24,7 +22,7 @@ pub(crate) mod state {
     }
 
     /// Implement the standard structure of a state
-    #[derive(Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
+    #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
     pub struct State<S> {
         pub message: String,
         pub state: S,

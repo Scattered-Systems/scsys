@@ -4,7 +4,6 @@
     Description:
         ... Summary ...
 */
-use serde::{Deserialize, Serialize};
 use std::io::Read;
 
 pub trait FileInterface: Clone + std::fmt::Debug + std::hash::Hash + PartialEq {
@@ -28,7 +27,7 @@ pub trait FileInterface: Clone + std::fmt::Debug + std::hash::Hash + PartialEq {
 }
 
 /// Extract the contents of a file
-#[derive(Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct FileExtractor {
     pub filepath: String,
     pub data: Vec<String>,

@@ -14,7 +14,7 @@ pub use scsys_macros::*;
 
 pub mod prelude {
     #[cfg(feature = "core")]
-    pub use super::core::{extract::*, generate::*, handlers::*, models::*};
+    pub use super::{extract::*, generate::*, handlers::*};
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]
