@@ -15,17 +15,16 @@ impl StringGenerator {
     fn constructor(data: String, timestamp: i64) -> Self {
         Self { data, timestamp }
     }
-    pub fn new() -> Self {
-        Self::constructor(String::new(), crate::Temporal::now().timestamp())
+    pub fn new(data: String) -> Self {
+        Self::constructor(data, crate::Temporal::now().timestamp())
     }
-    pub fn generate(&self, len: usize) -> crate::BoxResult<Self> {
-        crate::generate::generate_random_string(len);
-        Ok(self.clone())
+    pub fn generate(len: usize) -> crate::BoxResult<Self> {
+        Ok(Self::new(crate::generate::generate_random_string(len)))
     }
 }
 
 impl Default for StringGenerator {
     fn default() -> Self {
-        Self::new().generate(12).ok().unwrap()
+        Self::generate(12).ok().unwrap()
     }
 }

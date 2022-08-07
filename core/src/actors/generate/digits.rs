@@ -10,14 +10,11 @@ use rand::{distributions, prelude::Distribution};
 pub struct DigitGenerator<T>(T);
 
 impl<T> DigitGenerator<T> {
-    fn constructor(data: T) -> crate::BoxResult<Self> {
-        Ok(Self(data))
+    fn constructor(data: T) -> Self {
+        Self(data)
     }
     pub fn new(data: T) -> Self {
-        match Self::constructor(data) {
-            Ok(v) => v,
-            Err(e) => panic!("Generator Error: {}", e),
-        }
+        Self::constructor(data)
     }
 }
 

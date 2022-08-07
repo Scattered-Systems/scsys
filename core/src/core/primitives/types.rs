@@ -39,7 +39,6 @@ mod collections {
 mod errors {
     #[derive(Clone, Copy, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
     pub enum Errors {}
-
     /// Type alias for a boxed standard error
     pub type BaseError = Box<dyn std::error::Error>;
     /// Type alias for a boxed error with send, sync, and static flags enabled
