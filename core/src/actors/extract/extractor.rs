@@ -4,26 +4,8 @@
     Description:
         ... Summary ...
 */
-use serde::{Deserialize, Serialize};
-
-#[derive(Copy, Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
-pub enum ExtractorAction {
-    Cut,
-    Join,
-    Skip,
-    Split,
-    Strip,
-    Trim,
-}
-
-#[derive(Copy, Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
-pub enum ExtractorState {
-    Complete,
-    Parsing,
-    Start,
-}
-
-///
+/// Implements an extraction tool designed to iterate through a given string, collecting
+/// valid data points into a vector
 #[derive(Clone, Debug, Hash, PartialEq)]
 pub struct Extractor<'a> {
     pub breakpoint: char,

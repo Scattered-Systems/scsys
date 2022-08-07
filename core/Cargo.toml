@@ -8,12 +8,14 @@ keywords = ["core", "scsys"]
 license = "MIT"
 name = "scsys-core"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.1" # TODO: Update the package version
+version = "0.1.2" # TODO: Update the package version
+
+[lib]
+test = true
 
 [build-dependencies]
 
 [dependencies]
-async-trait = "0.1.57"
 bson = { features = ["chrono-0_4", "serde_with"], version = "2.3.0" }
 chrono = "0.4.19"
 config = "0.13.1"

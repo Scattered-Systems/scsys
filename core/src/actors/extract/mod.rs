@@ -4,16 +4,10 @@
     Description:
         ... Summary ...
 */
-pub use extractor::*;
-pub use file::*;
+pub use self::{extractor::*, file::*};
 
 pub(crate) mod extractor;
 pub(crate) mod file;
-
-pub trait IExtractor<Dt>: Clone + PartialEq + std::fmt::Debug {
-    fn cache(&self) -> Vec<String>;
-    fn extract(&self) -> Vec<Dt>;
-}
 
 #[cfg(test)]
 mod tests {
@@ -25,5 +19,13 @@ mod tests {
         let expected: Vec<u8> = vec![0, 0, 0, 0];
 
         assert_eq!(actual, expected)
+    }
+
+    #[test]
+    fn test_file_extractor() {
+        let path = "../README.md";
+        let actual = FileExtractor::from(path);
+        let expected = actual.clone();
+        assert_eq!(actual.file_lines(), expected.file_lines())
     }
 }

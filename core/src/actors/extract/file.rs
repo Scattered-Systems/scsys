@@ -4,7 +4,6 @@
     Description:
         ... Summary ...
 */
-use serde::{Deserialize, Serialize};
 use std::io::Read;
 
 pub trait FileInterface: Clone + std::fmt::Debug + std::hash::Hash + PartialEq {
@@ -28,7 +27,7 @@ pub trait FileInterface: Clone + std::fmt::Debug + std::hash::Hash + PartialEq {
 }
 
 /// Extract the contents of a file
-#[derive(Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
+#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct FileExtractor {
     pub filepath: String,
     pub data: Vec<String>,
@@ -49,18 +48,5 @@ impl FileExtractor {
 impl FileInterface for FileExtractor {
     fn filepath(&self) -> Box<std::path::Path> {
         Box::from(std::path::Path::new(self.filepath.as_str()))
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test() {
-        let path = "../README.md";
-        let actual = FileExtractor::from(path);
-        let expected = actual.clone();
-        assert_eq!(actual.file_lines(), expected.file_lines())
     }
 }

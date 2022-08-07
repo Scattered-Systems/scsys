@@ -9,7 +9,7 @@ license = "MIT"
 name = "scsys"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.11" # TODO: Update the package version
+version = "0.1.12" # TODO: Update the package version
 
 [features]
 default = ["core"]
@@ -26,17 +26,17 @@ test = true
 [dependencies.scsys-core]
 optional = true
 path = "../core"
-version = "0.1.1"
+version = "0.1.2"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.0"
+version = "0.1.1"
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.0"
+version = "0.1.1"
 
 [package.metadata.docs.rs]
 all-features = true
