@@ -25,14 +25,40 @@ pub(crate) mod state {
 
     /// Implement the standard structure of a state
     #[derive(Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
-    pub struct State<Dt> {
-        pub data: Vec<Dt>,
+    pub struct State<S> {
+        pub message: String,
+        pub state: S,
         pub timestamp: crate::Timestamp,
     }
 
-    impl<Dt> State<Dt> {
-        fn constructor(data: Vec<Dt>, timestamp: crate::Timestamp) -> Self {
-            Self { data, timestamp }
+    impl<S> State<S> {
+        fn constructor(message: String, state: S, timestamp: crate::Timestamp) -> Self {
+            Self {
+                message,
+                state,
+                timestamp,
+            }
         }
+        pub fn new(message: String, state: S) -> Self {
+            Self::constructor(message, state, crate::Timestamp::new())
+        }
+    }
+
+    impl<S: Default> Default for State<S> {
+        fn default() -> Self {
+            Self::new(String::new(), S::default())
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_state() {
+        let actual = State::new("message".to_string(), "test");
+        let expected = actual.clone();
+        assert_eq!(actual, expected)
     }
 }

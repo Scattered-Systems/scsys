@@ -40,17 +40,15 @@ mod tests {
 
     #[test]
     fn test_generator_num() {
-        let r = DigitGenerator::<f64>::default();
-        let s = DigitGenerator::<f64>::default();
-        assert_ne!(r, s)
+        assert_ne!(
+            DigitGenerator::<f64>::default(),
+            DigitGenerator::<f64>::default()
+        )
     }
 
     #[test]
     fn test_generator_str() {
-        let actual = StringGenerator::default();
-        let expected = StringGenerator::default();
-        println!("{:#?}", actual.clone());
-        assert_ne!(actual, expected)
+        assert_ne!(StringGenerator::default(), StringGenerator::default())
     }
 
     #[test]

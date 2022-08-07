@@ -19,8 +19,8 @@ impl<T> DigitGenerator<T> {
 }
 
 impl<T> DigitGenerator<T>
-    where
-        distributions::Standard: Distribution<T>,
+where
+    distributions::Standard: Distribution<T>,
 {
     pub fn generate() -> Self {
         Self::new(crate::generate::generate_random_number::<T>())

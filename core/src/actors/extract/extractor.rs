@@ -4,8 +4,6 @@
     Description:
         ... Summary ...
 */
-use serde::{Deserialize, Serialize};
-
 /// Implements an extraction tool designed to iterate through a given string, collecting
 /// valid data points into a vector
 #[derive(Clone, Debug, Hash, PartialEq)]
