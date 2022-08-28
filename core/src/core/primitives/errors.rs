@@ -18,7 +18,6 @@ pub enum Error {
     PeerError,
     InputOutput,
     Interface,
-
 }
 
 impl Error {
@@ -28,7 +27,7 @@ impl Error {
     }
     pub fn metadata() -> crate::Dictionary<Self> {
         let options = vec!["catch_all", "compute"];
-        let mut res = scsys::Dictionary::new();
+        let mut res = crate::Dictionary::new();
         res
     }
 }
