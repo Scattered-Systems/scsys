@@ -14,7 +14,7 @@ pub(crate) mod state {
         fn active(&self) -> bool;
         fn context(&self, state: String) -> Cnt;
         fn message(&self, message: String) -> String {
-            message
+            format!("State (message:{:?}\n)", message)
         }
         fn timestamp(&self) -> crate::Timestamp {
             crate::Timestamp::new()

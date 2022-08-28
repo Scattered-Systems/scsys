@@ -1,18 +1,17 @@
 /*
-    Appellation: mod <module>
+    Appellation: primitives <module>
     Creator: FL03 <jo3mccain@icloud.com>
     Description:
-        ... Summary ...
+        This module is dedicated to developing a set of primitives to be used throughout our
+        ecosystem
 */
-pub use constants::*;
-pub use types::*;
-pub use variants::*;
+pub use self::{constants::*, errors::*, types::*, variants::*};
 
 pub use bson;
 pub use chrono;
 pub use config;
-pub use serde::{Deserialize, Serialize};
 
 mod constants;
+mod errors;
 mod types;
 mod variants;

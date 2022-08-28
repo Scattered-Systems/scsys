@@ -28,8 +28,8 @@ where
 }
 
 impl<T> Default for DigitGenerator<T>
-    where
-        distributions::Standard: Distribution<T>,
+where
+    distributions::Standard: Distribution<T>,
 {
     fn default() -> Self {
         Self::generate()
