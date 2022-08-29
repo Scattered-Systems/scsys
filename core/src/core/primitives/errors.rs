@@ -5,35 +5,45 @@
         ... Summary ...
 */
 
-pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
-
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum Error {
-    Application,
-
-    Default,
-    ComputeError,
+    AsyncError,
     ConnectionError,
-    NodeError,
-    PeerError,
-    InputOutput,
-    Interface,
+    Default,
 }
 
 impl Error {
     pub fn new(data: &str) -> Self {
         let input = data.to_string();
-        Self::ComputeError
+        Self::metadata()
+            .get(data)
+            .expect("Failed to find a match...")
+            .clone()
     }
     pub fn metadata() -> crate::Dictionary<Self> {
-        let options = vec!["catch_all", "compute"];
-        let mut res = crate::Dictionary::new();
-        res
+        let options = [
+            ("async".to_string(), Self::AsyncError),
+            ("connection".to_string(), Self::ConnectionError),
+            ("default".to_string(), Self::Default),
+        ];
+        crate::Dictionary::from(options)
     }
 }
 
 impl Default for Error {
     fn default() -> Self {
-        Self::Default
+        Self::new("default")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_errors() {
+        let actual = Error::default();
+        let expected = Error::Default;
+        assert_eq!(actual, expected)
     }
 }

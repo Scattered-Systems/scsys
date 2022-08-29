@@ -7,10 +7,6 @@
 */
 pub use self::{constants::*, errors::*, types::*, variants::*};
 
-pub use bson;
-pub use chrono;
-pub use config;
-
 mod constants;
 mod errors;
 mod types;

@@ -6,18 +6,20 @@
 */
 pub use self::{crud::*, power::*, state::*};
 
-pub(crate) mod crud;
-pub(crate) mod power;
+mod crud;
+mod power;
 
-pub(crate) mod state {
+mod state {
+    use crate::Timestamp;
+
     pub trait Stateful<Cnt>: Clone + PartialEq + std::fmt::Debug + std::hash::Hash {
         fn active(&self) -> bool;
         fn context(&self, state: String) -> Cnt;
         fn message(&self, message: String) -> String {
             format!("State (message:{:?}\n)", message)
         }
-        fn timestamp(&self) -> crate::Timestamp {
-            crate::Timestamp::new()
+        fn timestamp(&self) -> Timestamp {
+            Timestamp::default()
         }
     }
 
@@ -26,11 +28,11 @@ pub(crate) mod state {
     pub struct State<S> {
         pub message: String,
         pub state: S,
-        pub timestamp: crate::Timestamp,
+        pub timestamp: Timestamp,
     }
 
     impl<S> State<S> {
-        fn constructor(message: String, state: S, timestamp: crate::Timestamp) -> Self {
+        fn constructor(message: String, state: S, timestamp: Timestamp) -> Self {
             Self {
                 message,
                 state,
@@ -38,7 +40,7 @@ pub(crate) mod state {
             }
         }
         pub fn new(message: String, state: S) -> Self {
-            Self::constructor(message, state, crate::Timestamp::new())
+            Self::constructor(message, state, Timestamp::default())
         }
     }
 
