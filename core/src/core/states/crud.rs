@@ -16,10 +16,9 @@ pub enum CRUDState {
 
 impl CRUDState {
     pub fn new(data: &str) -> Self {
-        let input = data.to_string().to_ascii_lowercase();
         match Self::info().get(data) {
             None => Self::Null,
-            Some(v) => *v,
+            Some(v) => v.clone(),
         }
     }
     pub fn create(&self) -> Self {
