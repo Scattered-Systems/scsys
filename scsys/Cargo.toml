@@ -8,8 +8,8 @@ keywords = ["blockchain", "primitives", "scsys"]
 license = "MIT"
 name = "scsys"
 readme = "README.md"
-repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.12" # TODO: Update the package version
+repository = "https://gitlab.com/scsys/scsys"
+version = "0.1.13" # TODO: Update the package version
 
 [features]
 default = ["core"]
@@ -26,17 +26,17 @@ test = true
 [dependencies.scsys-core]
 optional = true
 path = "../core"
-version = "0.1.2"
+version = "0.1.4" # TODO: Update feature versioning
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.1"
+version = "0.1.3" # TODO: Update feature versioning
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.1"
+version = "0.1.3" # TODO: Update feature versioning
 
 [package.metadata.docs.rs]
 all-features = true
