@@ -26,9 +26,9 @@ impl Extractor<'_> {
         to_skip
     }
     pub fn extract<T>(self) -> Vec<T>
-        where
-            T: Clone + std::str::FromStr,
-            <T as std::str::FromStr>::Err: std::fmt::Debug,
+    where
+        T: Clone + std::str::FromStr,
+        <T as std::str::FromStr>::Err: std::fmt::Debug,
     {
         let trimmed: &str = &self.data.trim_matches(self.exclude);
         trimmed

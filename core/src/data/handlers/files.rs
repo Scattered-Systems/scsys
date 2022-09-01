@@ -21,6 +21,10 @@ impl FileHandler {
     }
 }
 
+pub trait DocumentHandler {
+    fn path(&self) -> String;
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
