@@ -7,7 +7,7 @@
 #[doc(inline)]
 pub use crate::{actors::*, components::*, core::*, data::*};
 
-pub(crate) mod actors;
-pub(crate) mod components;
-pub(crate) mod core;
-pub(crate) mod data;
+mod actors;
+mod components;
+mod core;
+mod data;

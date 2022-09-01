@@ -4,3 +4,5 @@
     Description:
         ... Summary ...
 */
+
+pub const DEFAULT_HTTP_PORT: u16 = 8080;

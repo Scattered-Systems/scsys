@@ -13,8 +13,8 @@ impl Timestamp {
     fn constructor(data: i64) -> Self {
         Self(data)
     }
-    pub fn new() -> Self {
-        Self::constructor(Self::timestamp())
+    pub fn new(data: i64) -> Self {
+        Self(data)
     }
     pub fn now() -> chrono::DateTime<chrono::Utc> {
         crate::DefaultTimezone::now()
@@ -24,6 +24,12 @@ impl Timestamp {
     }
     pub fn timestamp() -> i64 {
         Self::now().timestamp()
+    }
+}
+
+impl Default for Timestamp {
+    fn default() -> Self {
+        Self::new(Self::timestamp())
     }
 }
 

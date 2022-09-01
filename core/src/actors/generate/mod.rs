@@ -18,8 +18,8 @@ pub(crate) mod utils {
 
     /// Consolidate resources required for generating random numbers
     pub fn generate_random_number<T>() -> T
-        where
-            Standard: Distribution<T>,
+    where
+        Standard: Distribution<T>,
     {
         let mut rnd = rand::thread_rng();
         rnd.gen::<T>()
