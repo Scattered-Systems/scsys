@@ -10,11 +10,15 @@ pub struct Tokens {
     pub access_token: String,
     pub token_type: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub username: Option<String>
+    pub username: Option<String>,
 }
 
 impl Tokens {
     pub fn new(access_token: String, token_type: String, username: Option<String>) -> Self {
-        Self { access_token, token_type, username }
+        Self {
+            access_token,
+            token_type,
+            username,
+        }
     }
 }

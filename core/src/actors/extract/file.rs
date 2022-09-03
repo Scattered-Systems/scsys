@@ -9,8 +9,10 @@ use std::io::Read;
 pub trait FileInterface: Clone + std::fmt::Debug + std::hash::Hash + PartialEq {
     fn extract(&mut self) -> Vec<String> {
         let mut buffer = String::new();
-        self.open_file().read_to_string(&mut buffer).expect("IOError");
-        
+        self.open_file()
+            .read_to_string(&mut buffer)
+            .expect("IOError");
+
         buffer.split("\n").map(|s: &str| s.to_string()).collect()
     }
     fn filepath(&self) -> Box<std::path::Path>;
@@ -31,7 +33,10 @@ pub struct FileExtractor {
 
 impl FileExtractor {
     pub fn new(filepath: String) -> Self {
-        Self { filepath, data: Vec::new() }
+        Self {
+            filepath,
+            data: Vec::new(),
+        }
     }
     pub fn from<T: std::string::ToString>(filepath: T) -> Self {
         Self::new(filepath.to_string())
@@ -46,14 +51,14 @@ impl FileInterface for FileExtractor {
 
 #[cfg(test)]
 mod tests {
-    use super::{FileInterface, FileExtractor};
+    use super::{FileExtractor, FileInterface};
 
     #[test]
     fn test_file_extractor() {
         let fp = "../README.md";
         let mut a = FileExtractor::new(fp.to_string());
         let mut b = a.clone();
-        
+
         assert_eq!(a.extract(), b.extract())
     }
 }

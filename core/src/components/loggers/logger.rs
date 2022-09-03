@@ -7,14 +7,14 @@
 
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Logger {
-    pub level: String
+    pub level: String,
 }
 
 impl Logger {
     pub fn new(level: String) -> Self {
         Self { level }
     }
-    
+
     pub fn from<T: std::string::ToString>(level: T) -> Self {
         Self::new(level.to_string())
     }
@@ -24,6 +24,6 @@ impl Logger {
             std::env::set_var("RUST_LOG", self.level.as_str());
         }
 
-        tracing_subscriber::fmt::init(); 
+        tracing_subscriber::fmt::init();
     }
 }

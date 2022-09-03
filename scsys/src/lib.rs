@@ -21,15 +21,17 @@ pub use config;
 
 pub mod prelude {
     #[cfg(feature = "bson")]
-    pub use bson as bson;
+    pub use bson;
     #[cfg(feature = "chrono")]
-    pub use chrono as chrono;
+    pub use chrono;
     #[cfg(feature = "config")]
-    pub use config as config;
-
+    pub use config;
 
     #[cfg(feature = "core")]
-    pub use super::{extract::*, generate::*, states::*, clients::*, loggers::*, networking::*, providers::*, handlers::*, models::*, schemas::*};
+    pub use super::{
+        clients::*, extract::*, generate::*, handlers::*, loggers::*, models::*, networking::*,
+        providers::*, schemas::*, states::*,
+    };
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]

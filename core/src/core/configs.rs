@@ -5,11 +5,10 @@
         ... Summary ...
 */
 
-
 pub trait AppConfig<'a>: Clone + serde::Deserialize<'a> + serde::Serialize {
     fn builder(&mut self) -> crate::DefaultConfigBuilder {
         let mut builder = config::Config::builder();
-        
+
         builder = builder.add_source(crate::collect_config_files("**/*.config.*", false));
         builder
     }
@@ -17,6 +16,3 @@ pub trait AppConfig<'a>: Clone + serde::Deserialize<'a> + serde::Serialize {
         self.builder().build()?.try_deserialize()
     }
 }
-
-
-

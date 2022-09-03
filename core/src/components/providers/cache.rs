@@ -5,9 +5,8 @@
         ... Summary ...
 */
 
-
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Cache {
     pub name: String,
-    pub uri: String
+    pub uri: String,
 }

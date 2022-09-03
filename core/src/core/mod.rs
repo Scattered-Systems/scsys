@@ -4,11 +4,10 @@
     Description:
         ... Summary ...
 */
-pub use self::{configs::*, primitives::*,  utils::*};
+pub use self::{configs::*, primitives::*, utils::*};
 
 mod configs;
 mod primitives;
-
 
 mod utils {
     use crate::{ConfigFile, ConfigFileVec};

@@ -34,8 +34,7 @@ impl std::fmt::Display for Server {
         write!(
             f,
             "View the server locally at http://{}:{}",
-            self.host,
-            self.port
+            self.host, self.port
         )
     }
 }

@@ -5,9 +5,8 @@
         ... Summary ...
 */
 
-
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Web3Provider {
     pub name: String,
-    pub url: String
+    pub url: String,
 }

@@ -8,10 +8,10 @@ use crate::BsonOid;
 
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Users {
-    #[serde(rename="_id", skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
     pub id: Option<BsonOid>,
 
-    pub username: String
+    pub username: String,
 }
 
 impl Users {
