@@ -4,9 +4,10 @@
     Description:
         ... Summary ...
 */
-pub use self::{caches::Cache, databases::Database, loggers::Logger, providers::Web3Provider};
+pub use self::{caches::Cache, databases::Database, loggers::Logger, providers::Web3Provider, servers::Server};
 
 mod caches;
 mod databases;
 mod loggers;
 mod providers;
+mod servers;
