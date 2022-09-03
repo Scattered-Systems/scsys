@@ -4,8 +4,6 @@
     Description:
         ... Summary ...
 */
+pub use self::logger::Logger;
 
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
-pub struct Logger {
-    pub level: String
-}
+mod logger;

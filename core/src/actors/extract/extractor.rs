@@ -25,7 +25,7 @@ impl Extractor<'_> {
         let to_skip = &[' ', ',', '[', ']', '.'];
         to_skip
     }
-    pub fn extract<T>(self) -> Vec<T>
+    pub fn extract<T>(&self) -> Vec<T>
     where
         T: Clone + std::str::FromStr,
         <T as std::str::FromStr>::Err: std::fmt::Debug,
@@ -38,5 +38,23 @@ impl Extractor<'_> {
     }
     pub fn new(breakpoint: char, data: String) -> Self {
         Self::constructor(breakpoint, data, Self::exclude_chars())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Extractor;
+
+    #[test]
+    fn test_extractor() {
+        let a = Extractor::new('.', "0.0.0.0".to_string());
+        let b = Extractor::new(',', "[0, 0, 0, 0]".to_string());
+
+        let a_data = a.extract::<u8>();
+        let b_data = b.extract::<u8>();
+        let expected: Vec<u8> = vec![0, 0, 0, 0];
+
+        assert_eq!(a_data, expected.clone());
+        assert_eq!(b_data, expected)
     }
 }

@@ -12,8 +12,14 @@ repository = "https://gitlab.com/scsys/scsys"
 version = "0.1.14" # TODO: Update the package version
 
 [features]
-default = ["core"]
-full = ["core", "derive", "macros"]
+default = ["core", "external"]
+full = ["core", "derive", "external","macros"]
+
+external = ["bson", "chrono", "config"]
+
+bson = ["bson/default", "bson/chrono-0_4", "bson/serde_with", "bson/uuid-0_8"]
+chrono = ["chrono/default"]
+config = ["config/default"]
 
 core = ["scsys-core"]
 derive = ["scsys-derive"]
@@ -22,6 +28,11 @@ macros = ["scsys-macros"]
 [lib]
 crate-type = ["cdylib", "rlib"]
 test = true
+
+[dependencies]
+bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional=true, version = "2.4.0" }
+chrono = { optional = true, version = "0.4.22" }
+config =  { optional = true, version = "0.13.2" }
 
 [dependencies.scsys-core]
 optional = true
