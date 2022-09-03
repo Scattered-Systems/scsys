@@ -14,7 +14,6 @@ pub enum Error {
 
 impl Error {
     pub fn new(data: &str) -> Self {
-        let input = data.to_string();
         Self::metadata()
             .get(data)
             .expect("Failed to find a match...")
