@@ -6,6 +6,7 @@
 */
 pub use self::{primitives::*, states::*, utils::*};
 
+pub mod configs;
 mod primitives;
 mod states;
 mod utils;
