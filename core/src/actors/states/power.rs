@@ -4,8 +4,11 @@
     Description:
         ... Summary ...
 */
+use strum_macros::{EnumString, EnumVariantNames};
 
-#[derive(Clone, Copy, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+/// Outlines a standard collection of power related states
+#[derive(Clone, Copy, Debug, Hash, EnumString, EnumVariantNames, PartialEq, serde::Deserialize, serde::Serialize)]
+#[strum(serialize_all = "snake_case")]
 pub enum PowerState {
     Off,
     On,
@@ -24,8 +27,9 @@ mod tests {
 
     #[test]
     fn test_default_power_state() {
-        let actual = PowerState::default();
-        assert_eq!(actual, PowerState::Off);
-        assert_ne!(actual, PowerState::On)
+        let a = PowerState::default();
+        let b = PowerState::On;
+        assert_eq!(a, PowerState::try_from("off").expect(""));
+        assert_eq!(b, PowerState::try_from("on").expect(""))
     }
 }

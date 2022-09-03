@@ -4,8 +4,10 @@
     Description:
         ... Summary ...
 */
+use strum_macros::{EnumString, EnumVariantNames};
 
-#[derive(Clone, Copy, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Copy, Debug, Hash, EnumString, EnumVariantNames, PartialEq, serde::Deserialize, serde::Serialize)]
+#[strum(serialize_all = "snake_case")]
 pub enum CRUDState {
     Null,
     Create,
@@ -20,9 +22,6 @@ impl CRUDState {
             None => Self::Null,
             Some(v) => v.clone(),
         }
-    }
-    pub fn create(&self) -> Self {
-        Self::Create
     }
     pub fn info() -> crate::Dictionary<Self> {
         let tmp = [
@@ -48,7 +47,7 @@ mod tests {
     #[test]
     fn test_crud_state() {
         let actual = CRUDState::new("create");
-        let expected = CRUDState::Create;
+        let expected = CRUDState::try_from("create").expect("TryFrom Error");
         assert_eq!(actual, expected)
     }
 }
