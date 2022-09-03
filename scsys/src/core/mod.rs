@@ -4,9 +4,10 @@
     Description:
         ... Summary ...
 */
-pub use self::{configs::*, primitives::*, utils::*};
+pub use self::{configs::*, messages::*, primitives::*, utils::*};
 
 mod configs;
+mod messages;
 mod primitives;
 
 mod utils {

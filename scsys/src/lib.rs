@@ -6,18 +6,17 @@
 */
 #[doc(inline)]
 #[cfg(feature = "core")]
-pub use scsys_core::*;
+pub use crate::{actors::*, components::*, core::*, data::*};
 #[cfg(feature = "derive")]
 pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
 
-#[cfg(feature = "bson")]
-pub use bson;
-#[cfg(feature = "chrono")]
-pub use chrono;
-#[cfg(feature = "config")]
-pub use config;
+mod actors;
+mod components;
+mod core;
+mod data;
+
 
 pub mod prelude {
     #[cfg(feature = "bson")]
@@ -29,11 +28,8 @@ pub mod prelude {
 
     #[cfg(feature = "core")]
     pub use super::{
-        clients::*, extract::*, generate::*, handlers::*, loggers::*, models::*, networking::*,
-        providers::*, schemas::*, states::*,
+        actors::{extract::*, generate::*, states::*}, 
+        components::{clients::*, loggers::*, networking::*, providers::*},
+        data::{handlers::*, models::*, schemas::*}
     };
-    #[cfg(feature = "derive")]
-    pub use scsys_derive::*;
-    #[cfg(feature = "macros")]
-    pub use scsys_macros::*;
 }

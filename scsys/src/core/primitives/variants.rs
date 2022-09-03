@@ -10,9 +10,6 @@ use serde::{Deserialize, Serialize};
 pub struct Timestamp(i64);
 
 impl Timestamp {
-    fn constructor(data: i64) -> Self {
-        Self(data)
-    }
     pub fn new(data: i64) -> Self {
         Self(data)
     }
