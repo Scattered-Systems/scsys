@@ -25,6 +25,8 @@ pub mod prelude {
     pub use chrono;
     #[cfg(feature = "config")]
     pub use config;
+    #[cfg(feature = "rand")]
+    pub use rand;
 
     #[cfg(feature = "core")]
     pub use super::{

@@ -1,6 +1,6 @@
 [package]
 authors = [
-    "FL03 <jo3mccain@icloud.com> (https://github.com/FL03)",
+    "FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)",
     "Scattered-Systems (https://github.com/scattered-systems)"
 ]
 categories = []
@@ -11,7 +11,7 @@ keywords = ["derive", "proc-macros"]
 license = "MIT"
 name = "scsys-derive"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.4" # TODO - Update cargo package version
+version = "0.1.5" # TODO - Update cargo package version
 
 [lib]
 proc-macro = true

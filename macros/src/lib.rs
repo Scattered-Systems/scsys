@@ -1,50 +1,38 @@
 /*
     Appellation: scsys-macros <library>
-    Creator: FL03 <jo3mccain@icloud.com>
+    Contributors: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...
 */
+pub use self::{actors::*, components::*, core::*, data::*};
+
+
+mod actors;
+mod components;
+mod core;
+mod data;
 
 #[macro_export]
-macro_rules! printer {
-    ( $( $x: expr ),* ) => {
-        {
-            $(
-                println!("{:#?}", $x);
-            )*
-        }
-    };
-}
+macro_rules! dframe {
+    ( $( ($x:expr, $y:expr) )*, ) => {
+        (
+            let mut tmp = Vec::new();
 
+            $( tmp.push(($x, $y)))*
 
-#[macro_export]
-macro_rules! dict {
-    ( $( ($x:expr, $y:expr) ),* ) => {
-        {
-            let mut tmp = std::collections::BTreeMap::new();
-            $(
-                tmp.insert($x, $y);
-            )*
             tmp
-        }
-    };
+        )
+    }
 }
-
 
 #[cfg(test)]
 mod tests {
-    use super::{dict, printer};
 
     #[test]
-    fn test_dict_macro() {
-        let a = dict![("hello", vec!["world"])];
+    fn test_dframe() {
+        let a = "a".to_string();
         let b = a.clone();
-        assert_eq!(a, b)
-    }
 
-    #[test]
-    fn test_printer_macro() {
-        let res = Some(printer![("hello", vec!["world"])]);
-        assert_eq!(res, Some(()))
+        assert_eq!(a, b)
     }
 }
