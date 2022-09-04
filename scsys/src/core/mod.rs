@@ -4,11 +4,13 @@
     Description:
         ... Summary ...
 */
-pub use self::{configs::*, messages::*, primitives::*, utils::*};
+#[doc(inline)]
+pub use self::{configs::*, messages::*, primitives::*, states::*, utils::*};
 
 mod configs;
 mod messages;
 mod primitives;
+mod states;
 
 mod utils {
     use crate::{ConfigFile, ConfigFileVec};

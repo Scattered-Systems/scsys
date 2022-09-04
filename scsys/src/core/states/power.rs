@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use strum_macros::{EnumString, EnumVariantNames};
+use strum::{EnumString, EnumVariantNames};
 
 /// Outlines a standard collection of power related states
 #[derive(Clone, Copy, Debug, Hash, EnumString, EnumVariantNames, PartialEq, serde::Deserialize, serde::Serialize)]

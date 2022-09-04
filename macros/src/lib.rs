@@ -12,6 +12,21 @@ mod components;
 mod core;
 mod data;
 
+
+
+#[macro_export]
+macro_rules! timestamp {
+    ( $( ($x:expr) )*, ) => {
+        (
+            let mut tmp = Vec::new();
+
+            $( tmp.push(($x, $y)))*
+
+            tmp
+        )
+    }
+}
+
 #[macro_export]
 macro_rules! dframe {
     ( $( ($x:expr, $y:expr) )*, ) => {

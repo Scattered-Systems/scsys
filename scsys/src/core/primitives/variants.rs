@@ -4,7 +4,22 @@
     Description:
         ... Summary ...
 */
+
+use crate::prelude::{chrono, strum::{EnumString, EnumVariantNames}};
 use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Copy, Debug, Hash, EnumString, EnumVariantNames, PartialEq, serde::Deserialize, serde::Serialize)]
+#[strum(serialize_all = "title_case")]
+pub enum Timezones {
+    Cst,
+    Utc,
+}
+
+impl Default for Timezones {
+    fn default() -> Self {
+        Self::Utc
+    }
+}
 
 #[derive(Clone, Debug, Hash, PartialEq, Deserialize, Serialize)]
 pub struct Timestamp(i64);
