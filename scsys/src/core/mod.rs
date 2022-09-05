@@ -5,24 +5,16 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{configs::*, messages::*, primitives::*, states::*, utils::*};
+pub use self::{configs::*, contexts::*, messages::*, primitives::*, states::*, utils::*};
 
 mod configs;
+mod contexts;
 mod messages;
 mod primitives;
 mod states;
 
 mod utils {
-    use crate::{ConfigFile, ConfigFileVec};
-    use glob::glob;
-
-    // Gather configuration files following the specified pattern and collect them into a vector
-    pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
-        glob(pattern)
-            .unwrap()
-            .map(|path| ConfigFile::from(path.unwrap()).required(required))
-            .collect::<Vec<_>>()
-    }
+    
 }
 
 #[cfg(test)]

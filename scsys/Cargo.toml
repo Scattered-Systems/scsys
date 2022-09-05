@@ -41,8 +41,7 @@ log = "0.4.17"
 rand = {optional = true, version = "0.8.5"}
 serde = { features = ["derive"], version = "1.0.144" }
 serde_json = "1.0.85"
-strum = {features = ["derive"], optional = true, version = "0.24.1" }
-# strum_macros = "0.24.1"
+strum = { features = ["derive"], optional = true, version = "0.24.1" }
 tracing = "0.1.36"
 tracing-subscriber = "0.3.15"
 

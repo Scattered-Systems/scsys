@@ -18,13 +18,15 @@ macro_rules! dict {
     };
 }
 
-#[cfg(test)]
-mod tests {
+#[macro_export]
+macro_rules! dframe {
+    ( $( ($x:expr, $y:expr) )*, ) => {
+        (
+            let mut tmp = Vec::new();
 
-    #[test]
-    fn test_dict_macro() {
-        let a = dict![("hello", vec!["world"])];
-        let b = a.clone();
-        assert_eq!(a, b)
+            $( tmp.push(($x, $y)))*
+
+            tmp
+        )
     }
 }

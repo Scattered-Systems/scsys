@@ -4,44 +4,36 @@
     Description:
         ... Summary ...
 */
-pub use self::{actors::*, components::*, core::*, data::*};
+pub use self::utils::*;
 
-
-mod actors;
-mod components;
-mod core;
-mod data;
-
-
+mod utils;
 
 #[macro_export]
-macro_rules! timestamp {
-    ( $( ($x:expr) )*, ) => {
-        (
-            let mut tmp = Vec::new();
-
-            $( tmp.push(($x, $y)))*
-
-            tmp
-        )
-    }
-}
-
-#[macro_export]
-macro_rules! dframe {
+macro_rules! network_addr {
     ( $( ($x:expr, $y:expr) )*, ) => {
         (
             let mut tmp = Vec::new();
 
-            $( tmp.push(($x, $y)))*
+            $( tmp.push(($x)))*
 
             tmp
         )
     }
 }
 
+
 #[cfg(test)]
 mod tests {
+    use super::dict;
+
+    #[test]
+    fn test_dict() {
+        let a = dict!(("a", "b"));
+        let b = std::collections::BTreeMap::from([("a", "b")]);
+
+        assert_eq!(a, b)
+
+    }
 
     #[test]
     fn test_dframe() {

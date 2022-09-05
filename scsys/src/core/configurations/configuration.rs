@@ -1,8 +1,6 @@
 /*
-    Appellation: configs <module>
-    Contributors: FL03 <jo3mccain@icloud.com> (https://github.com)
-    Description:
-        ... Summary ...
+    Appellation: configuration <module>
+    Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
 */
 
 pub trait AppConfig<'a>: Clone + serde::Deserialize<'a> + serde::Serialize {
@@ -16,3 +14,4 @@ pub trait AppConfig<'a>: Clone + serde::Deserialize<'a> + serde::Serialize {
         self.builder().build()?.try_deserialize()
     }
 }
+
