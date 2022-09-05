@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use strum_macros::{EnumString, EnumVariantNames};
+use crate::prelude::strum::{EnumString, EnumVariantNames};
 
 #[derive(Clone, Copy, Debug, Hash, EnumString, EnumVariantNames, PartialEq, serde::Deserialize, serde::Serialize)]
 #[strum(serialize_all = "snake_case")]
@@ -17,20 +17,19 @@ pub enum CRUDState {
 }
 
 impl CRUDState {
-    pub fn new(data: &str) -> Self {
-        match Self::info().get(data) {
+    pub fn new(data: Option<&str>) -> Self {
+        match data {
             None => Self::Null,
-            Some(v) => v.clone(),
+            Some(v) => {
+                match Self::try_from(v) {
+                    Ok(w) => w,
+                    Err(_) => {
+                        println!("No option labeled {}", data.unwrap());
+                        Self::Null
+                }
+                }
+            }
         }
-    }
-    pub fn info() -> crate::Dictionary<Self> {
-        let tmp = [
-            ("create".to_string(), Self::Create),
-            ("read".to_string(), Self::Read),
-            ("update".to_string(), Self::Update),
-            ("delete".to_string(), Self::Delete),
-        ];
-        crate::Dictionary::from(tmp.clone())
     }
 }
 
@@ -45,9 +44,16 @@ mod tests {
     use super::CRUDState;
 
     #[test]
+    fn test_crud_state_default() {
+        let actual = CRUDState::default();
+        let expected = CRUDState::Null;
+        assert_eq!(actual, expected)
+    }
+
+    #[test]
     fn test_crud_state() {
-        let actual = CRUDState::new("create");
-        let expected = CRUDState::try_from("create").expect("TryFrom Error");
+        let actual = CRUDState::new(Some("create"));
+        let expected = CRUDState::Create;
         assert_eq!(actual, expected)
     }
 }
