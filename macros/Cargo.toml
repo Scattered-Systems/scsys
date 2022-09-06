@@ -1,24 +1,28 @@
 [package]
 authors = [
-    "FL03 <jo3mccain@icloud.com> (https://github.com/FL03)",
+    "FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)",
     "Scattered-Systems (https://github.com/scattered-systems)"
 ]
 categories = []
-description = "Procedural macros created in support of scsys"
+description = "This crate is designed to further enable developers with a suite of useful macros written in Rust"
 edition = "2021"
 homepage = "https://scattered-systems.github.io/scsys"
 keywords = ["proc-macros", "scsys"]
 license = "MIT"
 name = "scsys-macros"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.4" # TODO - Update cargo package version
+version = "0.1.5" # TODO - Update cargo package version
 
 [lib]
+crate-type = ["cdylib", "rlib"]
 test = true
 
 [dependencies]
+bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" }
 proc-macro2 = "1.0.43"
 quote = "1.0.21"
+strum = "0.24.1"
+strum_macros = "0.24.3"
 syn = { features = ["full"], version = "1.0.99" }
 
 [dev-dependencies.scsys]

@@ -1,50 +1,43 @@
 /*
     Appellation: scsys-macros <library>
-    Creator: FL03 <jo3mccain@icloud.com>
+    Contributors: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...
 */
+pub use self::utils::*;
+
+mod utils;
 
 #[macro_export]
-macro_rules! printer {
-    ( $( $x: expr ),* ) => {
-        {
-            $(
-                println!("{:#?}", $x);
-            )*
-        }
-    };
-}
+macro_rules! network_addr {
+    ( $( ($x:expr, $y:expr) )*, ) => {
+        (
+            let mut tmp = Vec::new();
 
+            $( tmp.push(($x)))*
 
-#[macro_export]
-macro_rules! dict {
-    ( $( ($x:expr, $y:expr) ),* ) => {
-        {
-            let mut tmp = std::collections::BTreeMap::new();
-            $(
-                tmp.insert($x, $y);
-            )*
             tmp
-        }
-    };
+        )
+    }
 }
-
 
 #[cfg(test)]
 mod tests {
-    use super::{dict, printer};
+    use super::dict;
 
     #[test]
-    fn test_dict_macro() {
-        let a = dict![("hello", vec!["world"])];
-        let b = a.clone();
+    fn test_dict() {
+        let a = dict!(("a", "b"));
+        let b = std::collections::BTreeMap::from([("a", "b")]);
+
         assert_eq!(a, b)
     }
 
     #[test]
-    fn test_printer_macro() {
-        let res = Some(printer![("hello", vec!["world"])]);
-        assert_eq!(res, Some(()))
+    fn test_dframe() {
+        let a = "a".to_string();
+        let b = a.clone();
+
+        assert_eq!(a, b)
     }
 }

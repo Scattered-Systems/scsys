@@ -7,28 +7,25 @@ homepage = "https://scattered-systems.github.io/scsys/"
 keywords = ["blockchain", "primitives", "scsys"]
 license = "MIT"
 name = "scsys"
-readme = "README.md"
+readme = "https://gitlab.com/scsys/scsys/#README.md"
 repository = "https://gitlab.com/scsys/scsys"
-version = "0.1.14" # TODO: Update the package version
+version = "0.1.15" # TODO: Update the package version
 
 [features]
-default = [
-    "core"
-]
-full = [
-    "core",
-    "external",
-    "macros"
-]
+default = ["core"]
+full = ["core", "derive", "macros"]
 
 core = ["external"]
 derive = ["scsys-derive"]
 macros = ["scsys-macros"]
 
-external = ["bson", "chrono", "config"]
+external = ["bson", "chrono", "config", "extras"]
+extras = ["rand", "structs"]
 bson = ["bson/default", "bson/chrono-0_4", "bson/serde_with", "bson/uuid-0_8"]
 chrono = ["chrono/default"]
 config = ["config/default"]
+rand = ["rand/default"]
+structs = ["strum/derive"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -41,23 +38,22 @@ config =  { optional = true, version = "0.13.2" }
 futures = "0.3.24"
 glob = "0.3.0"
 log = "0.4.17"
-rand = "0.8.5"
+rand = {optional = true, version = "0.8.5"}
 serde = { features = ["derive"], version = "1.0.144" }
 serde_json = "1.0.85"
-strum = {features = ["derive"], version = "0.24.1" }
-strum_macros = "0.24.1"
+strum = { features = ["derive"], optional = true, version = "0.24.1" }
 tracing = "0.1.36"
 tracing-subscriber = "0.3.15"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.4" # TODO: Update feature versioning
+version = "0.1.5" # TODO: Update feature versioning
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.4" # TODO: Update feature versioning
+version = "0.1.5" # TODO: Update feature versioning
 
 [package.metadata.docs.rs]
 all-features = true

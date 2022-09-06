@@ -35,3 +35,16 @@ where
         Self::generate()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::DigitGenerator;
+
+    #[test]
+    fn test_generator_num() {
+        assert_ne!(
+            DigitGenerator::<f64>::default(),
+            DigitGenerator::<f64>::default()
+        )
+    }
+}

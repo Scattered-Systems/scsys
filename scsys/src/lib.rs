@@ -17,7 +17,6 @@ mod components;
 mod core;
 mod data;
 
-
 pub mod prelude {
     #[cfg(feature = "bson")]
     pub use bson;
@@ -25,11 +24,16 @@ pub mod prelude {
     pub use chrono;
     #[cfg(feature = "config")]
     pub use config;
+    #[cfg(feature = "rand")]
+    pub use rand;
+
+    #[cfg(feature = "extras")]
+    pub use strum;
 
     #[cfg(feature = "core")]
     pub use super::{
-        actors::{extract::*, generate::*, states::*}, 
+        actors::{extract::*, generate::*},
         components::{clients::*, loggers::*, networking::*, providers::*},
-        data::{handlers::*, models::*, schemas::*}
+        data::{handlers::*, models::*, schemas::*},
     };
 }
