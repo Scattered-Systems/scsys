@@ -2,16 +2,10 @@ name: Code Analysis
 
 on:
   push:
-    branches:
-      - master
     tags:
-      - latest
       - v*.*.*
   pull_request:
-    branches:
-      - master
     tags:
-      - latest
       - v*.*.*
 
 jobs:
