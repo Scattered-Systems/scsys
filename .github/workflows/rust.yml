@@ -2,13 +2,9 @@ name: Rust
 
 on:
   push:
-    branches:
-      - latest
     tags:
       - v*.*.*
   pull_request:
-    branches:
-      - latest
     tags:
       - v*.*.*
 
