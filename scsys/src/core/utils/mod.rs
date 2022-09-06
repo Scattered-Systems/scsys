@@ -4,7 +4,6 @@
     Description:
         ... Summary ...
 */
-pub use self::{config::*, time::*};
+pub use self::time::*;
 
-mod config;
 mod time;
