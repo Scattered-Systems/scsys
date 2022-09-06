@@ -48,12 +48,12 @@ tracing-subscriber = "0.3.15"
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.5" # TODO: Update feature versioning
+version = "0.1.6" # TODO: Update feature versioning
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.5" # TODO: Update feature versioning
+version = "0.1.6" # TODO: Update feature versioning
 
 [package.metadata.docs.rs]
 all-features = true
