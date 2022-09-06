@@ -9,7 +9,7 @@ license = "MIT"
 name = "scsys"
 readme = "README.md"
 repository = "https://gitlab.com/scsys/scsys"
-version = "0.1.15" # TODO: Update the package version
+version = "0.1.16" # TODO: Update the package version
 
 [features]
 default = ["core"]
