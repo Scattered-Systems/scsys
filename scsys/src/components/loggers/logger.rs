@@ -7,7 +7,6 @@
 use serde;
 use tracing_subscriber;
 
-
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Logger {
     pub level: String,

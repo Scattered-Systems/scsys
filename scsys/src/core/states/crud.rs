@@ -6,7 +6,17 @@
 */
 use crate::prelude::strum::{EnumString, EnumVariantNames};
 
-#[derive(Clone, Copy, Debug, Hash, EnumString, EnumVariantNames, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Hash,
+    EnumString,
+    EnumVariantNames,
+    PartialEq,
+    serde::Deserialize,
+    serde::Serialize,
+)]
 #[strum(serialize_all = "snake_case")]
 pub enum CRUDState {
     Null,
@@ -20,15 +30,13 @@ impl CRUDState {
     pub fn new(data: Option<&str>) -> Self {
         match data {
             None => Self::Null,
-            Some(v) => {
-                match Self::try_from(v) {
-                    Ok(w) => w,
-                    Err(_) => {
-                        println!("No option labeled {}", data.unwrap());
-                        Self::Null
+            Some(v) => match Self::try_from(v) {
+                Ok(w) => w,
+                Err(_) => {
+                    println!("No option labeled {}", data.unwrap());
+                    Self::Null
                 }
-                }
-            }
+            },
         }
     }
 }

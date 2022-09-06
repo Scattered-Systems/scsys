@@ -5,7 +5,6 @@
         ... Summary ...
 */
 
-
 pub trait ClientSpec {
     fn architecture(&self) -> String;
 }

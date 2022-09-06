@@ -7,8 +7,6 @@
 
 use crate::Timestamp;
 
-
-
 /// Implement the standard structure of a state
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct State<S> {

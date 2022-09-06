@@ -21,7 +21,6 @@ macro_rules! network_addr {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::dict;
@@ -32,7 +31,6 @@ mod tests {
         let b = std::collections::BTreeMap::from([("a", "b")]);
 
         assert_eq!(a, b)
-
     }
 
     #[test]

@@ -7,7 +7,17 @@
 use strum::{EnumString, EnumVariantNames};
 
 /// Outlines a standard collection of power related states
-#[derive(Clone, Copy, Debug, Hash, EnumString, EnumVariantNames, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Hash,
+    EnumString,
+    EnumVariantNames,
+    PartialEq,
+    serde::Deserialize,
+    serde::Serialize,
+)]
 #[strum(serialize_all = "snake_case")]
 pub enum PowerState {
     Off,

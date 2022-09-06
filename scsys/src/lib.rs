@@ -17,7 +17,6 @@ mod components;
 mod core;
 mod data;
 
-
 pub mod prelude {
     #[cfg(feature = "bson")]
     pub use bson;
@@ -33,8 +32,8 @@ pub mod prelude {
 
     #[cfg(feature = "core")]
     pub use super::{
-        actors::{extract::*, generate::*}, 
+        actors::{extract::*, generate::*},
         components::{clients::*, loggers::*, networking::*, providers::*},
-        data::{handlers::*, models::*, schemas::*}
+        data::{handlers::*, models::*, schemas::*},
     };
 }

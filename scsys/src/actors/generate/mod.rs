@@ -6,10 +6,10 @@
 */
 pub use self::{alphabet::*, digits::*, utils::*};
 
-pub(crate) mod alphabet;
-pub(crate) mod digits;
+mod alphabet;
+mod digits;
 
-pub(crate) mod utils {
+mod utils {
     use rand::{
         distributions::{Alphanumeric, Standard},
         prelude::Distribution,
@@ -37,19 +37,6 @@ pub(crate) mod utils {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_generator_num() {
-        assert_ne!(
-            DigitGenerator::<f64>::default(),
-            DigitGenerator::<f64>::default()
-        )
-    }
-
-    #[test]
-    fn test_generator_str() {
-        assert_ne!(StringGenerator::default(), StringGenerator::default())
-    }
 
     #[test]
     fn test_random_number() {

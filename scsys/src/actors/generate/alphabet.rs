@@ -4,26 +4,34 @@
     Description:
         ... Summary ...
 */
+use crate::{generate::generate_random_string, Timestamp};
+
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct StringGenerator {
     pub data: String,
-    pub timestamp: i64,
+    pub timestamp: Timestamp,
 }
 
 impl StringGenerator {
-    fn constructor(data: String, timestamp: i64) -> Self {
+    pub fn new(len: usize) -> Self {
+        let data = generate_random_string(len);
+        let timestamp = Timestamp::default();
         Self { data, timestamp }
-    }
-    pub fn new(data: String) -> Self {
-        Self::constructor(data, crate::Temporal::now().timestamp())
-    }
-    pub fn generate(len: usize) -> crate::BoxResult<Self> {
-        Ok(Self::new(crate::generate::generate_random_string(len)))
     }
 }
 
 impl Default for StringGenerator {
     fn default() -> Self {
-        Self::generate(12).ok().unwrap()
+        Self::new(12)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::StringGenerator;
+
+    #[test]
+    fn test_string_generator_default() {
+        assert_ne!(StringGenerator::default(), StringGenerator::default())
     }
 }

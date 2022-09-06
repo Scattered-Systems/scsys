@@ -6,10 +6,13 @@
 */
 use crate::Timestamp;
 
-
 pub trait IMessage {
     fn message<T: std::string::ToString>(&self, data: T) -> String {
-        format!("Timestamp: {:?}\nMessage:\n{}", self.timestamp(), data.to_string())
+        format!(
+            "Timestamp: {:?}\nMessage:\n{}",
+            self.timestamp(),
+            data.to_string()
+        )
     }
     fn timestamp(&self) -> Timestamp {
         Timestamp::default()

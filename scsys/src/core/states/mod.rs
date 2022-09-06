@@ -20,4 +20,3 @@ pub trait Stateful<Cnt>: Clone + PartialEq + std::fmt::Debug + std::hash::Hash {
         crate::Timestamp::default()
     }
 }
-

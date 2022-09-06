@@ -3,6 +3,6 @@
     Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
 */
 
-pub use self::configuration::*;
+pub use self::configure::{AppConfig, Configuration};
 
-mod configuration;
+mod configure;
