@@ -14,7 +14,7 @@ pub struct Application {
     pub id: Option<Id>,
     pub key: Option<String>,
     pub label: String,
-    pub mode: super
+    pub mode: ApplicationMode,
     pub name: String,
     pub secret: Option<String>
 }
