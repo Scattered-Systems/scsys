@@ -27,3 +27,9 @@ pub enum Id {
     Std(String),
     Null,
 }
+
+impl Default for Id {
+    fn default() -> Self {
+        Self::Obj(BsonOid::new())
+    }
+}
