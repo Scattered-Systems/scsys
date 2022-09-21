@@ -22,8 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Test (macros)
-        run: cargo test --color always --package scsys-macros --verbose
       - name: Publish (derive)
         run: cargo publish --package scsys-derive --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
       - name: Publish (macros)
