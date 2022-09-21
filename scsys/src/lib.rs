@@ -27,13 +27,11 @@ pub mod prelude {
     #[cfg(feature = "rand")]
     pub use rand;
 
-    #[cfg(feature = "extras")]
-    pub use strum;
 
     #[cfg(feature = "core")]
     pub use super::{
         actors::{extract::*, generate::*},
-        components::{clients::*, loggers::*, networking::*, providers::*},
+        components::{accounts::*, apps::*, clients::*, parameters::*},
         data::{handlers::*, models::*, schemas::*},
     };
 }

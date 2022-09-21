@@ -21,8 +21,6 @@ test = false
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" }
 proc-macro2 = "1.0.43"
 quote = "1.0.21"
-strum = "0.24.1"
-strum_macros = "0.24.3"
 syn = { features = ["full"], version = "1.0.99" }
 
 [dev-dependencies.scsys]
