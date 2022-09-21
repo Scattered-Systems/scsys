@@ -3,7 +3,10 @@
     Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
 */
 
-pub use self::{configure::{AppConfig, Configuration}, utils::collect_config_files};
+pub use self::{
+    configure::{AppConfig, Configuration},
+    utils::collect_config_files,
+};
 
 mod configure;
 

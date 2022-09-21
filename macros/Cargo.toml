@@ -15,7 +15,7 @@ version = "0.1.6" # TODO - Update cargo package version
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-test = true
+test = false
 
 [dependencies]
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" }

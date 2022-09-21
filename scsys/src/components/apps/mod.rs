@@ -11,13 +11,22 @@ mod application;
 use crate::prelude::strum::{EnumString, EnumVariantNames};
 use std::string::ToString;
 
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize, EnumString, EnumVariantNames)]
+#[derive(
+Clone,
+Debug,
+Hash,
+PartialEq,
+serde::Deserialize,
+serde::Serialize,
+EnumString,
+EnumVariantNames,
+)]
 #[strum(serialize_all = "snake_case")]
 pub enum ApplicationMode {
     Development,
     Staging,
     Production,
-    Custom(String)
+    Custom(String),
 }
 
 impl Default for ApplicationMode {

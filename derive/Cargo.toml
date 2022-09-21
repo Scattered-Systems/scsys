@@ -15,6 +15,7 @@ version = "0.1.6" # TODO - Update cargo package version
 
 [lib]
 proc-macro = true
+test = false
 
 [dependencies]
 proc-macro2 = "1.0.43"

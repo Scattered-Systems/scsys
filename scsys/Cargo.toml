@@ -20,28 +20,31 @@ derive = ["scsys-derive"]
 macros = ["scsys-macros"]
 
 external = ["bson", "chrono", "config", "extras"]
-extras = ["rand", "structs"]
+extras = ["rand"]
 bson = ["bson/default", "bson/chrono-0_4", "bson/serde_with", "bson/uuid-0_8"]
 chrono = ["chrono/default"]
 config = ["config/default"]
 rand = ["rand/default"]
-structs = ["strum/derive"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 test = true
 
+[[test]]
+name = "macros"
+path = "tests/macros.rs"
+
 [dependencies]
-bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional=true, version = "2.4.0" }
+bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, version = "2.4.0" }
 chrono = { optional = true, version = "0.4.22" }
-config =  { optional = true, version = "0.13.2" }
+config = { optional = true, version = "0.13.2" }
 futures = "0.3.24"
 glob = "0.3.0"
 log = "0.4.17"
-rand = {optional = true, version = "0.8.5"}
+rand = { optional = true, version = "0.8.5" }
 serde = { features = ["derive"], version = "1.0.144" }
 serde_json = "1.0.85"
-strum = { features = ["derive"], optional = true, version = "0.24.1" }
+strum = { features = ["derive"], version = "0.24.1" }
 tracing = "0.1.36"
 tracing-subscriber = "0.3.15"
 

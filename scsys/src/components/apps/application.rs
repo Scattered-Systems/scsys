@@ -4,9 +4,8 @@
     Description:
         ... Summary ...
 */
-use crate::Id;
 use super::ApplicationMode;
-
+use crate::Id;
 
 #[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Application {
@@ -16,12 +15,28 @@ pub struct Application {
     pub label: String,
     pub mode: ApplicationMode,
     pub name: String,
-    pub secret: Option<String>
+    pub secret: Option<String>,
 }
 
 impl Application {
-    pub fn new(homepage: Option<String>, id: Option<Id>, key: Option<String>, label: String, mode: ApplicationMode, name: String, secret: Option<String>) -> Self {
-        Self { homepage, id, key, label, mode, name, secret }
+    pub fn new(
+        homepage: Option<String>,
+        id: Option<Id>,
+        key: Option<String>,
+        label: String,
+        mode: ApplicationMode,
+        name: String,
+        secret: Option<String>,
+    ) -> Self {
+        Self {
+            homepage,
+            id,
+            key,
+            label,
+            mode,
+            name,
+            secret,
+        }
     }
     pub fn slug(&self) -> String {
         self.name.clone().to_lowercase()
@@ -33,7 +48,15 @@ impl Application {
 
 impl Default for Application {
     fn default() -> Self {
-        Self::new(None, Some(Id::default()), None, String::new(), ApplicationMode::default(), String::new(), None)
+        Self::new(
+            None,
+            Some(Id::default()),
+            None,
+            String::new(),
+            ApplicationMode::default(),
+            String::new(),
+            None,
+        )
     }
 }
 
