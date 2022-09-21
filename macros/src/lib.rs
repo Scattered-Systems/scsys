@@ -9,6 +9,17 @@ pub use self::utils::*;
 mod utils;
 
 #[macro_export]
+macro_rules! extend_path {
+    (
+        $(
+            $x:expr; [ $( $y:expr ),* ]
+        );*
+    ) => {
+        vec![$($( format!("{}/{}", $x, $y) ),*),*]
+    }
+}
+
+#[macro_export]
 macro_rules! network_addr {
     ( $( ($x:expr, $y:expr) )*, ) => {
         (
