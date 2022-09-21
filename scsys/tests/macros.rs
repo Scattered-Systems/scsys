@@ -7,7 +7,7 @@
 
 #[cfg(test)]
 mod tests {
-    use scsys_macros::extend_path;
+    use scsys::extend_path;
 
     #[test]
     fn test_extend_path() {
