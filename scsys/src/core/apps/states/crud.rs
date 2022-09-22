@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::prelude::strum::{EnumString, EnumVariantNames};
+use strum::{EnumString, EnumVariantNames};
 
 #[derive(
     Clone,
