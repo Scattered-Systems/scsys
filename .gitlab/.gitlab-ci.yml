@@ -2,12 +2,21 @@
   stage: testing
   script:
     - cargo test --all-features --release --verbose --jobs 1
-  
+
+.cargo_publish_template: &cargo_publish
+  stage: deploy
+  script:
+    - cargo publish -p scsys-derive --token $CARGO_REGISTRY_TOKEN
+    - cargo publish -p scsys-macros --token $CARGO_REGISTRY_TOKEN
+    - cargo publish -p scsys --token $CARGO_REGISTRY_TOKEN
+
 stages:
   - testing
+  - deploy
 
 stable:cargo:
   image: jo3mccain/rusty:latest
   rules:
     - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/'
   <<: *cargo_test
+  <<: *cargo_publish
