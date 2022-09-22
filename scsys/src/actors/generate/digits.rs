@@ -6,7 +6,7 @@
 */
 use rand::{distributions, prelude::Distribution};
 
-#[derive(Clone, Copy, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct DigitGenerator<T>(T);
 
 impl<T> DigitGenerator<T> {

@@ -4,19 +4,12 @@
     Description:
         ... Summary ...
 */
+use serde::{Deserialize, Serialize};
 use strum::{EnumString, EnumVariantNames};
 
-/// Outlines a standard collection of power related states
+/// Implements a collection of power-related states
 #[derive(
-    Clone,
-    Copy,
-    Debug,
-    Hash,
-    EnumString,
-    EnumVariantNames,
-    PartialEq,
-    serde::Deserialize,
-    serde::Serialize,
+    Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum PowerState {

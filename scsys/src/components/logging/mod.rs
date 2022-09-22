@@ -1,10 +1,10 @@
 /*
-    Appellation: utils <module>
+    Appellation: logging <module>
     Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
     Description:
         ... Summary ...
 */
-pub use self::{cnf::*, time::*};
+#[doc(inline)]
+pub use self::logger::Logger;
 
-mod cnf;
-mod time;
+mod logger;

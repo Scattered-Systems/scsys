@@ -4,18 +4,11 @@
     Description:
         ... Summary ...
 */
-use crate::prelude::strum::{EnumString, EnumVariantNames};
+use serde::{Deserialize, Serialize};
+use strum::{EnumString, EnumVariantNames};
 
 #[derive(
-    Clone,
-    Copy,
-    Debug,
-    Hash,
-    EnumString,
-    EnumVariantNames,
-    PartialEq,
-    serde::Deserialize,
-    serde::Serialize,
+    Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum CRUDState {

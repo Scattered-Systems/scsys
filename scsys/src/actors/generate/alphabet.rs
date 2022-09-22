@@ -6,7 +6,7 @@
 */
 use crate::{generate::generate_random_string, Timestamp};
 
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct StringGenerator {
     pub data: String,
     pub timestamp: Timestamp,

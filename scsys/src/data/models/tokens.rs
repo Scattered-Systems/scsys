@@ -5,7 +5,7 @@
         ... Summary ...
 */
 
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Tokens {
     pub access_token: String,
     pub token_type: String,

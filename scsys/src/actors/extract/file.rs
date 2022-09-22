@@ -13,7 +13,7 @@ pub trait FileInterface: Clone + std::fmt::Debug + std::hash::Hash + PartialEq {
             .read_to_string(&mut buffer)
             .expect("IOError");
 
-        buffer.split("\n").map(|s: &str| s.to_string()).collect()
+        buffer.split('\n').map(|s: &str| s.to_string()).collect()
     }
     fn filepath(&self) -> Box<std::path::Path>;
     fn open_file(&self) -> std::fs::File {
@@ -25,7 +25,7 @@ pub trait FileInterface: Clone + std::fmt::Debug + std::hash::Hash + PartialEq {
 }
 
 /// Extract the contents of a file
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct FileExtractor {
     pub filepath: String,
     pub data: Vec<String>,

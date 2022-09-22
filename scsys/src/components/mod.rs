@@ -4,10 +4,12 @@
     Description:
         ... Summary ...
 */
+pub use self::component::*;
 
 pub mod accounts;
-pub mod apps;
 pub mod clients;
-pub mod loggers;
+pub mod logging;
 pub mod networking;
 pub mod providers;
+
+mod component;

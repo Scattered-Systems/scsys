@@ -4,11 +4,10 @@
     Description:
         ... Summary ...
 */
-
 use crate::Timestamp;
 
 /// Implement the standard structure of a state
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct State<S> {
     pub message: String,
     pub state: S,

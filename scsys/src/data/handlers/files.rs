@@ -4,7 +4,8 @@
     Description:
         ... Summary ...
 */
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+
+#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct FileHandler {
     pub path: String,
 }

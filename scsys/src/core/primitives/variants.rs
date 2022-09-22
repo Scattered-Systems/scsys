@@ -4,21 +4,12 @@
     Description:
         ... Summary ...
 */
-use crate::{
-    prelude::strum::{EnumString, EnumVariantNames},
-    BsonOid,
-};
-use std::string::ToString;
+use crate::BsonOid;
+use serde::{Deserialize, Serialize};
+use strum::{EnumString, EnumVariantNames};
 
 #[derive(
-    Clone,
-    Debug,
-    Hash,
-    PartialEq,
-    serde::Deserialize,
-    serde::Serialize,
-    EnumString,
-    EnumVariantNames,
+    Clone, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "title_case")]
 pub enum Id {
