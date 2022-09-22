@@ -5,4 +5,5 @@
         ... Summary ...
 */
 
+pub const SCASE: &str = "snake_case";
 pub const DEFAULT_HTTP_PORT: u16 = 8080;

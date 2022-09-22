@@ -5,9 +5,11 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{apps::*, messages::*, primitives::*, utils::*};
+pub use self::{apps::*, errors::*, events::Event, messages::*, primitives::*, utils::*};
 
 mod apps;
+mod errors;
+mod events;
 mod messages;
 mod primitives;
 mod utils;

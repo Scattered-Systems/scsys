@@ -1,5 +1,5 @@
 /*
-    Appellation: power <module>
+    Appellation: errors <module>
     Creator: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...
@@ -7,20 +7,19 @@
 use serde::{Deserialize, Serialize};
 use strum::{EnumString, EnumVariantNames};
 
-/// Implements a collection of power-related states
 #[derive(
     Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
-pub enum PowerState {
-    Off,
-    On,
-    Transition,
+pub enum Error {
+    AsyncError,
+    ConnectionError,
+    Default,
 }
 
-impl Default for PowerState {
+impl Default for Error {
     fn default() -> Self {
-        Self::Off
+        Self::Default
     }
 }
 
@@ -29,10 +28,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_default_power_state() {
-        let a = PowerState::default();
-        let b = PowerState::On;
-        assert_eq!(a, PowerState::try_from("off").expect(""));
-        assert_eq!(b, PowerState::try_from("on").expect(""))
+    fn test_errors() {
+        let actual = Error::default();
+        let expected = Error::try_from("default").ok().unwrap();
+        assert_eq!(actual, expected)
     }
 }

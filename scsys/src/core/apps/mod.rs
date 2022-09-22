@@ -16,7 +16,7 @@ pub(crate) mod modes {
     use strum::{EnumString, EnumVariantNames};
 
     #[derive(
-    Clone, Debug, Hash, PartialEq, Deserialize, Serialize, EnumString, EnumVariantNames,
+        Clone, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
     )]
     #[strum(serialize_all = "snake_case")]
     pub enum ApplicationMode {

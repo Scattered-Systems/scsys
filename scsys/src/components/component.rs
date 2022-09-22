@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 use strum::{EnumString, EnumVariantNames};
 
 #[derive(
-Clone, Copy, Debug, Hash, PartialEq, EnumString, EnumVariantNames, Deserialize, Serialize,
+    Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum ComponentAct {

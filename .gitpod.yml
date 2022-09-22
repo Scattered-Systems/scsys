@@ -1,5 +1,0 @@
-tasks:
-  - init: cargo build --workspace
-    command: cargo test --all-features --workspace
-
-

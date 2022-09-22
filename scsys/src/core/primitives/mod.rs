@@ -5,9 +5,8 @@
         This module is dedicated to developing a set of primitives to be used throughout our
         ecosystem
 */
-pub use self::{constants::*, errors::*, types::*, variants::*};
+pub use self::{constants::*, types::*, variants::*};
 
 mod constants;
-mod errors;
 mod types;
 mod variants;

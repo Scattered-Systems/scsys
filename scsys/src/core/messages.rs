@@ -20,7 +20,7 @@ pub trait IMessage {
 }
 
 /// Implements a simple message structure
-#[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Message {
     pub id: BsonOid,
     pub message: String,
@@ -35,7 +35,7 @@ impl Message {
             timestamp: Timestamp::default(),
         }
     }
-    pub fn from_str<T: std::string::ToString>(message: T) -> Self {
+    pub fn from<T: std::string::ToString>(message: T) -> Self {
         Self::new(message.to_string())
     }
 }
@@ -58,9 +58,9 @@ mod tests {
 
     #[test]
     fn test_default_message() {
-        let a = Message::from_str("Test message");
+        let a = Message::from("Test message");
         let b = Message::default();
         assert_ne!(a, b.clone());
-        assert_eq!(Message::from_str("").message, b.message)
+        assert_eq!(Message::from("").message, b.message)
     }
 }
