@@ -25,4 +25,3 @@ stages:
 stable:cargo:
   image: rustdocker/rust:stable
   <<: *cargo_test
-  <<: *cargo-deploy
