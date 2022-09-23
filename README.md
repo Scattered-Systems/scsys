@@ -1,7 +1,6 @@
 # scsys
 
-[![Code Analysis](https://github.com/scattered-systems/scsys/actions/workflows/rust-clippy.yml/badge.svg)](https://github.com/scattered-systems/scsys/actions/workflows/rust-clippy.yml)
-[![Rust](https://github.com/scattered-systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/scattered-systems/scsys/actions/workflows/rust.yml)
+[![GitLab](https://gitlab.com/scsys/crates/scsys/badges/master/pipeline.svg)](https://gitlab.com/scsys/crates/scsys/-/commits/master)
 
 ## About
 
