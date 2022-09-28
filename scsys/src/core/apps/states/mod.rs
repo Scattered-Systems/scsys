@@ -4,19 +4,13 @@
     Description:
         ... Summary ...
 */
-pub use self::{crud::*, power::*, state::*};
+pub use self::{crud::CRUDState, power::PowerState, state::State};
 
 mod crud;
 mod power;
 mod state;
 
-pub trait Stateful<Cnt>: Clone + PartialEq + std::fmt::Debug + std::hash::Hash {
-    fn active(&self) -> bool;
-    fn context(&self, state: String) -> Cnt;
-    fn message(&self, message: String) -> String {
-        format!("State (message:{:?}\n)", message)
-    }
-    fn timestamp(&self) -> crate::Timestamp {
-        crate::Timestamp::default()
-    }
+
+pub trait Stateful<S> {
+    fn state(&self) -> S where Self: Sized;
 }

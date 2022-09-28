@@ -8,6 +8,7 @@
 pub use self::{apps::*, errors::*, events::Event, messages::*, primitives::*, utils::*};
 
 mod apps;
+pub mod crypto;
 mod errors;
 mod events;
 mod messages;

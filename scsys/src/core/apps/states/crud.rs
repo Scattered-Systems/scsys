@@ -8,11 +8,11 @@ use serde::{Deserialize, Serialize};
 use strum::{EnumString, EnumVariantNames};
 
 #[derive(
-    Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
+    Clone, Copy, Debug, Default, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum CRUDState {
-    Null,
+    #[default]
     Create,
     Read,
     Update,
@@ -20,23 +20,11 @@ pub enum CRUDState {
 }
 
 impl CRUDState {
-    pub fn new(data: Option<&str>) -> Self {
-        match data {
-            None => Self::Null,
-            Some(v) => match Self::try_from(v) {
-                Ok(w) => w,
-                Err(_) => {
-                    println!("No option labeled {}", data.unwrap());
-                    Self::Null
-                }
-            },
+    pub fn new(data: &str) -> Self {
+        match Self::try_from(data) {
+            Ok(v) => v,
+            Err(_) => panic!("{:?}", crate::Error::default())
         }
-    }
-}
-
-impl Default for CRUDState {
-    fn default() -> Self {
-        Self::Null
     }
 }
 
@@ -47,13 +35,13 @@ mod tests {
     #[test]
     fn test_crud_state_default() {
         let actual = CRUDState::default();
-        let expected = CRUDState::Null;
+        let expected = CRUDState::Create;
         assert_eq!(actual, expected)
     }
 
     #[test]
     fn test_crud_state() {
-        let actual = CRUDState::new(Some("create"));
+        let actual = CRUDState::new("create");
         let expected = CRUDState::Create;
         assert_eq!(actual, expected)
     }

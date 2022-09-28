@@ -9,19 +9,14 @@ use strum::{EnumString, EnumVariantNames};
 
 /// Implements a collection of power-related states
 #[derive(
-    Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
+    Clone, Copy, Debug, Default, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum PowerState {
+    #[default]
     Off,
     On,
     Transition,
-}
-
-impl Default for PowerState {
-    fn default() -> Self {
-        Self::Off
-    }
 }
 
 #[cfg(test)]
