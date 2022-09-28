@@ -8,19 +8,15 @@ use serde::{Deserialize, Serialize};
 use strum::{EnumString, EnumVariantNames};
 
 #[derive(
-    Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
+    Clone, Debug, Default, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum Error {
     AsyncError,
     ConnectionError,
+    #[default]
     Default,
-}
-
-impl Default for Error {
-    fn default() -> Self {
-        Self::Default
-    }
+    Generic(String)
 }
 
 #[cfg(test)]
