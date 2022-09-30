@@ -10,7 +10,8 @@ mod crud;
 mod power;
 mod state;
 
-
 pub trait Stateful<S> {
-    fn state(&self) -> S where Self: Sized;
+    fn state(&self) -> S
+    where
+        Self: Sized;
 }

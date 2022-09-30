@@ -16,7 +16,7 @@ pub enum Error {
     ConnectionError,
     #[default]
     Default,
-    Generic(String)
+    Generic(String),
 }
 
 #[cfg(test)]

@@ -6,15 +6,38 @@
 */
 use super::{H256Hash, Hashable};
 use rand::Rng;
+use ring::digest::digest;
 use serde::{Deserialize, Serialize};
 
 /// A SHA256 hash.
 #[derive(Clone, Copy, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct H256(pub H256Hash); // big endian u256
 
+impl H256 {
+    pub fn random() -> Self {
+        generate_random_hash()
+    }
+}
+
 impl Hashable for H256 {
     fn hash(&self) -> H256 {
-        ring::digest::digest(&ring::digest::SHA256, &self.0).into()
+        digest(&ring::digest::SHA256, &self.0).into()
+    }
+}
+
+impl std::ops::Div<f64> for H256 {
+    type Output = Self;
+
+    fn div(self, rhs: f64) -> Self {
+        hash_divide_by(&self, rhs)
+    }
+}
+
+impl std::ops::Mul<f64> for H256 {
+    type Output = Self;
+
+    fn mul(self, rhs: f64) -> Self {
+        hash_multiply_by(&self, rhs)
     }
 }
 

@@ -8,16 +8,11 @@
 
 #[doc(inline)]
 #[cfg(feature = "core")]
-pub use crate::{actors::*, components::*, core::*, data::*};
+pub use scsys_core as core;
 #[cfg(feature = "derive")]
 pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
-
-mod actors;
-mod components;
-mod core;
-mod data;
 
 pub mod prelude {
     #[cfg(feature = "bson")]
@@ -30,14 +25,15 @@ pub mod prelude {
     pub use rand;
 
     #[cfg(feature = "core")]
-    pub use super::{
-        actors::{extract::*, generate::*},
-        components::{
-            accounts::*,
-            logging::Logger,
-            networking::{ReverseProxy, Server},
-            providers::*,
-        },
-        data::{handlers::*, models::*, schemas::*},
+    pub use super::core::{
+        accounts::*,
+        extract::*,
+        generate::*,
+        handlers::*,
+        logging::Logger,
+        models::*,
+        networking::{ReverseProxy, Server},
+        providers::*,
+        schemas::*,
     };
 }

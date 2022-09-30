@@ -8,7 +8,17 @@ use serde::{Deserialize, Serialize};
 use strum::{EnumString, EnumVariantNames};
 
 #[derive(
-    Clone, Copy, Debug, Default, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Deserialize,
+    EnumString,
+    EnumVariantNames,
+    Eq,
+    Hash,
+    PartialEq,
+    Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum CRUDState {
@@ -23,7 +33,7 @@ impl CRUDState {
     pub fn new(data: &str) -> Self {
         match Self::try_from(data) {
             Ok(v) => v,
-            Err(_) => panic!("{:?}", crate::Error::default())
+            Err(_) => panic!("{:?}", crate::Error::default()),
         }
     }
 }

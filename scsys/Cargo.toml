@@ -13,14 +13,13 @@ version = "0.1.18" # TODO: Update the package version
 
 [features]
 default = ["core"]
-full = ["core", "derive", "macros"]
+full = ["core", "derive", "macros", "extras"]
 
-core = ["external"]
+core = ["scsys-core"]
 derive = ["scsys-derive"]
 macros = ["scsys-macros"]
 
-external = ["bson", "chrono", "config", "extras"]
-extras = ["rand"]
+extras = ["bson", "chrono", "config", "rand"]
 bson = ["bson/default", "bson/chrono-0_4", "bson/serde_with", "bson/uuid-0_8"]
 chrono = ["chrono/default"]
 config = ["config/default"]
@@ -38,20 +37,12 @@ path = "tests/macros.rs"
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, version = "2.4.0" }
 chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }
-futures = "0.3.24"
-glob = "0.3.0"
-hex = "0.4.3"
-log = "0.4.17"
 rand = { optional = true, version = "0.8.5" }
-ring = "0.16.20"
-serde = { features = ["derive"], version = "1.0.145" }
-serde_json = "1.0.85"
-strum = { features = ["derive"], version = "0.24.1" }
-tracing = "0.1.36"
-tracing-subscriber = "0.3.15"
 
-[dev-dependencies]
-vrf = "0.2.4"
+[dependencies.scsys-core]
+optional = true
+path = "../core"
+version = "0.1.6"
 
 [dependencies.scsys-derive]
 optional = true
