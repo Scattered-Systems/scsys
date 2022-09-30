@@ -35,8 +35,14 @@ impl Message {
             timestamp: Timestamp::default(),
         }
     }
-    pub fn from<T: std::string::ToString>(message: T) -> Self {
-        Self::new(message.to_string())
+}
+
+impl std::convert::From<T> for Message
+where
+    T: std::string::ToString,
+{
+    fn from(data: T) -> Self {
+        Self::new(data.to_string())
     }
 }
 
