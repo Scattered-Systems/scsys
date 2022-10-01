@@ -26,20 +26,18 @@ pub enum Hashes {
 
 pub trait Hashable {
     fn hash(&self) -> H256;
-}
-
-#[cfg(test)]
-pub mod tests {
-    use super::{hash_multiply_by, H256};
-    use rand::Rng;
-
-    pub fn generate_random_hash() -> H256 {
+    fn gen_rand() -> H256 {
         let mut rng = rand::thread_rng();
         let random_bytes: Vec<u8> = (0..32).map(|_| rng.gen()).collect();
         let mut raw_bytes = [0; 32];
         raw_bytes.copy_from_slice(&random_bytes);
         (&raw_bytes).into()
     }
+}
+
+#[cfg(test)]
+pub mod tests {
+    use super::{hash_multiply_by, H256};
 
     use vrf::openssl::{CipherSuite, ECVRF};
     use vrf::VRF;
