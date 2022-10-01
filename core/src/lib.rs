@@ -6,9 +6,9 @@
 */
 #![allow(unused_imports)]
 #[doc(inline)]
-pub use crate::{actors::*, components::*, core::*, data::*};
+pub use crate::{actors::*, contexts::*, core::*, data::*};
 
 pub(crate) mod actors;
-pub(crate) mod components;
+pub(crate) mod contexts;
 pub(crate) mod core;
 pub(crate) mod data;

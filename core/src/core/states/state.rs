@@ -6,6 +6,11 @@
 */
 use crate::Timestamp;
 
+pub trait Stateful<S, T> {
+    fn timestamp(&self) -> Timestamp;
+    fn transition(&self) -> &'static dyn Fn(S) -> T;
+}
+
 /// Implement the standard structure of a state
 #[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct State<S> {

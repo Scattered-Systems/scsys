@@ -70,6 +70,7 @@ pub mod tests {
             }
         }
     }
+    
     #[test]
     fn test_hash_multiply() {
         let hash: H256 = [2u8; 32].into();

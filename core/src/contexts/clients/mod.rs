@@ -4,6 +4,9 @@
     Description:
         ... Summary ...
 */
+pub use self::client::*;
+
+mod client;
 
 pub trait ClientSpec {
     fn architecture(&self) -> String;

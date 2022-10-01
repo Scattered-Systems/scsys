@@ -37,9 +37,7 @@ impl Message {
     }
 }
 
-impl std::convert::From<T> for Message
-where
-    T: std::string::ToString,
+impl<T: std::string::ToString> std::convert::From<T> for Message
 {
     fn from(data: T) -> Self {
         Self::new(data.to_string())

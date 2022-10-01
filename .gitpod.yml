@@ -1,5 +1,5 @@
 tasks:
   - init: cargo build --release --workspace
-    command: cargo watch -x test --all -r --release 
+    command: cargo watch -x test --all --release 
 
 

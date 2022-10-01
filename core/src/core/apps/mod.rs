@@ -5,11 +5,9 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{configs::*, contexts::*, modes::ApplicationMode, states::*};
+pub use self::{configs::*, modes::ApplicationMode};
 
 mod configs;
-mod contexts;
-mod states;
 
 pub(crate) mod modes {
     use serde::{Deserialize, Serialize};
@@ -32,15 +30,17 @@ pub(crate) mod modes {
         }
     }
 
-    #[cfg(test)]
-    mod tests {
-        use super::ApplicationMode;
+    
+}
 
-        #[test]
-        fn test_default_application_mode() {
-            let a = ApplicationMode::default();
-            let b = ApplicationMode::Development;
-            assert_eq!(a, b)
-        }
+#[cfg(test)]
+mod tests {
+    use super::ApplicationMode;
+
+    #[test]
+    fn test_default_application_mode() {
+        let a = ApplicationMode::default();
+        let b = ApplicationMode::Development;
+        assert_eq!(a, b)
     }
 }

@@ -4,17 +4,11 @@
     Description:
         ... Summary ...
 */
-#[macro_use]
-extern crate lazy_static;
 
 use super::{H256Hash, Hashable};
 use rand::Rng;
 use ring::digest::digest;
 use serde::{Deserialize, Serialize};
-
-lazy_static! {
-    static ref PREFIX: &str = "{:>02x}";
-}
 
 /// A SHA256 hash.
 #[derive(Clone, Copy, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
@@ -60,7 +54,7 @@ impl std::fmt::Display for H256 {
             0
         };
         for byte_idx in start..32 {
-            write!(f, PREFIX, &self.0[byte_idx])?;
+            write!(f, "{:>02x}", &self.0[byte_idx])?;
         }
         Ok(())
     }
