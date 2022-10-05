@@ -17,7 +17,3 @@ pub trait AppConfig<'a>: Clone + serde::Deserialize<'a> + serde::Serialize {
         self.builder().build()?.try_deserialize()
     }
 }
-
-pub trait Configuration<App> {
-    fn application(&self) -> App;
-}

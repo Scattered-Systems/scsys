@@ -29,8 +29,6 @@ pub(crate) mod modes {
             Self::try_from("development").expect("Failed")
         }
     }
-
-    
 }
 
 #[cfg(test)]

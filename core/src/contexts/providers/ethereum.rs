@@ -4,8 +4,9 @@
     Description:
         ... Summary ...
 */
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Web3Provider {
     pub name: String,
     pub url: String,

@@ -9,7 +9,17 @@ use strum::{EnumString, EnumVariantNames};
 
 /// Encapsulates the availible events for the ecosystem
 #[derive(
-    Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Deserialize,
+    EnumString,
+    EnumVariantNames,
+    Eq,
+    Hash,
+    PartialEq,
+    Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum Event {
@@ -24,18 +34,14 @@ pub enum Event {
     Destroying,
     Diverging,
     Equating,
+    #[default]
+    Event,
     Generic,
     Hashing,
     Parsing,
     Passing,
     Quitting,
     Syncing,
-}
-
-impl Default for Event {
-    fn default() -> Self {
-        Self::Generic
-    }
 }
 
 #[cfg(test)]

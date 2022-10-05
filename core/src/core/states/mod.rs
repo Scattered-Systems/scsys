@@ -10,8 +10,9 @@ mod crud;
 mod power;
 mod state;
 
-pub trait Stateful<S> {
+pub trait Stateful<S, T> {
     fn state(&self) -> S
     where
         Self: Sized;
+    fn transition(&self, state: S, f: dyn Fn(S) -> T) -> T;
 }

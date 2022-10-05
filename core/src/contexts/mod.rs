@@ -7,7 +7,6 @@
 pub use self::context::*;
 
 pub mod accounts;
-pub mod clients;
 pub mod logging;
 pub mod networking;
 pub mod providers;

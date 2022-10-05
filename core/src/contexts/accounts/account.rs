@@ -8,5 +8,5 @@ use crate::Id;
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Account {
-    pub id: Id
+    pub id: Id,
 }

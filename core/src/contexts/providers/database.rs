@@ -4,9 +4,15 @@
     Description:
         ... Summary ...
 */
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Database {
     pub name: String,
     pub uri: String,
+}
+
+pub trait DatabaseSpec {
+    fn name(&self) -> String;
+    fn uri(&self) -> String;
 }

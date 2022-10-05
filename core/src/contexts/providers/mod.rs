@@ -11,6 +11,11 @@ mod cache;
 mod database;
 mod ethereum;
 
-pub enum AccessMethod {
-    Uri { name: String, uri: String },
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub enum Provider {
+    Cache(Cache),
+    Database(Database),
+    Web3(Web3Provider),
 }

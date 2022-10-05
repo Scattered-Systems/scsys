@@ -5,14 +5,10 @@
         ... Summary ...
 */
 use crate::Timestamp;
-
-pub trait Stateful<S, T> {
-    fn timestamp(&self) -> Timestamp;
-    fn transition(&self) -> &'static dyn Fn(S) -> T;
-}
+use serde::{Deserialize, Serialize};
 
 /// Implement the standard structure of a state
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct State<S> {
     pub message: String,
     pub state: S,
