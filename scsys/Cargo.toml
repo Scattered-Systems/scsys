@@ -3,12 +3,12 @@ authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-S
 categories = []
 description = "scsys lays the foundation for the Scattered-Systems ecosystem, delivering critical primitives throughout"
 edition = "2021"
-homepage = "https://gitlab.com/scsys/-/wiki"
+homepage = "https://gitlab.com/scsys/lib/crates/scsys/-/wiki"
 keywords = ["blockchain", "primitives", "scsys"]
 license = "MIT"
 name = "scsys"
 readme = "README.md"
-repository = "https://gitlab.com/scsys/scsys"
+repository = "https://gitlab.com/scsys/lib/crates/scsys"
 version = "0.1.18" # TODO: Update the package version
 
 [features]
