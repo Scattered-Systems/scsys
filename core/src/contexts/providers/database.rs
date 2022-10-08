@@ -12,6 +12,21 @@ pub struct Database {
     pub uri: String,
 }
 
+impl Database {
+    pub fn new(name: String, uri: String) -> Self {
+        Self { name, uri}
+    }
+    pub fn from_str(name: &str, uri: &str) -> Self {
+        Self::new(name.to_string(), uri.to_string())
+    }
+}
+
+impl Default for Database {
+    fn default() -> Self {
+        Self::from_str("", "")
+    }
+}
+
 pub trait DatabaseSpec {
     fn name(&self) -> String;
     fn uri(&self) -> String;

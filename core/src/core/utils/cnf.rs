@@ -15,13 +15,3 @@ pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
         .collect::<Vec<_>>()
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test() {
-        let f = |x: usize, y: usize| x + y;
-        let actual = f(4, 4);
-        let expected: usize = 8;
-        assert_eq!(actual, expected)
-    }
-}

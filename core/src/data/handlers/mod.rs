@@ -4,9 +4,8 @@
     Description:
         ... Summary ...
 */
-pub use files::*;
-pub use utils::*;
+pub use self::{files::{DocumentHandler, FileHandler}, utils::*};
 
-mod files;
+pub(crate) mod files;
 
-mod utils {}
+pub(crate) mod utils {}

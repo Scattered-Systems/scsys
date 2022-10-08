@@ -11,7 +11,7 @@ keywords = ["derive", "proc-macros"]
 license = "MIT"
 name = "scsys-derive"
 repository = "https://gitlab.com/scsys/lib/crates/scsys"
-version = "0.1.8" # TODO - Update cargo package version
+version = "0.1.9" # TODO - Update cargo package version
 
 [lib]
 proc-macro = true

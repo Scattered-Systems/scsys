@@ -33,16 +33,3 @@ mod utils {
             .collect()
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_random_number() {
-        assert_ne!(
-            generate_random_number::<f64>(),
-            generate_random_number::<f64>()
-        )
-    }
-}

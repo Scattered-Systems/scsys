@@ -5,16 +5,14 @@
         ... Summary ...
 */
 use rand::{distributions, prelude::Distribution};
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct DigitGenerator<T>(T);
 
 impl<T> DigitGenerator<T> {
-    fn constructor(data: T) -> Self {
-        Self(data)
-    }
     pub fn new(data: T) -> Self {
-        Self::constructor(data)
+        Self(data)
     }
 }
 
@@ -33,18 +31,5 @@ where
 {
     fn default() -> Self {
         Self::generate()
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::DigitGenerator;
-
-    #[test]
-    fn test_generator_num() {
-        assert_ne!(
-            DigitGenerator::<f64>::default(),
-            DigitGenerator::<f64>::default()
-        )
     }
 }

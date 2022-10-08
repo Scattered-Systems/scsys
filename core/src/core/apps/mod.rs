@@ -9,6 +9,14 @@ pub use self::{configs::*, modes::ApplicationMode};
 
 mod configs;
 
+pub trait AppSpec {
+    fn homepage(&self) -> String;
+    fn name(&self) -> String;
+    fn slug(&self) -> String {
+        self.name().to_lowercase()
+    }
+}
+
 pub(crate) mod modes {
     use serde::{Deserialize, Serialize};
     use strum::{EnumString, EnumVariantNames};

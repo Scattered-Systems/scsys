@@ -5,8 +5,9 @@
         ... Summary ...
 */
 use crate::Id;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Account {
     pub id: Id,
 }

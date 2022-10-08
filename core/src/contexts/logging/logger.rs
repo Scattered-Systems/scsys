@@ -4,10 +4,11 @@
     Description:
         ... Summary ...
 */
-use serde;
+use super::logger_from_env;
+use serde::{Deserialize, Serialize};
 use tracing_subscriber;
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Logger {
     pub level: String,
 }
@@ -22,10 +23,12 @@ impl Logger {
     }
 
     pub fn setup(&self) {
-        if std::env::var_os("RUST_LOG").is_none() {
-            std::env::set_var("RUST_LOG", self.level.as_str());
-        }
+        logger_from_env(Some(self.level.clone().as_str()))
+    }
+}
 
-        tracing_subscriber::fmt::init();
+impl std::convert::From<&str> for Logger {
+    fn from(level: &str) -> Self {
+        Self::new(level.to_string())
     }
 }

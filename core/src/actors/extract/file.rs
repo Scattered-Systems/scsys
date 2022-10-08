@@ -6,7 +6,7 @@
 */
 use std::io::Read;
 
-pub trait FileInterface: Clone + std::fmt::Debug + std::hash::Hash + PartialEq {
+pub trait FileInterface {
     fn extract(&mut self) -> Vec<String> {
         let mut buffer = String::new();
         self.open_file()
@@ -38,27 +38,16 @@ impl FileExtractor {
             data: Vec::new(),
         }
     }
-    pub fn from<T: std::string::ToString>(filepath: T) -> Self {
-        Self::new(filepath.to_string())
+}
+
+impl std::convert::From<&str> for FileExtractor {
+    fn from(path: &str) -> Self {
+        Self::new(path.to_string())
     }
 }
 
 impl FileInterface for FileExtractor {
     fn filepath(&self) -> Box<std::path::Path> {
         Box::from(std::path::Path::new(self.filepath.as_str()))
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{FileExtractor, FileInterface};
-
-    #[test]
-    fn test_file_extractor() {
-        let fp = "../README.md";
-        let mut a = FileExtractor::new(fp.to_string());
-        let mut b = a.clone();
-
-        assert_eq!(a.extract(), b.extract())
     }
 }

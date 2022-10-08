@@ -58,16 +58,3 @@ impl Default for Message {
         Self::new(String::new())
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::Message;
-
-    #[test]
-    fn test_default_message() {
-        let a = Message::from("Test message");
-        let b = Message::default();
-        assert_ne!(a, b.clone());
-        assert_eq!(Message::from("").message, b.message)
-    }
-}

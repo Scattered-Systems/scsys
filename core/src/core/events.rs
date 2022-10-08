@@ -36,7 +36,6 @@ pub enum Event {
     Equating,
     #[default]
     Event,
-    Generic,
     Hashing,
     Parsing,
     Passing,
@@ -44,14 +43,3 @@ pub enum Event {
     Syncing,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::Event;
-
-    #[test]
-    fn test_default_event() {
-        let a = Event::default();
-        let b = Event::try_from("generic").expect("");
-        assert_eq!(a, b)
-    }
-}

@@ -4,15 +4,22 @@
     Description:
         ... Summary ...
 */
+use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub enum Connection {
     Incoming(SocketAddr),
     Outgoing(SocketAddr),
 }
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+impl Default for Connection {
+    fn default() -> Self {
+        Self::Outgoing(SocketAddr::from(([0, 0, 0, 0], 8080)))
+    }
+}
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+
 pub struct ReverseProxy {
-    pub incomming: std::net::SocketAddr,
+    pub connections: Vec<Connection>
 }

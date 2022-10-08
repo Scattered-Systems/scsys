@@ -11,7 +11,7 @@ keywords = ["proc-macros", "scsys"]
 license = "MIT"
 name = "scsys-macros"
 repository = "https://gitlab.com/scsys/lib/crates/scsys"
-version = "0.1.8" # TODO - Update cargo package version
+version = "0.1.9" # TODO - Update cargo package version
 
 [lib]
 crate-type = ["cdylib", "rlib"]

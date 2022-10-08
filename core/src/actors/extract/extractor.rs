@@ -36,21 +36,4 @@ impl Extractor<'_> {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::Extractor;
 
-    #[test]
-    fn test_extractor_comma() {
-        let a = Extractor::new(',', "[0, 0, 0, 0]".to_string());
-
-        assert_eq!(a.extract::<u8>(), vec![0, 0, 0, 0])
-    }
-
-    #[test]
-    fn test_extractor_period() {
-        let a = Extractor::new('.', "0.0.0.0".to_string());
-
-        assert_eq!(a.extract::<u8>(), vec![0, 0, 0, 0])
-    }
-}

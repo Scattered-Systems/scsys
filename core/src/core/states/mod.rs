@@ -4,15 +4,15 @@
     Description:
         ... Summary ...
 */
-pub use self::{crud::CRUDState, power::PowerState, state::State};
+pub use self::state::State;
 
-mod crud;
-mod power;
-mod state;
+pub(crate) mod state;
 
-pub trait Stateful<S, T> {
-    fn state(&self) -> S
-    where
-        Self: Sized;
+
+pub type StateHashMap<T = crate::crypto::hash::H160> = std::collections::HashMap<T, (usize, usize)>;
+
+pub trait Stateful<T, S = StateHashMap> {
+    fn state(&self) -> S;
     fn transition(&self, state: S, f: dyn Fn(S) -> T) -> T;
 }
+

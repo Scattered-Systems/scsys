@@ -7,3 +7,6 @@
 pub use self::account::*;
 
 mod account;
+
+pub trait AccountSpec {
+}

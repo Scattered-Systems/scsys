@@ -19,3 +19,9 @@ pub enum Provider {
     Database(Database),
     Web3(Web3Provider),
 }
+
+impl Default for Provider {
+    fn default() -> Self {
+        Self::Database(Database::default())
+    }
+}

@@ -8,7 +8,7 @@ keywords = ["blockchain", "primitives", "scsys"]
 license = "MIT"
 name = "scsys-core"
 repository = "https://gitlab.com/scsys/lib/crates/scsys"
-version = "0.1.6" # TODO: Update the package version
+version = "0.1.7" # TODO: Update the package version
 
 [lib]
 crate-type = ["cdylib", "rlib"]

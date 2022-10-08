@@ -26,12 +26,3 @@ impl Default for StringGenerator {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::StringGenerator;
-
-    #[test]
-    fn test_string_generator_default() {
-        assert_ne!(StringGenerator::default(), StringGenerator::default())
-    }
-}

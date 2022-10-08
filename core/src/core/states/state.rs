@@ -16,15 +16,13 @@ pub struct State<S> {
 }
 
 impl<S> State<S> {
-    fn constructor(message: String, state: S, timestamp: Timestamp) -> Self {
+    pub fn new(message: String, state: S) -> Self {
+        let timestamp = Timestamp::default();
         Self {
             message,
             state,
             timestamp,
         }
-    }
-    pub fn new(message: String, state: S) -> Self {
-        Self::constructor(message, state, Timestamp::default())
     }
 }
 
@@ -34,14 +32,3 @@ impl<S: Default> Default for State<S> {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_state() {
-        let actual = State::new("message".to_string(), "test");
-        let expected = actual.clone();
-        assert_eq!(actual, expected)
-    }
-}
