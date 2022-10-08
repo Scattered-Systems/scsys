@@ -12,6 +12,7 @@
     - cargo publish -p scsys-core -v
     - cargo publish -p scsys-derive -v
     - cargo publish -p scsys-macros -v
+  after_script:
     - cargo publish --all-features -p scsys  -v
 
 .cargo_test_template: &cargo_test
