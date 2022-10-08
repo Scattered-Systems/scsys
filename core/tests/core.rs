@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use scsys_core::{Error, Event, Message, Timestamp, states::State};
+    use scsys_core::{states::State, Error, Event, Message, Timestamp};
 
     #[test]
     fn test_error_default() {

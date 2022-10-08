@@ -21,12 +21,11 @@ pub(crate) mod utils {
         let env_var = "RUST_LOG";
         let level = match level {
             Some(v) => v,
-            None => "info"
+            None => "info",
         };
         if std::env::var_os(env_var).is_none() {
             std::env::set_var(env_var, level)
         }
         tracing_subscriber::fmt::init()
     }
-    
 }

@@ -25,4 +25,3 @@ impl Default for StringGenerator {
         Self::new(12)
     }
 }
-

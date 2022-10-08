@@ -4,7 +4,10 @@
     Description:
         ... Summary ...
 */
-use std::{fs::File, io::{self, BufRead, BufReader}};
+use std::{
+    fs::File,
+    io::{self, BufRead, BufReader},
+};
 
 /// This function converts the file found at path (fp) into a Vec<String>
 pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {

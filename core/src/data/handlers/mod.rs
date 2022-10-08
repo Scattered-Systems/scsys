@@ -4,7 +4,10 @@
     Description:
         ... Summary ...
 */
-pub use self::{files::{DocumentHandler, FileHandler}, utils::*};
+pub use self::{
+    files::{DocumentHandler, FileHandler},
+    utils::*,
+};
 
 pub(crate) mod files;
 

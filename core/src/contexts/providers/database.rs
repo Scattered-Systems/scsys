@@ -14,7 +14,7 @@ pub struct Database {
 
 impl Database {
     pub fn new(name: String, uri: String) -> Self {
-        Self { name, uri}
+        Self { name, uri }
     }
     pub fn from_str(name: &str, uri: &str) -> Self {
         Self::new(name.to_string(), uri.to_string())

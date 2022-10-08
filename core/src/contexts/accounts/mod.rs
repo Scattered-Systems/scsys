@@ -8,5 +8,4 @@ pub use self::account::*;
 
 mod account;
 
-pub trait AccountSpec {
-}
+pub trait AccountSpec {}

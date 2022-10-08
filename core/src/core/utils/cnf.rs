@@ -14,4 +14,3 @@ pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
         .map(|path| ConfigFile::from(path.unwrap()).required(required))
         .collect::<Vec<_>>()
 }
-

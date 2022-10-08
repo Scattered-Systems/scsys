@@ -31,4 +31,3 @@ impl<S: Default> Default for State<S> {
         Self::new(String::new(), S::default())
     }
 }
-

@@ -16,5 +16,3 @@ pub trait ExtractorSpec<T> {
 pub trait FileExtSpec: ExtractorSpec<String> {
     fn path(&self) -> std::path::Path;
 }
-
-

@@ -21,5 +21,5 @@ impl Default for Connection {
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 
 pub struct ReverseProxy {
-    pub connections: Vec<Connection>
+    pub connections: Vec<Connection>,
 }

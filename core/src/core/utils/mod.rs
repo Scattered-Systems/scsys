@@ -4,7 +4,11 @@
     Description:
         ... Summary ...
 */
-pub use self::{cnf::collect_config_files, fs::file_to_vec, time::{Timestamp, chrono_datetime_now, chrono_into_bson}};
+pub use self::{
+    cnf::collect_config_files,
+    fs::file_to_vec,
+    time::{chrono_datetime_now, chrono_into_bson, Timestamp},
+};
 
 mod cnf;
 mod fs;

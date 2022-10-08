@@ -35,5 +35,3 @@ impl Extractor<'_> {
             .collect()
     }
 }
-
-
