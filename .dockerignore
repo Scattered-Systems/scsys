@@ -1,11 +1,3 @@
-# Config
-**/config.*
-**/*.config.*
-
-**/*.env
-**/*.env.*
-
-# Directories
 **/__pycache__/
 **/__sapper__/
 
@@ -27,7 +19,7 @@
 **/target/
 **/venv/
 
-# File Extensions
+
 **/*.bk
 **/*.bk.*
 
@@ -53,8 +45,4 @@
 **/*.zip
 **/*.zip.*
 
-# Exceptions
-!**/default.config.*
-!**/*.env.example
-!**/*.config.js
-!**/*.config.cjs
+

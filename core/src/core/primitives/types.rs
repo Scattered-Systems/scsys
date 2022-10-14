@@ -4,18 +4,17 @@
     Description:
         ... Summary ...
 */
-pub use self::blocks::*;
 
 pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
 
 /// Type alias for a boxed standard error
 pub type BaseError = Box<dyn std::error::Error>;
 /// Type alias of a result implementing the [BaseError]
-pub type BaseResult<T = ()> = Result<T, super::BaseError>;
+pub type BaseResult<T = (), E = BaseError> = Result<T, E>;
 /// Type alias for a boxed error with send, sync, and static flags enabled
 pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
 /// Type alias for the standard result used
-pub type BoxResult<T = ()> = Result<T, BoxError>;
+pub type BoxResult<T = (), E = super::BoxError> = Result<T, E>;
 /// Type alias for [bson::DateTime]
 pub type BsonDateTime = bson::DateTime;
 /// Type alias for [bson::oid::ObjectId]
@@ -43,17 +42,3 @@ pub type DefaultTimezone = chrono::Utc;
 /// Type alias for [std::io::Result]
 pub type IOResult<T = ()> = std::io::Result<T>;
 
-mod blocks {
-    /// Type alias for a common block hash
-    pub type BlockHs = String;
-    /// Type alias for a common block id
-    pub type BlockId = u64;
-    /// Type alias for a common block nonce
-    pub type BlockNc = u64;
-    /// Type alias for a common block timestamp
-    pub type BlockTs = super::DefaultTimestamp;
-    /// Type alias for a common block timezone
-    pub type BlockTz = super::DefaultTimezone;
-    /// Type alias for a batch of transactions for a block as an array of type (T) and size 16
-    pub type BlockTr<T = String> = [T; 16];
-}

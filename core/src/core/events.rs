@@ -12,7 +12,6 @@ use strum::{EnumString, EnumVariantNames};
     Clone,
     Copy,
     Debug,
-    Default,
     Deserialize,
     EnumString,
     EnumVariantNames,
@@ -22,7 +21,7 @@ use strum::{EnumString, EnumVariantNames};
     Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
-pub enum Event {
+pub enum Event<T: std::string::ToString + std::default::Default = String> {
     Initializing,
     Aggregating,
     Attempting,
@@ -34,11 +33,18 @@ pub enum Event {
     Destroying,
     Diverging,
     Equating,
-    #[default]
-    Event,
+    GenericEvent(T),
     Hashing,
     Parsing,
     Passing,
     Quitting,
     Syncing,
 }
+
+
+impl<T: std::string::ToString + std::default::Default> Default for Event<T> {
+    fn default() -> Self {
+        Self::GenericEvent(T::default())
+    }
+}
+

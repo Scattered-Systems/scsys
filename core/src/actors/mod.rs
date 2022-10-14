@@ -8,4 +8,6 @@
 pub mod extract;
 pub mod generate;
 
-pub trait ActorSpec {}
+pub trait ActorSpec {
+    
+}
