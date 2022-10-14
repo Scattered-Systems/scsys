@@ -6,7 +6,7 @@
         ecosystem
 */
 
-pub use crate::{errors::primitives::*, states::primitives::*};
+pub use crate::{crypto::hash::primitives::*, errors::primitives::*, states::primitives::*};
 
 pub use self::{constants::*, statics::*, types::*, variants::*};
 pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
