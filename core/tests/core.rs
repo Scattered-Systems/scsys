@@ -5,7 +5,7 @@ mod tests {
     #[test]
     fn test_error_default() {
         let actual = Error::default();
-        let expected = Error::try_from("generic").ok().unwrap();
+        let expected = Error::try_from("default").ok().unwrap();
         assert_eq!(actual, expected)
     }
 

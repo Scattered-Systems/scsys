@@ -6,7 +6,7 @@
 */
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Database {
     pub name: String,
     pub uri: String,
@@ -20,13 +20,6 @@ impl Database {
         Self::new(name.to_string(), uri.to_string())
     }
 }
-
-impl Default for Database {
-    fn default() -> Self {
-        Self::from_str("", "")
-    }
-}
-
 pub trait DatabaseSpec {
     fn name(&self) -> String;
     fn uri(&self) -> String;

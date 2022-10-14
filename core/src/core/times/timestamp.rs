@@ -1,19 +1,12 @@
 /*
-    Appellation: time <module>
-    Contributors: FL03 <jo3mccain@icloud.com> (https://github.com)
+    Appellation: timestamp <module>
+    Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
     Description:
         ... Summary ...
 */
-use chrono::{DateTime, Utc};
+use crate::{chrono_datetime_now, chrono_into_bson};
+use chrono::Utc;
 use serde::{Deserialize, Serialize};
-
-pub fn chrono_datetime_now() -> DateTime<Utc> {
-    Utc::now()
-}
-
-pub fn chrono_into_bson<T: chrono::TimeZone>(data: DateTime<T>) -> bson::DateTime {
-    bson::DateTime::from_chrono(data)
-}
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Timestamp(i64);
@@ -22,7 +15,7 @@ impl Timestamp {
     pub fn new(data: i64) -> Self {
         Self(data)
     }
-    pub fn now() -> DateTime<Utc> {
+    pub fn now() -> chrono::DateTime<Utc> {
         chrono_datetime_now()
     }
     pub fn chrono_to_bson(&self, data: crate::ChronoDateTime) -> bson::DateTime {

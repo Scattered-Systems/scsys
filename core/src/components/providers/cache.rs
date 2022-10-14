@@ -4,9 +4,21 @@
     Description:
         ... Summary ...
 */
+use serde::{Deserialize, Serialize};
+use strum::{EnumString, EnumVariantNames};
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
-pub struct Cache {
-    pub name: String,
-    pub uri: String,
+#[derive(
+    Clone, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
+)]
+pub enum Cache {
+    Redis { name: String, uri: String },
+}
+
+impl Default for Cache {
+    fn default() -> Self {
+        Self::Redis {
+            name: String::new(),
+            uri: String::new(),
+        }
+    }
 }

@@ -6,10 +6,7 @@
         ecosystem
 */
 
-pub use crate::{
-    errors::primitives::*,
-    states::primitives::*
-};
+pub use crate::{errors::primitives::*, states::primitives::*};
 
 pub use self::{constants::*, statics::*, types::*, variants::*};
 pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
@@ -19,14 +16,12 @@ mod constants {
     pub const DEFAULT_HTTP_PORT: u16 = 8080;
 }
 
-mod statics {
-
-}
+mod statics {}
 
 mod types {
-    use crate::{BaseError, BoxError};
     use super::ConfigError;
-    
+    use crate::{BaseError, BoxError};
+
     /// Type alias of a result implementing the [BaseError]
     pub type BaseResult<T = (), E = BaseError> = Result<T, E>;
 
@@ -61,5 +56,5 @@ mod types {
 }
 
 mod variants {
-
+    pub use crate::identities::variants::*;
 }

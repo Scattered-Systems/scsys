@@ -5,7 +5,6 @@
         ... Summary ...
 */
 
-
 pub trait EventSpec {
     type Message;
 

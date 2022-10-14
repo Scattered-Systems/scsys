@@ -11,17 +11,21 @@ mod cache;
 mod database;
 mod ethereum;
 
-use serde::{Deserialize, Serialize};
+pub(crate) mod variants {
+    use super::{Cache, Database, Web3Provider};
+    use serde::{Deserialize, Serialize};
+    use strum::{EnumString, EnumVariantNames};
 
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub enum Provider {
-    Cache(Cache),
-    Database(Database),
-    Web3(Web3Provider),
-}
+    #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+    pub enum Provider {
+        Cache(Cache),
+        Database(Database),
+        Web3(Web3Provider),
+    }
 
-impl Default for Provider {
-    fn default() -> Self {
-        Self::Database(Database::default())
+    impl Default for Provider {
+        fn default() -> Self {
+            Self::Database(Database::default())
+        }
     }
 }

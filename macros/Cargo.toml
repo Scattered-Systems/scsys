@@ -10,6 +10,7 @@ homepage = "https://gitlab.com/scsys/lib/crates/scsys"
 keywords = ["proc-macros", "scsys"]
 license = "MIT"
 name = "scsys-macros"
+readme = "README.md"
 repository = "https://gitlab.com/scsys/lib/crates/scsys"
 version = "0.1.9" # TODO - Update cargo package version
 
@@ -19,9 +20,9 @@ test = false
 
 [dependencies]
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" }
-proc-macro2 = "1.0.43"
+proc-macro2 = "1.0.46"
 quote = "1.0.21"
-syn = { features = ["full"], version = "1.0.99" }
+syn = { features = ["full"], version = "1.0.102" }
 
 [dev-dependencies.scsys]
 path = "../scsys"

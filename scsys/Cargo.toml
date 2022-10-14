@@ -19,7 +19,8 @@ core = ["scsys-core"]
 derive = ["scsys-derive"]
 macros = ["scsys-macros"]
 
-extras = ["bson", "chrono", "config", "rand"]
+extras = ["anyhow", "bson", "chrono", "config", "rand"]
+anyhow = ["anyhow/default"]
 bson = ["bson/default", "bson/chrono-0_4", "bson/serde_with", "bson/uuid-0_8"]
 chrono = ["chrono/default"]
 config = ["config/default"]
@@ -30,6 +31,7 @@ crate-type = ["cdylib", "rlib"]
 test = true
 
 [dependencies]
+anyhow = { features = ["default"], version = "1.0.65" }
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, version = "2.4.0" }
 chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }

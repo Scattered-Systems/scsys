@@ -9,16 +9,7 @@ use strum::{EnumString, EnumVariantNames};
 
 /// Encapsulates the availible events for the ecosystem
 #[derive(
-    Clone,
-    Copy,
-    Debug,
-    Deserialize,
-    EnumString,
-    EnumVariantNames,
-    Eq,
-    Hash,
-    PartialEq,
-    Serialize,
+    Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum Event<T: std::string::ToString + std::default::Default = String> {
@@ -41,10 +32,8 @@ pub enum Event<T: std::string::ToString + std::default::Default = String> {
     Syncing,
 }
 
-
 impl<T: std::string::ToString + std::default::Default> Default for Event<T> {
     fn default() -> Self {
         Self::GenericEvent(T::default())
     }
 }
-

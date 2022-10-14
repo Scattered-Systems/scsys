@@ -9,8 +9,7 @@ pub use self::error::*;
 mod error;
 
 pub(crate) mod primitives {
-    #[cfg(feature = "anyhow")]
-    pub use anyhow;
+
     /// Type alias for a boxed standard error
     pub type BaseError = Box<dyn std::error::Error>;
     /// Type alias for a boxed error with send, sync, and static flags enabled

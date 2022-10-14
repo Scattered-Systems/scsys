@@ -6,6 +6,7 @@
 */
 use std::io::Read;
 
+/// A complete interface for interacting with files and file-like objects
 pub trait FileInterface {
     fn extract(&mut self) -> Vec<String> {
         let mut buffer = String::new();
@@ -21,33 +22,5 @@ pub trait FileInterface {
             Ok(file) => file,
             Err(e) => panic!("File Error: File Not Found \n{}", e),
         }
-    }
-}
-
-/// Extract the contents of a file
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
-pub struct FileExtractor {
-    pub filepath: String,
-    pub data: Vec<String>,
-}
-
-impl FileExtractor {
-    pub fn new(filepath: String) -> Self {
-        Self {
-            filepath,
-            data: Vec::new(),
-        }
-    }
-}
-
-impl std::convert::From<&str> for FileExtractor {
-    fn from(path: &str) -> Self {
-        Self::new(path.to_string())
-    }
-}
-
-impl FileInterface for FileExtractor {
-    fn filepath(&self) -> Box<std::path::Path> {
-        Box::from(std::path::Path::new(self.filepath.as_str()))
     }
 }
