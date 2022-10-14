@@ -28,20 +28,8 @@ pub mod prelude {
 
     #[cfg(feature = "core")]
     pub use super::core::{
-        self,
-        accounts::*,
-        extract::*,
-        generate::*,
-        logging::*,
-        models::*,
-        networking::*,
-        providers::*,
-        schemas::*,
-        states::*,
-        ActorSpec,
-        AppConfig,
-        AppSpec,
-        ApplicationMode,
+        self, accounts::*, extract::*, generate::*, logging::*, models::*, networking::*,
+        providers::*, schemas::*, states::*, ActorSpec, AppConfig, AppSpec, ApplicationMode,
         BoxResult,
     };
 }
