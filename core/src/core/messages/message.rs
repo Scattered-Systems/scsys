@@ -1,5 +1,5 @@
 /*
-    Appellation: scsys-derive <library>
+    Appellation: message <moduel>
     Contributors: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...

@@ -5,7 +5,7 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{apps::*, contexts::*, errors::*, events::Event, messages::*, primitives::*, utils::*};
+pub use self::{apps::*, contexts::*, errors::*, events::*, messages::*, primitives::*, utils::*};
 
 pub(crate) mod apps;
 pub(crate) mod contexts;

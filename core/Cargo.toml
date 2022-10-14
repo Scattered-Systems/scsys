@@ -15,6 +15,7 @@ crate-type = ["cdylib", "rlib"]
 test = true
 
 [dependencies]
+anyhow = { optional = true, version = "1.0.65" }
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" }
 chrono = "0.4.22"
 config = "0.13.2"

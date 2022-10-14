@@ -4,10 +4,10 @@
     Description:
         ... Summary ...
 */
-use crate::Id;
+use bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Account {
-    pub id: Id,
+    pub id: ObjectId,
 }

@@ -4,17 +4,16 @@
     Description:
         ... Summary ...
 */
+pub use crate::errors::primitives::*;
 
 pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
 
-/// Type alias for a boxed standard error
-pub type BaseError = Box<dyn std::error::Error>;
+
 /// Type alias of a result implementing the [BaseError]
 pub type BaseResult<T = (), E = BaseError> = Result<T, E>;
-/// Type alias for a boxed error with send, sync, and static flags enabled
-pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
+
 /// Type alias for the standard result used
-pub type BoxResult<T = (), E = super::BoxError> = Result<T, E>;
+pub type BoxResult<T = (), E = BoxError> = Result<T, E>;
 /// Type alias for [bson::DateTime]
 pub type BsonDateTime = bson::DateTime;
 /// Type alias for [bson::oid::ObjectId]

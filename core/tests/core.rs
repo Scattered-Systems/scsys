@@ -5,14 +5,14 @@ mod tests {
     #[test]
     fn test_error_default() {
         let actual = Error::default();
-        let expected = Error::try_from("default").ok().unwrap();
+        let expected = Error::try_from("generic").ok().unwrap();
         assert_eq!(actual, expected)
     }
 
     #[test]
     fn test_event_default() {
-        let a = Event::default();
-        let b = Event::try_from("event").expect("");
+        let a: Event<String> = Event::default();
+        let b = Event::try_from("generic_event").expect("");
         assert_eq!(a, b)
     }
 
