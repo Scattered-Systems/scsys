@@ -4,12 +4,12 @@
     Description:
         ... Summary ...
 */
-pub use self::{h160::H160, h256::H256, interface::Hashable, hashes::Hashes};
+pub use self::{h160::H160, h256::H256, hash::Hashes, interface::Hashable};
 
 mod h160;
 mod h256;
+mod hash;
 mod interface;
-mod hashes;
 
 pub(crate) mod primitives {
     pub type H256Hash = [u8; 32];

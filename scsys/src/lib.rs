@@ -25,6 +25,8 @@ pub mod prelude {
     pub use config;
     #[cfg(feature = "rand")]
     pub use rand;
+    #[cfg(feature = "ring")]
+    pub use ring;
 
     #[cfg(feature = "core")]
     pub use super::core::{

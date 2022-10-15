@@ -9,7 +9,8 @@ use bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 
 /// Message as a trait
-pub trait IMessage {
+pub trait IMessage<Msg = String> {
+    fn message(&self) -> &Msg;
     fn stdout<T: std::string::ToString>(&self, data: T) -> String {
         format!(
             "Timestamp: {:?}\nMessage:\n{}",
@@ -17,7 +18,7 @@ pub trait IMessage {
             data.to_string()
         )
     }
-    fn timestamp(&self) -> Timestamp;
+    fn timestamp(&self) -> &Timestamp;
 }
 
 /// Implements a simple message structure
@@ -48,8 +49,11 @@ impl<T: std::string::ToString> std::convert::From<T> for Message {
 }
 
 impl IMessage for Message {
-    fn timestamp(&self) -> Timestamp {
-        self.timestamp.clone()
+    fn message(&self) -> &String {
+        &self.message
+    }
+    fn timestamp(&self) -> &Timestamp {
+        &self.timestamp
     }
 }
 

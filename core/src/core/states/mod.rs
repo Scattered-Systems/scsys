@@ -9,9 +9,9 @@ pub use self::state::State;
 pub(crate) mod state;
 
 pub(crate) mod primitives {
+    use crate::{crypto::hashes, Dictionary};
 
-    pub type StateHashMap<K = crate::crypto::hash::H160, V = (usize, usize)> =
-        std::collections::HashMap<K, V>;
+    pub type StateHashMap<K = hashes::H160, V = (usize, usize)> = Dictionary<K, V>;
 }
 
 pub trait Stateful<T, S = crate::StateHashMap> {

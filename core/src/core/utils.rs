@@ -5,7 +5,7 @@
         ... Summary ...
 */
 pub use self::{configure::*, files::*};
-pub use crate::crypto::hash::utils::*;
+pub use crate::crypto::{hashes::utils::*, keypairs::utils::*};
 pub use crate::logging::utils::*;
 pub use crate::times::utils::*;
 

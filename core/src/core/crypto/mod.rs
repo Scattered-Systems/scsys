@@ -5,4 +5,5 @@
         ... Summary ...
 */
 
-pub mod hash;
+pub mod hashes;
+pub mod keypairs;

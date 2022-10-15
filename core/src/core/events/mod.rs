@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-pub use self::{interface::*, variants::*};
+pub use self::{event::*, variants::*};
 
-mod interface;
+mod event;
 mod variants;

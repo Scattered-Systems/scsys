@@ -4,10 +4,11 @@
     Description:
         ... Summary ...
 */
+use crate::Timestamp;
 
 pub trait EventSpec {
-    type Message;
+    type Event;
 
-    fn message(&self) -> Self::Message;
-    fn timestamp(&self) -> crate::Timestamp;
+    fn event(&self) -> Self::Event;
+    fn timestamp(&self) -> Timestamp;
 }

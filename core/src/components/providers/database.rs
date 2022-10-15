@@ -24,3 +24,12 @@ pub trait DatabaseSpec {
     fn name(&self) -> String;
     fn uri(&self) -> String;
 }
+
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub enum Databases {
+    Cassandra { uri: String },
+    MongoDB { name: String, uri: String },
+    Postgres { name: String, uri: String },
+    RocksDB { name: String, uri: String },
+    SQLite(String),
+}

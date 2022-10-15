@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use scsys_core::{crypto::hash::H256, hash_multiply_by};
+    use scsys_core::{crypto::hashes::H256, hash_multiply_by};
 
     use vrf::openssl::{CipherSuite, ECVRF};
     use vrf::VRF;

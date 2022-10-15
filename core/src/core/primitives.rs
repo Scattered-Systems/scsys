@@ -6,7 +6,7 @@
         ecosystem
 */
 
-pub use crate::{crypto::hash::primitives::*, errors::primitives::*, states::primitives::*};
+pub use crate::{crypto::hashes::primitives::*, errors::primitives::*, states::primitives::*};
 
 pub use self::{constants::*, statics::*, types::*, variants::*};
 pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
@@ -20,7 +20,7 @@ mod statics {}
 
 mod types {
     use super::ConfigError;
-    use crate::{BaseError, BoxError};
+    use super::{BaseError, BoxError};
 
     /// Type alias of a result implementing the [BaseError]
     pub type BaseResult<T = (), E = BaseError> = Result<T, E>;
@@ -39,8 +39,8 @@ mod types {
     pub type ConfigFileVec = Vec<ConfigFile<config::FileSourceFile, config::FileFormat>>;
     /// Type alias for a configuration result
     pub type ConfigResult<T> = Result<T, ConfigError>;
-    /// Type alias for an [std::collections::HashMap] with a String key and variable value
-    pub type Dictionary<T = String> = std::collections::HashMap<String, T>;
+    /// Type alias for [std::collections::HashMap] defaulting to a (String, String) type
+    pub type Dictionary<K = String, V = String> = std::collections::HashMap<K, V>;
     /// Type alias for [chrono::DateTime]
     pub type ChronoDateTime<T = DefaultTimezone> = chrono::DateTime<T>;
     /// Type alias for [config::ConfigBuilder]
@@ -56,5 +56,5 @@ mod types {
 }
 
 mod variants {
-    pub use crate::identities::variants::*;
+    pub use crate::identities::ids::*;
 }
