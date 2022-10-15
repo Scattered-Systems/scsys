@@ -8,9 +8,13 @@ pub use self::state::State;
 
 pub(crate) mod state;
 
-pub type StateHashMap<T = crate::crypto::hash::H160> = std::collections::HashMap<T, (usize, usize)>;
+pub(crate) mod primitives {
+    use crate::{crypto::hashes, Dictionary};
 
-pub trait Stateful<T, S = StateHashMap> {
+    pub type StateHashMap<K = hashes::H160, V = (usize, usize)> = Dictionary<K, V>;
+}
+
+pub trait Stateful<T, S = crate::StateHashMap> {
     fn state(&self) -> S;
     fn transition(&self, state: S, f: dyn Fn(S) -> T) -> T;
 }

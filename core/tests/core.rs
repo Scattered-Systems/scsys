@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use scsys_core::{states::State, Error, Event, Message, Timestamp};
+    use scsys_core::{states::State, Error, Event, Timestamp};
 
     #[test]
     fn test_error_default() {
@@ -11,18 +11,12 @@ mod tests {
 
     #[test]
     fn test_event_default() {
-        let a = Event::default();
-        let b = Event::try_from("event").expect("");
+        let a: Event<String> = Event::default();
+        let b = Event::try_from("generic_event").expect("");
         assert_eq!(a, b)
     }
 
-    #[test]
-    fn test_message_default() {
-        let a = Message::from("Test message");
-        let b = Message::default();
-        assert_ne!(a, b.clone());
-        assert_eq!(Message::from("").message, b.message)
-    }
+
 
     #[test]
     fn test_state_default() {

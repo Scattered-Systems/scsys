@@ -4,10 +4,10 @@
     Description:
         ... Summary ...
 */
-pub use self::{extractor::*, file::*};
+pub use self::{extractor::*, files::*};
 
 mod extractor;
-mod file;
+mod files;
 
 pub trait ExtractorSpec<T> {
     fn extract(&self) -> Vec<T>;
@@ -16,3 +16,5 @@ pub trait ExtractorSpec<T> {
 pub trait FileExtSpec: ExtractorSpec<String> {
     fn path(&self) -> std::path::Path;
 }
+
+pub(crate) mod utils {}

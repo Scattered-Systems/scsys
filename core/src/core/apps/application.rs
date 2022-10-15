@@ -6,8 +6,9 @@
 */
 use super::ApplicationMode;
 use crate::Id;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize)]
 pub struct Application {
     pub homepage: Option<String>,
     pub id: Option<Id>,

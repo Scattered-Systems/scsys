@@ -4,6 +4,7 @@
     Description:
         ... Summary ...
 */
+use crate::generate_random_number;
 use rand::{distributions, prelude::Distribution};
 use serde::{Deserialize, Serialize};
 
@@ -21,7 +22,7 @@ where
     distributions::Standard: Distribution<T>,
 {
     pub fn generate() -> Self {
-        Self::new(crate::generate::generate_random_number::<T>())
+        Self::new(generate_random_number::<T>())
     }
 }
 

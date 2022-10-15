@@ -4,12 +4,12 @@
     Description:
         ... Summary ...
 */
-pub use self::{alphabet::*, digits::*, utils::*};
+pub use self::{alphabet::*, digits::*};
 
 mod alphabet;
 mod digits;
 
-mod utils {
+pub(crate) mod utils {
     use rand::{
         distributions::{Alphanumeric, Standard},
         prelude::Distribution,
