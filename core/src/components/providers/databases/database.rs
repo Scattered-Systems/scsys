@@ -1,8 +1,7 @@
 /*
-    Appellation: databases <module>
+    Appellation: database <module>
     Contributors: FL03 <jo3mccain@icloud.com> (https://github.com)
-    Description:
-        ... Summary ...
+    Description: Implements the standards for interacting with database providers
 */
 use serde::{Deserialize, Serialize};
 
@@ -19,17 +18,4 @@ impl Database {
     pub fn from_str(name: &str, uri: &str) -> Self {
         Self::new(name.to_string(), uri.to_string())
     }
-}
-pub trait DatabaseSpec {
-    fn name(&self) -> String;
-    fn uri(&self) -> String;
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub enum Databases {
-    Cassandra { uri: String },
-    MongoDB { name: String, uri: String },
-    Postgres { name: String, uri: String },
-    RocksDB { name: String, uri: String },
-    SQLite(String),
 }

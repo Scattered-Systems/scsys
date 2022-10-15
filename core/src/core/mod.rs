@@ -5,18 +5,11 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{
-    apps::*, contexts::*, errors::*, events::*, identities::*, messages::*, primitives::*,
-    times::*, utils::*,
-};
+pub use self::{apps::*, contexts::*, primitives::*, times::*, utils::*};
 
 pub(crate) mod apps;
 pub(crate) mod contexts;
 pub mod crypto;
-pub(crate) mod errors;
-pub(crate) mod events;
-pub(crate) mod identities;
-pub(crate) mod messages;
 mod primitives;
 pub mod states;
 pub(crate) mod times;

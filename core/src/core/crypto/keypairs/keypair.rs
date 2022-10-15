@@ -4,7 +4,6 @@
     Description:
         ... Summary ...
 */
-use crate::Timestamp;
 use ring::signature::{EcdsaKeyPair, Ed25519KeyPair};
 use serde::{Deserialize, Serialize};
 
@@ -20,7 +19,6 @@ impl Keypair {
         let keypair = Ed25519KeyPair::from_pkcs8(pkcs8_bytes.as_ref())
             .ok()
             .unwrap();
-        let timestamp = Timestamp::default();
         Self::ED25519(keypair)
     }
 }

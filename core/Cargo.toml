@@ -9,7 +9,7 @@ license = "MIT"
 name = "scsys-core"
 readme = "README.md"
 repository = "https://gitlab.com/scsys/lib/crates/scsys"
-version = "0.1.7" # TODO: Update the package version
+version = "0.1.20" # TODO: Update the package version
 
 [lib]
 crate-type = ["cdylib", "rlib"]

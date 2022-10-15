@@ -9,7 +9,7 @@ license = "MIT"
 name = "scsys"
 readme = "README.md"
 repository = "https://gitlab.com/scsys/lib/crates/scsys"
-version = "0.1.19" # TODO: Update the package version
+version = "0.1.20" # TODO: Update the package version
 
 [features]
 default = ["core"]
@@ -42,17 +42,17 @@ ring = { optional = true, version = "0.16.20" }
 [dependencies.scsys-core]
 optional = true
 path = "../core"
-version = "0.1.7"
+version = "0.1.20"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.9" # TODO: Update feature versioning
+version = "0.1.20" # TODO: Update feature versioning
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.9" # TODO: Update feature versioning
+version = "0.1.20" # TODO: Update feature versioning
 
 [package.metadata.docs.rs]
 all-features = true

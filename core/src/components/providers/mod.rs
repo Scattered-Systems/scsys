@@ -5,27 +5,21 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{cache::Cache, database::Database, ethereum::Web3Provider};
+pub use self::{cache::Cache, databases::*, ethereum::Web3Provider};
 
 mod cache;
-mod database;
+mod databases;
 mod ethereum;
 
 pub(crate) mod variants {
-    use super::{Cache, Database, Web3Provider};
+    use super::{Cache, Databases, Web3Provider};
     use serde::{Deserialize, Serialize};
     use strum::{EnumString, EnumVariantNames};
 
-    #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-    pub enum Provider {
-        Cache(Cache),
-        Database(Database),
-        Web3(Web3Provider),
-    }
-
-    impl Default for Provider {
-        fn default() -> Self {
-            Self::Database(Database::default())
-        }
+    #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+    pub struct Providers {
+        pub cache: Option<Cache>,
+        pub database: Option<Databases>,
+        pub ethereum: Option<Web3Provider>,
     }
 }
