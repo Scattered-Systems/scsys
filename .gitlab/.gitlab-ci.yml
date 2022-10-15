@@ -7,7 +7,6 @@
   stage: publish
   before_script:
     - cargo login $CARGO_REGISTRY_TOKEN
-    - cargo fmt --all
   script:
     - cargo publish -p scsys-core -v
     - cargo publish -p scsys-derive -v
