@@ -6,8 +6,6 @@
 */
 
 pub mod accounts;
-pub mod errors;
-pub mod events;
 pub mod identities;
 pub mod logging;
 pub mod messages;

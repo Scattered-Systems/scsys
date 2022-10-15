@@ -8,7 +8,7 @@
 
 #[doc(inline)]
 #[cfg(feature = "core")]
-pub use scsys_core as core;
+pub use scsys_core::*;
 #[cfg(feature = "derive")]
 pub use scsys_derive::*;
 #[cfg(feature = "macros")]
@@ -29,9 +29,11 @@ pub mod prelude {
     pub use ring;
 
     #[cfg(feature = "core")]
-    pub use super::core::{
-        self, accounts::*, extract::*, generate::*, logging::*, models::*, networking::*,
-        providers::*, schemas::*, states::*, ActorSpec, AppConfig, AppSpec, ApplicationMode,
-        BoxResult,
+    pub use super::{
+        actors::{extract::*, generate::*},
+        components::{accounts::*, identities::*, logging::*, networking::*, providers::*},
+        data::{models::*, schemas::*},
+        crypto::*,
+        states::*
     };
 }

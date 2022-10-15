@@ -1,3 +1,8 @@
+/*
+    Appellation: scsys-core <library>
+    Creator: FL03 <jo3mccain@icloud.com>
+    Description: Implements standard datetime utilities along with a timestamp structure for use throughout
+*/
 pub use self::timestamp::Timestamp;
 
 mod timestamp;

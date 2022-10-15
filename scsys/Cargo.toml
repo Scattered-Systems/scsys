@@ -38,7 +38,6 @@ chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }
 rand = { optional = true, version = "0.8.5" }
 ring = { optional = true, version = "0.16.20" }
-
 [dependencies.scsys-core]
 optional = true
 path = "../core"

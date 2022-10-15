@@ -4,9 +4,10 @@
     Description:
         ... Summary ...
 */
-use crate::{generate::generate_random_string, Timestamp};
+use crate::{generate_random_string, Timestamp};
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct StringGenerator {
     pub data: String,
     pub timestamp: Timestamp,
