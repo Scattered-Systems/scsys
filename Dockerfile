@@ -16,7 +16,12 @@ WORKDIR /project
 
 COPY . .
 
-RUN cargo fmt --all && \
-    cargo build --release --workspace && \
-    cargo clippy && \
+RUN cargo build --release --workspace && \
     cargo test --all --release -v
+
+FROM builder as publisher
+
+ENV CARGO_REGISTRY_TOKEN="" \
+    PACKAGE=""
+
+CMD [ "cargo", "publish", "-p",  ${PACKAGE}, "--token", ${CARGO_REGISTRY_TOKEN}]
