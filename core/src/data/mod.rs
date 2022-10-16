@@ -4,7 +4,9 @@
     Description:
         ... Summary ...
 */
+pub use self::structs::*;
 
-pub mod handlers;
+pub mod caveats;
 pub mod models;
 pub mod schemas;
+pub(crate) mod structs;

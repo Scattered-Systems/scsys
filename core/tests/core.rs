@@ -16,8 +16,6 @@ mod tests {
         assert_eq!(a, b)
     }
 
-
-
     #[test]
     fn test_state_default() {
         let actual = State::new("message".to_string(), "test");

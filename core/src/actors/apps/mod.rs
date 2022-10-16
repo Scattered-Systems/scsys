@@ -9,12 +9,15 @@ pub use self::{configs::*, modes::ApplicationMode};
 
 mod configs;
 
-pub trait AppSpec {
+pub trait ApplicationMetadata<Dt = serde_json::Value> {
+    fn data(&self) -> Vec<Dt>;
     fn homepage(&self) -> String;
     fn name(&self) -> String;
     fn slug(&self) -> String {
         self.name().to_lowercase()
     }
+    fn version(&self) -> Option<String>;
+    fn url(&self) -> Option<String>;
 }
 
 pub(crate) mod modes {

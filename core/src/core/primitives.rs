@@ -12,7 +12,7 @@ pub const SCASE: &str = "snake_case";
 pub const DEFAULT_HTTP_PORT: u16 = 8080;
 
 /// Type alias of a result implementing the [BaseError]
-pub type BaseResult<T = (), E = BaseError> = Result<T, E>;
+pub type Result<T = (), E = BaseError> = std::result::Result<T, E>;
 /// Type alias for the standard result used
 pub type BoxResult<T = (), E = BoxError> = Result<T, E>;
 /// Type alias for [bson::DateTime]

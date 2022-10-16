@@ -30,10 +30,12 @@ pub mod prelude {
 
     #[cfg(feature = "core")]
     pub use super::{
-        actors::{extract::*, generate::*},
-        components::{accounts::*, identities::*, logging::*, networking::*, providers::*},
-        data::{models::*, schemas::*},
+        actors::{extract::*, generate::*, handlers::*, parse::*},
+        components::{
+            accounts::*, identities::*, logging::*, messages::*, networking::*, providers::*,
+        },
         crypto::*,
-        states::*
+        data::{caveats::*, models::*, schemas::*},
+        states::*,
     };
 }

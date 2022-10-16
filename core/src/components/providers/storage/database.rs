@@ -19,3 +19,21 @@ impl Database {
         Self::new(name.to_string(), uri.to_string())
     }
 }
+
+impl std::convert::From<&Self> for Database {
+    fn from(data: &Self) -> Self {
+        data.clone()
+    }
+}
+
+impl std::convert::From<(&str, &str)> for Database {
+    fn from(data: (&str, &str)) -> Self {
+        Self::new(data.0.to_string(), data.1.to_string())
+    }
+}
+
+impl std::convert::From<&str> for Database {
+    fn from(data: &str) -> Self {
+        Self::new(String::new(), data.to_string())
+    }
+}
