@@ -19,9 +19,9 @@ COPY . .
 RUN cargo build --release --workspace && \
     cargo test --all --release -v
 
-FROM builder as publisher
+# FROM builder as publisher
 
-ENV CARGO_REGISTRY_TOKEN="" \
-    PACKAGE=""
+# ENV CARGO_REGISTRY_TOKEN="" \
+#     PACKAGE=""
 
-CMD [ "cargo", "publish", "-p",  ${PACKAGE}, "--token", ${CARGO_REGISTRY_TOKEN}]
+# CMD [ "cargo", "publish", "-p",  ${PACKAGE}, "--token", ${CARGO_REGISTRY_TOKEN}]
