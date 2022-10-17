@@ -4,7 +4,8 @@
     Description:
         ... Summary ...
 */
-pub use self::{tokens::*, users::*};
+pub use self::{events::*, tokens::*, users::*};
 
+pub(crate) mod events;
 mod tokens;
 mod users;

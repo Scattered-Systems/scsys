@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::{BsonOid, Timestamp};
+use crate::{data::models::EventModel, BsonOid, Timestamp};
 use serde::{Deserialize, Serialize};
 
 pub trait EventSpec {
@@ -15,20 +15,37 @@ pub trait EventSpec {
     fn event(&self) -> &Self;
 }
 
-
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Event {
     pub id: BsonOid,
-    pub key: String,
-    pub class: String,
-    pub data: Vec<String>,
-    pub timestamp: i64
+    pub created: Timestamp,
+
+    pub account: Option<String>,
+    pub classification: String,
+    pub data: EventModel,
+    pub pending_webhooks: i64,
 }
 
 impl Event {
-    pub fn new(key: String, class: String, data: Vec<String>) -> Self {
+    pub fn new(
+        account: Option<String>,
+        classification: String,
+        data: EventModel,
+        pending_webhooks: Option<i64>,
+    ) -> Self {
         let id = crate::BsonOid::new();
-        let timestamp = Timestamp::default().into();
-        Self { id, key, class, data, timestamp }
+        let created = Timestamp::default().into();
+        let pending_webhooks = match pending_webhooks {
+            Some(v) => v,
+            None => 0,
+        };
+        Self {
+            id,
+            created,
+            account,
+            classification,
+            data,
+            pending_webhooks,
+        }
     }
 }

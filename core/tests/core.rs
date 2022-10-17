@@ -11,8 +11,8 @@ mod tests {
 
     #[test]
     fn test_event_default() {
-        let a: Event<String> = Event::default();
-        let b = Event::try_from("generic_event").expect("");
+        let a = Event::default();
+        let b = a.clone();
         assert_eq!(a, b)
     }
 

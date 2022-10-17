@@ -13,7 +13,6 @@ pub trait Temporal {
         Timestamp::default()
     }
     fn timestamp(&self) -> Timestamp;
-
 }
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
