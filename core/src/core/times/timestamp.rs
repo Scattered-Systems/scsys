@@ -8,6 +8,14 @@ use crate::{chrono_datetime_now, chrono_into_bson};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
 
+pub trait Temporal {
+    fn now(&self) -> Timestamp {
+        Timestamp::default()
+    }
+    fn timestamp(&self) -> Timestamp;
+
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Timestamp(i64);
 
@@ -23,6 +31,12 @@ impl Timestamp {
     }
     pub fn timestamp() -> i64 {
         Self::now().timestamp()
+    }
+}
+
+impl std::convert::Into<i64> for Timestamp {
+    fn into(self) -> i64 {
+        self.0
     }
 }
 
