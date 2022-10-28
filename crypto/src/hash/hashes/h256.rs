@@ -5,10 +5,10 @@
         ... Summary ...
 */
 use super::{
-    primitives::H256Hash,
     utils::{generate_random_hash, hash_divide_by, hash_multiply_by},
     Hashable,
 };
+use crate::H256Hash;
 use rand::Rng;
 use ring::digest::digest;
 use serde::{Deserialize, Serialize};

@@ -4,17 +4,23 @@
     Description:
         ... Summary ...
 */
-use ring::signature::{EcdsaKeyPair, Ed25519KeyPair};
+use ring::{rand::SystemRandom, signature::Ed25519KeyPair};
 use serde::{Deserialize, Serialize};
 
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub struct PublicKey<T>(T);
+
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub struct SecretKey<T>(T);
+
 #[derive(Debug)]
-pub enum Keypair {
+pub enum Keys {
     ED25519(Ed25519KeyPair),
 }
 
-impl Keypair {
+impl Keys {
     pub fn new() -> Self {
-        let rng = ring::rand::SystemRandom::new();
+        let rng = SystemRandom::new();
         let pkcs8_bytes = Ed25519KeyPair::generate_pkcs8(&rng).ok().unwrap();
         let keypair = Ed25519KeyPair::from_pkcs8(pkcs8_bytes.as_ref())
             .ok()

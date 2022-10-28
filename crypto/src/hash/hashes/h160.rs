@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use super::{primitives::H160Hash, H256};
+use crate::{hash::hashes::H256, H160Hash};
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 

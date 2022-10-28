@@ -3,19 +3,20 @@ authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-S
 categories = []
 description = "scsys lays the foundation for the Scattered-Systems ecosystem, delivering critical primitives throughout"
 edition = "2021"
-homepage = "https://gitlab.com/scsys/lib/crates/scsys/-/wiki"
+homepage = "https://github.com/scattered-systems/scsys/wiki"
 keywords = ["blockchain", "primitives", "scsys"]
 license = "MIT"
 name = "scsys"
 readme = "README.md"
-repository = "https://gitlab.com/scsys/lib/crates/scsys"
-version = "0.1.21" # TODO: Update the package version
+repository = "https://github.com/scattered-systems/scsys"
+version = "0.1.22" # TODO: Update the package version
 
 [features]
-default = ["core"]
-full = ["core", "derive", "macros", "extras"]
+default = ["core", "crypto"]
+full = ["core", "crypto", "derive", "macros", "extras"]
 
 core = ["scsys-core"]
+crypto = ["scsys-crypto"]
 derive = ["scsys-derive"]
 macros = ["scsys-macros"]
 
@@ -32,7 +33,7 @@ crate-type = ["cdylib", "rlib"]
 test = true
 
 [dependencies]
-anyhow = { features = ["default"], version = "1.0.65" }
+anyhow = { optional = true, features = ["default"], version = "1.0.65" }
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, version = "2.4.0" }
 chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }
@@ -42,17 +43,22 @@ ring = { optional = true, version = "0.16.20" }
 [dependencies.scsys-core]
 optional = true
 path = "../core"
-version = "0.1.21"
+version = "0.1.22"
+
+[dependencies.scsys-crypto]
+optional = true
+path = "../crypto"
+version = "0.1.22"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.21" # TODO: Update feature versioning
+version = "0.1.22" # TODO: Update feature versioning
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.21" # TODO: Update feature versioning
+version = "0.1.22" # TODO: Update feature versioning
 
 [package.metadata.docs.rs]
 all-features = true

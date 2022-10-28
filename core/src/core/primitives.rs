@@ -5,7 +5,7 @@
         This module is dedicated to developing a set of primitives to be used throughout our
         ecosystem
 */
-pub use crate::{crypto::hashes::primitives::*, errors::primitives::*, states::primitives::*};
+pub use crate::{errors::primitives::*, states::primitives::*};
 pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
 
 pub const SCASE: &str = "snake_case";

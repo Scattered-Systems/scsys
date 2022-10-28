@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use scsys_core::{crypto::hashes::H256, hash_multiply_by};
+    use scsys_crypto::hash::{hash_multiply_by, H256};
 
     use vrf::openssl::{CipherSuite, ECVRF};
     use vrf::VRF;
@@ -37,8 +37,13 @@ mod tests {
     #[test]
     fn test_hash_multiply() {
         let hash: H256 = [2u8; 32].into();
-        let result = hash_multiply_by(&hash, 0.5f64);
-        let halfhash: H256 = [1u8; 32].into();
-        assert_eq!(result, halfhash);
+        let actual: H256 = [1u8; 32].into();
+
+        let a = hash_multiply_by(&hash, 0.5f64);
+        let b = hash * 0.5f64;
+
+        assert_eq!(&a, &actual);
+        assert_eq!(&b, &actual);
+        assert_eq!(b, actual)
     }
 }

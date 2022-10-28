@@ -9,9 +9,7 @@ pub use self::keypair::*;
 pub(crate) mod keypair;
 
 pub(crate) mod utils {
-    use log::{debug, info, warn};
-    use ring::rand;
-    use ring::signature::Ed25519KeyPair;
+    use ring::{rand, signature::Ed25519KeyPair};
 
     /// Generate a random key pair.
     pub fn random_keypair() -> Ed25519KeyPair {

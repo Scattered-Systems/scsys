@@ -1,19 +1,31 @@
 /*
-    Appellation: hash <module>
+    Appellation: hashes <module>
     Contributors: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...
 */
-pub use self::{h160::H160, h256::H256, hash::Hashes, interface::Hashable};
+pub use self::{h160::H160, h256::H256, utils::*};
 
-mod h160;
-mod h256;
-mod hash;
-mod interface;
+pub(crate) mod h160;
+pub(crate) mod h256;
 
-pub(crate) mod primitives {
-    pub type H256Hash = [u8; 32];
-    pub type H160Hash = [u8; 20];
+pub trait Hashable {
+    fn hash(&self) -> H256;
+    fn generate(&self) -> H256 {
+        generate_random_hash()
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+pub enum Hashes {
+    H256(H256),
+    H160(H160),
+}
+
+impl Default for Hashes {
+    fn default() -> Self {
+        Self::H256(H256::default())
+    }
 }
 
 pub(crate) mod utils {

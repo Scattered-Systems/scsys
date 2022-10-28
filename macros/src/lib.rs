@@ -6,6 +6,19 @@
 */
 
 #[macro_export]
+macro_rules! join {
+    ( $( $x:expr ),* ) => {
+        {
+            let mut tmp = String::new();
+            $(
+                tmp.push_str($x);
+            )*
+            tmp
+        }
+    };
+}
+
+#[macro_export]
 macro_rules! extend_path {
     ($(
         $x:expr;

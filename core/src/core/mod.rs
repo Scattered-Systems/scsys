@@ -7,7 +7,6 @@
 pub use self::{contexts::*, errors::*, events::*, primitives::*, times::*, utils::*};
 
 pub(crate) mod contexts;
-pub mod crypto;
 pub(crate) mod errors;
 pub(crate) mod events;
 mod primitives;

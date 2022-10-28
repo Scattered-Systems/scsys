@@ -1,15 +1,14 @@
 [package]
 authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
 categories = []
-description = "scsys lays the foundation for the Scattered-Systems ecosystem, delivering critical primitives throughout"
+description = "scsys-core"
 edition = "2021"
-homepage = "https://gitlab.com/scsys/lib/crates/scsys/-/wiki"
-keywords = ["blockchain", "primitives", "scsys"]
+homepage = "https://github.com/scattered-systems/scsys/wiki"
+keywords = ["core", "primitives", "scsys"]
 license = "MIT"
 name = "scsys-core"
-readme = "README.md"
-repository = "https://gitlab.com/scsys/lib/crates/scsys"
-version = "0.1.21" # TODO: Update the package version
+repository = "https://github.com/scattered-systems/scsys"
+version = "0.1.22" # TODO: Update the package version
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -27,8 +26,8 @@ log = "0.4.17"
 nom = "7.1.1"
 rand = { features = ["serde1"], version = "0.8.5" }
 ring = "0.16.20"
-serde = { features = ["derive"], version = "1.0.145" }
-serde_json = "1.0.85"
+serde = { features = ["derive"], version = "1.0.147" }
+serde_json = "1.0.87"
 strum = { features = ["derive"], version = "0.24.1" }
 tracing = "0.1.36"
 tracing-subscriber = "0.3.15"

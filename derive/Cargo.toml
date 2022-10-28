@@ -1,25 +1,21 @@
 [package]
-authors = [
-    "FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)",
-    "Scattered-Systems (https://gitlab.com/scsys)"
-]
+authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
 categories = []
-description = "Derive macros created for scsys"
+description = "scsys-derive"
 edition = "2021"
-homepage = "https://gitlab.com/scsys/lib/crates/scsys"
-keywords = ["derive", "proc-macros"]
+homepage = "https://github.com/scattered-systems/scsys/wiki"
+keywords = ["derive", "macros", "scsys"]
 license = "MIT"
 name = "scsys-derive"
-readme = "README.md"
-repository = "https://gitlab.com/scsys/lib/crates/scsys"
-version = "0.1.21" # TODO - Update cargo package version
+repository = "https://github.com/scattered-systems/scsys"
+version = "0.1.22" # TODO: Update the package version
 
 [lib]
 proc-macro = true
 test = false
 
 [dependencies]
-proc-macro2 = "1.0.46"
+proc-macro2 = "1.0.47"
 quote = "1.0.21"
 syn = { features = ["full"], version = "1.0.102" }
 

@@ -9,6 +9,8 @@
 #[doc(inline)]
 #[cfg(feature = "core")]
 pub use scsys_core::*;
+#[cfg(feature = "crypto")]
+pub use scsys_crypto as crypto;
 #[cfg(feature = "derive")]
 pub use scsys_derive::*;
 #[cfg(feature = "macros")]
@@ -34,8 +36,10 @@ pub mod prelude {
         components::{
             accounts::*, identities::*, logging::*, messages::*, networking::*, providers::*,
         },
-        crypto::*,
         data::{caveats::*, models::*, schemas::*},
         states::*,
     };
+
+    #[cfg(feature = "crypto")]
+    pub use super::crypto::{self, hash::*};
 }
