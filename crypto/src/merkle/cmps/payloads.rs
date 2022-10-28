@@ -12,4 +12,3 @@ pub enum Payload<T: ToString> {
     Leaf(Leaf<T>),
     Node(Box<Node<T>>, Box<Node<T>>),
 }
-

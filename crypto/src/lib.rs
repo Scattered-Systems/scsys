@@ -3,9 +3,10 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... summary ...
 */
-pub use self::core::*;
+#[doc(inline)]
+pub use self::primitives::*;
 
-pub(crate) mod core;
 pub mod hash;
 pub mod keys;
 pub mod merkle;
+pub(crate) mod primitives;

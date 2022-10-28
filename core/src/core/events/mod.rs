@@ -6,5 +6,17 @@
 */
 pub use self::{event::*, variants::*};
 
-mod event;
+pub(crate) mod event;
 mod variants;
+
+#[cfg(test)]
+mod tests {
+    use super::Event;
+
+    #[test]
+    fn test_event_default() {
+        let a = Event::default();
+        let b = a.clone();
+        assert_eq!(a, b)
+    }
+}

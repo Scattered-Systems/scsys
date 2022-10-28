@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::{chrono_datetime_now, chrono_into_bson};
+use crate::{ChronoDateTime, chrono_datetime_now, chrono_into_bson};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
 
@@ -25,7 +25,7 @@ impl Timestamp {
     pub fn now() -> chrono::DateTime<Utc> {
         chrono_datetime_now()
     }
-    pub fn chrono_to_bson(&self, data: crate::ChronoDateTime) -> bson::DateTime {
+    pub fn chrono_to_bson(&self, data: ChronoDateTime) -> bson::DateTime {
         chrono_into_bson::<Utc>(data)
     }
     pub fn timestamp() -> i64 {

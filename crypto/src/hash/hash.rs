@@ -4,8 +4,8 @@
     Description:
         ... Summary ...
 */
-use crate::HashGeneric;
 use super::hasher;
+use crate::HashGeneric;
 use serde::Serialize;
 use sha2::{Digest, Sha256};
 

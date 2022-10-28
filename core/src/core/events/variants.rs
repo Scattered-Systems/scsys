@@ -12,7 +12,7 @@ use strum::{EnumString, EnumVariantNames};
     Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
-pub enum Event<T: std::string::ToString + std::default::Default = String> {
+pub enum Events<T: std::string::ToString + std::default::Default = String> {
     Initializing,
     Aggregating,
     Attempting,
@@ -32,7 +32,7 @@ pub enum Event<T: std::string::ToString + std::default::Default = String> {
     Syncing,
 }
 
-impl<T: std::string::ToString + std::default::Default> Default for Event<T> {
+impl<T: std::string::ToString + std::default::Default> Default for Events<T> {
     fn default() -> Self {
         Self::GenericEvent(T::default())
     }
