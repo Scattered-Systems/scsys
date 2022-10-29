@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::BsonOid;
+use crate::core::BsonOid;
 use serde::{Deserialize, Serialize};
 use strum::{EnumString, EnumVariantNames};
 

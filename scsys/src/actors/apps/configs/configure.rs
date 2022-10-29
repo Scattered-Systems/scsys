@@ -2,7 +2,7 @@
     Appellation: configuration <module>
     Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
 */
-use crate::{collect_config_files, DefaultConfigBuilder};
+use crate::core::{collect_config_files, DefaultConfigBuilder};
 
 use config::{Config, ConfigError};
 

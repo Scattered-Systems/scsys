@@ -3,7 +3,7 @@
     Creator: FL03 <jo3mccain@icloud.com>
     Description:
 */
-
+use crate::core::Result;
 use serde::{Deserialize, Serialize};
 use url::Url;
 
@@ -17,8 +17,8 @@ impl Uri {
     pub fn new(data: String) -> Self {
         Self(data)
     }
-    pub fn parse(&self) -> crate::Result<Url> {
-        let data = url::Url::parse(self.0.as_str())?;
-        Ok(url::Url::parse(self.0.as_str())?)
+    pub fn parse(&self) -> Result<Url> {
+        let url = Url::parse(self.0.as_str())?;
+        Ok(url)
     }
 }

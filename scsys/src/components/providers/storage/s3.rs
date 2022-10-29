@@ -4,6 +4,7 @@
     Description:
         ... Summary ...
 */
+use crate::core::Result;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
@@ -22,7 +23,7 @@ impl S3Credential {
     pub fn from_env(
         access: Option<&str>,
         secret: Option<&str>,
-    ) -> crate::Result<Self, std::env::VarError> {
+    ) -> Result<Self, std::env::VarError> {
         let access = match access {
             Some(v) => std::env::var(v),
             None => std::env::var("S3_ACCESS_KEY"),
@@ -54,7 +55,7 @@ impl S3Region {
     pub fn from_env(
         endpoint: Option<&str>,
         region: Option<&str>,
-    ) -> crate::Result<Self, std::env::VarError> {
+    ) -> Result<Self, std::env::VarError> {
         let endpoint = match endpoint {
             Some(v) => std::env::var(v),
             None => std::env::var("S3_ENDPOINT"),

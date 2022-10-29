@@ -4,6 +4,7 @@
     Description:
         ... Summary ...
 */
+use crate::core::BoxResult;
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct FileHandler {
@@ -11,14 +12,8 @@ pub struct FileHandler {
 }
 
 impl FileHandler {
-    fn constructor(path: String) -> Result<Self, crate::BoxError> {
-        Ok(Self { path })
-    }
     pub fn new(path: String) -> Self {
-        match Self::constructor(path) {
-            Ok(v) => v,
-            Err(e) => panic!("FileHandler Error: {}", e),
-        }
+       Self { path }
     }
 }
 

@@ -10,7 +10,7 @@ pub(crate) mod ids;
 
 pub(crate) mod interface {
     use super::Id;
-    use crate::times::Timestamp;
+    use crate::core::Timestamp;
     use serde_json::Value;
 
     pub trait Identitfiable {
