@@ -61,6 +61,8 @@ impl Default for Application {
     }
 }
 
+
+
 #[cfg(test)]
 mod tests {
     use super::Application;

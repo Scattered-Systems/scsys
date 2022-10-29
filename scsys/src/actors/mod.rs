@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-pub use self::{actor::ActorSpec, apps::*};
+pub use self::{actor::*, apps::*};
 
 pub(crate) mod actor;
 pub(crate) mod apps;

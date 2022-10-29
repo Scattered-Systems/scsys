@@ -4,8 +4,6 @@
     Description:
         ... Summary ...
 */
-use serde_json::Value;
-
 pub trait Caveat {
     fn caveat(&self) -> &Self
     where

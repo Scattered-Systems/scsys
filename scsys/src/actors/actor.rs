@@ -6,6 +6,10 @@
 */
 use crate::{components::identities::Appellation, core::BoxResult};
 
+pub trait Catalyst<S: std::convert::Into<T>, T> {
+    fn catalyst(&self, data: &S) -> T;
+}
+
 pub trait Transformation<S> {
     fn data(&self) -> Vec<S>;
     fn transform<T>(&self, catalyst: fn(&S) -> T) -> BoxResult<Vec<T>> {
