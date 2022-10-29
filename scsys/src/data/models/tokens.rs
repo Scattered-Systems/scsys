@@ -4,8 +4,10 @@
     Description:
         ... Summary ...
 */
+use bson::oid::ObjectId;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Tokens {
     pub access_token: String,
     pub token_type: String,

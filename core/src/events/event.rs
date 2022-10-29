@@ -4,7 +4,8 @@
     Description:
         ... Summary ...
 */
-use crate::{data::models::EventModel, BsonOid, Timestamp};
+use crate::{BsonOid, Timestamp};
+use super::payload::EventModel;
 use serde::{Deserialize, Serialize};
 
 pub trait EventSpec {

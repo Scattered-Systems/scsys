@@ -4,10 +4,11 @@
     Description:
         ... Summary ...
 */
-pub use self::{event::*, variants::*};
+pub use self::{event::*, payload::*, variants::*};
 
 pub(crate) mod event;
-mod variants;
+pub(crate) mod payload;
+pub(crate) mod variants;
 
 #[cfg(test)]
 mod tests {

@@ -4,19 +4,20 @@
     Description:
         ... Summary ...
 */
-use crate::BsonOid;
+use bson::oid::ObjectId;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Users {
     #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<BsonOid>,
+    pub id: Option<ObjectId>,
 
     pub username: String,
 }
 
 impl Users {
     pub fn new(username: String) -> Self {
-        let id = Some(BsonOid::new());
+        let id = Some(ObjectId::new());
 
         Self { id, username }
     }

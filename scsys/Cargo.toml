@@ -15,7 +15,7 @@ version = "0.1.22" # TODO: Update the package version
 default = ["core", "crypto"]
 full = ["core", "crypto", "derive", "macros", "extras"]
 
-core = ["scsys-core", "chrono", "config"]
+core = ["scsys-core"]
 crypto = ["scsys-crypto"]
 derive = ["scsys-derive"]
 macros = ["scsys-macros"]

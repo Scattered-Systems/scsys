@@ -19,9 +19,23 @@ pub use scsys_derive::*;
 pub use scsys_macros::*;
 
 pub mod prelude {
+    #[doc(inline)]
+    pub use bson;
+    #[doc(inline)]
+    pub use chrono;
+    #[doc(inline)]
+    pub use config;
+    #[doc(inline)]
+    pub use log;
+    #[doc(inline)]
+    pub use rand;
+    #[doc(inline)]
+    pub use ring;
+
+
     #[cfg(feature = "core")]
-    pub use super::core::*;
+    pub use super::core::{self, contexts::*, errors::*, events::*, states::*};
 
     #[cfg(feature = "crypto")]
-    pub use super::crypto::{self, hash::*};
+    pub use super::crypto::{self, hash::*, keys::*};
 }
