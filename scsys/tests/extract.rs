@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use scsys::prelude::{Extractor, FileExtractor, FileInterface};
+    use scsys::actors::extract::{Extractor, FileExtractor, FileInterface};
 
     #[test]
     fn test_file_extractor() {

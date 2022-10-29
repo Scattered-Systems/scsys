@@ -4,11 +4,13 @@
     Description:
         ... Summary ...
 */
-#![allow(unused_imports)]
+pub mod actors;
+pub mod components;
+pub mod data;
 
 #[doc(inline)]
 #[cfg(feature = "core")]
-pub use scsys_core::*;
+pub use scsys_core as core;
 #[cfg(feature = "crypto")]
 pub use scsys_crypto as crypto;
 #[cfg(feature = "derive")]
@@ -17,29 +19,22 @@ pub use scsys_derive::*;
 pub use scsys_macros::*;
 
 pub mod prelude {
-    #[cfg(feature = "anyhow")]
-    pub use anyhow;
-    #[cfg(feature = "bson")]
+    #[doc(inline)]
     pub use bson;
-    #[cfg(feature = "chrono")]
+    #[doc(inline)]
     pub use chrono;
-    #[cfg(feature = "config")]
+    #[doc(inline)]
     pub use config;
-    #[cfg(feature = "rand")]
+    #[doc(inline)]
+    pub use log;
+    #[doc(inline)]
     pub use rand;
-    #[cfg(feature = "ring")]
+    #[doc(inline)]
     pub use ring;
 
     #[cfg(feature = "core")]
-    pub use super::{
-        actors::{extract::*, generate::*, handlers::*, parse::*},
-        components::{
-            accounts::*, identities::*, logging::*, messages::*, networking::*, providers::*,
-        },
-        data::{caveats::*, models::*, schemas::*},
-        states::*,
-    };
+    pub use super::core::{self, contexts::*, errors::*, events::*, states::*};
 
     #[cfg(feature = "crypto")]
-    pub use super::crypto::{self, hash::*};
+    pub use super::crypto::{self, hash::*, keys::*};
 }

@@ -1,9 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use scsys::{
-        generate_random_number,
-        prelude::{DigitGenerator, StringGenerator},
-    };
+    use scsys::actors::generate::{generate_random_number, DigitGenerator, StringGenerator};
 
     #[test]
     fn test_generate_number_default() {
