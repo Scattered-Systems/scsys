@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::{ChronoDateTime, chrono_datetime_now, chrono_into_bson};
+use crate::{chrono_datetime_now, chrono_into_bson, ChronoDateTime};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
 

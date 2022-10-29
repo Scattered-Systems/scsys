@@ -13,7 +13,7 @@ pub struct FileHandler {
 
 impl FileHandler {
     pub fn new(path: String) -> Self {
-       Self { path }
+        Self { path }
     }
 }
 

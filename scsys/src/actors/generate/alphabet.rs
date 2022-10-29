@@ -4,8 +4,8 @@
     Description:
         ... Summary ...
 */
-use crate::core::Timestamp;
 use super::generate_random_string;
+use crate::core::Timestamp;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]

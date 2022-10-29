@@ -32,7 +32,6 @@ pub mod prelude {
     #[doc(inline)]
     pub use ring;
 
-
     #[cfg(feature = "core")]
     pub use super::core::{self, contexts::*, errors::*, events::*, states::*};
 
