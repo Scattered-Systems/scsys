@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-pub use self::{alphabet::*, digits::*};
+pub use self::{alphabet::*, digits::*, utils::*};
 
 mod alphabet;
 mod digits;

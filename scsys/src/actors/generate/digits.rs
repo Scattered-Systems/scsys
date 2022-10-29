@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::generate_random_number;
+use super::generate_random_number;
 use rand::{distributions, prelude::Distribution};
 use serde::{Deserialize, Serialize};
 
