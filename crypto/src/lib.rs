@@ -8,5 +8,4 @@ pub use self::primitives::*;
 
 pub mod hash;
 pub mod keys;
-pub mod merkle;
 pub(crate) mod primitives;
