@@ -26,7 +26,7 @@ pub trait ArrayLike {
 //     fn truncate(&mut self, _len: usize) -> Result<(), MerkleMountainRangeError>;
 //     fn shift(&mut self, n: usize) -> Result<(), MerkleMountainRangeError>;
 //     fn push_front(
-//         &mut self, 
+//         &mut self,
 //         item: Self::Value
 //     ) -> Result<(), MerkleMountainRangeError>;
 //     fn for_each<F>(&self, f: F) -> Result<(), MerkleMountainRangeError>

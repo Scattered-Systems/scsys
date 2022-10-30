@@ -8,14 +8,6 @@ use super::payload::EventModel;
 use crate::{BsonOid, Timestamp};
 use serde::{Deserialize, Serialize};
 
-pub trait EventSpec {
-    fn id(&self) -> BsonOid;
-    fn key(&self) -> String;
-    fn classification(&self) -> String;
-    fn data(&self) -> Vec<String>;
-    fn event(&self) -> &Self;
-}
-
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Event {
     pub id: BsonOid,

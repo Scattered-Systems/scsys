@@ -4,9 +4,8 @@
     Description:
         ... Summary ...
 */
-use super::logger_from_env;
+use super::{logger_from_env, Loggable};
 use serde::{Deserialize, Serialize};
-use tracing_subscriber;
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Logger {
@@ -17,13 +16,20 @@ impl Logger {
     pub fn new(level: String) -> Self {
         Self { level }
     }
-
-    pub fn from<T: std::string::ToString>(level: T) -> Self {
-        Self::new(level.to_string())
-    }
-
     pub fn setup(&self) {
         logger_from_env(Some(self.level.clone().as_str()))
+    }
+}
+
+impl Default for Logger {
+    fn default() -> Self {
+        Self::from("info")
+    }
+}
+
+impl Loggable for Logger {
+    fn level(&self) -> String {
+        self.level.clone()
     }
 }
 

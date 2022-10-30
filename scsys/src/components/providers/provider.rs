@@ -9,7 +9,6 @@ use super::{
     Web3Provider,
 };
 use serde::{Deserialize, Serialize};
-use strum::{EnumString, EnumVariantNames};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Providers {

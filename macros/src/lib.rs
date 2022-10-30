@@ -4,6 +4,7 @@
     Description:
         ... Summary ...
 */
+pub mod utils;
 
 #[macro_export]
 macro_rules! join {
@@ -30,4 +31,17 @@ macro_rules! extend_path {
             ),*),*
         ]
     }
+}
+
+#[macro_export]
+macro_rules! rstr {
+    ( $( $x:expr ),* ) => {
+        {
+            let mut tmp = Vec::new();
+            $(
+                tmp.push(crate::utils::gen_random_string($x));
+            )*
+            tmp
+        }
+    };
 }

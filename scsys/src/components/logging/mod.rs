@@ -8,12 +8,8 @@ pub use self::{logger::Logger, utils::logger_from_env};
 
 mod logger;
 
-pub trait LoggerSpec {
+pub trait Loggable {
     fn level(&self) -> String;
-    fn setup(&self) -> &Self {
-        logger_from_env(Some(self.level().as_str()));
-        self
-    }
 }
 
 pub(crate) mod utils {

@@ -7,3 +7,15 @@
 pub use self::context::*;
 
 pub(crate) mod context;
+
+pub trait Configurable {
+    fn settings(&self) -> &Self {
+        self
+    }
+}
+
+pub trait Contextual: Configurable {
+    fn context(&self) -> &Self {
+        self
+    }
+}

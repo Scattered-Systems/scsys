@@ -4,8 +4,16 @@
     Description:
         ... Summary ...
 */
+use super::Configurable;
+use serde::{Deserialize, Serialize};
 
-pub trait Context<Cnf> {
-    fn context(&self) -> Self;
-    fn settings(&self) -> Cnf;
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub struct Context<Cnf: Configurable> {
+    pub settings: Cnf,
+}
+
+impl<Cnf: Configurable> Context<Cnf> {
+    pub fn new(settings: Cnf) -> Self {
+        Self { settings }
+    }
 }

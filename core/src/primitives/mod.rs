@@ -4,7 +4,7 @@
     Description: ... Summary ...
 */
 #[doc(inline)]
-pub use self::{primitives::*, utils::*};
+pub use self::{constants::*, types::*};
 
-pub(crate) mod primitives;
-pub(crate) mod utils;
+pub(crate) mod constants;
+pub(crate) mod types;

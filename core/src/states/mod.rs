@@ -8,7 +8,13 @@ pub use self::state::State;
 
 pub(crate) mod state;
 
-pub(crate) mod primitives {}
+pub trait Stateful<Msg: ToString = String>: Clone + ToString {
+    fn message(&self) -> &Msg;
+    fn state(&self) -> &Self {
+        self
+    }
+    fn timestamp(&self) -> i64;
+}
 
 #[cfg(test)]
 mod tests {

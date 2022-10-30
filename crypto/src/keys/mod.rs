@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-pub use self::keypair::*;
+pub use self::{keypair::*, utils::*};
 
 pub(crate) mod keypair;
 

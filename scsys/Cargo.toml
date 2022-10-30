@@ -9,7 +9,7 @@ license = "MIT"
 name = "scsys"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.22" # TODO: Update the package version
+version = "0.1.23" # TODO: Update the package version
 
 [features]
 default = ["core", "crypto"]

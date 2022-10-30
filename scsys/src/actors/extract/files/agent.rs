@@ -5,7 +5,6 @@
         ... Summary ...
 */
 use serde::{Deserialize, Serialize};
-use std::io::Read;
 
 /// Extract the contents of a file
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]

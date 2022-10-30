@@ -5,11 +5,14 @@
         This module is dedicated to developing a set of primitives to be used throughout our
         ecosystem
 */
-pub use crate::{errors::primitives::*, states::primitives::*};
+use std::collections::HashMap;
+
 pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
 
-pub const SCASE: &str = "snake_case";
-pub const DEFAULT_HTTP_PORT: u16 = 8080;
+/// Type alias for a boxed standard error
+pub type BaseError = Box<dyn std::error::Error>;
+/// Type alias for a boxed error with send, sync, and static flags enabled
+pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
 
 /// Type alias of a result implementing the [BaseError]
 pub type Result<T = (), E = BaseError> = std::result::Result<T, E>;
@@ -28,7 +31,7 @@ pub type ConfigFileVec = Vec<ConfigFile<config::FileSourceFile, config::FileForm
 /// Type alias for a configuration result
 pub type ConfigResult<T> = Result<T, ConfigError>;
 /// Type alias for [std::collections::HashMap] defaulting to a (String, String) type
-pub type Dictionary<K = String, V = String> = std::collections::HashMap<K, V>;
+pub type Dictionary<K = String, V = String> = HashMap<K, V>;
 /// Type alias for [chrono::DateTime]
 pub type ChronoDateTime<T = DefaultTimezone> = chrono::DateTime<T>;
 /// Type alias for [config::ConfigBuilder]
@@ -41,3 +44,6 @@ pub type DefaultTimestamp = i64;
 pub type DefaultTimezone = chrono::Utc;
 /// Type alias for [std::io::Result]
 pub type IOResult<T = ()> = std::io::Result<T>;
+
+/// Type alias for a stateful hash map
+pub type StateMap<Hs, V = (usize, usize)> = HashMap<Hs, V>;

@@ -4,11 +4,18 @@
     Description:
         ... Summary ...
 */
-pub use self::{event::*, payload::*, variants::*};
+pub use self::{event::*, misc::*};
 
 pub(crate) mod event;
-pub(crate) mod payload;
-pub(crate) mod variants;
+pub(crate) mod misc;
+
+pub trait Eventful {
+    fn event(&self) -> &Self {
+        self
+    }
+    fn id(&self) -> i64;
+    fn timestamp(&self) -> i64;
+}
 
 #[cfg(test)]
 mod tests {

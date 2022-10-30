@@ -6,11 +6,12 @@
 */
 #![allow(unused_imports)]
 #[doc(inline)]
-pub use self::{misc::*, times::*};
+pub use self::{primitives::*, times::*, utils::*};
 
 pub mod contexts;
 pub mod errors;
 pub mod events;
-pub(crate) mod misc;
+pub(crate) mod primitives;
 pub mod states;
 pub(crate) mod times;
+pub(crate) mod utils;
