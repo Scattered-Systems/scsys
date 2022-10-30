@@ -34,13 +34,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: core
-      run: cargo publish --all-features -p scsys-core -v --token ${CARGO_REGISTRY_TOKEN}
+      run: cargo publish --all-features -p scsys-core -v --token $CARGO_REGISTRY_TOKEN
     - name: crypto
-      run: cargo publish --all-features -p scsys-crypto -v --token ${CARGO_REGISTRY_TOKEN}
+      run: cargo publish --all-features -p scsys-crypto -v --token $CARGO_REGISTRY_TOKEN
     - name: derive
-      run: cargo publish --all-features -p scsys-derive -v --token ${CARGO_REGISTRY_TOKEN}
+      run: cargo publish --all-features -p scsys-derive -v --token $CARGO_REGISTRY_TOKEN
     - name: macros
-      run: cargo publish --all-features -p scsys-macros -v --token ${CARGO_REGISTRY_TOKEN}
+      run: cargo publish --all-features -p scsys-macros -v --token $CARGO_REGISTRY_TOKEN
   publish:
     needs: [ features, login, test ]
     runs-on: ubuntu-latest
