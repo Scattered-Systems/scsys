@@ -4,12 +4,10 @@
     Description:
         ... Summary ...
 */
-use super::{
-    utils::{generate_random_hash, hash_divide_by, hash_multiply_by},
-    Hashable,
+use crate::{
+    hash::{generate_random_hash, hash_divide_by, hash_multiply_by, hashes::H160, Hashable},
+    H256Hash,
 };
-use crate::H256Hash;
-use rand::Rng;
 use ring::digest::digest;
 use serde::{Deserialize, Serialize};
 
@@ -18,7 +16,10 @@ use serde::{Deserialize, Serialize};
 pub struct H256(pub H256Hash); // big endian u256
 
 impl H256 {
-    pub fn random() -> Self {
+    pub fn new(data: H256Hash) -> Self {
+        Self(data)
+    }
+    pub fn generate() -> Self {
         generate_random_hash()
     }
 }
@@ -29,19 +30,13 @@ impl Hashable for H256 {
     }
 }
 
-impl std::ops::Div<f64> for H256 {
-    type Output = Self;
-
-    fn div(self, rhs: f64) -> Self {
-        hash_divide_by(&self, rhs)
-    }
-}
-
-impl std::ops::Mul<f64> for H256 {
-    type Output = Self;
-
-    fn mul(self, rhs: f64) -> Self {
-        hash_multiply_by(&self, rhs)
+impl std::fmt::Debug for H256 {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(
+            f,
+            "{:>02x}{:>02x}..{:>02x}{:>02x}",
+            &self.0[0], &self.0[1], &self.0[30], &self.0[31]
+        )
     }
 }
 
@@ -60,16 +55,6 @@ impl std::fmt::Display for H256 {
             write!(f, "{:>02x}", &self.0[byte_idx])?;
         }
         Ok(())
-    }
-}
-
-impl std::fmt::Debug for H256 {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(
-            f,
-            "{:>02x}{:>02x}..{:>02x}{:>02x}",
-            &self.0[0], &self.0[1], &self.0[30], &self.0[31]
-        )
     }
 }
 
@@ -101,6 +86,14 @@ impl std::convert::From<[u8; 32]> for H256 {
     }
 }
 
+impl std::convert::From<H160> for H256 {
+    fn from(input: H160) -> H256 {
+        let mut buffer: H256Hash = [0; 32];
+        buffer[..].copy_from_slice(&input.0[0..32]);
+        buffer.into()
+    }
+}
+
 impl std::convert::From<H256> for [u8; 32] {
     fn from(input: H256) -> [u8; 32] {
         input.0
@@ -123,6 +116,22 @@ impl std::convert::From<ring::digest::Digest> for H256 {
     }
 }
 
+impl std::ops::Div<f64> for H256 {
+    type Output = Self;
+
+    fn div(self, rhs: f64) -> Self {
+        hash_divide_by(&self, rhs)
+    }
+}
+
+impl std::ops::Mul<f64> for H256 {
+    type Output = Self;
+
+    fn mul(self, rhs: f64) -> Self {
+        hash_multiply_by(&self, rhs)
+    }
+}
+
 impl Ord for H256 {
     fn cmp(&self, other: &H256) -> std::cmp::Ordering {
         let self_higher = u128::from_be_bytes(self.0[0..16].try_into().unwrap());
@@ -140,5 +149,17 @@ impl Ord for H256 {
 impl PartialOrd for H256 {
     fn partial_cmp(&self, other: &H256) -> Option<std::cmp::Ordering> {
         Some(self.cmp(other))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_h256_random() {
+        let a = H256::generate();
+        let b = H256::generate();
+        assert_ne!(a, b)
     }
 }

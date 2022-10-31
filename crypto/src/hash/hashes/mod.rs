@@ -9,13 +9,6 @@ pub use self::{h160::H160, h256::H256, utils::*};
 pub(crate) mod h160;
 pub(crate) mod h256;
 
-pub trait Hashable {
-    fn hash(&self) -> H256;
-    fn generate(&self) -> H256 {
-        generate_random_hash()
-    }
-}
-
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, serde::Deserialize, serde::Serialize)]
 pub enum Hashes {
     H256(H256),
