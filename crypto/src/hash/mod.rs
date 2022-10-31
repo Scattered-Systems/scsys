@@ -15,12 +15,12 @@ pub trait Hashable {
 
 pub(crate) mod utils {
     use crate::GenericHash;
-    use serde::Serialize;
     use sha2::{Digest, Sha256};
+    use std::string::ToString;
 
-    pub fn hasher<T: Serialize>(data: &T) -> GenericHash {
+    pub fn hasher<T: ToString>(data: &T) -> GenericHash {
         let mut hasher = Sha256::new();
-        hasher.update(serde_json::to_string(data).unwrap().as_bytes());
+        hasher.update(data.to_string().as_bytes());
         hasher.finalize()
     }
 }

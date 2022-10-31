@@ -12,5 +12,5 @@ use typenum::{
 pub type H256Hash = [u8; 32];
 pub type H160Hash = [u8; 20];
 
-pub type HashOutputSize = UInt<UInt<UInt<UInt<UInt<UInt<UTerm, B1>, B0>, B0>, B0>, B0>, B0>;
-pub type GenericHash<T = u8> = GenericArray<T, HashOutputSize>;
+pub type GenericHashOutput = UInt<UInt<UInt<UInt<UInt<UInt<UTerm, B1>, B0>, B0>, B0>, B0>, B0>;
+pub type GenericHash<T = u8, Output = GenericHashOutput> = GenericArray<T, Output>;
