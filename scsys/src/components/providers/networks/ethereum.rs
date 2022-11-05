@@ -17,11 +17,7 @@ impl Web3Provider {
         Self { name, url }
     }
     pub fn localhost(&mut self, port: Option<u16>) -> &Self {
-        let port = match port {
-            Some(v) => v,
-            None => 8454,
-        };
-        self.url = format!("http://localhost:{}", port);
+        self.url = format!("http://localhost:{}", port.unwrap_or(8454));
         self
     }
     pub fn from_str(name: &str, url: &str) -> Self {

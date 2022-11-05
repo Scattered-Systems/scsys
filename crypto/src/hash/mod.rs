@@ -4,19 +4,46 @@
     Description:
         ... Summary ...
 */
-pub use self::{hash::Hash, hashes::*, utils::*};
+pub use self::{hashes::*, interface::Hash, utils::*};
 
-pub(crate) mod hash;
 pub(crate) mod hashes;
+pub(crate) mod interface;
+
+pub trait Hashable {
+    fn hash(&self) -> H256;
+}
 
 pub(crate) mod utils {
-    use crate::HashGeneric;
-    use serde::Serialize;
-    use sha2::{Digest, Sha256};
+    use crate::GenericHash;
+    use std::string::ToString;
 
-    pub fn hasher<T: Serialize>(data: &T) -> HashGeneric {
-        let mut hasher = Sha256::new();
-        hasher.update(serde_json::to_string(data).unwrap().as_bytes());
-        hasher.finalize()
+    /// hasher implements a generic hash function wrapper around blake3
+    pub fn hasher<T: ToString>(data: &T) -> GenericHash {
+        blake3::hash(data.to_string().as_bytes())
+            .as_bytes()
+            .to_owned()
+            .into()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use rand::{self, distributions::Alphanumeric, Rng};
+
+    pub fn generate_random_string(length: Option<usize>) -> String {
+        std::ops::Range {
+            start: 0,
+            end: length.unwrap_or_else(|| 12),
+        }
+        .map(|_| rand::thread_rng().sample(Alphanumeric) as char)
+        .collect::<String>()
+    }
+
+    #[test]
+    fn test_hasher() {
+        let a = hasher(&generate_random_string(None));
+        let b = hasher(&generate_random_string(None));
+        assert_ne!(&a, &b)
     }
 }

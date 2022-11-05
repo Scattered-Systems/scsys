@@ -26,9 +26,9 @@ impl Timestamp {
     }
 }
 
-impl std::convert::Into<i64> for Timestamp {
-    fn into(self) -> i64 {
-        self.0
+impl std::convert::From<i64> for Timestamp {
+    fn from(ts: i64) -> Self {
+        Self(ts)
     }
 }
 

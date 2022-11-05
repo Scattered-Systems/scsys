@@ -27,11 +27,8 @@ impl Event {
         pending_webhooks: Option<i64>,
     ) -> Self {
         let id = crate::BsonOid::new();
-        let created = Timestamp::default().into();
-        let pending_webhooks = match pending_webhooks {
-            Some(v) => v,
-            None => 0,
-        };
+        let created = Timestamp::default();
+        let pending_webhooks = pending_webhooks.unwrap_or(0);
         Self {
             id,
             created,

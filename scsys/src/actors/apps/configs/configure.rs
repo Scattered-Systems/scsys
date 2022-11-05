@@ -20,16 +20,15 @@ pub trait AppConfig<'a>: Clone + serde::Deserialize<'a> + serde::Serialize {
             None => builder = builder.add_source(Environment::default().separator("__")),
         }
 
-        match pattern {
-            Some(pat) => match required {
+        if let Some(pat) = pattern {
+            match required {
                 Some(req) => {
                     builder = builder.add_source(collect_config_files(pat, req));
                 }
                 None => {
                     builder = builder.add_source(collect_config_files(pat, false));
                 }
-            },
-            None => {}
+            }
         }
         builder = builder.add_source(collect_config_files("**/*.config.*", false));
 

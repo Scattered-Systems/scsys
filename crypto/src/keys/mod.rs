@@ -4,17 +4,21 @@
     Description:
         ... Summary ...
 */
-pub use self::{keypair::*, utils::*};
+pub use self::{keypair::*, public_key::*, secret_key::*, utils::*};
 
 pub(crate) mod keypair;
+pub(crate) mod public_key;
+pub(crate) mod secret_key;
 
 pub(crate) mod utils {
-    use ring::{rand, signature::Ed25519KeyPair};
+    use ring::{rand::SystemRandom, signature::Ed25519KeyPair};
 
     /// Generate a random key pair.
     pub fn random_keypair() -> Ed25519KeyPair {
-        let rng = rand::SystemRandom::new();
-        let pkcs8_bytes = Ed25519KeyPair::generate_pkcs8(&rng).unwrap();
-        Ed25519KeyPair::from_pkcs8(pkcs8_bytes.as_ref().into()).unwrap()
+        Ed25519KeyPair::from_pkcs8(generate_random_pkcs8().as_ref()).unwrap()
+    }
+
+    pub fn generate_random_pkcs8() -> ring::pkcs8::Document {
+        Ed25519KeyPair::generate_pkcs8(&mut SystemRandom::new()).unwrap()
     }
 }

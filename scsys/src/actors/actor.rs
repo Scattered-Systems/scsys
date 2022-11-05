@@ -13,7 +13,7 @@ pub trait Catalyst<S: std::convert::Into<T>, T> {
 pub trait Transformation<S> {
     fn data(&self) -> Vec<S>;
     fn transform<T>(&self, catalyst: fn(&S) -> T) -> BoxResult<Vec<T>> {
-        let res = self.data().iter().map(|i| catalyst(i)).collect::<Vec<_>>();
+        let res = self.data().iter().map(catalyst).collect::<Vec<_>>();
         Ok(res)
     }
 }

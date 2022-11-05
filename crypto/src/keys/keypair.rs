@@ -4,14 +4,35 @@
     Description:
         ... Summary ...
 */
-use ring::{rand::SystemRandom, signature::Ed25519KeyPair};
-use serde::{Deserialize, Serialize};
+use crate::keys::generate_random_pkcs8;
+use ring::{pkcs8, rand::SystemRandom, signature::Ed25519KeyPair};
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct PublicKey<T>(T);
+#[derive(Debug)]
+pub struct Keypair(Ed25519KeyPair);
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct SecretKey<T>(T);
+impl Keypair {
+    pub fn new(data: Ed25519KeyPair) -> Self {
+        Self(data)
+    }
+    pub fn generate() -> Self {
+        Self::from(generate_random_pkcs8())
+    }
+    pub fn keypair(&self) -> &Ed25519KeyPair {
+        &self.0
+    }
+}
+
+impl std::convert::From<&[u8]> for Keypair {
+    fn from(data: &[u8]) -> Self {
+        Self::new(Ed25519KeyPair::from_pkcs8(data).expect(""))
+    }
+}
+
+impl std::convert::From<pkcs8::Document> for Keypair {
+    fn from(data: pkcs8::Document) -> Self {
+        Self::from(data.as_ref())
+    }
+}
 
 #[derive(Debug)]
 pub enum Keys {
@@ -26,5 +47,11 @@ impl Keys {
             .ok()
             .unwrap();
         Self::ED25519(keypair)
+    }
+}
+
+impl Default for Keys {
+    fn default() -> Self {
+        Self::new()
     }
 }
