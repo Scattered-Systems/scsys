@@ -31,7 +31,7 @@ mod tests {
     use super::*;
     use rand::{
         self,
-        distributions::{Alphanumeric, Distribution},
+        distributions::{Alphanumeric},
         Rng,
     };
 
