@@ -27,8 +27,8 @@ mod tests {
     #[test]
     fn test_is_float() {
         let data = vec!["1", "-10", "ifjuka87"];
-        assert!(is_float(data.0));
-        assert!(is_float(data.1));
-        assert!(is_float(data.2))
+        assert!(is_float(&data[0]));
+        assert!(is_float(&data[1]));
+        assert!(is_float(&data[2]) == false)
     }
 }

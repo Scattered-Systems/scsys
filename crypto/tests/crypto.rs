@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use scsys_crypto::hash::{hash_multiply_by, H256};
+    use scsys_crypto::hash::H256;
 
     use vrf::openssl::{CipherSuite, ECVRF};
     use vrf::VRF;
@@ -32,18 +32,5 @@ mod tests {
                 println!("VRF proof is not valid: {}", e);
             }
         }
-    }
-
-    #[test]
-    fn test_hash_multiply() {
-        let hash: H256 = [2u8; 32].into();
-        let actual: H256 = [1u8; 32].into();
-
-        let a = hash_multiply_by(&hash, 0.5f64);
-        let b = hash * 0.5f64;
-
-        assert_eq!(&a, &actual);
-        assert_eq!(&b, &actual);
-        assert_eq!(b, actual)
     }
 }

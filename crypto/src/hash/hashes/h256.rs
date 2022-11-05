@@ -192,15 +192,15 @@ mod tests {
     #[test]
     fn test_h256_divide() {
         let a = H256::generate();
-        assert_ne!(a, a / 1f64);
+        assert_eq!(a, a / 1f64);
         assert_ne!(a, a / 0f64);
         assert_ne!(a, a / 10f64)
     }
 
     #[test]
-    fn test_h256_divide() {
+    fn test_h256_multiply() {
         let a = H256::generate();
-        assert_ne!(a, a * 1f64);
+        assert_eq!(a, a * 1f64);
         assert_ne!(a, a * 0f64);
         assert_ne!(a, a * 10f64)
     }

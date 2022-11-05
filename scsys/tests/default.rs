@@ -1,13 +1,10 @@
 #[cfg(test)]
-
 mod tests {
-    use scsys::components::messages::Message;
-
     #[test]
-    fn test_message_default() {
-        let a = Message::from("Test message");
-        let b = Message::default();
-        assert_ne!(a, b.clone());
-        assert_eq!(Message::from("").message, b.message)
+    fn lib_compiles() {
+        let f = |i: usize| i + 1;
+        assert_eq!(f(10), 11);
+        assert_ne!(f(10), 9)
     }
 }
+

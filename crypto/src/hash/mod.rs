@@ -31,12 +31,12 @@ mod tests {
     use super::*;
     use rand::{
         self,
-        distributions::{Alphanumeric, Distribution, Standard},
+        distributions::{Alphanumeric, Distribution},
         Rng,
     };
 
     pub fn generate_random_string(length: Option<usize>) -> String {
-        Range {
+        std::ops::Range {
             start: 0,
             end: length.unwrap_or_else(|| 12),
         }
@@ -46,8 +46,8 @@ mod tests {
 
     #[test]
     fn test_hasher() {
-        let a = hasher(generate_random_string());
-        let b = hasher(generate_random_string());
+        let a = hasher(&generate_random_string(None));
+        let b = hasher(&generate_random_string(None));
         assert_ne!(&a, &b)
     }
 }
