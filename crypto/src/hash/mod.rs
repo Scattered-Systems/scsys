@@ -29,11 +29,7 @@ pub(crate) mod utils {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use rand::{
-        self,
-        distributions::{Alphanumeric},
-        Rng,
-    };
+    use rand::{self, distributions::Alphanumeric, Rng};
 
     pub fn generate_random_string(length: Option<usize>) -> String {
         std::ops::Range {

@@ -5,7 +5,7 @@
         ... Summary ...
 */
 use crate::keys::generate_random_pkcs8;
-use ring::{rand::SystemRandom, pkcs8, signature::{Ed25519KeyPair}};
+use ring::{pkcs8, rand::SystemRandom, signature::Ed25519KeyPair};
 
 #[derive(Debug)]
 pub struct Keypair(Ed25519KeyPair);
