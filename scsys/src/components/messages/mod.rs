@@ -8,7 +8,6 @@ pub use self::message::*;
 
 mod message;
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

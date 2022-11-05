@@ -7,4 +7,3 @@ mod tests {
         assert_ne!(f(10), 9)
     }
 }
-
