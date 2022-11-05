@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 cargo publish --color always --jobs 1 --package scsys-core --token $CARGO_REGISTRY_TOKEN
 cargo publish --color always --jobs 1 --package scsys-crypto --token $CARGO_REGISTRY_TOKEN
 cargo publish --color always --jobs 1 --package scsys-derive --token $CARGO_REGISTRY_TOKEN
