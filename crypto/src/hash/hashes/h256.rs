@@ -5,7 +5,7 @@
         ... Summary ...
 */
 use crate::{
-    hash::{generate_random_hash, hash_divide_by, hash_multiply_by, hashes::H160, Hashable},
+    hash::{generate_random_hash, Hashable, H160},
     H256Hash,
 };
 use ring::digest::digest;
@@ -89,7 +89,7 @@ impl std::convert::From<[u8; 32]> for H256 {
 impl std::convert::From<H160> for H256 {
     fn from(input: H160) -> H256 {
         let mut buffer: H256Hash = [0; 32];
-        buffer[..].copy_from_slice(&input.0[0..32]);
+        buffer[..].copy_from_slice(&input.0[0..20]);
         buffer.into()
     }
 }
@@ -120,7 +120,19 @@ impl std::ops::Div<f64> for H256 {
     type Output = Self;
 
     fn div(self, rhs: f64) -> Self {
-        hash_divide_by(&self, rhs)
+        let mut result_bytes = [0; 32];
+        for n in 1..9 {
+            let value = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
+            let value = value as f64;
+            let result = value / rhs;
+            let result = result as u32;
+            let results: [u8; 4] = result.to_be_bytes();
+            result_bytes[4 * (n - 1)] = results[0];
+            result_bytes[4 * (n - 1) + 1] = results[1];
+            result_bytes[4 * (n - 1) + 2] = results[2];
+            result_bytes[4 * (n - 1) + 3] = results[3];
+        }
+        (&result_bytes).into()
     }
 }
 
@@ -128,7 +140,21 @@ impl std::ops::Mul<f64> for H256 {
     type Output = Self;
 
     fn mul(self, rhs: f64) -> Self {
-        hash_multiply_by(&self, rhs)
+        let mut result_bytes = [0; 32];
+        for n in 1..9 {
+            let value = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
+            //println!{"{}",value};
+            let value = value as f64;
+            let result = value * rhs;
+            let result = result as u32;
+            let results: [u8; 4] = result.to_be_bytes();
+            //println!{"{}",result};
+            result_bytes[4 * (n - 1)] = results[0];
+            result_bytes[4 * (n - 1) + 1] = results[1];
+            result_bytes[4 * (n - 1) + 2] = results[2];
+            result_bytes[4 * (n - 1) + 3] = results[3];
+        }
+        (&result_bytes).into()
     }
 }
 
@@ -161,5 +187,21 @@ mod tests {
         let a = H256::generate();
         let b = H256::generate();
         assert_ne!(a, b)
+    }
+
+    #[test]
+    fn test_h256_divide() {
+        let a = H256::generate();
+        assert_ne!(a, a / 1f64);
+        assert_ne!(a, a / 0f64);
+        assert_ne!(a, a / 10f64)
+    }
+
+    #[test]
+    fn test_h256_divide() {
+        let a = H256::generate();
+        assert_ne!(a, a * 1f64);
+        assert_ne!(a, a * 0f64);
+        assert_ne!(a, a * 10f64)
     }
 }

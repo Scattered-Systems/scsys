@@ -29,7 +29,7 @@ impl H160 {
 
 impl Hashable for H160 {
     fn hash(&self) -> H256 {
-        self.clone().into()
+        (*self).into()
     }
 }
 

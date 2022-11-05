@@ -28,3 +28,9 @@ impl Keys {
         Self::ED25519(keypair)
     }
 }
+
+impl Default for Keys {
+    fn default() -> Self {
+        Self::new()
+    }
+}

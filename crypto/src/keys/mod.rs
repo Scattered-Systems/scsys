@@ -15,6 +15,6 @@ pub(crate) mod utils {
     pub fn random_keypair() -> Ed25519KeyPair {
         let rng = rand::SystemRandom::new();
         let pkcs8_bytes = Ed25519KeyPair::generate_pkcs8(&rng).unwrap();
-        Ed25519KeyPair::from_pkcs8(pkcs8_bytes.as_ref().into()).unwrap()
+        Ed25519KeyPair::from_pkcs8(pkcs8_bytes.as_ref()).unwrap()
     }
 }

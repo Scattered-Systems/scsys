@@ -1,9 +1,9 @@
 /*
-    Appellation: hashes <module>
+    Appellation: interface <module>
     Contributors: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
+    Description: ... Summary ...
 */
+#![allow(clippy::from_over_into)]
 use crate::{
     hash::{hasher, hashes::H256, Hashable},
     GenericHash,
@@ -22,6 +22,12 @@ impl Hash {
 impl Hashable for Hash {
     fn hash(&self) -> H256 {
         self.clone().into()
+    }
+}
+
+impl std::convert::From<GenericHash> for Hash {
+    fn from(data: GenericHash) -> Self {
+        Self(data)
     }
 }
 

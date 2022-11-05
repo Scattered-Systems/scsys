@@ -39,7 +39,7 @@ macro_rules! rstr {
         {
             let mut tmp = Vec::new();
             $(
-                tmp.push(crate::utils::gen_random_string($x));
+                tmp.push($crate::utils::gen_random_string($x));
             )*
             tmp
         }
