@@ -34,7 +34,7 @@ mod tests {
     pub fn generate_random_string(length: Option<usize>) -> String {
         std::ops::Range {
             start: 0,
-            end: length.unwrap_or_else(|| 12),
+            end: length.unwrap_or(12),
         }
         .map(|_| rand::thread_rng().sample(Alphanumeric) as char)
         .collect::<String>()

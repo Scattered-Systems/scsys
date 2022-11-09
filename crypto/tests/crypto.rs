@@ -15,12 +15,12 @@ mod tests {
         let message: &[u8] = b"sample";
 
         // VRF proof and hash output
-        let pi = vrf.prove(&secret_key, &message).unwrap();
+        let pi = vrf.prove(&secret_key, message).unwrap();
         let hash = vrf.proof_to_hash(&pi).unwrap();
         println!("Generated VRF proof: {}", hex::encode(&pi));
 
         // VRF proof verification (returns VRF hash output)
-        let beta = vrf.verify(&public_key, &pi, &message);
+        let beta = vrf.verify(&public_key, &pi, message);
 
         match beta {
             Ok(beta) => {

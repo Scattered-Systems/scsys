@@ -9,7 +9,6 @@ pub use self::{constants::*, types::*};
 pub(crate) mod constants {
     pub const SCASE: &str = "snake_case";
     pub const DEFAULT_HTTP_PORT: u16 = 8080;
-
 }
 pub(crate) mod types {
     use std::collections::HashMap;

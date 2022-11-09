@@ -5,8 +5,12 @@
 */
 use crate::{ConfigFile, ConfigFileVec};
 use glob::glob;
-use std::{fs::File, io::{self, BufRead, BufReader}, str::FromStr, string::ToString};
-
+use std::{
+    fs::File,
+    io::{self, BufRead, BufReader},
+    str::FromStr,
+    string::ToString,
+};
 
 // Gather configuration files following the specified pattern and collect them into a vector
 pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
@@ -15,7 +19,6 @@ pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
         .map(|p| ConfigFile::from(p.expect("Failed to read the pathbuf")).required(required))
         .collect::<Vec<_>>()
 }
-
 
 /// This function converts the file found at path (fp) into a Vec<String>
 pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {
@@ -31,7 +34,6 @@ pub fn is_float<T: ToString>(data: &T) -> bool {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -41,7 +43,7 @@ mod tests {
         let fp = "README.md".to_string();
         let a = file_to_vec(fp);
         assert!(a.is_ok());
-        assert!(a.expect("").len() != 0)
+        assert!(!a.expect("").is_empty())
     }
 
     #[test]
@@ -49,6 +51,6 @@ mod tests {
         let data = vec!["1", "-10", "ifjuka87"];
         assert!(is_float(&data[0]));
         assert!(is_float(&data[1]));
-        assert!(is_float(&data[2]) == false)
+        assert!(!is_float(&data[2]))
     }
 }

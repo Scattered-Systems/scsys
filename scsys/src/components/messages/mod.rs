@@ -16,7 +16,7 @@ mod tests {
     fn test_message_default() {
         let a = Message::from("Test message");
         let b = Message::default();
-        assert_ne!(a, b.clone());
+        assert_ne!(a, b);
         assert_eq!(Message::from("").message, b.message)
     }
 }

@@ -21,7 +21,6 @@ quote = "1.0.21"
 rand = "0.8.5"
 syn = { features = ["full"], version = "1.0.102" }
 
-
 [package.metadata.docs.rs]
 all-features = true
 rustc-args = ["--cfg", "docsrs"]

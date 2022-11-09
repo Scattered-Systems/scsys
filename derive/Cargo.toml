@@ -19,9 +19,6 @@ proc-macro2 = "1.0.47"
 quote = "1.0.21"
 syn = { features = ["full"], version = "1.0.103" }
 
-[dev-dependencies.scsys-core]
-path = "../core"
-
 [package.metadata.docs.rs]
 all-features = true
 rustc-args = ["--cfg", "docsrs"]
