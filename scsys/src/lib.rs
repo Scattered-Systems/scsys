@@ -33,9 +33,9 @@ pub mod prelude {
     pub use ring;
 
     #[cfg(feature = "core")]
-    pub use super::core::{
-        self, contexts::*, errors::*, events::*, states::*, BoxResult, Timestamp,
-    };
+    pub use super::core::*;
+    #[cfg(feature = "core")]
+    pub use super::core::{self, contexts::*, errors::*, events::*, states::*};
 
     #[cfg(feature = "crypto")]
     pub use super::crypto::{self, hash::*, keys::*};

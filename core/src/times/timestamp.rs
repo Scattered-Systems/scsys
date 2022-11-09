@@ -9,7 +9,7 @@ use chrono::Utc;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct Timestamp(i64);
+pub struct Timestamp(pub i64);
 
 impl Timestamp {
     pub fn new(data: i64) -> Self {
@@ -26,14 +26,38 @@ impl Timestamp {
     }
 }
 
+impl std::convert::From<&Timestamp> for Timestamp {
+    fn from(ts: &Timestamp) -> Self {
+        Self(ts.0)
+    }
+}
+
 impl std::convert::From<i64> for Timestamp {
     fn from(ts: i64) -> Self {
         Self(ts)
     }
 }
 
+impl std::convert::From<Timestamp> for i64 {
+    fn from(ts: Timestamp) -> i64 {
+        ts.0
+    }
+}
+
 impl Default for Timestamp {
     fn default() -> Self {
         Self::new(Self::timestamp())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_default_timestamp() {
+        let a = Timestamp::default();
+        let b: i64 = a.clone().into();
+        assert_eq!(a.0, b)
     }
 }

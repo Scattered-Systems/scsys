@@ -8,11 +8,8 @@ pub use self::state::State;
 
 pub(crate) mod state;
 
-pub trait Stateful<Msg: ToString = String>: Clone + ToString {
+pub trait Stateful<Msg> {
     fn message(&self) -> &Msg;
-    fn state(&self) -> &Self {
-        self
-    }
     fn timestamp(&self) -> i64;
 }
 
@@ -22,7 +19,7 @@ mod tests {
 
     #[test]
     fn test_state_default() {
-        let actual = State::new("message".to_string(), "test");
+        let actual = State::from("test");
         let expected = actual.clone();
         assert_eq!(actual, expected)
     }

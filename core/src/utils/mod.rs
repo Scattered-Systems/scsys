@@ -3,11 +3,10 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-pub use self::{configure::*, fs::*, misc::*, time::*};
+pub use self::{configure::*, fs::*, misc::*};
 
 pub(crate) mod configure;
 pub(crate) mod fs;
-pub(crate) mod time;
 
 pub(crate) mod misc {
     use std::{str::FromStr, string::ToString};

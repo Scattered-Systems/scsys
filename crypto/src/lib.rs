@@ -3,6 +3,8 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... summary ...
 */
+extern crate scsys_core;
+
 #[doc(inline)]
 pub use self::primitives::*;
 
@@ -10,15 +12,13 @@ pub mod hash;
 pub mod keys;
 pub(crate) mod primitives;
 
-pub trait ArrayLike {
-    type Value;
-    type Error: std::error::Error;
-    fn len(&self) -> Result<usize, Self::Error>;
-    fn is_empty(&self) -> Result<bool, Self::Error>;
-    fn push(&mut self, item: Self::Value) -> Result<usize, Self::Error>;
-    fn get(&self, index: usize) -> Result<Option<Self::Value>, Self::Error>;
-    fn clear(&mut self) -> Result<(), Self::Error>;
-    fn position(&self, item: &Self::Value) -> Result<Option<usize>, Self::Error>;
+pub trait ArrayLike<T, E: std::error::Error> {
+    fn flush(&mut self) -> Result<(), E>;
+    fn get(&self, index: usize) -> Result<Option<T>, E>;
+    fn is_empty(&self) -> Result<bool, E>;
+    fn len(&self) -> Result<usize, E>;
+    fn position(&self, item: &T) -> Result<Option<usize>, E>;
+    fn push(&mut self, item: T) -> Result<usize, E>;
 }
 
 // pub trait ArrayLikeExt {

@@ -4,18 +4,8 @@
     Description:
         ... Summary ...
 */
-pub use self::context::*;
+pub use self::{context::*, interface::*};
 
 pub(crate) mod context;
+pub(crate) mod interface;
 
-pub trait Configurable {
-    fn settings(&self) -> &Self {
-        self
-    }
-}
-
-pub trait Contextual: Configurable {
-    fn context(&self) -> &Self {
-        self
-    }
-}

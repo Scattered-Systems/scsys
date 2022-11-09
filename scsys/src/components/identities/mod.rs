@@ -9,15 +9,12 @@ pub(crate) mod appellation;
 pub(crate) mod ids;
 
 pub(crate) mod interface {
-    use super::Id;
-    use crate::core::Timestamp;
     use serde_json::Value;
 
     pub trait Identitfiable {
-        fn id(&self) -> Id;
-        fn gen_timestamp(&self) -> Timestamp {
-            Timestamp::default()
-        }
+        type Id;
+        fn id(&self) -> &Self::Id;
+        
     }
 
     pub trait Justification {
