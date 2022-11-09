@@ -1,6 +1,6 @@
 [workspace]
 default-members = [
-    "conduit",
+    "scsys",
 ]
 
 exclude = [
@@ -8,7 +8,11 @@ exclude = [
 ]
 
 members = [
-    "conduit",
+    "core",
+    "crypto",
+    "derive",
+    "macros",
+    "scsys"
 ]
 
 
