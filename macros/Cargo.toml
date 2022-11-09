@@ -19,7 +19,6 @@ bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" 
 proc-macro2 = "1.0.46"
 quote = "1.0.21"
 rand = "0.8.5"
-scsys-core = { path = "../core", version = "0.1.25" }
 syn = { features = ["full"], version = "1.0.102" }
 
 

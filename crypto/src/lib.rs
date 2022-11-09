@@ -3,8 +3,6 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... summary ...
 */
-extern crate scsys_core;
-
 #[doc(inline)]
 pub use self::primitives::*;
 

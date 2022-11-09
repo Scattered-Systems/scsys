@@ -1,7 +1,7 @@
 /*
-    Appellation: scsys-core <library>
+    Appellation: times <module>
     Creator: FL03 <jo3mccain@icloud.com>
-    Description: Implements standard datetime utilities along with a timestamp structure for use throughout
+    Description: ... Summary ...
 */
 pub use self::{timestamp::Timestamp, utils::*};
 
