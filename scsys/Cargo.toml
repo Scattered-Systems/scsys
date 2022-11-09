@@ -9,7 +9,7 @@ license = "MIT"
 name = "scsys"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.24" # TODO: Update the package version
+version = "0.1.25" # TODO: Update the package version
 
 [features]
 default = ["core", "crypto"]
@@ -48,22 +48,22 @@ url = "2.3.1"
 [dependencies.scsys-core]
 optional = true
 path = "../core"
-version = "0.1.24"
+version = "0.1.25"
 
 [dependencies.scsys-crypto]
 optional = true
 path = "../crypto"
-version = "0.1.24"
+version = "0.1.25"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.24" # TODO: Update feature versioning
+version = "0.1.25" # TODO: Update feature versioning
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.24" # TODO: Update feature versioning
+version = "0.1.25" # TODO: Update feature versioning
 
 [package.metadata.docs.rs]
 all-features = true

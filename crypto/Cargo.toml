@@ -8,7 +8,7 @@ keywords = ["crypto", "scsys"]
 license = "MIT"
 name = "scsys-crypto"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.24" # TODO: Update the package version
+version = "0.1.25" # TODO: Update the package version
 
 [lib]
 crate-type = ["cdylib", "rlib"]
