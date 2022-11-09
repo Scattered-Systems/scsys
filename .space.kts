@@ -28,15 +28,16 @@ job("Publish (crates)") {
         }
     }
     container(displayName = "Rust", image = "rust") {
+        env["TOKEN"] = Secrets("cargo_registry_token")
+
         shellScript {
             interpreter = "/bin/bash"
             content = """
-                cargo login ${'$'}CARGO_REGISTRY_TOKEN
-                cargo publish --all-features --color always --jobs 1 --verbose -p scsys-core
-                cargo publish --all-features --color always --jobs 1 --verbose -p scsys-crypto
-                cargo publish --all-features --color always --jobs 1 --verbose -p scsys-derive
-                cargo publish --all-features --color always --jobs 1 --verbose -p scsys-macros
-                cargo publish --all-features --color always --jobs 1 --verbose -p scsys
+                cargo publish --all-features --color always --jobs 1 --token ${'$'}TOKEN --verbose -p scsys-core
+                cargo publish --all-features --color always --jobs 1 --token ${'$'}TOKEN --verbose -p scsys-crypto
+                cargo publish --all-features --color always --jobs 1 --token ${'$'}TOKEN --verbose -p scsys-derive
+                cargo publish --all-features --color always --jobs 1 --token ${'$'}TOKEN --verbose -p scsys-macros
+                cargo publish --all-features --color always --jobs 1 --token ${'$'}TOKEN --verbose -p scsys
             """
         }
     }
