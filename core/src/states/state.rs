@@ -4,8 +4,8 @@
     Description:
         ... Summary ...
 */
-use crate::Timestamp;
 use super::Stateful;
+use crate::Timestamp;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 

@@ -14,7 +14,6 @@ pub(crate) mod interface {
     pub trait Identitfiable {
         type Id;
         fn id(&self) -> &Self::Id;
-        
     }
 
     pub trait Justification {

@@ -10,7 +10,6 @@ pub(crate) mod event;
 pub(crate) mod interface;
 pub(crate) mod misc;
 
-
 #[cfg(test)]
 mod tests {
     use super::Event;
