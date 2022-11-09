@@ -1,4 +1,5 @@
 job("Login & Test (crates)") {
+    env["CARGO_REGISTRY_TOKEN"] = Secrets("cargo_registry_token")
     startOn {
         gitPush { 
             branchFilter {
