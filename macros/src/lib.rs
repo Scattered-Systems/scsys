@@ -4,6 +4,8 @@
     Description:
         ... Summary ...
 */
+extern crate scsys_core;
+
 pub mod utils;
 
 #[macro_export]
