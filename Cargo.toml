@@ -1,14 +1,16 @@
 [workspace]
 default-members = [
-    "scsys"
+    "conduit",
 ]
+
+exclude = [
+    "examples/*"
+]
+
 members = [
-    "scsys",
-    "core",
-    "crypto",
-    "derive",
-    "macros"
+    "conduit",
 ]
+
 
 [profile.dev]
 codegen-units = 256
@@ -19,6 +21,7 @@ lto = false
 panic = "unwind"
 rpath = false
 opt-level = 0
+overflow-checks = true
 
 [profile.release]
 codegen-units = 16
@@ -29,3 +32,4 @@ lto = false
 panic = "unwind"
 rpath = false
 opt-level = "z"
+overflow-checks = false
