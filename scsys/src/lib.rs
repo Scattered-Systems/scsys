@@ -18,6 +18,10 @@ pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
 
+pub trait HelloWorld {
+    fn hello_world() -> String;
+}
+
 pub mod prelude {
     #[doc(inline)]
     pub use bson;
