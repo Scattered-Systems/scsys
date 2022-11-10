@@ -9,11 +9,9 @@ extern crate proc_macro;
 extern crate quote;
 extern crate syn;
 
-
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput};
-
 
 #[proc_macro_derive(HelloWorld, attributes(HelloWorldName))]
 pub fn hello_world(input: TokenStream) -> TokenStream {
@@ -22,7 +20,7 @@ pub fn hello_world(input: TokenStream) -> TokenStream {
 
     // Build the impl
     let gen = impl_hello_world(&ast);
-    
+
     gen.into()
 }
 

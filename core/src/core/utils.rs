@@ -28,10 +28,7 @@ pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {
 }
 /// Simple function wrapper evaluating the claim that the given information is of type f64
 pub fn is_float<T: ToString>(data: &T) -> bool {
-    match f64::from_str(&data.to_string()) {
-        Err(_) => false,
-        Ok(_) => true,
-    }
+    f64::from_str(&data.to_string()).is_ok()
 }
 
 #[cfg(test)]

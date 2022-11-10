@@ -14,7 +14,6 @@ mod tests {
 
     #[test]
     fn test_simple_derive() {
-
         let a = Pancakes::hello_world();
         let b = "Hello, World! My name is Pancakes".to_string();
 

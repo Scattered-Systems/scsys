@@ -17,11 +17,11 @@ impl Server {
     pub fn new(host: String, port: u16) -> Self {
         Self { host, port }
     }
-    pub fn address(self) -> std::net::SocketAddr {
+    pub fn address(&self) -> std::net::SocketAddr {
         std::net::SocketAddr::from(self.pieces())
     }
-    pub fn pieces(self) -> ([u8; 4], u16) {
-        let host: [u8; 4] = Extractor::new('.', self.host.clone())
+    pub fn pieces(&self) -> ([u8; 4], u16) {
+        let host: [u8; 4] = Extractor::new('.', self.host.clone(), None)
             .extract()
             .try_into()
             .ok()
