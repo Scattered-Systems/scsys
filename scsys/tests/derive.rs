@@ -7,16 +7,30 @@
 #[cfg(feature = "derive")]
 #[cfg(test)]
 mod tests {
-    use scsys::HelloWorld;
+    use scsys::Named;
+    #[cfg(feature = "crypto")]
+    use scsys::prelude::Hashable;
+    use scsys::prelude::Timestamp;
 
-    #[derive(HelloWorld)]
+    #[derive(Default, Hashable)]
+    pub struct TestStruct {
+        timestamp: Timestamp
+    }
+
+
+   #[derive(Named)]
     struct Pancakes;
 
     #[test]
     fn test_simple_derive() {
-        let a = Pancakes::hello_world();
-        let b = "Hello, World! My name is Pancakes".to_string();
+        let a = Pancakes::name();
+        assert_eq!(a, String::from("Pancakes"))
+    }
 
-        assert_eq!(a, b)
+    #[test]
+    fn test_hashable_derive() {
+        let a = TestStruct::default();
+        // let hash = a.hash();
+        // assert!(hash.len() > 0);
     }
 }

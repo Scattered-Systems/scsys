@@ -13,23 +13,43 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput};
 
-#[proc_macro_derive(HelloWorld, attributes(HelloWorldName))]
-pub fn hello_world(input: TokenStream) -> TokenStream {
-    // Parse the inputs into the proper struct
+#[proc_macro_derive(Hashable)]
+pub fn hashable(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
-
-    // Build the impl
-    let gen = impl_hello_world(&ast);
+    let gen = impl_hashable(&ast);
 
     gen.into()
 }
 
-fn impl_hello_world(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+fn impl_hashable(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
     let name = &ast.ident;
     let res = quote! {
-        impl HelloWorld for #name {
-            fn hello_world() -> String {
-                format!("Hello, World! My name is {}", stringify!(#name))
+        impl Hashable for #name {
+            fn hash(&self) -> H256 {
+                scsys::prelude::Hash::new(self).into()
+            }
+        }
+    };
+    res
+}
+
+#[proc_macro_derive(Named, attributes(Alternative))]
+pub fn named(input: TokenStream) -> TokenStream {
+    // Parse the inputs into the proper struct
+    let ast = parse_macro_input!(input as DeriveInput);
+
+    // Build the impl
+    let gen = impl_named(&ast);
+
+    gen.into()
+}
+
+fn impl_named(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+    let name = &ast.ident;
+    let res = quote! {
+        impl Named for #name {
+            fn name() -> String {
+                format!("{}", stringify!(#name))
             }
         }
     };

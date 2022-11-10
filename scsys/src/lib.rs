@@ -18,8 +18,8 @@ pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
 
-pub trait HelloWorld {
-    fn hello_world() -> String;
+pub trait Named {
+    fn name() -> String;
 }
 
 pub mod prelude {
@@ -43,4 +43,6 @@ pub mod prelude {
 
     #[cfg(feature = "crypto")]
     pub use super::crypto::{self, hash::*, keys::*};
+    #[cfg(feature = "derive")]
+    pub use scsys_derive::*;
 }
