@@ -7,11 +7,6 @@ pub use self::{timestamp::Timestamp, utils::*};
 
 pub(crate) mod timestamp;
 
-pub trait Temporal<Tz: chrono::TimeZone = chrono::Utc> {
-    fn now(&self) -> chrono::DateTime<Tz>;
-    fn timestamp(&self) -> i64;
-}
-
 pub(crate) mod utils {
     use chrono::{DateTime, TimeZone, Utc};
 

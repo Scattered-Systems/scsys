@@ -4,6 +4,7 @@
     Description: ... Summary ...
 */
 
+pub mod addresses;
 pub mod contexts;
 pub mod errors;
 pub mod events;
