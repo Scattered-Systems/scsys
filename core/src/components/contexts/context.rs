@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use super::Configurable;
+use crate::Configurable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]

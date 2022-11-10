@@ -4,7 +4,6 @@
     Description:
         ... Summary ...
 */
-pub use self::{context::*, interface::*};
+pub use self::context::*;
 
 pub(crate) mod context;
-pub(crate) mod interface;

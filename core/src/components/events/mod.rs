@@ -4,10 +4,9 @@
     Description:
         ... Summary ...
 */
-pub use self::{event::*, interface::*, misc::*};
+pub use self::{event::*, misc::*};
 
 pub(crate) mod event;
-pub(crate) mod interface;
 pub(crate) mod misc;
 
 #[cfg(test)]

@@ -4,14 +4,9 @@
     Description:
         ... Summary ...
 */
-pub use self::state::State;
+pub use self::state::*;
 
 pub(crate) mod state;
-
-pub trait Stateful<Msg> {
-    fn message(&self) -> &Msg;
-    fn timestamp(&self) -> i64;
-}
 
 #[cfg(test)]
 mod tests {

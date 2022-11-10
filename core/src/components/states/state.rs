@@ -4,22 +4,22 @@
     Description:
         ... Summary ...
 */
-use super::Stateful;
-use crate::Timestamp;
+use crate::{messages::Message, times::Timestamp, Stateful};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use std::fmt::Display;
 
 /// Implement the standard structure of a state
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
-pub struct State<T> {
+pub struct State<T: Display> {
     pub events: Vec<String>,
-    pub message: T,
-    pub metadata: serde_json::Value,
+    pub message: Message<T>,
+    pub metadata: Value,
     pub timestamp: i64,
 }
 
-impl<T> State<T> {
-    pub fn new(events: Vec<String>, message: T) -> Self {
+impl<T: Display> State<T> {
+    pub fn new(events: Vec<String>, message: Message<T>) -> Self {
         let metadata = Value::default();
         let timestamp = Timestamp::default().into();
         Self {
@@ -31,8 +31,10 @@ impl<T> State<T> {
     }
 }
 
-impl<T> Stateful<T> for State<T> {
-    fn message(&self) -> &T {
+impl<T: Clone + Default + Display + Serialize> Stateful for State<T> {
+    type Data = T;
+
+    fn message(&self) -> &Message<Self::Data> {
         &self.message
     }
 
@@ -41,14 +43,24 @@ impl<T> Stateful<T> for State<T> {
     }
 }
 
-impl<T: Default> Default for State<T> {
+impl<T: Default + std::fmt::Display> Default for State<T> {
     fn default() -> Self {
         Self::new(Default::default(), Default::default())
     }
 }
 
-impl<T> std::convert::From<T> for State<T> {
+impl<T: Display> std::convert::From<T> for State<T> {
     fn from(data: T) -> Self {
-        Self::new(Default::default(), data)
+        Self::new(Default::default(), Message::from(data))
+    }
+}
+
+impl<T: Display + Serialize> std::fmt::Display for State<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            serde_json::to_string_pretty(&self).unwrap().to_lowercase()
+        )
     }
 }

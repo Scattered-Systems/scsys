@@ -8,6 +8,5 @@
 pub mod accounts;
 pub mod identities;
 pub mod logging;
-pub mod messages;
 pub mod networking;
 pub mod providers;
