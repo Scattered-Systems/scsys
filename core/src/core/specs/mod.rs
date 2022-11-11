@@ -6,7 +6,6 @@
 */
 pub use self::{
     addressable::*, configurable::*, contextual::*, eventful::*, justifiable::*, stateful::*,
-    temporal::*,
 };
 
 pub(crate) mod addressable;
@@ -15,4 +14,3 @@ pub(crate) mod contextual;
 pub(crate) mod eventful;
 pub(crate) mod justifiable;
 pub(crate) mod stateful;
-pub(crate) mod temporal;

@@ -7,16 +7,22 @@
 #[cfg(feature = "derive")]
 #[cfg(test)]
 mod tests {
-    use scsys::Named;
-    #[cfg(feature = "crypto")]
-    use scsys::prelude::Hashable;
-    use scsys::prelude::Timestamp;
+    use scsys::{Named, prelude::{H256, Hashable, Temporal, Timestamp}};
 
-    #[derive(Default, Hashable)]
+    #[derive(Default, Hashable, Named, Temporal)]
     pub struct TestStruct {
         timestamp: Timestamp
     }
 
+    impl std::fmt::Display for TestStruct {
+        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            write!(
+                f,
+                "{}",
+                self.timestamp
+            )
+        }
+    }
 
    #[derive(Named)]
     struct Pancakes;
@@ -31,6 +37,6 @@ mod tests {
     fn test_hashable_derive() {
         let a = TestStruct::default();
         // let hash = a.hash();
-        // assert!(hash.len() > 0);
+        assert_eq!(TestStruct::name(), String::from("TestStruct"));
     }
 }

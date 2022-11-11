@@ -13,6 +13,26 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput};
 
+
+#[proc_macro_derive(Temporal)]
+pub fn temporal(input: TokenStream) -> TokenStream {
+    let ast = parse_macro_input!(input as DeriveInput);
+    let gen = impl_temporal(&ast);
+    gen.into()
+}
+
+fn impl_temporal(ast: &DeriveInput) -> proc_macro2::TokenStream {
+    let name = &ast.ident;
+    let res = quote! {
+        impl Temporal for #name {
+            fn timestamp(&self) -> i64 {
+                self.timestamp.clone().into()
+            }
+        }
+    };
+    res
+}
+
 #[proc_macro_derive(Hashable)]
 pub fn hashable(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
