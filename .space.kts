@@ -1,5 +1,4 @@
 job("Login & Test (crates)") {
-    env["CARGO_REGISTRY_TOKEN"] = Secrets("cargo_registry_token")
     startOn {
         gitPush { 
             branchFilter {
@@ -10,6 +9,7 @@ job("Login & Test (crates)") {
         schedule { cron("0 8 * * *") }
     }
     container(displayName = "Rust", image = "rust") {
+        env["CARGO_REGISTRY_TOKEN"] = Secrets("cargo_registry_token")
         shellScript {
             interpreter = "/bin/bash"
             content = """
