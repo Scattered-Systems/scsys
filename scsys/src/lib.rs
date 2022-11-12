@@ -4,13 +4,8 @@
     Description:
         ... Summary ...
 */
-pub mod actors;
-pub mod components;
-pub mod data;
-
-#[doc(inline)]
 #[cfg(feature = "core")]
-pub use scsys_core as core;
+pub use scsys_core::*;
 #[cfg(feature = "crypto")]
 pub use scsys_crypto as crypto;
 #[cfg(feature = "derive")]
@@ -18,31 +13,21 @@ pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
 
-pub trait Named {
-    fn name() -> String;
-}
-
 pub mod prelude {
-    #[doc(inline)]
+    #[cfg(feature = "bson")]
     pub use bson;
-    #[doc(inline)]
+    #[cfg(feature = "chrono")]
     pub use chrono;
-    #[doc(inline)]
+    #[cfg(feature = "config")]
     pub use config;
-    #[doc(inline)]
-    pub use log;
-    #[doc(inline)]
+    #[cfg(feature = "rand")]
     pub use rand;
-    #[doc(inline)]
+    #[cfg(feature = "ring")]
     pub use ring;
-
-    #[cfg(feature = "core")]
-    pub use super::core::*;
-    #[cfg(feature = "core")]
-    pub use super::core::{self, contexts::*, errors::*, events::*, states::*};
 
     #[cfg(feature = "crypto")]
     pub use super::crypto::{self, hash::*, keys::*};
+    pub use super::*;
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
 }

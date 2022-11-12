@@ -18,7 +18,7 @@ pub trait FileExtSpec: ExtractorSpec<String> {
 }
 
 pub(crate) mod utils {
-    use crate::prelude::DEFAULT_IGNORE_CHARS;
+    use crate::DEFAULT_IGNORE_CHARS;
     use std::str::FromStr;
 
     /// Implements the base functionality for the structured machina, Extractor

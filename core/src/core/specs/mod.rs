@@ -5,7 +5,8 @@
         ... Summary ...
 */
 pub use self::{
-    addressable::*, configurable::*, contextual::*, eventful::*, justifiable::*, stateful::*,
+    addressable::*, configurable::*, contextual::*, eventful::*, justifiable::*, misc::*,
+    stateful::*,
 };
 
 pub(crate) mod addressable;
@@ -14,3 +15,27 @@ pub(crate) mod contextual;
 pub(crate) mod eventful;
 pub(crate) mod justifiable;
 pub(crate) mod stateful;
+
+pub(crate) mod misc {
+    use crate::{components::identities::Appellation, core::BoxResult};
+
+    pub trait Catalyst<S: std::convert::Into<T>, T> {
+        fn catalyst(&self, data: &S) -> T;
+    }
+
+    pub trait Transformation<S> {
+        fn data(&self) -> Vec<S>;
+        fn transform<T>(&self, catalyst: fn(&S) -> T) -> BoxResult<Vec<T>> {
+            let res = self.data().iter().map(catalyst).collect::<Vec<_>>();
+            Ok(res)
+        }
+    }
+    pub trait ActorSpec {
+        fn appellation(&self) -> Appellation;
+        fn justification(&self) -> serde_json::Value;
+    }
+
+    pub trait Named {
+        fn name() -> String;
+    }
+}

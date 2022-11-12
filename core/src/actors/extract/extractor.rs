@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::{actors::extract::base_extractor, prelude::DEFAULT_IGNORE_CHARS};
+use crate::{actors::extract::base_extractor, DEFAULT_IGNORE_CHARS};
 use std::str::FromStr;
 
 /// Implements the formal interface for operating the extraction features
