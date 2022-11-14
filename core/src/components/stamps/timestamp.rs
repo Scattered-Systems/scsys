@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::{chrono_datetime_now, chrono_into_bson, ChronoDateTime};
+use crate::{stamps::{chrono_datetime_now, chrono_into_bson}, ChronoDateTime};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
 
@@ -61,9 +61,17 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_default_timestamp() {
+    fn test_timestamp() {
         let a = Timestamp::default();
-        let b: i64 = a.clone().into();
-        assert_eq!(a.0, b)
+        let b = a.clone();
+        b.chrono_to_bson(Timestamp::now());
+        assert_eq!(a, b)
+    }
+
+    #[test]
+    fn test_timestamp_default() {
+        let actual = Timestamp::default();
+        let expected = actual.clone();
+        assert_eq!(actual, expected)
     }
 }

@@ -4,6 +4,7 @@
     Description:
         ... Summary ...
 */
+use crate::events::{Event, Eventful};
 use serde::{Deserialize, Serialize};
 use strum::{EnumString, EnumVariantNames};
 
@@ -12,28 +13,19 @@ use strum::{EnumString, EnumVariantNames};
     Clone, Copy, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
 )]
 #[strum(serialize_all = "snake_case")]
-pub enum Events<T: std::string::ToString + std::default::Default = String> {
-    Initializing,
-    Aggregating,
-    Attempting,
-    Collecting,
-    Constructing,
-    Connecting,
-    Counting,
-    Deleting,
-    Destroying,
-    Diverging,
-    Equating,
+pub enum Events<T: Eventful = Event> {
     GenericEvent(T),
-    Hashing,
-    Parsing,
-    Passing,
-    Quitting,
-    Syncing,
+    Idle,
 }
 
-impl<T: std::string::ToString + std::default::Default> Default for Events<T> {
+impl<T: Eventful> Default for Events<T> {
     fn default() -> Self {
-        Self::GenericEvent(T::default())
+        Self::Idle
+    }
+}
+
+impl<T: Eventful> std::fmt::Display for Events<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
     }
 }

@@ -1,40 +1,48 @@
 /*
     Appellation: interface <events>
-    Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
+    Contributors: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...
 */
-use crate::{events::EventModel, BsonOid, Timestamp};
+use super::Eventful;
+use crate::stamps::Timestamp;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Event {
-    pub id: BsonOid,
-    pub created: Timestamp,
-
-    pub account: Option<String>,
-    pub classification: String,
-    pub data: EventModel,
-    pub pending_webhooks: i64,
+    pub message: String,
+    pub timestamp: Timestamp,
 }
 
 impl Event {
-    pub fn new(
-        account: Option<String>,
-        classification: String,
-        data: EventModel,
-        pending_webhooks: Option<i64>,
-    ) -> Self {
-        let id = crate::BsonOid::new();
-        let created = Timestamp::default();
-        let pending_webhooks = pending_webhooks.unwrap_or(0);
-        Self {
-            id,
-            created,
-            account,
-            classification,
-            data,
-            pending_webhooks,
-        }
+    pub fn new(message: String, timestamp: Timestamp) -> Self {
+        Self { message, timestamp }
+    }
+}
+
+impl Eventful for Event {
+    fn message(&self) -> String {
+        self.message.clone()
+    }
+    fn timestamp(&self) -> i64 {
+        self.clone().timestamp.into()
+    }
+}
+
+impl std::convert::From<String> for Event {
+    fn from(data: String) -> Self {
+        Self::new(data, Timestamp::default())
+    }
+}
+
+impl Default for Event {
+    fn default() -> Self {
+        Self::from(String::new())
+    }
+}
+
+impl std::fmt::Display for Event {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
     }
 }

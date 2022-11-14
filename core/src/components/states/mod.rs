@@ -4,9 +4,10 @@
     Description:
         ... Summary ...
 */
-pub use self::state::*;
+pub use self::{state::*, stateful::*};
 
 pub(crate) mod state;
+pub(crate) mod stateful;
 
 #[cfg(test)]
 mod tests {

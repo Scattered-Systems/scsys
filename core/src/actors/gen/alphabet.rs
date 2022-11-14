@@ -5,7 +5,7 @@
         ... Summary ...
 */
 use super::generate_random_string;
-use crate::core::Timestamp;
+use crate::stamps::Timestamp;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]

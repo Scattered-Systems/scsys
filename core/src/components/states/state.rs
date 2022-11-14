@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::{messages::Message, times::Timestamp, Stateful};
+use crate::{messages::Message, stamps::Timestamp, states::Stateful};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::Display;

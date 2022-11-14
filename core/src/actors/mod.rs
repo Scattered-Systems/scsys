@@ -5,5 +5,5 @@
 */
 
 pub mod extract;
-pub mod generate;
+pub mod gen;
 pub mod parse;

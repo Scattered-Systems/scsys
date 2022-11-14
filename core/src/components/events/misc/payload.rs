@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::Timestamp;
+use crate::stamps::Timestamp;
 use bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 

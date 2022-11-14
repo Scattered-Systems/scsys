@@ -4,17 +4,12 @@
     Description:
         ... Summary ...
 */
-pub use self::{
-    addressable::*, configurable::*, contextual::*, eventful::*, justifiable::*, misc::*,
-    stateful::*,
-};
+pub use self::{addressable::*, configurable::*, contextual::*, justifiable::*, misc::*,};
 
 pub(crate) mod addressable;
 pub(crate) mod configurable;
 pub(crate) mod contextual;
-pub(crate) mod eventful;
 pub(crate) mod justifiable;
-pub(crate) mod stateful;
 
 pub(crate) mod misc {
     use crate::{components::identities::Appellation, core::BoxResult};

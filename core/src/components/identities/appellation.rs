@@ -1,6 +1,6 @@
 /*
     Appellation: appellation <module>
-    Creator: FL03 <jo3mccain@icloud.com>
+    Contrib: FL03 <jo3mccain@icloud.com>
     Description:
         An appellation is a more concise definition for the abstract naming schemes native to blockchain technologies,
         wrapping mission critical tags into a streamlined naming convention
