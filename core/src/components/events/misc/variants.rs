@@ -1,6 +1,6 @@
 /*
     Appellation: variants <events>
-    Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
+    Contributors: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...
 */
