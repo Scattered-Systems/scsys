@@ -4,8 +4,9 @@
     Description:
         ... Summary ...
 */
+use serde::Serialize;
 
-pub trait Configurable {
+pub trait Configurable: Serialize {
     type Settings;
 
     fn settings(&self) -> &Self::Settings;

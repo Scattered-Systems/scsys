@@ -6,7 +6,6 @@
 
 pub mod accounts;
 pub mod addresses;
-pub mod agents;
 pub mod contexts;
 pub mod errors;
 pub mod events;

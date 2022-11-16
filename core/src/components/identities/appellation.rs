@@ -9,8 +9,14 @@ use crate::components::identities::Id;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct Appellation {
+pub struct Appellation<T> {
     pub id: Id,
-    pub key: String, // Key is meant for use with items like a CID from IPFS
-    pub label: String,
+    pub key: T, // Key is meant for use with items like a CID from IPFS
+    pub label: T,
+}
+
+impl<T: Serialize> std::fmt::Display for Appellation<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
+    }
 }

@@ -25,8 +25,8 @@ pub(crate) mod misc {
             Ok(res)
         }
     }
-    pub trait ActorSpec {
-        fn appellation(&self) -> Appellation;
+    pub trait ActorSpec<T> {
+        fn appellation(&self) -> Appellation<T>;
         fn justification(&self) -> serde_json::Value;
     }
 

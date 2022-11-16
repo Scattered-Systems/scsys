@@ -13,8 +13,9 @@ version = "0.1.27" # TODO: Update the package version
 
 [features]
 default = ["core", "crypto"]
-full = ["core", "crypto", "derive", "macros", "extras"]
+full = ["agents", "core", "crypto", "derive", "macros", "extras"]
 
+agents = ["scsys-agents"]
 core = ["scsys-core"]
 crypto = ["scsys-crypto"]
 derive = ["scsys-derive"]
@@ -38,25 +39,30 @@ config = { optional = true, version = "0.13.2" }
 rand = { features = [], optional = true, version = "0.8.5" }
 ring = { features = [], optional = true, version = "0.16.20" }
 
+[dependencies.scsys-agents]
+optional = true
+path = "../agents"
+version = "0.1.27"
+
 [dependencies.scsys-core]
 optional = true
 path = "../core"
-version = "0.1.26"
+version = "0.1.27"
 
 [dependencies.scsys-crypto]
 optional = true
 path = "../crypto"
-version = "0.1.26"
+version = "0.1.27"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.26" # TODO: Update feature versioning
+version = "0.1.27" # TODO: Update feature versioning
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.26" # TODO: Update feature versioning
+version = "0.1.27" # TODO: Update feature versioning
 
 [package.metadata.docs.rs]
 all-features = true

@@ -8,7 +8,7 @@ pub use self::files::{DocumentHandler, FileHandler};
 
 pub(crate) mod files;
 
-pub trait Handle<S: crate::Stateful> {
+pub trait Handle<S: crate::states::Stateful> {
     fn state(&self) -> &S;
 }
 
