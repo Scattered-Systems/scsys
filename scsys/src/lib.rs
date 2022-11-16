@@ -28,10 +28,9 @@ pub mod prelude {
     #[cfg(feature = "crypto")]
     pub use super::crypto::{self, hash::*, keys::*};
     pub use super::{
-        accounts::*, addresses::*, agents::*, contexts::*, 
-        errors::*, events::*, extract::*, gen::*, handlers::*, 
-        identities::*, logging::*, networking::*, parse::*, 
-        providers::*, stamps::*, states::*
+        accounts::*, addresses::*, agents::*, contexts::*, errors::*, events::*, extract::*,
+        gen::*, handlers::*, identities::*, logging::*, networking::*, parse::*, providers::*,
+        stamps::*, states::*,
     };
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;

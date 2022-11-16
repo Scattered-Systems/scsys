@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-pub use self::{addressable::*, configurable::*, contextual::*, justifiable::*, misc::*,};
+pub use self::{addressable::*, configurable::*, contextual::*, justifiable::*, misc::*};
 
 pub(crate) mod addressable;
 pub(crate) mod configurable;
