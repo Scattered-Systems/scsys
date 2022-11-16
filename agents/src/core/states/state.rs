@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::{messages::Message, stamps::Timestamp, states::Stateful};
+use crate::{messages::Message, states::Stateful};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::Display;
@@ -21,7 +21,7 @@ pub struct State<T: Display> {
 impl<T: Display> State<T> {
     pub fn new(events: Vec<String>, message: Message<T>) -> Self {
         let metadata = Value::default();
-        let timestamp = Timestamp::default().into();
+        let timestamp = chrono::Utc::now().timestamp();
         Self {
             events,
             message,

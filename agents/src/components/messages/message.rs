@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... summary ...
 */
-use crate::stamps::Timestamp;
+use chrono::Utc;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt;
@@ -16,7 +16,7 @@ pub struct Message<T: fmt::Display = Value> {
 
 impl<T: fmt::Display> Message<T> {
     pub fn new(data: Vec<T>) -> Self {
-        let timestamp = Timestamp::default().into();
+        let timestamp = Utc::now().timestamp();
         Self { data, timestamp }
     }
     pub fn content(&self) -> &Vec<T> {

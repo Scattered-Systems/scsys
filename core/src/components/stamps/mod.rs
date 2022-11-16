@@ -17,9 +17,8 @@ pub(crate) mod specs {
 
     /// Interface extending the base features of Temporal
     pub trait TemporalExt<Tz: TimeZone = Utc>: Temporal {
-            fn now() -> chrono::DateTime<Tz>;
-        }
-
+        fn now() -> chrono::DateTime<Tz>;
+    }
 }
 
 pub(crate) mod utils {

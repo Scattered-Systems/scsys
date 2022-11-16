@@ -17,13 +17,12 @@ pub use scsys_macros::*;
 
 pub mod prelude {
     #[cfg(feature = "agents")]
-    pub use super::agents::*;
+    pub use super::agents::{self, catalysts::*, connect::*, handlers::*, justify::*, messages::*};
     #[cfg(feature = "crypto")]
     pub use super::crypto::{self, hash::*, keys::*};
     pub use super::{
-        accounts::*, addresses::*, contexts::*, errors::*, events::*, extract::*, gen::*,
-        handlers::*, identities::*, logging::*, networking::*, parse::*, providers::*, stamps::*,
-        states::*,
+        accounts::*, addresses::*, errors::*, events::*, extract::*, gen::*, identities::*,
+        loggers::*, networking::*, parse::*, providers::*, stamps::*,
     };
     #[cfg(feature = "bson")]
     pub use bson;

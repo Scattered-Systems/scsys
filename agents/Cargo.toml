@@ -18,9 +18,15 @@ default = []
 crate-type = ["cdylib", "rlib"]
 test = true
 
+[dev-dependencies.scsys-core]
+path = "../core"
+
 [dependencies]
+chrono = "0.4.22"
 serde = { features = ["derive"], version = "1.0.147" }
 serde_json = "1.0.87"
+strum = { features = ["derive"], version = "0.24.1" }
+
 
 [package.metadata.docs.rs]
 all-features = true

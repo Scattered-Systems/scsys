@@ -4,6 +4,7 @@
     Description:
         ... Summary ...
 */
-pub use self::context::*;
+pub use self::{context::*, specs::*};
 
 pub(crate) mod context;
+pub(crate) mod specs;
