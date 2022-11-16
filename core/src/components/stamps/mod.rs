@@ -3,10 +3,24 @@
     Creator: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-pub use self::{temporal::*, timestamp::Timestamp, utils::*};
+pub use self::{specs::*, timestamp::Timestamp, utils::*};
 
-pub(crate) mod temporal;
 pub(crate) mod timestamp;
+
+pub(crate) mod specs {
+    use chrono::{TimeZone, Utc};
+
+    /// Interface for time-related data-structures
+    pub trait Temporal {
+        fn timestamp(&self) -> i64;
+    }
+
+    /// Interface extending the base features of Temporal
+    pub trait TemporalExt<Tz: TimeZone = Utc>: Temporal {
+            fn now() -> chrono::DateTime<Tz>;
+        }
+
+}
 
 pub(crate) mod utils {
     use chrono::{DateTime, TimeZone, Utc};
