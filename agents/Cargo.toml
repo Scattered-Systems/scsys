@@ -9,7 +9,7 @@ license = "MIT"
 name = "scsys-agents"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.27" # TODO: Update the package version
+version = "0.1.28" # TODO: Update the package version
 
 [features]
 default = []
