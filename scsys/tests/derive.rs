@@ -7,24 +7,23 @@
 #[cfg(feature = "derive")]
 #[cfg(test)]
 mod tests {
-    use scsys::{Named, prelude::{H256, Hashable, Temporal, Timestamp}};
+    use scsys::{
+        prelude::{Hashable, Temporal, Timestamp, H256},
+        Named,
+    };
 
     #[derive(Default, Hashable, Named, Temporal)]
     pub struct TestStruct {
-        timestamp: Timestamp
+        timestamp: Timestamp,
     }
 
     impl std::fmt::Display for TestStruct {
         fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-            write!(
-                f,
-                "{}",
-                self.timestamp
-            )
+            write!(f, "{}", self.timestamp)
         }
     }
 
-   #[derive(Named)]
+    #[derive(Named)]
     struct Pancakes;
 
     #[test]

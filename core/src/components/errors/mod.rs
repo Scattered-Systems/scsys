@@ -1,6 +1,6 @@
 /*
     Appellation: errors <module>
-    Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
+    Contrib: FL03 <jo3mccain@icloud.com>
     Description:
         ... Summary ...
 */
@@ -15,7 +15,7 @@ mod tests {
     #[test]
     fn test_error_default() {
         let actual = Error::default();
-        let expected = Error::try_from("default").ok().unwrap();
+        let expected = Error::Default;
         assert_eq!(actual, expected)
     }
 }

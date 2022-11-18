@@ -4,13 +4,10 @@
     Description:
         ... Summary ...
 */
-pub mod actors;
-pub mod components;
-pub mod data;
-
-#[doc(inline)]
+#[cfg(feature = "agents")]
+pub use scsys_agents as agents;
 #[cfg(feature = "core")]
-pub use scsys_core as core;
+pub use scsys_core::*;
 #[cfg(feature = "crypto")]
 pub use scsys_crypto as crypto;
 #[cfg(feature = "derive")]
@@ -18,31 +15,25 @@ pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
 
-pub trait Named {
-    fn name() -> String;
-}
-
 pub mod prelude {
-    #[doc(inline)]
-    pub use bson;
-    #[doc(inline)]
-    pub use chrono;
-    #[doc(inline)]
-    pub use config;
-    #[doc(inline)]
-    pub use log;
-    #[doc(inline)]
-    pub use rand;
-    #[doc(inline)]
-    pub use ring;
-
-    #[cfg(feature = "core")]
-    pub use super::core::*;
-    #[cfg(feature = "core")]
-    pub use super::core::{self, contexts::*, errors::*, events::*, states::*};
-
+    #[cfg(feature = "agents")]
+    pub use super::agents::{self, catalysts::*, connect::*, handlers::*, justify::*, messages::*};
     #[cfg(feature = "crypto")]
     pub use super::crypto::{self, hash::*, keys::*};
+    pub use super::{
+        accounts::*, addresses::*, errors::*, events::*, extract::*, gen::*, identities::*,
+        loggers::*, networking::*, parse::*, providers::*, stamps::*,
+    };
+    #[cfg(feature = "bson")]
+    pub use bson;
+    #[cfg(feature = "chrono")]
+    pub use chrono;
+    #[cfg(feature = "config")]
+    pub use config;
+    #[cfg(feature = "rand")]
+    pub use rand;
+    #[cfg(feature = "ring")]
+    pub use ring;
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
 }

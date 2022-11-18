@@ -8,7 +8,7 @@ keywords = ["core", "primitives", "scsys"]
 license = "MIT"
 name = "scsys-core"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.26" # TODO: Update the package version
+version = "0.1.27" # TODO: Update the package version
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -19,6 +19,8 @@ bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" 
 chrono = "0.4.22"
 config = "0.13.2"
 glob = "0.3.0"
+nom = "7.1.1"
+rand = { features = [], version = "0.8.5" }
 ring = "0.16.20"
 serde = { features = ["derive"], version = "1.0.147" }
 serde_json = "1.0.87"

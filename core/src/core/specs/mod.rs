@@ -4,13 +4,19 @@
     Description:
         ... Summary ...
 */
-pub use self::{
-    addressable::*, configurable::*, contextual::*, eventful::*, justifiable::*, stateful::*,
-};
+pub use self::{addressable::*, misc::*};
 
 pub(crate) mod addressable;
-pub(crate) mod configurable;
-pub(crate) mod contextual;
-pub(crate) mod eventful;
-pub(crate) mod justifiable;
-pub(crate) mod stateful;
+
+pub(crate) mod misc {
+    use crate::components::identities::Appellation;
+
+    pub trait ActorSpec<T> {
+        fn appellation(&self) -> Appellation<T>;
+        fn justification(&self) -> serde_json::Value;
+    }
+
+    pub trait Named {
+        fn name() -> String;
+    }
+}
