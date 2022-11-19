@@ -10,16 +10,6 @@ name = "scsys-core"
 repository = "https://github.com/scattered-systems/scsys"
 version = "0.1.29" # TODO: Update the package version
 
-[features]
-default = ["core"]
-full = ["core", "extras", "wasm", "wasm-ext"]
-
-core = []
-extras = []
-
-wasm = []
-wasm-ext = []
-
 [lib]
 crate-type = ["cdylib", "rlib"]
 test = true

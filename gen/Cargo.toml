@@ -13,15 +13,16 @@ version = "0.1.29" # TODO: Update the package version
 
 [features]
 default = ["core"]
-full = ["core", "extras", "wasm", "wasm-ext"]
+full = ["core", "wasm", "wasm-ext"]
 
 core = []
-extras = []
-
 wasm = []
+
 wasm-ext = [
-    "getrandom/js"
+    "rand"
 ]
+
+rand = ["getrandom/js"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
