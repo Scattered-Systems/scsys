@@ -12,7 +12,18 @@ repository = "https://github.com/scattered-systems/scsys"
 version = "0.1.28" # TODO: Update the package version
 
 [features]
-default = []
+default = ["core", "extras"]
+full = ["core", "extras", "wasm"]
+
+core = []
+wasm = ["getrandom/js"]
+
+extras = [
+    "getrandom/std"
+]
+wasm-ext = [
+    "getrandom/js"
+]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

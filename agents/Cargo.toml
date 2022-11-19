@@ -13,6 +13,12 @@ version = "0.1.28" # TODO: Update the package version
 
 [features]
 default = []
+full = ["core", "extras", "wasm", "wasm-ext"]
+
+core = []
+wasm = []
+wasm-ext = []
+extras = []
 
 [lib]
 crate-type = ["cdylib", "rlib"]

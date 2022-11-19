@@ -19,13 +19,13 @@ agents = ["scsys-agents"]
 core = ["scsys-core"]
 crypto = ["scsys-crypto"]
 derive = ["scsys-derive"]
+gen = ["scsys-gen/default", "scsys-gen/full", "scsys-gen/wasm"]
 macros = ["scsys-macros"]
 
-extras = ["bson", "chrono", "config", "rand"]
+extras = ["bson", "chrono", "config"]
 bson = ["bson/default", "bson/chrono-0_4", "bson/serde_with", "bson/uuid-0_8"]
 chrono = ["chrono/default"]
 config = ["config/default"]
-rand = ["rand/default"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -35,19 +35,21 @@ test = true
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, version = "2.4.0" }
 chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }
-rand = { features = [], optional = true, version = "0.8.5" }
 
 [dependencies.scsys-agents]
+features = ["full"]
 optional = true
 path = "../agents"
 version = "0.1.28"
 
 [dependencies.scsys-core]
+features = ["full"]
 optional = true
 path = "../core"
 version = "0.1.28"
 
 [dependencies.scsys-crypto]
+features = ["full"]
 optional = true
 path = "../crypto"
 version = "0.1.28"
@@ -58,6 +60,7 @@ path = "../derive"
 version = "0.1.28" # TODO: Update feature versioning
 
 [dependencies.scsys-gen]
+features = ["full"]
 optional = true
 path = "../gen"
 version = "0.1.28"
