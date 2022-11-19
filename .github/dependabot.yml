@@ -1,22 +1,30 @@
 version: 2
 updates:
-  - package-ecosystem: github-actions
-    directory: /
+    - package-ecosystem: github-actions
+        directory: /
+        schedule:
+            interval: daily
+    - package-ecosystem: cargo
+    directory: /agents
     schedule:
       interval: daily
-  - package-ecosystem: cargo
+    - package-ecosystem: cargo
     directory: /core
     schedule:
       interval: daily
-  - package-ecosystem: cargo
+    - package-ecosystem: cargo
     directory: /derive
     schedule:
       interval: daily
-  - package-ecosystem: cargo
+    - package-ecosystem: cargo
+    directory: /gen
+    schedule:
+      interval: daily
+    - package-ecosystem: cargo
     directory: /macros
     schedule:
       interval: daily
-  - package-ecosystem: cargo
+    - package-ecosystem: cargo
     directory: /scsys
     schedule:
       interval: daily

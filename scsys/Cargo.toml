@@ -9,24 +9,47 @@ license = "MIT"
 name = "scsys"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.27" # TODO: Update the package version
+version = "0.1.28" # TODO: Update the package version
 
 [features]
-default = ["core", "crypto"]
-full = ["agents", "core", "crypto", "derive", "macros", "extras"]
+default = [
+    "scsys-agents/default",
+    "scsys-core/default",
+    "scsys-crypto/default",
+    "scsys-gen/default",
+    "wasm"
+]
+full = [
+    "scsys-agents/full",
+    "scsys-core/full",
+    "scsys-crypto/full",
+    "scsys-gen/full",
+    "derive", 
+    "macros", 
+    "extras", 
+    "wasm"
+]
 
-agents = ["scsys-agents"]
-core = ["scsys-core"]
-crypto = ["scsys-crypto"]
-derive = ["scsys-derive"]
+wasm = [
+    "scsys-agents/wasm",
+    "scsys-core/wasm",
+    "scsys-crypto/wasm",
+    "scsys-gen/wasm",
+    "wasm-ext"
+]
+wasm-ext = []
+
+agents = ["scsys-agents/default"]
+core = ["scsys-core/default"]
+crypto = ["scsys-crypto/default"]
+derive = ["scsys-derive", "macros"]
+gen = ["scsys-gen/default", "scsys-gen/full", "scsys-gen/wasm"]
 macros = ["scsys-macros"]
 
-extras = []
+extras = ["bson", "chrono", "config"]
 bson = ["bson/default", "bson/chrono-0_4", "bson/serde_with", "bson/uuid-0_8"]
 chrono = ["chrono/default"]
 config = ["config/default"]
-rand = ["rand/default"]
-ring = ["ring/default"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -36,34 +59,43 @@ test = true
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, version = "2.4.0" }
 chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }
-rand = { features = [], optional = true, version = "0.8.5" }
-ring = { features = [], optional = true, version = "0.16.20" }
 
 [dependencies.scsys-agents]
+features = ["full"]
 optional = true
 path = "../agents"
-version = "0.1.27"
+version = "0.1.28"
 
 [dependencies.scsys-core]
+features = ["full"]
 optional = true
 path = "../core"
-version = "0.1.27"
+version = "0.1.28"
 
 [dependencies.scsys-crypto]
+features = ["full"]
 optional = true
 path = "../crypto"
-version = "0.1.27"
+version = "0.1.28"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.1.27" # TODO: Update feature versioning
+version = "0.1.28" # TODO: Update feature versioning
+
+[dependencies.scsys-gen]
+features = ["full"]
+optional = true
+path = "../gen"
+version = "0.1.28"
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.1.27" # TODO: Update feature versioning
+version = "0.1.28" # TODO: Update feature versioning
 
 [package.metadata.docs.rs]
 all-features = true
 rustc-args = ["--cfg", "docsrs"]
+
+[target.wasm32-unknown-unknown]

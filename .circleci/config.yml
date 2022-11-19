@@ -1,0 +1,47 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: rust:latest
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - run: cargo --version
+      - run: cargo login $CARGO_REGISTRY_TOKEN
+      - run:
+          name: Run Tests
+          command: "cargo test --all --all-features --color always -v"
+  publisher:
+    docker:
+      - image: rust:latest
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - run: cargo login $CARGO_REGISTRY_TOKEN
+      - run:
+          name: Publish crate features
+          command: |
+            cargo publish --all-features --jobs 1 --verbose -p scsys-agents
+            cargo publish --all-features --jobs 1 --verbose -p scsys-core
+            cargo publish --all-features --jobs 1 --verbose -p scsys-crypto
+            cargo publish --all-features --jobs 1 --verbose -p scsys-derive
+            cargo publish --all-features --jobs 1 --verbose -p scsys-gen
+            cargo publish --all-features --jobs 1 --verbose -p scsys-macros
+      - run:
+          name: Publish (crate)
+          command: cargo publish --all-features --jobs 1 --verbose -p scsys
+
+workflows:
+  rust:
+    jobs:
+      - build
+      - publish:
+          requires: [build]
+        filters:
+          branches:
+            only: main # only deploy when on main

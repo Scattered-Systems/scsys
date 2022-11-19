@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-pub use self::{logger::Logger, utils::logger_from_env};
+pub use self::{logger::Logger, utils::*};
 
 mod logger;
 
@@ -12,13 +12,4 @@ pub trait Loggable {
     fn level(&self) -> String;
 }
 
-pub(crate) mod utils {
-    pub fn logger_from_env(level: Option<&str>) {
-        let env_var = "RUST_LOG";
-        let level = level.unwrap_or("info");
-        if std::env::var_os(env_var).is_none() {
-            std::env::set_var(env_var, level)
-        }
-        tracing_subscriber::fmt::init()
-    }
-}
+pub(crate) mod utils {}

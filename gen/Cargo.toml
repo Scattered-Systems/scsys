@@ -1,26 +1,29 @@
 [package]
 authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
 categories = []
-description = "scsys-agents"
+description = "scsys-gen"
 edition = "2021"
 homepage = "https://github.com/scattered-systems/scsys/wiki"
 keywords = ["scsys"]
 license = "MIT"
-name = "scsys-agents"
+name = "scsys-gen"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
 version = "0.1.28" # TODO: Update the package version
 
 [features]
-default = ["core", "wasm"]
+default = ["core", "extras"]
 full = ["core", "extras", "wasm"]
 
 core = []
-wasm = [
-    "wasm-ext"
+wasm = ["getrandom/js"]
+
+extras = [
+    "getrandom/std"
 ]
-wasm-ext = []
-extras = []
+wasm-ext = [
+    "getrandom/js"
+]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -31,6 +34,8 @@ path = "../core"
 
 [dependencies]
 chrono = "0.4.22"
+getrandom = { features = ["js"], version = "0.2" }
+rand = "0.8.5"
 serde = { features = ["derive"], version = "1.0.147" }
 serde_json = "1.0.87"
 strum = { features = ["derive"], version = "0.24.1" }
