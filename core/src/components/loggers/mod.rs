@@ -12,6 +12,4 @@ pub trait Loggable {
     fn level(&self) -> String;
 }
 
-pub(crate) mod utils {
-    
-}
+pub(crate) mod utils {}

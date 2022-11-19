@@ -19,6 +19,6 @@ pub(crate) mod utils {
     }
 
     pub fn generate_random_pkcs8() -> ring::pkcs8::Document {
-        Ed25519KeyPair::generate_pkcs8(&mut SystemRandom::new()).unwrap()
+        Ed25519KeyPair::generate_pkcs8(&SystemRandom::new()).unwrap()
     }
 }

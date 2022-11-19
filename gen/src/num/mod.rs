@@ -8,11 +8,7 @@ pub use self::{digits::*, utils::*};
 pub(crate) mod digits;
 
 pub(crate) mod utils {
-    use rand::{
-        distributions::Standard,
-        prelude::Distribution,
-        Rng,
-    };
+    use rand::{distributions::Standard, prelude::Distribution, Rng};
 
     /// Consolidate resources required for generating random numbers
     pub fn generate_random_number<T>() -> T

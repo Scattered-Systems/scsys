@@ -9,18 +9,14 @@ pub use self::{alphabet::*, utils::*};
 pub(crate) mod alphabet;
 
 pub(crate) mod utils {
-    use rand::{
-        distributions::{Alphanumeric, Standard},
-        prelude::Distribution,
-        Rng,
-    };
+    use rand::{distributions::Alphanumeric, Rng};
 
     pub fn generate_random_string(len: usize) -> String {
         rand::thread_rng()
-        .sample_iter(&Alphanumeric)
-        .take(len)
-        .map(char::from)
-        .collect()
+            .sample_iter(&Alphanumeric)
+            .take(len)
+            .map(char::from)
+            .collect()
     }
 }
 
@@ -32,6 +28,4 @@ mod tests {
     fn test_generate_alpha_default() {
         assert_ne!(StringGenerator::default(), StringGenerator::default())
     }
-
-
 }
