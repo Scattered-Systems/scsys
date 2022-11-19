@@ -1,10 +1,9 @@
 /*
     Appellation: loggers <module>
-    Contributors: FL03 <jo3mccain@icloud.com> (https://github.com)
-    Description:
-        ... Summary ...
+    Contrib: FL03 <jo3mccain@icloud.com>
+    Description: ... Summary ...
 */
-use super::{logger_from_env, Loggable};
+use super::Loggable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
@@ -16,8 +15,14 @@ impl Logger {
     pub fn new(level: String) -> Self {
         Self { level }
     }
-    pub fn setup(&self) {
-        logger_from_env(Some(self.level.clone().as_str()))
+    pub fn setup(&mut self, key: Option<&str>) -> &Self {
+        let key = key.unwrap_or("RUST_LOG");
+        if let Some(v) = std::env::var_os(key) {
+            self.level = v.into_string().expect("Failed to convert into string...");
+        } else {
+            std::env::set_var(key, self.level.clone());
+        }
+        self
     }
 }
 
@@ -30,6 +35,12 @@ impl Default for Logger {
 impl Loggable for Logger {
     fn level(&self) -> String {
         self.level.clone()
+    }
+}
+
+impl std::convert::From<&Logger> for Logger {
+    fn from(data: &Logger) -> Self {
+        Self::new(data.level.clone())
     }
 }
 
