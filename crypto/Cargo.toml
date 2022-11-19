@@ -8,20 +8,16 @@ keywords = ["crypto", "scsys"]
 license = "MIT"
 name = "scsys-crypto"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.28" # TODO: Update the package version
+version = "0.1.29" # TODO: Update the package version
 
 [features]
-default = ["core", "extras", "wasm"]
-full = ["core", "extras", "wasm"]
+default = ["core"]
+full = ["core", "extras", "wasm", "wasm-ext"]
 
 core = []
-extras = [
-    "getrandom/std"
-]
+extras = []
 
-wasm = [
-    "wasm-ext"
-]
+wasm = []
 
 wasm-ext = [
     "getrandom/js",

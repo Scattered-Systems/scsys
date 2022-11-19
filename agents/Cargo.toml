@@ -9,18 +9,17 @@ license = "MIT"
 name = "scsys-agents"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.28" # TODO: Update the package version
+version = "0.1.29" # TODO: Update the package version
 
 [features]
-default = ["core", "wasm"]
-full = ["core", "extras", "wasm"]
+default = ["core"]
+full = ["core", "extras", "wasm", "wasm-ext"]
 
 core = []
-wasm = [
-    "wasm-ext"
-]
-wasm-ext = []
 extras = []
+
+wasm = []
+wasm-ext = []
 
 [lib]
 crate-type = ["cdylib", "rlib"]
