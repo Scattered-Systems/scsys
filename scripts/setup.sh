@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 rustup default nightly
 rustup target add wasm32-wasi wasm32-unknown-unknown --toolchain nightly
 rustup component add clippy rustfmt --toolchain nightly

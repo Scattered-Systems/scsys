@@ -10,6 +10,22 @@ jobs:
     steps:
       - checkout
       - run: cargo --version
+      - run: cargo login $CARGO_REGISTRY_TOKEN
       - run:
           name: Run Tests
           command: "cargo test --all --all-features --color always -v"
+  publisher:
+    docker:
+      - image: rust:latest
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    filters:
+      branches:
+        only: main # only deploy when on main
+    steps:
+      - checkout
+workflows:
+  build:
+    jobs:
+      - my-job
