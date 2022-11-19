@@ -5,19 +5,19 @@
         ... Summary ...
 */
 use super::generate_random_string;
-use crate::stamps::Timestamp;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct StringGenerator {
     pub data: String,
-    pub timestamp: Timestamp,
+    pub timestamp: i64,
 }
 
 impl StringGenerator {
     pub fn new(len: usize) -> Self {
         let data = generate_random_string(len);
-        let timestamp = Timestamp::default();
+        let timestamp = chrono::Utc::now().timestamp();
         Self { data, timestamp }
     }
 }
