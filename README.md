@@ -15,8 +15,8 @@ cargo install package
 
 ## Usage
 
-- [crates.io](https://crates.io/crates/scsys-derive)
-- [docs.rs](https://docs.rs/scsys-derive)
+- [crates.io](https://crates.io/crates/scsys)
+- [docs.rs](https://docs.rs/scsys)
 
 ```rust
 use scsys::prelude::*;
