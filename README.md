@@ -3,31 +3,36 @@
 [![Clippy](https://github.com/Scattered-Systems/scsys/actions/workflows/rust-clippy.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/rust-clippy.yml)
 [![Rust](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml)
 
-## About
+This crate was built in support of the scsys ecosystem;
 
-scsys lays the foundation for the Scattered-Systems ecosystem, delivering critical primitives throughout
+## Installation
 
-## Concepts
+Use Rust's built-in package manager [crates](https://crates.io/crates/package) to install *package*.
 
-## Developers
+```bash
+cargo install package
+```
 
-### _Building from the source_
+## Usage
 
-    git clone https://github.com/scattered-systems/scsys
+- [crates.io](https://crates.io/crates/scsys-derive)
+- [docs.rs](https://docs.rs/scsys-derive)
 
-    cargo build --release --workspace
-    cargo test --all-features --release
+```rust
+use scsys::prelude::*;
 
-## Contents
+fn main() {
+  println!("{:?}", Message::<String>::default());
+}
+```
 
-### _References_
+## Contributing
 
-* [Bitcoin](https://bitcoin.org)
-* [Ethereum](https://ethereum.org)
-* [IPFS](https://ipfs.io)
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
 
-### _Websites_
+Please make sure to update tests as appropriate.
 
-* [Company](https://scattered-systems.com)
-* [Crate](https://crates.io/crates/scsys)
-* [Docs](https://docs.rs/scsys)
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

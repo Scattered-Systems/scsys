@@ -1,32 +1,28 @@
 # scsys
 
-[![Code Analysis](https://github.com/scattered-systems/scsys/actions/workflows/rust-clippy.yml/badge.svg)](https://github.com/scattered-systems/scsys/actions/workflows/rust-clippy.yml)
-[![Rust](https://github.com/scattered-systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/scattered-systems/scsys/actions/workflows/rust.yml)
+This crate was built in support of the scsys ecosystem; 
 
-## Abstract
+## Usage
 
-scsys is a collection of primitives used throughout the Scattered-Systems Ecosystem.
+- [crates.io](https://crates.io/crates/scsys)
+- [docs.rs](https://docs.rs/scsys)
 
-## Concepts
+```rust
+use scsys::prelude::*;
 
 
+fn main() {
+  println!("{:?}", Message::<String>::default());
+}
+```
 
-## Developers
+## Contributing
 
-### _Building from the source_
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
 
-    git clone https://github.com/scattered-systems/scsys
+Please make sure to update tests as appropriate.
 
-    cargo build --release --workspace
-    cargo test --all-features --release
+## License
 
-## References
-
-### Crate (_scsys_)
-
-* [Crate](https://crates.io/crates/scsys)
-* [Docs](https://docs.rs/scsys)
-
-### _Scattered-Systems, LLC_
-
-* [Company](https://scattered-systems.com)
+[MIT](https://choosealicense.com/licenses/mit/)
