@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 cargo publish --all-features --jobs 1 --verbose -p scsys-agents
 cargo publish --all-features --jobs 1 --verbose -p scsys-core
 cargo publish --all-features --jobs 1 --verbose -p scsys-crypto
