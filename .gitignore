@@ -54,7 +54,7 @@
 **/*.zip.*
 
 # Exceptions
-!.circleci/config.yaml
+!**/.circleci/config.*
 !**/default.config.*
 !**/*.env.example
 !**/*.config.js
