@@ -23,7 +23,7 @@ hex = "0.4.3"
 hex-literal = "0.3.4"
 itertools = "0.10.5"
 rand = "0.8.5"
-ring = "0.16.20"
+ring = { features = ["wasm32_c"], version = "0.16.20"}
 serde = { features = ["derive"], version = "1.0.147" }
 serde_json = "1.0.87"
 typenum = "1.15.0"
