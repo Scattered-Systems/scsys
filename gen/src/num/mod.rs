@@ -1,17 +1,15 @@
 /*
-    Appellation: generate <module>
-    Creator: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
+    Appellation: num <module>
+    Contrib: FL03 <jo3mccain@icloud.com>
+    Description: ... Summary ...
 */
-pub use self::{alphabet::*, digits::*, utils::*};
+pub use self::{digits::*, utils::*};
 
-mod alphabet;
-mod digits;
+pub(crate) mod digits;
 
 pub(crate) mod utils {
     use rand::{
-        distributions::{Alphanumeric, Standard},
+        distributions::Standard,
         prelude::Distribution,
         Rng,
     };
@@ -23,14 +21,6 @@ pub(crate) mod utils {
     {
         let mut rnd = rand::thread_rng();
         rnd.gen::<T>()
-    }
-
-    pub fn generate_random_string(len: usize) -> String {
-        rand::thread_rng()
-            .sample_iter(&Alphanumeric)
-            .take(len)
-            .map(char::from)
-            .collect()
     }
 }
 
@@ -44,11 +34,6 @@ mod tests {
             DigitGenerator::<f64>::default(),
             DigitGenerator::<f64>::default()
         )
-    }
-
-    #[test]
-    fn test_generate_alpha_default() {
-        assert_ne!(StringGenerator::default(), StringGenerator::default())
     }
 
     #[test]

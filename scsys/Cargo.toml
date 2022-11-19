@@ -57,6 +57,11 @@ optional = true
 path = "../derive"
 version = "0.1.28" # TODO: Update feature versioning
 
+[dependencies.scsys-gen]
+optional = true
+path = "../gen"
+version = "0.1.28"
+
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"

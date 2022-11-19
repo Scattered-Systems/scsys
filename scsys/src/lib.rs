@@ -12,6 +12,8 @@ pub use scsys_core::*;
 pub use scsys_crypto as crypto;
 #[cfg(feature = "derive")]
 pub use scsys_derive::*;
+#[cfg(feature = "gen")]
+pub use scsys_gen as gen;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
 
@@ -23,11 +25,13 @@ pub mod prelude {
     
     #[cfg(feature = "core")]
     pub use super::{
-        accounts::*, addresses::*, errors::*, events::*, extract::*, gen::*, identities::*,
+        accounts::*, addresses::*, errors::*, events::*, extract::*, identities::*,
         loggers::*, networking::*, parse::*, providers::*, stamps::*,
     };
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
+    #[cfg(feature = "gen")]
+    pub use super::gen::*;
     #[cfg(feature = "macros")]
     pub use scsys_macros::*;
     #[cfg(feature = "bson")]
