@@ -11,15 +11,21 @@ repository = "https://github.com/scattered-systems/scsys"
 version = "0.1.28" # TODO: Update the package version
 
 [features]
-default = []
-full = []
+default = ["core", "extras", "wasm"]
+full = ["core", "extras", "wasm"]
 
-extras = ["getrandom/std"]
+core = []
+extras = [
+    "getrandom/std"
+]
 
-wasm = ["getrandom/js"]
+wasm = [
+    "wasm-ext"
+]
 
 wasm-ext = [
-    "getrandom/js"
+    "getrandom/js",
+    "ring/wasm32_c"
 ]
 
 [lib]

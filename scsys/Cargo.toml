@@ -12,12 +12,21 @@ repository = "https://github.com/scattered-systems/scsys"
 version = "0.1.28" # TODO: Update the package version
 
 [features]
-default = ["core", "crypto"]
-full = ["agents", "core", "crypto", "derive", "macros", "extras"]
+default = ["core", "crypto", "wasm"]
+full = ["agents", "core", "crypto", "derive", "macros", "extras", "wasm"]
 
-agents = ["scsys-agents"]
-core = ["scsys-core"]
-crypto = ["scsys-crypto"]
+wasm = [
+    "scsys-agents/wasm",
+    "scsys-core/wasm",
+    "scsys-crypto/wasm",
+    "scsys-gen/wasm",
+    "wasm-ext"
+]
+wasm-ext = []
+
+agents = ["scsys-agents/default", "scsys-agents/full", "scsys-agents/wasm"]
+core = ["scsys-core/default", "scsys-core/full", "scsys-core/wasm"]
+crypto = ["scsys-crypto/default", "scsys-crypto/full", "scsys-crypto/wasm"]
 derive = ["scsys-derive"]
 gen = ["scsys-gen/default", "scsys-gen/full", "scsys-gen/wasm"]
 macros = ["scsys-macros"]
