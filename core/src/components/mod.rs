@@ -6,10 +6,9 @@
 
 pub mod accounts;
 pub mod addresses;
-pub mod errors;
 pub mod events;
 pub mod identities;
 pub mod loggers;
+pub mod messages;
 pub mod networking;
 pub mod providers;
-pub mod stamps;

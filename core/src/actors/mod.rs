@@ -4,5 +4,9 @@
     Description: ... Summary ...
 */
 
+pub mod catalysts;
+pub mod connect;
 pub mod extract;
+pub mod handlers;
+pub mod justify;
 pub mod parse;

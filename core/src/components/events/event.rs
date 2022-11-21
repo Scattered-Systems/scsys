@@ -5,7 +5,7 @@
         ... Summary ...
 */
 use super::Eventful;
-use crate::stamps::Timestamp;
+use crate::Timestamp;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]

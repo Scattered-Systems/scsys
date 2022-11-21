@@ -1,16 +1,13 @@
 /*
     Appellation: derive <module>
-    Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
-    Description:
-        ... Summary ...
+    Contrib: FL03 <jo3mccain@icloud.com>
+    Description:  ... Summary ...
 */
 #[cfg(feature = "derive")]
 #[cfg(test)]
 mod tests {
-    use scsys::{
-        prelude::{Hashable, Temporal, Timestamp, H256},
-        Named,
-    };
+    use scsys::prelude::{Hashable, H256};
+    use scsys::{Named, Temporal, Timestamp};
 
     #[derive(Default, Hashable, Named, Temporal)]
     pub struct TestStruct {
