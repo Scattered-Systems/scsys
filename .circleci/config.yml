@@ -40,7 +40,7 @@ workflows:
   rust:
     jobs:
       - build
-      - publish:
+      - publisher:
           requires: [build]
           filters:
             branches:
