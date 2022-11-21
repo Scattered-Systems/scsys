@@ -5,6 +5,7 @@
 */
 pub use self::{primitives::*, specs::*, utils::*};
 
+pub mod contexts;
 pub mod errors;
 pub mod states;
 
