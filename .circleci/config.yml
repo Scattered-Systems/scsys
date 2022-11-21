@@ -22,15 +22,14 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - run: cargo login $CARGO_REGISTRY_TOKEN
       - run:
           name: Publish crate features
           command: |
-            cargo publish --all-features --jobs 1 --verbose -p scsys-core
-            cargo publish --all-features --jobs 1 --verbose -p scsys-crypto
-            cargo publish --all-features --jobs 1 --verbose -p scsys-derive
-            cargo publish --all-features --jobs 1 --verbose -p scsys-gen
-            cargo publish --all-features --jobs 1 --verbose -p scsys-macros
+            cargo publish --all-features --jobs 1 -v --token $CARGO_REGISTRY_TOKEN -p scsys-core
+            cargo publish --all-features --jobs 1 -v --token $CARGO_REGISTRY_TOKEN -p scsys-crypto
+            cargo publish --all-features --jobs 1 -v --token $CARGO_REGISTRY_TOKEN -p scsys-derive
+            cargo publish --all-features --jobs 1 -v --token $CARGO_REGISTRY_TOKEN -p scsys-gen
+            cargo publish --all-features --jobs 1 -v --token $CARGO_REGISTRY_TOKEN -p scsys-macros
       - run:
           name: Publish (crate)
           command: cargo publish --all-features --jobs 1 --verbose -p scsys
@@ -38,7 +37,10 @@ jobs:
 workflows:
   rust:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: main
       - publisher:
           requires: [build]
           filters:
