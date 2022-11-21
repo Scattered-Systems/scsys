@@ -4,7 +4,9 @@
     Description: ... Summary ...
 */
 #[doc(inline)]
-pub use self::{address::*, appellation::*, constants::*, ids::*, links::*, timestamp::*, types::*};
+pub use self::{
+    address::*, appellation::*, constants::*, ids::*, links::*, timestamp::*, types::*,
+};
 
 pub(crate) mod address;
 pub(crate) mod appellation;

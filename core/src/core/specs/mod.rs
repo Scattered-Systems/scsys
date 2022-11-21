@@ -13,8 +13,6 @@ pub(crate) mod misc {
     use chrono::Utc;
     use serde_json::Value;
 
-    
-
     pub trait InputName {
         fn name(&self) -> String;
         fn slug(&self) -> String {

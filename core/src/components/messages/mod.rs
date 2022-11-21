@@ -10,7 +10,7 @@ pub(crate) mod message;
 pub(crate) mod specs {
     use serde::Serialize;
     use std::{collections::HashSet, fmt::Display};
-    
+
     pub trait Symbolic: Clone + Display {
         fn symbols(&self) -> &HashSet<Self>;
     }

@@ -56,7 +56,7 @@ impl std::fmt::Display for Timestamp {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Timestamp, Temporal};
+    use crate::{Temporal, Timestamp};
 
     #[test]
     fn test_timestamp() {

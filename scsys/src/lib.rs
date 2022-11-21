@@ -22,9 +22,9 @@ pub mod prelude {
     pub use super::gen::*;
     #[cfg(feature = "core")]
     pub use super::{
-        accounts::*, agents::*, catalysts::*,contexts::*, errors::*, events::*, extract::*,
-        handlers::*, justify::*, loggers::*, messages::*, networking::*, parse::*,
-        providers::*, states::*,
+        accounts::*, agents::*, catalysts::*, contexts::*, errors::*, events::*, extract::*,
+        handlers::*, justify::*, loggers::*, messages::*, networking::*, parse::*, providers::*,
+        states::*,
     };
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;

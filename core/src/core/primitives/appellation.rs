@@ -7,7 +7,6 @@
 */
 use serde::{Deserialize, Serialize};
 
-
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Appellation<T = String> {
     pub id: T,
@@ -15,7 +14,10 @@ pub struct Appellation<T = String> {
     pub label: T,
 }
 
-impl<T> std::fmt::Display for Appellation<T> where T: Serialize {
+impl<T> std::fmt::Display for Appellation<T>
+where
+    T: Serialize,
+{
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
