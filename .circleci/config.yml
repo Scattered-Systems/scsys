@@ -42,6 +42,6 @@ workflows:
       - build
       - publish:
           requires: [build]
-        filters:
-          branches:
-            only: main # only deploy when on main
+          filters:
+            branches:
+              only: main # only deploy when on main
