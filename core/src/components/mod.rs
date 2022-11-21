@@ -5,9 +5,8 @@
 */
 
 pub mod accounts;
-pub mod addresses;
+pub mod agents;
 pub mod events;
-pub mod identities;
 pub mod loggers;
 pub mod messages;
 pub mod networking;

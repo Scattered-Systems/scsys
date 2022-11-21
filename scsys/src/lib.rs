@@ -22,8 +22,8 @@ pub mod prelude {
     pub use super::gen::*;
     #[cfg(feature = "core")]
     pub use super::{
-        accounts::*, addresses::*, catalysts::*, connect::*, errors::*, events::*, extract::*,
-        handlers::*, identities::*, justify::*, loggers::*, messages::*, networking::*, parse::*,
+        accounts::*, agents::*, catalysts::*,contexts::*, errors::*, events::*, extract::*,
+        handlers::*, justify::*, loggers::*, messages::*, networking::*, parse::*,
         providers::*, states::*,
     };
     #[cfg(feature = "derive")]

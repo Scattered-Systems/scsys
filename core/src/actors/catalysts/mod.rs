@@ -1,12 +1,20 @@
 /*
-    Appellation: catalyst <module>
+    Appellation: catalysts <module>
     Creator: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
+pub use self::{catalyst::*, specs::*,};
+
+pub(crate) mod catalyst;
 
 pub(crate) mod specs {
+    use std::convert::Into;
 
-    pub trait Catalyst<S: std::convert::Into<T>, T> {
+    pub trait Transformable<T>: Into<T> {
+        
+    }
+
+    pub trait Converter<S, T> where S: Transformable<T> {
         fn catalyst(&self, data: &S) -> T;
     }
 

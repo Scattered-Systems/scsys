@@ -3,25 +3,24 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use crate::{chrono_datetime_now, chrono_into_bson, ChronoDateTime};
-use chrono::Utc;
+use crate::{timestamp, Temporal};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Timestamp(pub i64);
 
 impl Timestamp {
-    pub fn new(data: i64) -> Self {
-        Self(data)
+    pub fn new() -> Self {
+        Self(timestamp())
     }
-    pub fn now() -> chrono::DateTime<Utc> {
-        chrono_datetime_now()
+    pub fn ts() -> i64 {
+        chrono::Utc::now().timestamp()
     }
-    pub fn chrono_to_bson(&self, data: ChronoDateTime) -> bson::DateTime {
-        chrono_into_bson::<Utc>(data)
-    }
-    pub fn timestamp() -> i64 {
-        Self::now().timestamp()
+}
+
+impl Temporal for Timestamp {
+    fn timestamp(&self) -> i64 {
+        self.0
     }
 }
 
@@ -45,32 +44,34 @@ impl std::convert::From<Timestamp> for i64 {
 
 impl Default for Timestamp {
     fn default() -> Self {
-        Self::new(Self::timestamp())
+        Self::new()
     }
 }
 
 impl std::fmt::Display for Timestamp {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
+        write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use crate::{Timestamp, Temporal};
 
     #[test]
     fn test_timestamp() {
         let a = Timestamp::default();
         let b = a.clone();
-        b.chrono_to_bson(Timestamp::now());
+        b.chrono_to_bson(Timestamp::datetime());
         assert_eq!(a, b)
     }
 
     #[test]
     fn test_timestamp_default() {
-        let actual = Timestamp::default();
-        let expected = actual.clone();
-        assert_eq!(actual, expected)
+        let m = Timestamp::default();
+        let a = Timestamp::from(&m);
+        let b: i64 = Timestamp::from(&a).into();
+        assert_eq!(&m, &a);
+        assert_eq!(&a.timestamp(), &b);
     }
 }
