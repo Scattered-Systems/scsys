@@ -2,7 +2,6 @@ job("Login & Test (crates)") {
     startOn {
         gitPush { 
             branchFilter {
-                +"refs/heads/main"
                 +"refs/tags/v*.*.*"
             }
         }

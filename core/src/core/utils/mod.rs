@@ -3,6 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
+pub use self::times::*;
 use crate::{ConfigFile, ConfigFileVec};
 use glob::glob;
 use std::{
@@ -29,6 +30,22 @@ pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {
 /// Simple function wrapper evaluating the claim that the given information is of type f64
 pub fn is_float<T: ToString>(data: &T) -> bool {
     f64::from_str(&data.to_string()).is_ok()
+}
+
+pub(crate) mod times {
+    use chrono::{DateTime, TimeZone, Utc};
+
+    pub fn chrono_datetime_now() -> DateTime<Utc> {
+        Utc::now()
+    }
+
+    pub fn chrono_into_bson<T: TimeZone>(data: DateTime<T>) -> bson::DateTime {
+        bson::DateTime::from_chrono(data)
+    }
+
+    pub fn timestamp() -> i64 {
+        Utc::now().timestamp()
+    }
 }
 
 #[cfg(test)]

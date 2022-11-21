@@ -4,13 +4,17 @@
     Description:
         ... Summary ...
 */
-pub use self::{hashes::*, interface::Hash, utils::*};
+pub use self::{hashes::*, interface::Hash, specs::*, utils::*};
 
 pub(crate) mod hashes;
 pub(crate) mod interface;
 
-pub trait Hashable {
-    fn hash(&self) -> H256;
+pub(crate) mod specs {
+    use super::H256;
+
+    pub trait Hashable {
+        fn hash(&self) -> H256;
+    }
 }
 
 pub(crate) mod utils {

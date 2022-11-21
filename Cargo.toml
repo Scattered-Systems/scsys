@@ -8,7 +8,6 @@ exclude = [
 ]
 
 members = [
-    "agents",
     "core",
     "crypto",
     "derive",

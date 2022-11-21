@@ -8,25 +8,19 @@ keywords = ["crypto", "scsys"]
 license = "MIT"
 name = "scsys-crypto"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.28" # TODO: Update the package version
+version = "0.1.29" # TODO: Update the package version
 
 [features]
-default = ["core", "extras", "wasm"]
-full = ["core", "extras", "wasm"]
+default = []
+full = ["wasm", "wasm-ext"]
 
-core = []
-extras = [
-    "getrandom/std"
-]
-
-wasm = [
-    "wasm-ext"
-]
-
+wasm = []
 wasm-ext = [
-    "getrandom/js",
-    "ring/wasm32_c"
+    "rand", "ring"
 ]
+
+rand = ["getrandom/js"]
+ring = ["ring/default", "ring/wasm32_c"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -45,7 +39,7 @@ itertools = "0.10.5"
 rand = "0.8.5"
 ring = { features = ["wasm32_c"], version = "0.16.20" }
 serde = { features = ["derive"], version = "1.0.147" }
-serde_json = "1.0.87"
+serde_json = "1.0.88"
 typenum = "1.15.0"
 
 [dev-dependencies]

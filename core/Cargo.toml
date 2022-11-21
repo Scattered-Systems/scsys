@@ -8,17 +8,7 @@ keywords = ["core", "primitives", "scsys"]
 license = "MIT"
 name = "scsys-core"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.28" # TODO: Update the package version
-
-[features]
-default = ["core", "extras"]
-full = ["core", "extras", "wasm"]
-
-core = []
-extras = []
-
-wasm = ["wasm-ext"]
-wasm-ext = []
+version = "0.1.29" # TODO: Update the package version
 
 [lib]
 crate-type = ["cdylib", "rlib"]

@@ -4,8 +4,6 @@
     Description:
         ... Summary ...
 */
-#[cfg(feature = "agents")]
-pub use scsys_agents as agents;
 #[cfg(feature = "core")]
 pub use scsys_core::*;
 #[cfg(feature = "crypto")]
@@ -18,16 +16,15 @@ pub use scsys_gen as gen;
 pub use scsys_macros::*;
 
 pub mod prelude {
-    #[cfg(feature = "agents")]
-    pub use super::agents::{self, catalysts::*, connect::*, handlers::*, justify::*, messages::*};
     #[cfg(feature = "crypto")]
     pub use super::crypto::{self, hash::*, keys::*};
     #[cfg(feature = "gen")]
     pub use super::gen::*;
     #[cfg(feature = "core")]
     pub use super::{
-        accounts::*, addresses::*, errors::*, events::*, extract::*, identities::*, loggers::*,
-        networking::*, parse::*, providers::*, stamps::*,
+        accounts::*, addresses::*, catalysts::*, connect::*, errors::*, events::*, extract::*,
+        handlers::*, identities::*, justify::*, loggers::*, messages::*, networking::*, parse::*,
+        providers::*, states::*,
     };
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;

@@ -9,21 +9,20 @@ license = "MIT"
 name = "scsys-gen"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.28" # TODO: Update the package version
+version = "0.1.29" # TODO: Update the package version
 
 [features]
-default = ["core", "extras"]
-full = ["core", "extras", "wasm"]
+default = ["core"]
+full = ["core", "wasm", "wasm-ext"]
 
 core = []
-wasm = ["getrandom/js"]
+wasm = []
 
-extras = [
-    "getrandom/std"
-]
 wasm-ext = [
-    "getrandom/js"
+    "rand"
 ]
+
+rand = ["getrandom/js"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

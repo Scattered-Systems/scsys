@@ -1,13 +1,9 @@
 /*
     Appellation: timestamp <module>
-    Contributors: FL03 <jo3mccain@icloud.com> (https://gitlab.com/FL03)
-    Description:
-        ... Summary ...
+    Contrib: FL03 <jo3mccain@icloud.com>
+    Description: ... Summary ...
 */
-use crate::{
-    stamps::{chrono_datetime_now, chrono_into_bson},
-    ChronoDateTime,
-};
+use crate::{chrono_datetime_now, chrono_into_bson, ChronoDateTime};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
 
