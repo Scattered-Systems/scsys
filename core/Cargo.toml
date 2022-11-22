@@ -25,8 +25,5 @@ serde_json = "1.0.87"
 strum = { features = ["derive"], version = "0.24.1" }
 url = "2.3.1"
 
-[dev-dependencies]
-vrf = "0.2.4"
-
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]

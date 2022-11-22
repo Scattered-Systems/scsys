@@ -1,8 +1,7 @@
 /*
     Appellation: h256 <module>
-    Contributors: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
+    Contrib: FL03 <jo3mccain@icloud.com>
+    Description: ... Summary ...
 */
 use crate::{
     hash::{generate_random_hash, H160},
@@ -10,12 +9,11 @@ use crate::{
     H256Hash,
     Hashable
 };
-use ring::digest::digest;
 use serde::{Deserialize, Serialize};
 
 /// A SHA256 hash.
 #[derive(Clone, Copy, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct H256(pub H256Hash); // big endian u256
+pub struct H256(pub H256Hash);
 
 impl H256 {
     pub fn new(data: H256Hash) -> Self {
@@ -28,7 +26,7 @@ impl H256 {
 
 impl Hashable for H256 {
     fn hash(&self) -> H256 {
-        digest(&ring::digest::SHA256, &self.0).into()
+        ring::digest::digest(&ring::digest::SHA256, &self.0).into()
     }
 }
 
