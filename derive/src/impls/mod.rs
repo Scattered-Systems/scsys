@@ -4,9 +4,8 @@
     Description:
         ... Summary ...
 */
-pub use self::{hashable::*, naming::*, temporal::*};
+pub use self::{naming::*, temporal::*};
 
-pub(crate) mod hashable;
 pub(crate) mod temporal;
 
 pub(crate) mod naming {

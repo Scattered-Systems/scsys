@@ -26,7 +26,7 @@ impl H256 {
 
 impl Hashable for H256 {
     fn hash(&self) -> H256 {
-        ring::digest::digest(&ring::digest::SHA256, &self.0).into()
+        self.clone()
     }
 }
 

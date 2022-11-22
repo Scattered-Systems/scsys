@@ -13,6 +13,26 @@ extern crate syn;
 use proc_macro::TokenStream;
 use syn::{parse_macro_input, DeriveInput};
 
+#[proc_macro_derive(Hashable)]
+pub fn hashable(input: TokenStream) -> TokenStream {
+    let ast = parse_macro_input!(input as DeriveInput);
+    let gen = impl_hashable(&ast);
+
+    gen.into()
+}
+
+fn impl_hashable(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+    let name = &ast.ident;
+    let res = quote::quote! {
+        impl scsys::crypto::Hashable for #name {
+            fn hash(&self) -> scsys::crypto::hash::H256 {
+                scsys::crypto::hash::hasher(&self).into()
+            }
+        }
+    };
+    res
+}
+
 #[proc_macro_derive(Temporal)]
 pub fn temporal(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
@@ -20,13 +40,6 @@ pub fn temporal(input: TokenStream) -> TokenStream {
     gen.into()
 }
 
-#[proc_macro_derive(Hashable)]
-pub fn hashable(input: TokenStream) -> TokenStream {
-    let ast = parse_macro_input!(input as DeriveInput);
-    let gen = impls::hashable::impl_hashable(&ast);
-
-    gen.into()
-}
 
 #[proc_macro_derive(Named, attributes(Alternative))]
 pub fn named(input: TokenStream) -> TokenStream {
