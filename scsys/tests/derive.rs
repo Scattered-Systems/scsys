@@ -6,7 +6,7 @@
 #[cfg(feature = "derive")]
 #[cfg(test)]
 mod tests {
-    use scsys::prelude::{Hashable, H256};
+    use scsys::prelude::{H256, Hashable};
     use scsys::{Named, Temporal, Timestamp};
 
     #[derive(Default, Hashable, Named, Temporal)]

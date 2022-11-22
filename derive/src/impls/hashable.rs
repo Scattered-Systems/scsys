@@ -10,7 +10,7 @@ pub fn impl_hashable(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
     let res = quote::quote! {
         impl Hashable for #name {
             fn hash(&self) -> H256 {
-                scsys::prelude::Hash::new(self).into()
+                scsys::crypto::hash::hasher(&self).into()
             }
         }
     };

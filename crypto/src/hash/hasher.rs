@@ -4,17 +4,15 @@
     Description: ... Summary ...
 */
 #![allow(clippy::from_over_into)]
-use crate::{
-    hash::{hasher, hashes::H256, Hashable},
-    GenericHash,
-};
-use std::string::ToString;
+use crate::hash::{hasher, hashes::H256};
+use crate::{GenericHash, Hashable};
+
 
 #[derive(Clone, Debug, Default, Eq, Hash, PartialEq)]
 pub struct Hash(pub GenericHash);
 
 impl Hash {
-    pub fn new<T: ToString>(data: T) -> Self {
+    pub fn new<T>(data: T) -> Self where T: ToString {
         Self(hasher(&data))
     }
 }

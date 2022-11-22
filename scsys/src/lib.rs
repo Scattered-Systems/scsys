@@ -16,8 +16,10 @@ pub use scsys_gen as gen;
 pub use scsys_macros::*;
 
 pub mod prelude {
+    pub use super::*;
+    
     #[cfg(feature = "crypto")]
-    pub use super::crypto::{self, hash::*, keys::*};
+    pub use super::crypto::{hash::*, keys::*, GenericHash, GenericHashOutput, Hashable};
     #[cfg(feature = "gen")]
     pub use super::gen::*;
     #[cfg(feature = "core")]
@@ -26,10 +28,6 @@ pub mod prelude {
         handlers::*, justify::*, loggers::*, messages::*, networking::*, parse::*, providers::*,
         states::*,
     };
-    #[cfg(feature = "derive")]
-    pub use scsys_derive::*;
-    #[cfg(feature = "macros")]
-    pub use scsys_macros::*;
     // Extras
     #[cfg(feature = "bson")]
     pub use bson;

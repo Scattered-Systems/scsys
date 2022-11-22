@@ -1,21 +1,12 @@
 /*
     Appellation: hash <module>
     Contributors: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
+    Description: ... Summary ...
 */
-pub use self::{hashes::*, interface::Hash, specs::*, utils::*};
+pub use self::{hashes::*, hasher::Hash, utils::*};
 
 pub(crate) mod hashes;
-pub(crate) mod interface;
-
-pub(crate) mod specs {
-    use super::H256;
-
-    pub trait Hashable {
-        fn hash(&self) -> H256;
-    }
-}
+pub(crate) mod hasher;
 
 pub(crate) mod utils {
     use crate::GenericHash;

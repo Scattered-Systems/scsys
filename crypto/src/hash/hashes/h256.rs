@@ -5,8 +5,10 @@
         ... Summary ...
 */
 use crate::{
-    hash::{generate_random_hash, Hashable, H160},
+    hash::{generate_random_hash, H160},
+    GenericHash,
     H256Hash,
+    Hashable
 };
 use ring::digest::digest;
 use serde::{Deserialize, Serialize};
@@ -69,6 +71,12 @@ impl std::convert::From<&[u8; 32]> for H256 {
         let mut buffer: [u8; 32] = [0; 32];
         buffer[..].copy_from_slice(input);
         H256(buffer)
+    }
+}
+
+impl std::convert::From<GenericHash> for H256 {
+    fn from(data: GenericHash) -> H256 {
+        data.as_slice().to_owned().into()
     }
 }
 

@@ -8,7 +8,7 @@ keywords = ["derive", "macros", "scsys"]
 license = "MIT"
 name = "scsys-derive"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.30" # TODO: Update the package version
+version = "0.1.31" # TODO: Update the package version
 
 [lib]
 proc-macro = true

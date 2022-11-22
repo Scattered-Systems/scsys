@@ -4,10 +4,9 @@
     Description:
         ... Summary ...
 */
-use crate::{
-    hash::{hashes::H256, Hashable},
-    H160Hash,
-};
+use super::H256;
+use crate::{H160Hash,Hashable};
+
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 
