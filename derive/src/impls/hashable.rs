@@ -8,8 +8,8 @@
 pub fn impl_hashable(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
     let name = &ast.ident;
     let res = quote::quote! {
-        impl Hashable for #name {
-            fn hash(&self) -> H256 {
+        impl scsys::crypto::Hashable for #name {
+            fn hash(&self) -> scsys::crypto::hash::H256 {
                 scsys::crypto::hash::hasher(&self).into()
             }
         }
