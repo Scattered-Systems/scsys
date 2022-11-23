@@ -6,6 +6,7 @@
 #[cfg(feature = "derive")]
 #[cfg(test)]
 mod tests {
+    use scsys::prelude::*;
     use scsys::Hashable;
     use scsys::{Named, Temporal, Timestamp};
 
@@ -31,7 +32,7 @@ mod tests {
 
     #[test]
     fn test_hashable_derive() {
-        let a = TestStruct::default();
+        let _a = TestStruct::default();
         // let hash = a.hash();
         assert_eq!(TestStruct::name(), String::from("TestStruct"));
     }

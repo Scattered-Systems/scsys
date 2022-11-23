@@ -5,9 +5,7 @@
 */
 use crate::{
     hash::{generate_random_hash, H160},
-    GenericHash,
-    H256Hash,
-    Hashable
+    GenericHash, H256Hash, Hashable,
 };
 use serde::{Deserialize, Serialize};
 
@@ -26,7 +24,7 @@ impl H256 {
 
 impl Hashable for H256 {
     fn hash(&self) -> H256 {
-        self.clone()
+        *self
     }
 }
 

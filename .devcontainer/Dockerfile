@@ -15,7 +15,7 @@ FROM base as runner-base
 ADD . /space
 WORKDIR /space
 
-COPY . .
+COPY .. .
 
 FROM runner-base as wasm-base
 

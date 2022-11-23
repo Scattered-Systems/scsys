@@ -7,12 +7,14 @@
 use crate::hash::{hasher, hashes::H256};
 use crate::{GenericHash, Hashable};
 
-
 #[derive(Clone, Debug, Default, Eq, Hash, PartialEq)]
 pub struct Hash(pub GenericHash);
 
 impl Hash {
-    pub fn new<T>(data: T) -> Self where T: ToString {
+    pub fn new<T>(data: T) -> Self
+    where
+        T: ToString,
+    {
         Self(hasher(&data))
     }
 }

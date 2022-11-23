@@ -17,9 +17,9 @@ pub use scsys_macros::*;
 
 pub mod prelude {
     pub use super::*;
-    
+
     #[cfg(feature = "crypto")]
-    pub use super::crypto::{hash::*, keys::*, GenericHash, GenericHashOutput, Hashable};
+    pub use super::crypto::*;
     #[cfg(feature = "gen")]
     pub use super::gen::*;
     #[cfg(feature = "core")]

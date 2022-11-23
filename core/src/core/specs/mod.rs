@@ -11,7 +11,7 @@ pub(crate) mod addressable;
 pub(crate) mod misc {
     use crate::{chrono_into_bson, Appellation, ChronoDateTime};
     use chrono::Utc;
-    use serde_json::Value;
+    
 
     pub trait InputName {
         fn name(&self) -> String;
@@ -40,7 +40,7 @@ pub(crate) mod misc {
     pub trait Named {
         fn name() -> String;
         fn slug(&self) -> String {
-            Self::name().clone().to_lowercase()
+            Self::name().to_lowercase()
         }
     }
 }

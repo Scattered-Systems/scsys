@@ -1,7 +1,7 @@
 {
 	"name": "Rust",
 	"build": {
-		"context": "..",
+		"context": ".",
 		"dockerfile": "Dockerfile"
 	},
 	"customizations": {

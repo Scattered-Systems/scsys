@@ -5,7 +5,7 @@
         ... Summary ...
 */
 use super::H256;
-use crate::{H160Hash,Hashable};
+use crate::{H160Hash, Hashable};
 
 use rand::Rng;
 use serde::{Deserialize, Serialize};

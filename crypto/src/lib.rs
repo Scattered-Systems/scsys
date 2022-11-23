@@ -4,12 +4,10 @@
     Description: ... summary ...
 */
 #[doc(inline)]
-pub use self::{primitives::*, specs::*};
+pub use self::{hash::*, keys::*, primitives::*, specs::*};
 
-pub mod hash;
-pub mod keys;
-
-
+pub(crate) mod hash;
+pub(crate) mod keys;
 
 pub(crate) mod primitives {
     use generic_array::GenericArray;
@@ -23,13 +21,15 @@ pub(crate) mod primitives {
 
     pub type GenericHashOutput = UInt<UInt<UInt<UInt<UInt<UInt<UTerm, B1>, B0>, B0>, B0>, B0>, B0>;
     pub type GenericHash<T = u8, Output = GenericHashOutput> = GenericArray<T, Output>;
-
 }
 
 pub(crate) mod specs {
     use crate::hash::{hasher, H256};
-    
-    pub trait Hashable where Self: std::fmt::Display {
+
+    pub trait Hashable
+    where
+        Self: std::fmt::Display,
+    {
         fn hash(&self) -> H256;
     }
 
@@ -37,7 +37,7 @@ pub(crate) mod specs {
         fn hasher(&self, deg: Option<usize>) -> H256 {
             let s: H256 = hasher(&self).into();
 
-            let mut res: H256 = s.clone();
+            let mut res: H256 = s;
             for _ in 0..deg.unwrap_or(1) {
                 res = hasher(&res.clone()).into()
             }
@@ -53,7 +53,7 @@ pub(crate) mod specs {
         fn position(&self, item: &T) -> Result<Option<usize>, E>;
         fn push(&mut self, item: T) -> Result<usize, E>;
     }
-    
+
     // pub trait ArrayLikeExt {
     //     type Value;
     //     fn truncate(&mut self, _len: usize) -> Result<(), MerkleMountainRangeError>;

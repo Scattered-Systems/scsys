@@ -14,9 +14,20 @@ pub(crate) mod specs {
 
     pub trait Converter<S, T>
     where
-        S: Transformable<T>,
+        S: Clone + Transformable<T>,
     {
-        fn catalyst(&self, data: &S) -> T;
+        fn data(&self) -> &[S];
+        fn catalyst(&mut self) -> Vec<T>
+        where
+            S: Iterator,
+        {
+            self.data()
+                .to_owned()
+                .iter()
+                .cloned()
+                .map(|i| i.into())
+                .collect::<Vec<_>>()
+        }
     }
 
     pub trait Transformation<S> {
