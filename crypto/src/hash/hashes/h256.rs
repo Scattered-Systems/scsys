@@ -24,7 +24,7 @@ impl H256 {
 
 impl Hashable for H256 {
     fn hash(&self) -> H256 {
-        self.clone()
+        *self
     }
 }
 

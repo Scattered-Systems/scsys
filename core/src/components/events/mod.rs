@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-pub use self::{event::*, specs::*, misc::*};
+pub use self::{event::*, misc::*, specs::*};
 
 pub(crate) mod event;
 pub(crate) mod misc;

@@ -37,7 +37,7 @@ pub(crate) mod specs {
         fn hasher(&self, deg: Option<usize>) -> H256 {
             let s: H256 = hasher(&self).into();
 
-            let mut res: H256 = s.clone();
+            let mut res: H256 = s;
             for _ in 0..deg.unwrap_or(1) {
                 res = hasher(&res.clone()).into()
             }

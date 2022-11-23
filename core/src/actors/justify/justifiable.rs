@@ -4,7 +4,7 @@
     Description: ... Summary ...
 */
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
+
 use std::collections::HashSet;
 
 pub trait Justifiable<I: ToString = String>: Clone + std::fmt::Display + Serialize {

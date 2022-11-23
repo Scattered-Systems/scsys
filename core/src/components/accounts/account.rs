@@ -13,13 +13,18 @@ pub struct Account {
     pub handle: String,
     pub id: ObjectId,
     pub key: String,
-    pub data: Vec<Option<AccountMetadata>>
+    pub data: Vec<Option<AccountMetadata>>,
 }
 
 impl Account {
     pub fn new(handle: String, key: String) -> Self {
         let id = ObjectId::new();
-        Self { handle, id, key, data: Default::default() }
+        Self {
+            handle,
+            id,
+            key,
+            data: Default::default(),
+        }
     }
 }
 
@@ -32,7 +37,7 @@ impl std::fmt::Display for Account {
 #[derive(Clone, Debug, Deserialize, EnumString, EnumVariantNames, Eq, PartialEq, Serialize)]
 pub enum AccountMetadata {
     Account(Account),
-    Generic(serde_json::Value)
+    Generic(serde_json::Value),
 }
 impl Default for AccountMetadata {
     fn default() -> Self {
