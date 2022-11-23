@@ -1,18 +1,17 @@
 # Security Policy
 
-### Supported Versions
+## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+This section is used to update intrested parties as to which versions are currently supported, with respect to the current version.
 
 | Package | Current | Supported |
 |---------|---------|-----------|
-| scsys   | 0.1.8   | <=0.1.7   |
+| scsys   | 0.1.33   | <=0.1.30   |
 
 ## Reporting a Vulnerability
 
-If you discover a vulnerability feel free to email me at j3mccain@gmail.com or visit the
-company [website](https://scattered-systems.com)
+If you discover a vulnerability feel free to email me at jo3mccain@scattered-systems.com or visit the
+company [website](https://scsys.eth.limo)
 for more information.
 
 ### _GitHub_
