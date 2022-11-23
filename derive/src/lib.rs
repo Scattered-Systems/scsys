@@ -24,9 +24,9 @@ pub fn hashable(input: TokenStream) -> TokenStream {
 fn impl_hashable(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
     let name = &ast.ident;
     let res = quote::quote! {
-        impl scsys::crypto::Hashable for #name {
-            fn hash(&self) -> scsys::crypto::hash::H256 {
-                scsys::crypto::hash::hasher(&self).into()
+        impl Hashable for #name {
+            fn hash(&self) -> H256 {
+                scsys::crypto::hasher(&self).into()
             }
         }
     };
@@ -39,7 +39,6 @@ pub fn temporal(input: TokenStream) -> TokenStream {
     let gen = impls::temporal::impl_temporal(&ast);
     gen.into()
 }
-
 
 #[proc_macro_derive(Named, attributes(Alternative))]
 pub fn named(input: TokenStream) -> TokenStream {

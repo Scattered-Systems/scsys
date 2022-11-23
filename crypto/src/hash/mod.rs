@@ -3,10 +3,10 @@
     Contributors: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-pub use self::{hashes::*, hasher::Hash, utils::*};
+pub use self::{hasher::Hash, hashes::*, utils::*};
 
-pub(crate) mod hashes;
 pub(crate) mod hasher;
+pub(crate) mod hashes;
 
 pub(crate) mod utils {
     use crate::GenericHash;

@@ -17,8 +17,16 @@ pub(crate) mod specs {
         S: Clone + Transformable<T>,
     {
         fn data(&self) -> &[S];
-        fn catalyst(&mut self) -> Vec<T> where S: Iterator{
-            self.data().to_owned().iter().cloned().map(|i| i.into()).collect::<Vec<_>>()
+        fn catalyst(&mut self) -> Vec<T>
+        where
+            S: Iterator,
+        {
+            self.data()
+                .to_owned()
+                .iter()
+                .cloned()
+                .map(|i| i.into())
+                .collect::<Vec<_>>()
         }
     }
 

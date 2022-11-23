@@ -8,7 +8,6 @@ use serde_json::Value;
 use std::collections::HashSet;
 
 pub trait Justifiable<I: ToString = String>: Clone + std::fmt::Display + Serialize {
-    
     fn invocations(&self) -> &Vec<I>;
     fn justification(&self) -> &Justification;
 }
@@ -21,12 +20,16 @@ pub struct Originator<T: ToString>(HashSet<T>);
 pub struct Justification {
     pub invocations: Vec<String>,
     pub methods: Vec<String>,
-    pub origins: Vec<String>
+    pub origins: Vec<String>,
 }
 
 impl Justification {
     pub fn new(invocations: Vec<String>, methods: Vec<String>, origins: Vec<String>) -> Self {
-        Self { invocations, methods, origins }
+        Self {
+            invocations,
+            methods,
+            origins,
+        }
     }
 }
 
@@ -43,8 +46,6 @@ impl Justifiable for Justification {
     fn justification(&self) -> &Justification {
         self
     }
-
-    
 }
 
 impl std::convert::From<&Justification> for Justification {
