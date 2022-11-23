@@ -9,15 +9,13 @@ license = "Apache-2.0"
 name = "scsys-gen"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.32" # TODO: Update the package version
+version = "0.1.33" # TODO: Update the package version
 
 [features]
-default = ["core"]
-full = ["core", "wasm", "wasm-ext"]
+default = ["wasm"]
+full = ["wasm", "wasm-ext"]
 
-core = []
 wasm = []
-
 wasm-ext = [
     "rand"
 ]

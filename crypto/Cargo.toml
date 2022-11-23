@@ -8,10 +8,10 @@ keywords = ["crypto", "scsys"]
 license = "Apache-2.0"
 name = "scsys-crypto"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.32" # TODO: Update the package version
+version = "0.1.33" # TODO: Update the package version
 
 [features]
-default = []
+default = ["wasm"]
 full = ["wasm", "wasm-ext"]
 
 wasm = []
