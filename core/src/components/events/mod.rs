@@ -4,11 +4,20 @@
     Description:
         ... Summary ...
 */
-pub use self::{event::*, eventful::*, misc::*};
+pub use self::{event::*, specs::*, misc::*};
 
 pub(crate) mod event;
-pub(crate) mod eventful;
 pub(crate) mod misc;
+
+pub(crate) mod specs {
+    use serde::Serialize;
+    use std::fmt::Display;
+
+    pub trait Eventful: Clone + Default + Display + Serialize {
+        fn message(&self) -> String;
+        fn timestamp(&self) -> i64;
+    }
+}
 
 #[cfg(test)]
 mod tests {
