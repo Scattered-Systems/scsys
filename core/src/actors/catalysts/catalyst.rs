@@ -13,9 +13,9 @@ pub struct Catalyst<S> {
 
 impl<S, T> Converter<S, T> for Catalyst<S>
 where
-    S: Transformable<T>,
+    S: Clone + Transformable<T>,
 {
-    fn catalyst(&self, data: &S) -> T {
-        todo!()
+    fn data(&self) -> &[S] {
+        self.data.as_slice()
     }
 }

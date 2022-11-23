@@ -15,6 +15,7 @@ version = "0.1.33" # TODO: Update the package version
 default = [
     "core",
     "crypto",
+    "derive",
     "gen",
     "macros"
 ]
@@ -28,10 +29,10 @@ full = [
     "wasm"
 ]
 
-wasm = [
-    "wasm-ext"
+wasm = []
+wasm-ext = [
+    "scsys-crypto/wasm-ext"
 ]
-wasm-ext = ["scsys-crypto/wasm-ext"]
 
 core = ["scsys-core"]
 crypto = ["scsys-crypto/full"]
