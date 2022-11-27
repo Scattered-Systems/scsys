@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use crate::{timestamp, Temporal};
+use crate::{timestamp, DefaultTimezone, Temporal};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
@@ -13,6 +13,12 @@ impl Timestamp {
     pub fn new() -> Self {
         Self(timestamp())
     }
+    pub fn now() -> chrono::DateTime<DefaultTimezone> {
+        chrono::Utc::now()
+    }
+    pub fn pretty() -> String {
+        Self::now().to_rfc3339()
+    }
     pub fn ts() -> i64 {
         chrono::Utc::now().timestamp()
     }
@@ -21,6 +27,29 @@ impl Timestamp {
 impl Temporal for Timestamp {
     fn timestamp(&self) -> i64 {
         self.0
+    }
+}
+
+impl std::convert::TryFrom<String> for Timestamp {
+    type Error = crate::BoxError;
+
+    fn try_from(data: String) -> Result<Self, Self::Error> {
+        Self::try_from(data.as_str())
+    }
+}
+
+impl std::convert::TryFrom<&str> for Timestamp {
+    type Error = crate::BoxError;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        let dt = chrono::DateTime::parse_from_rfc3339(value)?;
+        Ok(Self(dt.timestamp()))
+    }
+}
+
+impl std::convert::From<&chrono::DateTime<chrono::Utc>> for Timestamp {
+    fn from(ts: &chrono::DateTime<chrono::Utc>) -> Self {
+        Self(ts.timestamp())
     }
 }
 
@@ -60,9 +89,10 @@ mod tests {
 
     #[test]
     fn test_timestamp() {
-        let a = Timestamp::default();
-        let b = a.clone();
-        b.chrono_to_bson(Timestamp::datetime());
+        let ts = Timestamp::now();
+        let str_ts = ts.to_rfc3339();
+        let a = Timestamp::from(&ts);
+        let b = Timestamp::try_from(str_ts).unwrap();
         assert_eq!(a, b)
     }
 
