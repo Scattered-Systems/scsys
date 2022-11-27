@@ -6,7 +6,7 @@
 */
 pub use self::error::*;
 
-mod error;
+pub(crate) mod error;
 
 #[cfg(test)]
 mod tests {

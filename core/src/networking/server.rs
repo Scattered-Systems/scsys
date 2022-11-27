@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::actors::extract::Extractor;
+use crate::extract::Extractor;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]

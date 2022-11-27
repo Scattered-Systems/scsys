@@ -5,9 +5,18 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{actors::*, components::*, core::*, data::*};
+pub use self::{data::*, primitives::*, specs::*, utils::*};
 
-pub(crate) mod actors;
-pub(crate) mod components;
-pub(crate) mod core;
+pub mod accounts;
+pub mod errors;
+pub mod events;
+pub mod extract;
+pub mod loggers;
+pub mod networking;
+pub mod parse;
+pub mod providers;
+
 pub(crate) mod data;
+pub(crate) mod primitives;
+pub(crate) mod specs;
+pub(crate) mod utils;

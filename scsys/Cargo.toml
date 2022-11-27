@@ -13,6 +13,7 @@ version = "0.1.33" # TODO: Update the package version
 
 [features]
 default = [
+    "actors",
     "core",
     "crypto",
     "derive",
@@ -20,6 +21,7 @@ default = [
     "macros"
 ]
 full = [
+    "actors",
     "core",
     "crypto",
     "gen",
@@ -34,6 +36,7 @@ wasm-ext = [
     "scsys-crypto/wasm-ext"
 ]
 
+actors = ["scsys-actors"]
 core = ["scsys-core"]
 crypto = ["scsys-crypto/full"]
 derive = ["scsys-derive"]
@@ -54,6 +57,7 @@ bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, v
 chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }
 
+scsys-actors = { features = [], optional = true, path = "../actors", version = "0.1.33" }
 scsys-core = { features = [], optional = true, path = "../core", version = "0.1.33" }
 scsys-crypto = { features = ["full"], optional = true, path = "../crypto", version = "0.1.33" }
 scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.33" }

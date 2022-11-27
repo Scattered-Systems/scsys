@@ -11,7 +11,6 @@ pub(crate) mod addressable;
 pub(crate) mod misc {
     use crate::{chrono_into_bson, Appellation, ChronoDateTime};
     use chrono::Utc;
-    
 
     pub trait InputName {
         fn name(&self) -> String;

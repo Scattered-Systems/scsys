@@ -3,7 +3,7 @@
     Creator: FL03 <jo3mccain@icloud.com>
     Description:
 */
-use crate::core::Result;
+use crate::Result;
 use serde::{Deserialize, Serialize};
 use url::Url;
 
