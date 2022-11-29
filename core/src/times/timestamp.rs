@@ -6,6 +6,7 @@
 use crate::{timestamp, DefaultTimezone, Temporal};
 use serde::{Deserialize, Serialize};
 
+/// Timestamp implements a host of useful utilities for stamping data
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Timestamp(pub i64);
 

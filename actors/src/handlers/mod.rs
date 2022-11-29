@@ -4,12 +4,16 @@
     Description:
         ... Summary ...
 */
-pub use self::files::{DocumentHandler, FileHandler};
+pub use self::{handler::*, specs::*, utils::*};
 
-pub(crate) mod files;
+pub(crate) mod handler;
 
-pub trait Handle<S: crate::states::Stateful> {
-    fn state(&self) -> &S;
+pub(crate) mod specs {
+    use crate::states::Stateful;
+
+    pub trait StateHandle<S: Stateful> {
+        fn state(&self) -> &S;
+    }
 }
 
 pub(crate) mod utils {}

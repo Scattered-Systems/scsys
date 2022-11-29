@@ -7,16 +7,10 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct FileHandler {
-    pub path: String,
-}
+pub struct Handler;
 
-impl FileHandler {
-    pub fn new(path: String) -> Self {
-        Self { path }
+impl Handler {
+    pub fn new() -> Self {
+        Self
     }
-}
-
-pub trait DocumentHandler {
-    fn path(&self) -> String;
 }

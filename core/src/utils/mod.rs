@@ -3,8 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-pub use self::times::*;
-use crate::{ConfigFile, ConfigFileVec};
+use crate::{BoxResult, ConfigFile, ConfigFileVec};
 use glob::glob;
 use std::{
     fs::File,
@@ -13,12 +12,32 @@ use std::{
     string::ToString,
 };
 
+/// A generic function wrapper extending glob::glob
+pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> BoxResult<Vec<T>> {
+    let mut files = Vec::<T>::new();
+    for r in glob::glob(pat)? {
+        files.push(f(r?))
+    }
+    Ok(files)
+}
+
 // Gather configuration files following the specified pattern and collect them into a vector
 pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
     glob(pattern)
         .expect("")
         .map(|p| ConfigFile::from(p.expect("Failed to read the pathbuf")).required(required))
         .collect::<Vec<_>>()
+}
+
+/// Attempts to collect configuration files, following the given pattern, into a ConfigFileVec
+pub fn try_collect_config_files(pattern: &str, required: bool) -> BoxResult<ConfigFileVec> {
+    let f = |p: std::path::PathBuf| ConfigFile::from(p).required(required);
+    collect_files_as(&f, pattern)
+    // let mut files = Vec::new();
+    // for r in glob::glob(pattern)? {
+    //     files.push(ConfigFile::from(r?).required(required))
+    // }
+    // Ok(files)
 }
 
 /// This function converts the file found at path (fp) into a Vec<String>
@@ -32,22 +51,6 @@ pub fn is_float<T: ToString>(data: &T) -> bool {
     f64::from_str(&data.to_string()).is_ok()
 }
 
-pub(crate) mod times {
-    use chrono::{DateTime, TimeZone, Utc};
-
-    pub fn chrono_datetime_now() -> DateTime<Utc> {
-        Utc::now()
-    }
-
-    pub fn chrono_into_bson<T: TimeZone>(data: DateTime<T>) -> bson::DateTime {
-        bson::DateTime::from_chrono(data)
-    }
-
-    pub fn timestamp() -> i64 {
-        Utc::now().timestamp()
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -56,7 +59,9 @@ mod tests {
     fn test_file_to_vec() {
         let fp = "README.md".to_string();
         let a = file_to_vec(fp);
+        let b = try_collect_config_files("**/Cargo.*", false);
         assert!(a.is_ok());
+        assert!(b.is_ok());
         assert!(!a.expect("").is_empty())
     }
 
