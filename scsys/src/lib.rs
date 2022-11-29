@@ -4,6 +4,8 @@
     Description:
         ... Summary ...
 */
+#[cfg(feature = "actors")]
+pub use scsys_actors as actors;
 #[cfg(feature = "core")]
 pub use scsys_core::*;
 #[cfg(feature = "crypto")]
@@ -16,17 +18,19 @@ pub use scsys_gen as gen;
 pub use scsys_macros::*;
 
 pub mod prelude {
-    pub use super::*;
-
+    #[cfg(feature = "actors")]
+    pub use super::actors::{
+        agents::*, catalysts::*, contexts::*, handlers::*, justify::*, messages::*, states::*,
+    };
     #[cfg(feature = "crypto")]
     pub use super::crypto::*;
     #[cfg(feature = "gen")]
     pub use super::gen::*;
+    pub use super::*;
     #[cfg(feature = "core")]
     pub use super::{
-        accounts::*, agents::*, catalysts::*, contexts::*, errors::*, events::*, extract::*,
-        handlers::*, justify::*, loggers::*, messages::*, networking::*, parse::*, providers::*,
-        states::*,
+        accounts::*, errors::*, events::*, extract::*, loggers::*, networking::*, parse::*,
+        providers::*,
     };
     // Extras
     #[cfg(feature = "bson")]

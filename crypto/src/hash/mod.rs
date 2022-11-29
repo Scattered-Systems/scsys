@@ -19,6 +19,14 @@ pub(crate) mod utils {
             .to_owned()
             .into()
     }
+    /// Given a collection of elements, reduce into a single hash by updating the same hasher
+    pub fn iter_hasher<T: ToString>(data: &Vec<T>) -> GenericHash {
+        let mut hasher = blake3::Hasher::default();
+        for i in data {
+            hasher.update(i.to_string().as_bytes());
+        }
+        hasher.finalize().as_bytes().to_owned().into()
+    }
 }
 
 #[cfg(test)]
@@ -39,6 +47,18 @@ mod tests {
     fn test_hasher() {
         let a = hasher(&generate_random_string(None));
         let b = hasher(&generate_random_string(None));
+        assert_ne!(&a, &b)
+    }
+
+    #[test]
+    fn test_iter_hasher() {
+        let hashes = |i: usize| {
+            std::ops::Range { start: 0, end: i }
+                .map(|_| generate_random_string(None))
+                .collect::<Vec<String>>()
+        };
+        let a = iter_hasher(&hashes(10));
+        let b = iter_hasher(&hashes(12));
         assert_ne!(&a, &b)
     }
 }
