@@ -2,11 +2,10 @@ name: Rust
 
 on:
   push:
-    branches-ignore: ["dev", "next"]
-    tags:
-      - v*.*.*
+    branches: ["main", "master", "prod*"]
+    tags: ["v*.*.*"]
   schedule:
-    - cron: '30 9 * * 5'
+    - cron: "30 9 * * 5"
   workflow_dispatch:
 
 env:
@@ -26,4 +25,3 @@ jobs:
       - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
       - run: cargo build -v
       - run: cargo test --all --all-features -v
-  

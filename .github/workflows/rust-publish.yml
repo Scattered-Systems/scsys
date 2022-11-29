@@ -28,4 +28,3 @@ jobs:
           cargo publish --all-features --jobs 1 -v -p scsys-gen --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
           cargo publish --all-features --jobs 1 -v -p scsys-macros --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
           cargo publish --all-features --jobs 1 -v -p scsys --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
-  
