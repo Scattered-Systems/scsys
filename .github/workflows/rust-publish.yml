@@ -1,0 +1,31 @@
+name: Rust Publish 
+
+on:
+  push:
+    tags: [ "v*.*.*" ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  publish:
+    name: Rust - Build and Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain:
+          - stable
+          - nightly
+    steps:
+      - uses: actions/checkout@v3
+      - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
+      - run: |
+          cargo publish --all-features --jobs 1 -v -p scsys-actors --token ${CARGO_REGISTRY_TOKEN}
+          cargo publish --all-features --jobs 1 -v -p scsys-core --token ${CARGO_REGISTRY_TOKEN}
+          cargo publish --all-features --jobs 1 -v -p scsys-crypto --token ${CARGO_REGISTRY_TOKEN}
+          cargo publish --all-features --jobs 1 -v -p scsys-derive --token ${CARGO_REGISTRY_TOKEN}
+          cargo publish --all-features --jobs 1 -v -p scsys-gen --token ${CARGO_REGISTRY_TOKEN}
+          cargo publish --all-features --jobs 1 -v -p scsys-macros --token ${CARGO_REGISTRY_TOKEN}
+          cargo publish --all-features --jobs 1 -v -p scsys --token ${CARGO_REGISTRY_TOKEN}
+  
