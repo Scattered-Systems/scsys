@@ -2,9 +2,10 @@ name: Clippy
 
 on:
   push:
+    branches: ["main"]
     tags: ["v*.*.*"]
   schedule:
-    - cron: '30 9 * * 5'
+    - cron: "30 9 * * 5"
   workflow_dispatch:
 
 jobs:
