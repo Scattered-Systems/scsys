@@ -33,7 +33,7 @@ jobs:
       - run: cargo test --all --all-features -v
   
   publish:
-    if: ${{ github.event.inputs.publish == true }}
+    if: ${{ github.event.inputs.publish }}
     name: Publish
     runs-on: ubuntu-latest
     strategy:
