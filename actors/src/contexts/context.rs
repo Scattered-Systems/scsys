@@ -9,12 +9,12 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Context<Cnf: Configurable> {
-    pub settings: Cnf,
+    pub cnf: Cnf,
 }
 
 impl<Cnf: Configurable> Context<Cnf> {
-    pub fn new(settings: Cnf) -> Self {
-        Self { settings }
+    pub fn new(cnf: Cnf) -> Self {
+        Self { cnf }
     }
 }
 
