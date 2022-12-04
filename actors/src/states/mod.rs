@@ -24,6 +24,10 @@ pub(crate) mod specs {
         fn catalyst<S, T>(&mut self, f: &dyn Fn(S) -> T) -> Vec<T>;
         fn tags(&self) -> Vec<String>;
     }
+
+    pub trait StateTransition {
+        type Dest: Stateful;
+    }
 }
 
 #[cfg(test)]

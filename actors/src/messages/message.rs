@@ -9,12 +9,12 @@ use serde_json::Value;
 use std::fmt::Display;
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct Message<T: Display = Value> {
+pub struct Message<T = Value> {
     pub data: Vec<T>,
     pub timestamp: i64,
 }
 
-impl<T: Display> Message<T> {
+impl<T> Message<T> {
     pub fn new(data: Vec<T>) -> Self {
         let timestamp = Utc::now().timestamp();
         Self { data, timestamp }
@@ -28,25 +28,21 @@ impl<T: Display> Message<T> {
     }
 }
 
-impl<T: Display> std::convert::From<Vec<T>> for Message<T> {
+impl<T> std::convert::From<Vec<T>> for Message<T> {
     fn from(data: Vec<T>) -> Self {
         Self::new(data)
     }
 }
 
-impl<T: Display> std::convert::From<T> for Message<T> {
+impl<T> std::convert::From<T> for Message<T> {
     fn from(data: T) -> Self {
         Self::new(vec![data])
     }
 }
 
-impl<T: Serialize + Display> Display for Message<T> {
+impl<T: Serialize> Display for Message<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(
-            f,
-            "{}",
-            serde_json::to_string(&self).unwrap().to_lowercase()
-        )
+        write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }
 

@@ -20,7 +20,7 @@ pub use scsys_macros::*;
 pub mod prelude {
     #[cfg(feature = "actors")]
     pub use super::actors::{
-        agents::*, catalysts::*, contexts::*, handlers::*, justify::*, messages::*, states::*,
+        agents::*, catalysts::*, contexts::*, handlers::*, messages::*, sessions::*, states::*,
     };
     #[cfg(feature = "crypto")]
     pub use super::crypto::*;

@@ -57,10 +57,6 @@ impl<T: Display> std::convert::From<T> for State<T> {
 
 impl<T: Display + Serialize> std::fmt::Display for State<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(
-            f,
-            "{}",
-            serde_json::to_string_pretty(&self).unwrap().to_lowercase()
-        )
+        write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }

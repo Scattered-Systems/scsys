@@ -1,6 +1,6 @@
 # scsys
 
-[![Clippy](https://github.com/Scattered-Systems/scsys/actions/workflows/rust-clippy.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/rust-clippy.yml)
+[![Clippy](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml)
 [![Rust](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml)
 
 This crate was built in support of the scsys ecosystem;
