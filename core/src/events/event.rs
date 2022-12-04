@@ -29,15 +29,15 @@ impl Eventful for Event {
     }
 }
 
-impl std::convert::From<String> for Event {
-    fn from(data: String) -> Self {
-        Self::new(data, Timestamp::default())
+impl<T: ToString> std::convert::From<&T> for Event {
+    fn from(data: &T) -> Self {
+        Self::new(data.to_string(), Timestamp::default())
     }
 }
 
 impl Default for Event {
     fn default() -> Self {
-        Self::from(String::new())
+        Self::from(&String::new())
     }
 }
 

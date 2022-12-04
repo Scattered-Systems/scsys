@@ -7,6 +7,9 @@ use std::collections::HashMap;
 
 pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
 
+pub type AsyncError = Box<dyn std::error::Error + Send + Sync + 'static>;
+
+pub type AsyncResult<T = ()> = Result<T, AsyncError>;
 /// Type alias for a boxed standard error
 pub type BaseError = Box<dyn std::error::Error>;
 /// Type alias for a boxed error with send, sync, and static flags enabled
