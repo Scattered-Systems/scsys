@@ -5,7 +5,7 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{data::*, primitives::*, specs::*, times::*, utils::*};
+pub use self::{primitives::*, specs::*, times::*, utils::*};
 
 pub mod accounts;
 pub mod errors;
@@ -16,7 +16,6 @@ pub mod networking;
 pub mod parse;
 pub mod providers;
 
-pub(crate) mod data;
 pub(crate) mod primitives;
 pub(crate) mod specs;
 pub(crate) mod times;
