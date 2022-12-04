@@ -4,16 +4,16 @@
     Description:
         ... Summary ...
 */
-pub use self::direction::*;
+pub use self::{direction::*, justify::*};
 
 pub mod agents;
 pub mod catalysts;
 pub mod contexts;
 pub mod handlers;
-pub mod justify;
 pub mod messages;
 pub mod states;
 
 pub(crate) mod direction;
+pub(crate) mod justify;
 
 pub type Job = Box<dyn FnOnce() + Send + 'static>;

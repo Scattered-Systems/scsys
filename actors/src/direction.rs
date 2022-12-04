@@ -12,12 +12,16 @@ pub enum Direction<S, T> {
     Output(T),
 }
 
-impl<S, T> Direction<S, T> {
+impl<S: Clone, T: Clone> Direction<S, T> {
     pub fn input(data: S) -> Self {
         Self::Input(data)
     }
     pub fn output(data: T) -> Self {
         Self::Output(data)
+    }
+    pub fn shift(mut self, f: &dyn Fn(S) -> T) -> Self {
+        self = transition(self.clone(), f);
+        self
     }
 }
 
@@ -55,6 +59,17 @@ pub fn switch<S: Clone + From<T>, T: Clone + From<S>>(
     }
 }
 
+pub fn transition<S: Clone, T: Clone>(
+    mut dir: Direction<S, T>,
+    f: &dyn Fn(S) -> T,
+) -> Direction<S, T> {
+    dir = match dir.clone() {
+        Direction::Input(d) => Direction::Output(f(d)),
+        Direction::Output(d) => Direction::Output(d),
+    };
+    dir
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -62,11 +77,10 @@ mod tests {
     #[test]
     fn test_default() {
         let f = |i: i32| format!("{}", i);
-        let data = [0, 1, 2, 3];
         let a = Direction::<i32, String>::default();
         let b = Direction::<i32, String>::from(0);
-        // let c = b.transition(&f).clone();
+        let c = b.clone().shift(&f);
         assert_eq!(&a, &b);
-        // assert_eq!(&b, &c);
+        assert_eq!(&Direction::output("0".to_string()), &c);
     }
 }

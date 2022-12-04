@@ -5,10 +5,9 @@
 */
 use crate::{messages::Message, Direction};
 use serde::{Deserialize, Serialize};
-use std::{convert::From, fmt::Display};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct Catalyst<S: Clone, T: Clone> {
+pub struct Catalyst<S: Clone = String, T: Clone = String> {
     pub data: Vec<Direction<Message<S>, Message<T>>>,
 }
 
@@ -33,5 +32,17 @@ where
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", serde_json::to_string(&self).unwrap())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_default() {
+        let a = Catalyst::<String, String>::default();
+        let b = a.clone();
+        assert_eq!(&a, &b)
     }
 }
