@@ -11,6 +11,7 @@ pub mod catalysts;
 pub mod contexts;
 pub mod handlers;
 pub mod messages;
+pub mod sessions;
 pub mod states;
 
 pub(crate) mod direction;
