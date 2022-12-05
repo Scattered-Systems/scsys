@@ -34,7 +34,7 @@ jobs:
   
   features:
     if: ${{ github.event.inputs.publish }}
-    name: Publish
+    name: Features
     runs-on: ubuntu-latest
     strategy:
       matrix:
