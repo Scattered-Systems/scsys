@@ -3,7 +3,7 @@
 [![Clippy](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml)
 [![Rust](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml)
 
-This crate was built in support of the scsys ecosystem;
+Welcome to scsys, this crate was created in support of the Scattered-Systems ecosystem. The crate is reserved primarily for implementing a variety of critical primitives and utilities.
 
 ## Installation
 
