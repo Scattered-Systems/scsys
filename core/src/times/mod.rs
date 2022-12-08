@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-pub use self::{timestamp::*, specs::*, utils::*};
+pub use self::{specs::*, timestamp::*, utils::*};
 
 pub(crate) mod timestamp;
 
@@ -11,9 +11,7 @@ pub(crate) mod specs {
     use crate::{chrono_into_bson, ChronoDateTime};
     use chrono::Utc;
 
-    pub trait TemporalExt {
-
-    }
+    pub trait TemporalExt {}
 
     /// Interface for time-related data-structures
     pub trait Temporal {
