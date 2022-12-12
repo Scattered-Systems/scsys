@@ -27,11 +27,12 @@ full = [
     "gen",
     "derive", 
     "macros", 
-    "extras", 
-    "wasm"
+    "extras"
 ]
 
-wasm = []
+wasm = [
+    "core"
+]
 wasm-ext = [
     "scsys-crypto/wasm-ext"
 ]

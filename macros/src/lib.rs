@@ -4,7 +4,9 @@
     Description:
         ... Summary ...
 */
-pub mod utils;
+pub use self::utils::*;
+
+pub(crate) mod utils;
 
 #[macro_export]
 macro_rules! join {

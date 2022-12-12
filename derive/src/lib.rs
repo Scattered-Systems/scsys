@@ -36,8 +36,20 @@ fn impl_hashable(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
 #[proc_macro_derive(Temporal)]
 pub fn temporal(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
-    let gen = impls::temporal::impl_temporal(&ast);
+    let gen = impl_temporal(&ast);
     gen.into()
+}
+
+pub(crate) fn impl_temporal(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+    let name = &ast.ident;
+    let res = quote::quote! {
+        impl Temporal for #name {
+            fn timestamp(&self) -> i64 {
+                self.timestamp.clone().into()
+            }
+        }
+    };
+    res
 }
 
 #[proc_macro_derive(Named, attributes(Alternative))]
@@ -46,7 +58,19 @@ pub fn named(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
 
     // Build the impl
-    let gen = impls::naming::impl_named(&ast);
+    let gen = impl_named(&ast);
 
     gen.into()
+}
+
+pub(crate) fn impl_named(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+    let name = &ast.ident;
+    let res = quote::quote! {
+        impl Named for #name {
+            fn name() -> String {
+                format!("{}", stringify!(#name))
+            }
+        }
+    };
+    res
 }
