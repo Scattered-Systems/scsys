@@ -5,7 +5,7 @@
 */
 #[doc(inline)]
 pub use self::{
-    address::*, appellation::*, ids::*, links::*, primitives::*, specs::*, times::*, utils::*,
+    appellation::*, ids::*, links::*, primitives::*, specs::*, times::*, utils::*,
 };
 
 pub mod accounts;
@@ -17,7 +17,6 @@ pub mod networking;
 pub mod parse;
 pub mod providers;
 
-pub(crate) mod address;
 pub(crate) mod appellation;
 pub(crate) mod ids;
 pub(crate) mod links;

@@ -4,6 +4,8 @@
     Description:
         An appellation is a more concise definition for the abstract naming schemes native to blockchain technologies,
         wrapping mission critical tags into a streamlined naming convention
+
+        Each appellation must contain an origin, optionally proof of ownership, optionally proof of
 */
 use serde::{Deserialize, Serialize};
 
