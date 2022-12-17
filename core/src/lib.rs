@@ -4,9 +4,7 @@
     Description: ... Summary ...
 */
 #[doc(inline)]
-pub use self::{
-    appellation::*, ids::*, links::*, primitives::*, specs::*, times::*, utils::*,
-};
+pub use self::{appellation::*, ids::*, links::*, primitives::*, specs::*, times::*, utils::*};
 
 pub mod accounts;
 pub mod errors;
