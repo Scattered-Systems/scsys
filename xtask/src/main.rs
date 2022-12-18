@@ -25,6 +25,14 @@ fn build_stage() -> std::thread::JoinHandle<()> {
     })
 }
 
+fn setup() -> std::thread::JoinHandle<()> {
+    tracing::info!("Building the workspace...");
+    std::thread::spawn(move || {
+        cmd!("rustup"; ["default", "nightly"]);
+        cmd!("rustup"; ["target", "add", "wasm32-unknown-unknown", "wasm32-wasi", "--toolchain", "nightly"]);
+    })
+}
+
 fn testing() -> std::thread::JoinHandle<()> {
     tracing::info!("Testing the workspace...");
     std::thread::spawn(move || {

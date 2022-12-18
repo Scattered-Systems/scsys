@@ -1,10 +1,9 @@
 tasks:
   - init: |
       rustup default nightly
-      rustup target add wasm32-unknown-unknown wasm32-wasi
-      rustup component add clippy rustfmt
-      cargo build --release --workspace
-      cargo build --target wasm32-unknown-unknown --release --workspace
+      rustup target add wasm32-unknown-unknown wasm32-wasi --toolchain nightly
+      rustup component add clippy rustfmt --toolchain nightly
+      cargo xtask
     command: cargo test --all --all-features -v
 
 
