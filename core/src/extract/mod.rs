@@ -21,7 +21,7 @@ pub(crate) mod utils {
     use crate::DEFAULT_IGNORE_CHARS;
     use std::str::FromStr;
 
-    /// Implements the base functionality for the structured machina, Extractor
+    /// Implements the basic algorithm used by the extractor
     pub fn base_extractor<S: ToString, T: FromStr + ToString>(
         bp: char,
         data: &S,

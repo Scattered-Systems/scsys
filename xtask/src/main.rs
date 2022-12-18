@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-
+use clap::Parser;
 use scsys_xtask::cmd;
 
 fn main() -> anyhow::Result<()> {
@@ -43,3 +43,6 @@ fn cicd() -> std::thread::JoinHandle<()> {
         testing().join().ok().unwrap();
     })
 }
+
+#[derive(Parser)]
+pub struct CLI {}

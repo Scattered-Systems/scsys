@@ -5,12 +5,8 @@
 */
 use crate::{BoxResult, ConfigFile, ConfigFileVec};
 use glob::glob;
-use std::{
-    fs::File,
-    io::{self, BufRead, BufReader},
-    str::FromStr,
-    string::ToString,
-};
+use std::io::{self, BufRead, BufReader};
+use std::{fs::File, str::FromStr, string::ToString};
 
 /// A generic function wrapper extending glob::glob
 pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> BoxResult<Vec<T>> {
@@ -20,26 +16,18 @@ pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> Bo
     }
     Ok(files)
 }
-
-// Gather configuration files following the specified pattern and collect them into a vector
+/// Gather configuration files following the specified pattern and collect them into a vector
 pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
     glob(pattern)
         .expect("")
         .map(|p| ConfigFile::from(p.expect("Failed to read the pathbuf")).required(required))
         .collect::<Vec<_>>()
 }
-
 /// Attempts to collect configuration files, following the given pattern, into a ConfigFileVec
 pub fn try_collect_config_files(pattern: &str, required: bool) -> BoxResult<ConfigFileVec> {
     let f = |p: std::path::PathBuf| ConfigFile::from(p).required(required);
     collect_files_as(&f, pattern)
-    // let mut files = Vec::new();
-    // for r in glob::glob(pattern)? {
-    //     files.push(ConfigFile::from(r?).required(required))
-    // }
-    // Ok(files)
 }
-
 /// This function converts the file found at path (fp) into a Vec<String>
 pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {
     let file_in = File::open(fp)?;
@@ -49,6 +37,14 @@ pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {
 /// Simple function wrapper evaluating the claim that the given information is of type f64
 pub fn is_float<T: ToString>(data: &T) -> bool {
     f64::from_str(&data.to_string()).is_ok()
+}
+/// Fetch the project root unless specified otherwise with a CARGO_MANIFEST_DIR env variable
+pub fn project_root() -> std::path::PathBuf {
+    std::path::Path::new(&env!("CARGO_MANIFEST_DIR"))
+        .ancestors()
+        .nth(1)
+        .unwrap()
+        .to_path_buf()
 }
 
 #[cfg(test)]
