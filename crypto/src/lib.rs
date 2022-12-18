@@ -8,20 +8,8 @@ pub use self::{hash::*, keys::*, primitives::*, specs::*};
 
 pub(crate) mod hash;
 pub(crate) mod keys;
-
-pub(crate) mod primitives {
-    use generic_array::GenericArray;
-    use typenum::{
-        bit::{B0, B1},
-        uint::{UInt, UTerm},
-    };
-
-    pub type H256Hash = [u8; 32];
-    pub type H160Hash = [u8; 20];
-
-    pub type GenericHashOutput = UInt<UInt<UInt<UInt<UInt<UInt<UTerm, B1>, B0>, B0>, B0>, B0>, B0>;
-    pub type GenericHash<T = u8, Output = GenericHashOutput> = GenericArray<T, Output>;
-}
+pub(crate) mod primitives;
+pub(crate) mod utils;
 
 pub(crate) mod specs {
     use crate::hash::{hasher, H256};

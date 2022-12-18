@@ -13,7 +13,9 @@ use strum::{EnumString, EnumVariantNames};
 #[strum(serialize_all = "snake_case")]
 pub enum Error {
     Async,
+    Boxed,
     Connection,
+    IO,
     Default,
     Generic(String),
 }

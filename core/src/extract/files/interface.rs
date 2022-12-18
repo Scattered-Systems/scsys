@@ -20,7 +20,7 @@ pub trait FileInterface {
     fn open_file(&self) -> std::fs::File {
         match std::fs::File::open(self.filepath()) {
             Ok(file) => file,
-            Err(e) => panic!("File Error: File Not Found \n{}", e),
+            Err(e) => panic!("File Error: File Not Found \n{e}"),
         }
     }
 }

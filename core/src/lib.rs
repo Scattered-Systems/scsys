@@ -1,11 +1,10 @@
 /*
     Appellation: scsys-core <library>
-    Creator: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
+    Contrib: FL03 <jo3mccain@icloud.com>
+    Description: ... Summary ...
 */
 #[doc(inline)]
-pub use self::{primitives::*, specs::*, times::*, utils::*};
+pub use self::{appellation::*, ids::*, links::*, primitives::*, specs::*, times::*, utils::*};
 
 pub mod accounts;
 pub mod errors;
@@ -16,6 +15,9 @@ pub mod networking;
 pub mod parse;
 pub mod providers;
 
+pub(crate) mod appellation;
+pub(crate) mod ids;
+pub(crate) mod links;
 pub(crate) mod primitives;
 pub(crate) mod specs;
 pub(crate) mod times;

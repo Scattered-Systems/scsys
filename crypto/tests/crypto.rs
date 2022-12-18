@@ -28,7 +28,7 @@ mod tests {
                 assert_eq!(hash, beta);
             }
             Err(e) => {
-                println!("VRF proof is not valid: {}", e);
+                println!("VRF proof is not valid: {e}");
             }
         }
     }

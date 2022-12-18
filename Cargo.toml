@@ -4,7 +4,8 @@ default-members = [
 ]
 
 exclude = [
-    "examples/*"
+    "examples/*",
+    
 ]
 
 members = [
@@ -13,7 +14,8 @@ members = [
     "derive",
     "gen",
     "macros",
-    "scsys"
+    "scsys",
+    "xtask"
 ]
 
 

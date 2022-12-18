@@ -76,7 +76,7 @@ mod tests {
 
     #[test]
     fn test_default() {
-        let f = |i: i32| format!("{}", i);
+        let f = |i: i32| format!("{i}");
         let a = Direction::<i32, String>::default();
         let b = Direction::<i32, String>::from(0);
         let c = b.clone().shift(&f);

@@ -5,76 +5,35 @@
 */
 use crate::{timestamp, DefaultTimezone, Temporal};
 use serde::{Deserialize, Serialize};
+use std::convert::{From, TryFrom};
+use strum::EnumVariantNames;
 
 /// Timestamp implements a host of useful utilities for stamping data
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct Timestamp(pub i64);
+#[derive(Clone, Debug, Deserialize, EnumVariantNames, Eq, Hash, PartialEq, Serialize)]
+#[strum(serialize_all = "snake_case")]
+pub enum Timestamp {
+    Rfc3339(String),
+    Ts(i64),
+}
 
 impl Timestamp {
     pub fn new() -> Self {
-        Self(timestamp())
+        Self::timestamp()
     }
     pub fn now() -> chrono::DateTime<DefaultTimezone> {
         chrono::Utc::now()
     }
-    pub fn pretty() -> String {
-        Self::now().to_rfc3339()
+    pub fn rfc3339() -> Self {
+        Self::Rfc3339(chrono::Utc::now().to_rfc3339())
     }
-    pub fn ts() -> i64 {
-        chrono::Utc::now().timestamp()
-    }
-}
-
-impl Temporal for Timestamp {
-    fn timestamp(&self) -> i64 {
-        self.0
-    }
-}
-
-impl std::convert::TryFrom<String> for Timestamp {
-    type Error = crate::BoxError;
-
-    fn try_from(data: String) -> Result<Self, Self::Error> {
-        Self::try_from(data.as_str())
-    }
-}
-
-impl std::convert::TryFrom<&str> for Timestamp {
-    type Error = crate::BoxError;
-
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        let dt = chrono::DateTime::parse_from_rfc3339(value)?;
-        Ok(Self(dt.timestamp()))
-    }
-}
-
-impl std::convert::From<&chrono::DateTime<chrono::Utc>> for Timestamp {
-    fn from(ts: &chrono::DateTime<chrono::Utc>) -> Self {
-        Self(ts.timestamp())
-    }
-}
-
-impl std::convert::From<&Timestamp> for Timestamp {
-    fn from(ts: &Timestamp) -> Self {
-        Self(ts.0)
-    }
-}
-
-impl std::convert::From<i64> for Timestamp {
-    fn from(ts: i64) -> Self {
-        Self(ts)
-    }
-}
-
-impl std::convert::From<Timestamp> for i64 {
-    fn from(ts: Timestamp) -> i64 {
-        ts.0
+    pub fn timestamp() -> Self {
+        Self::Ts(timestamp())
     }
 }
 
 impl Default for Timestamp {
     fn default() -> Self {
-        Self::new()
+        Self::Ts(timestamp())
     }
 }
 
@@ -84,9 +43,67 @@ impl std::fmt::Display for Timestamp {
     }
 }
 
+impl Temporal for Timestamp {
+    fn timestamp(&self) -> i64 {
+        self.into()
+    }
+}
+
+impl From<&Timestamp> for Timestamp {
+    fn from(data: &Timestamp) -> Self {
+        data.clone()
+    }
+}
+
+impl From<&chrono::DateTime<chrono::Utc>> for Timestamp {
+    fn from(ts: &chrono::DateTime<chrono::Utc>) -> Self {
+        Self::Ts(ts.timestamp())
+    }
+}
+
+impl From<i64> for Timestamp {
+    fn from(data: i64) -> Self {
+        Self::Ts(data)
+    }
+}
+
+impl From<Timestamp> for i64 {
+    fn from(data: Timestamp) -> i64 {
+        match data {
+            Timestamp::Rfc3339(ts) => chrono::DateTime::parse_from_rfc3339(ts.as_str())
+                .unwrap()
+                .timestamp(),
+            Timestamp::Ts(ts) => ts,
+        }
+    }
+}
+
+impl From<&Timestamp> for i64 {
+    fn from(data: &Timestamp) -> i64 {
+        data.clone().into()
+    }
+}
+
+impl TryFrom<String> for Timestamp {
+    type Error = crate::BoxError;
+
+    fn try_from(data: String) -> Result<Self, Self::Error> {
+        Self::try_from(data.as_str())
+    }
+}
+
+impl TryFrom<&str> for Timestamp {
+    type Error = crate::BoxError;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        let dt = chrono::DateTime::parse_from_rfc3339(value)?;
+        Ok(Self::Ts(dt.timestamp()))
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::{Temporal, Timestamp};
+    use super::*;
 
     #[test]
     fn test_timestamp() {

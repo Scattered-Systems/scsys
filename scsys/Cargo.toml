@@ -9,7 +9,7 @@ license = "Apache-2.0"
 name = "scsys"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.36" # TODO: Update the package version
+version = "0.1.37" # TODO: Update the package version
 
 [features]
 default = [
@@ -27,11 +27,12 @@ full = [
     "gen",
     "derive", 
     "macros", 
-    "extras", 
-    "wasm"
+    "extras"
 ]
 
-wasm = []
+wasm = [
+    "core"
+]
 wasm-ext = [
     "scsys-crypto/wasm-ext"
 ]
@@ -57,12 +58,12 @@ bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, v
 chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }
 
-scsys-actors = { features = [], optional = true, path = "../actors", version = "0.1.36" }
-scsys-core = { features = [], optional = true, path = "../core", version = "0.1.36" }
-scsys-crypto = { features = ["full"], optional = true, path = "../crypto", version = "0.1.36" }
-scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.36" }
-scsys-gen = { features = ["full"], optional = true, path = "../gen", version = "0.1.36" }
-scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.36" }
+scsys-actors = { features = [], optional = true, path = "../actors", version = "0.1.37" }
+scsys-core = { features = [], optional = true, path = "../core", version = "0.1.37" }
+scsys-crypto = { features = ["full"], optional = true, path = "../crypto", version = "0.1.37" }
+scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.37" }
+scsys-gen = { features = ["full"], optional = true, path = "../gen", version = "0.1.37" }
+scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.37" }
 
 [package.metadata.docs.rs]
 all-features = true
