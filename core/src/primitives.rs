@@ -19,7 +19,10 @@ pub(crate) mod constants {
 }
 
 pub(crate) mod types {
-    use std::collections::HashMap;
+    use std::{
+        collections::HashMap,
+        sync::{Arc, Mutex},
+    };
 
     pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
 
@@ -59,6 +62,8 @@ pub(crate) mod types {
     pub type DefaultTimestamp = i64;
     /// Type alias for the default timezone, [chrono::Utc]
     pub type DefaultTimezone = chrono::Utc;
+    /// Type alias wrapping a locked, thread-safe structure with a [std::sync::Mutex] in an [std::sync::Arc]
+    pub type Locked<T> = Arc<Mutex<T>>;
     /// Type alias for [std::io::Result]
     pub type IOResult<T = ()> = std::io::Result<T>;
     /// Type alias for a stateful hash map
