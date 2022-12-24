@@ -9,8 +9,44 @@ pub use self::utils::*;
 pub(crate) mod utils;
 
 #[macro_export]
+macro_rules! create_method {
+    ($vis:vis $name:ident) => {
+        $vis fn $name(&self) {}
+    };
+}
+
+#[macro_export]
+macro_rules! string {
+    ( $( $x:expr ),* ) => {
+        {
+            let mut res = Vec::new();
+            $(
+                res.push($x.to_string());
+            )*
+            res
+        }
+    };
+    ( $x:expr ) => {
+        {
+            $(
+                $x.to_string()
+            )*
+        }
+    };
+}
+
+#[macro_export]
 macro_rules! join {
     ( $( $x:expr ),* ) => {
+        {
+            let mut tmp = String::new();
+            $(
+                tmp.push_str($x);
+            )*
+            tmp
+        }
+    };
+    ( $x:expr ) => {
         {
             let mut tmp = String::new();
             $(

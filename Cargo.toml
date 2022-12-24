@@ -5,7 +5,7 @@ default-members = [
 
 exclude = [
     "examples/*",
-    
+    "xtask"
 ]
 
 members = [
@@ -14,10 +14,19 @@ members = [
     "derive",
     "gen",
     "macros",
-    "scsys",
-    "xtask"
+    "scsys"
 ]
 
+[workspace.package]
+authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
+categories = []
+description = "scsys lays the foundation for the Scattered-Systems ecosystem, delivering critical primitives throughout"
+edition = "2021"
+homepage = "https://github.com/scattered-systems/scsys/wiki"
+keywords = ["blockchain", "primitives", "scsys"]
+license = "Apache-2.0"
+repository = "https://github.com/scattered-systems/scsys"
+version = "0.1.38"
 
 [profile.dev]
 codegen-units = 256

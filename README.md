@@ -5,18 +5,15 @@
 
 Welcome to scsys, this crate was created in support of the Scattered-Systems ecosystem. The crate is reserved primarily for implementing a variety of critical primitives and utilities.
 
-## Installation
+## Getting Started
 
-Use Rust's built-in package manager [crates](https://crates.io/crates/package) to install *package*.
+Use Rust's built-in package manager [crates](https://crates.io/crates/scsys) to install *scsys*.
 
 ```bash
 cargo install package
 ```
 
 ## Usage
-
-- [crates.io](https://crates.io/crates/scsys)
-- [docs.rs](https://docs.rs/scsys)
 
 ```rust
 use scsys::prelude::*;
@@ -35,4 +32,5 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+- [Apache-2.0](https://choosealicense.com/licenses/apache-2.0/)
+- [MIT](https://choosealicense.com/licenses/mit/)

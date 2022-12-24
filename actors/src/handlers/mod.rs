@@ -9,10 +9,12 @@ pub use self::{handler::*, specs::*, utils::*};
 pub(crate) mod handler;
 
 pub(crate) mod specs {
-    use crate::states::Stateful;
+    use crate::states::{StatePack, Stateful};
 
-    pub trait StateHandle<S: Stateful> {
-        fn state(&self) -> &S;
+    pub trait StatefulHandle<S: StatePack, T> {
+        type State: Stateful<S, Data = T>;
+
+        fn state(&self) -> &Self::State;
     }
 }
 

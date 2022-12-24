@@ -24,6 +24,16 @@ impl Default for Id {
     }
 }
 
+impl std::fmt::Display for Id {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            crate::fnl_remove(serde_json::to_string(self).unwrap()).to_ascii_lowercase()
+        )
+    }
+}
+
 impl std::convert::From<i64> for Id {
     fn from(data: i64) -> Self {
         Self::Int(data)
