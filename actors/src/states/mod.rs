@@ -9,11 +9,21 @@ pub(crate) mod state;
 
 pub(crate) mod specs {
     use crate::messages::Message;
+    use std::sync::Arc;
 
     pub trait StatePack: Default + ToString {}
 
-    pub trait Stateful<S: StatePack> {
+    pub trait Stateful<S: StatePack>: Clone + Default {
         type Data;
+        fn by_ref(&self) -> Self {
+            self.clone()
+        }
+        fn by_ref_mut(&mut self) -> Self {
+            self.clone()
+        }
+        fn by_arc(self: Arc<Self>) -> Arc<Self> {
+            self
+        }
         fn message(self) -> Message<Self::Data>;
         fn state(self) -> S;
         fn timestamp(self) -> i64;

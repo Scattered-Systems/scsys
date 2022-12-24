@@ -9,6 +9,13 @@ pub use self::utils::*;
 pub(crate) mod utils;
 
 #[macro_export]
+macro_rules! create_method {
+    ($vis:vis $name:ident) => {
+        $vis fn $name(&self) {}
+    };
+}
+
+#[macro_export]
 macro_rules! join {
     ( $( $x:expr ),* ) => {
         {

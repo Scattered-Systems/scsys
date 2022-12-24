@@ -31,7 +31,7 @@ impl<S: StatePack, T: Default> State<S, T> {
     }
 }
 
-impl<S: StatePack, T: Default> Stateful<S> for State<S, T> {
+impl<S: Clone + StatePack, T: Clone + Default> Stateful<S> for State<S, T> {
     type Data = T;
 
     fn message(self) -> Message<Self::Data> {
@@ -46,7 +46,7 @@ impl<S: StatePack, T: Default> Stateful<S> for State<S, T> {
         self.state
     }
 }
-impl<S: StatePack, T: Default> StatefulExt<S> for State<S, T> {
+impl<S: Clone + StatePack, T: Clone + Default> StatefulExt<S> for State<S, T> {
     fn update_state(&mut self, msg: Option<Message<Self::Data>>, state: S) -> &Self {
         self.message = msg.unwrap_or_default();
         self.state = state;

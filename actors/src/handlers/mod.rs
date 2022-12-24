@@ -11,7 +11,7 @@ pub(crate) mod handler;
 pub(crate) mod specs {
     use crate::states::{StatePack, Stateful};
 
-    pub trait StateHandle<S: StatePack, T> {
+    pub trait StatefulHandle<S: StatePack, T> {
         type State: Stateful<S, Data = T>;
 
         fn state(&self) -> &Self::State;
