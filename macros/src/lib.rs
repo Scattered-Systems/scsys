@@ -16,8 +16,37 @@ macro_rules! create_method {
 }
 
 #[macro_export]
+macro_rules! string {
+    ( $( $x:expr ),* ) => {
+        {
+            let mut res = Vec::new();
+            $(
+                res.push($x.to_string());
+            )*
+            res
+        }
+    };
+    ( $x:expr ) => {
+        {
+            $(
+                $x.to_string()
+            )*
+        }
+    };
+}
+
+#[macro_export]
 macro_rules! join {
     ( $( $x:expr ),* ) => {
+        {
+            let mut tmp = String::new();
+            $(
+                tmp.push_str($x);
+            )*
+            tmp
+        }
+    };
+    ( $x:expr ) => {
         {
             let mut tmp = String::new();
             $(
