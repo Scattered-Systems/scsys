@@ -4,7 +4,6 @@
     Description: ... Summary ...
 */
 use crate::{BoxResult, ConfigFile, ConfigFileVec};
-use glob::glob;
 use std::io::{self, BufRead, BufReader};
 use std::{fs::File, str::FromStr, string::ToString};
 
@@ -18,10 +17,8 @@ pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> Bo
 }
 /// Gather configuration files following the specified pattern and collect them into a vector
 pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
-    glob(pattern)
-        .expect("")
-        .map(|p| ConfigFile::from(p.expect("Failed to read the pathbuf")).required(required))
-        .collect::<Vec<_>>()
+    let f = |p: std::path::PathBuf| ConfigFile::from(p).required(required);
+    collect_files_as(&f, pattern).expect("Failed to find any similar files...")
 }
 /// Attempts to collect configuration files, following the given pattern, into a ConfigFileVec
 pub fn try_collect_config_files(pattern: &str, required: bool) -> BoxResult<ConfigFileVec> {
@@ -33,6 +30,14 @@ pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {
     let file_in = File::open(fp)?;
     let file_reader = BufReader::new(file_in);
     Ok(file_reader.lines().filter_map(io::Result::ok).collect())
+}
+/// Remove the first and last charecters of a string
+pub fn fnl_remove<T: Clone + ToString>(data: T) -> String {
+    let data = data.to_string();
+    let mut chars = data.chars();
+    chars.next();
+    chars.next_back();
+    chars.as_str().to_string()
 }
 /// Simple function wrapper evaluating the claim that the given information is of type f64
 pub fn is_float<T: ToString>(data: &T) -> bool {
@@ -53,7 +58,7 @@ mod tests {
 
     #[test]
     fn test_file_to_vec() {
-        let fp = "README.md".to_string();
+        let fp = "../README.md".to_string();
         let a = file_to_vec(fp);
         let b = try_collect_config_files("**/Cargo.*", false);
         assert!(a.is_ok());
