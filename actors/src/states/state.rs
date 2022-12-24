@@ -9,7 +9,6 @@ use crate::messages::Message;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-
 /// Implement the standard structure of a state
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
 pub struct State<S: StatePack, T: Default = String> {

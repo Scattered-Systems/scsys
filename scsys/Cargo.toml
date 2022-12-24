@@ -31,17 +31,17 @@ full = [
 ]
 
 wasm = [
-    "core"
-]
-wasm-ext = [
-    "scsys-crypto/wasm-ext"
+    "actors",
+    "core",
+    "scsys-crypto/wasm",
+    "scsys-gen/wasm"
 ]
 
 actors = ["scsys-actors"]
 core = ["scsys-core"]
-crypto = ["scsys-crypto/full"]
+crypto = ["scsys-crypto/default"]
 derive = ["scsys-derive"]
-gen = ["scsys-gen/full"]
+gen = ["scsys-gen/default"]
 macros = ["scsys-macros"]
 
 extras = ["bson", "chrono", "config"]
@@ -60,9 +60,9 @@ config = { optional = true, version = "0.13.2" }
 
 scsys-actors = { features = [], optional = true, path = "../actors", version = "0.1.38" }
 scsys-core = { features = [], optional = true, path = "../core", version = "0.1.38" }
-scsys-crypto = { features = ["full"], optional = true, path = "../crypto", version = "0.1.38" }
+scsys-crypto = { features = ["wasm"], optional = true, path = "../crypto", version = "0.1.38" }
 scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.38" }
-scsys-gen = { features = ["full"], optional = true, path = "../gen", version = "0.1.38" }
+scsys-gen = { features = ["wasm"], optional = true, path = "../gen", version = "0.1.38" }
 scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.38" }
 
 [package.metadata.docs.rs]
@@ -70,3 +70,5 @@ all-features = true
 rustc-args = ["--cfg", "docsrs"]
 
 [target.wasm32-unknown-unknown]
+
+[target.wasm32-wasi]

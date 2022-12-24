@@ -11,16 +11,14 @@ repository = "https://github.com/scattered-systems/scsys"
 version = "0.1.38" # TODO: Update the package version
 
 [features]
-default = ["wasm"]
-full = ["wasm", "wasm-ext"]
+default = []
 
-wasm = []
-wasm-ext = [
-    "ring"
+wasm = [
+    "wasm-ext"
 ]
-
-
-ring = ["ring/wasm32_c"]
+wasm-ext = [
+    "ring/wasm32_c"
+]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
