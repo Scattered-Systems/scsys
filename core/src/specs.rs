@@ -4,8 +4,9 @@
     Description: ... Summary ...
 */
 
-pub trait Addressable<T> {
-    fn address(&self) -> T;
+pub trait Addressable {
+    type Addr;
+    fn address(self) -> Self::Addr;
 }
 /// Trait for signaling a structure with a dedicated build stage
 pub trait Buildable {
@@ -17,8 +18,8 @@ pub trait Buildable {
 
 /// Quickly derive elligible naming schematics for the desired structure
 pub trait Named {
-    fn name() -> String;
+    fn name(&self) -> String;
     fn slug(&self) -> String {
-        Self::name().to_lowercase()
+        self.name().to_lowercase()
     }
 }
