@@ -29,8 +29,7 @@ pub mod prelude {
     pub use super::*;
     #[cfg(feature = "core")]
     pub use super::{
-        accounts::*, errors::*, events::*, extract::*, loggers::*, networking::*,
-        providers::*,
+        accounts::*, errors::*, events::*, extract::*, loggers::*, networking::*, providers::*,
     };
     // Extras
     #[cfg(feature = "bson")]

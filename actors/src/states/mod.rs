@@ -17,7 +17,9 @@ pub(crate) mod specs {
         fn by_arc(self: Arc<Self>) -> Arc<Self> {
             self
         }
-        fn event(&self) -> Self::Event where Self: Sized;
+        fn event(&self) -> Self::Event
+        where
+            Self: Sized;
         fn timestamp(self) -> i64;
         fn now(self) -> i64 {
             chrono::Utc::now().timestamp()

@@ -47,9 +47,7 @@ impl Temporal for Timestamp {
         self.into()
     }
 }
-impl TemporalExt for Timestamp {
-    
-}
+impl TemporalExt for Timestamp {}
 
 impl From<&Timestamp> for Timestamp {
     fn from(data: &Timestamp) -> Self {
