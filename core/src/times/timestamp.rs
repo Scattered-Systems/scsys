@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use crate::{timestamp, DefaultTimezone, Temporal};
+use crate::{timestamp, DefaultTimezone, Temporal, TemporalExt};
 use serde::{Deserialize, Serialize};
 use std::convert::{From, TryFrom};
 use strum::EnumVariantNames;
@@ -18,7 +18,7 @@ pub enum Timestamp {
 
 impl Timestamp {
     pub fn new() -> Self {
-        Self::timestamp()
+        Self::Ts(timestamp())
     }
     pub fn now() -> chrono::DateTime<DefaultTimezone> {
         chrono::Utc::now()
@@ -26,8 +26,8 @@ impl Timestamp {
     pub fn rfc3339() -> Self {
         Self::Rfc3339(chrono::Utc::now().to_rfc3339())
     }
-    pub fn timestamp() -> Self {
-        Self::Ts(timestamp())
+    pub fn timestamp(&self) -> i64 {
+        self.into()
     }
 }
 
@@ -42,11 +42,13 @@ impl std::fmt::Display for Timestamp {
         write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }
-
 impl Temporal for Timestamp {
-    fn timestamp(&self) -> i64 {
+    fn created(&self) -> i64 {
         self.into()
     }
+}
+impl TemporalExt for Timestamp {
+    
 }
 
 impl From<&Timestamp> for Timestamp {

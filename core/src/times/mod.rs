@@ -11,10 +11,7 @@ pub(crate) mod specs {
     use crate::{chrono_into_bson, ChronoDateTime};
     use chrono::Utc;
 
-    pub trait TemporalExt {}
-
-    /// Interface for time-related data-structures
-    pub trait Temporal {
+    pub trait TemporalExt: Temporal {
         fn chrono_to_bson(&self, data: ChronoDateTime) -> bson::DateTime {
             chrono_into_bson::<Utc>(data)
         }
@@ -30,7 +27,11 @@ pub(crate) mod specs {
         fn ts() -> i64 {
             chrono::Utc::now().timestamp()
         }
-        fn timestamp(&self) -> i64; // Recall an objects time of creation
+    }
+
+    /// Interface for time-related data-structures
+    pub trait Temporal {
+        fn created(&self) -> i64; // Recall an objects time of creation
     }
 }
 

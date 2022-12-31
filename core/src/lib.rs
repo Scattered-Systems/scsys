@@ -12,7 +12,6 @@ pub mod events;
 pub mod extract;
 pub mod loggers;
 pub mod networking;
-pub mod parse;
 pub mod providers;
 
 pub(crate) mod appellation;

@@ -8,9 +8,9 @@
 mod tests {
     use scsys::prelude::*;
     use scsys::Hashable;
-    use scsys::{Named, Temporal, Timestamp};
+    use scsys::Timestamp;
 
-    #[derive(Default, Hashable, Temporal)]
+    #[derive(Default, Hashable)]
     pub struct TestStruct {
         timestamp: Timestamp,
     }
@@ -26,8 +26,8 @@ mod tests {
 
     #[test]
     fn test_hashable_derive() {
-        let _a = TestStruct::default();
-        // let hash = a.hash();
+        let a = TestStruct::default();
+        let _hash = a.hash();
         assert!(true)
     }
 }

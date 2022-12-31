@@ -10,20 +10,25 @@ name = "scsys-core"
 repository = "https://github.com/scattered-systems/scsys"
 version = "0.1.39" # TODO: Update the package version
 
+[features]
+default = []
+# wasm = ["wasm-bindgen/serde-serialize"]
+
 [lib]
 crate-type = ["cdylib", "rlib"]
 test = true
 
 [dependencies]
-bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" }
+bson = { features = ["chrono-0_4", "uuid-0_8"], version = "2.4.0" }
 chrono = "0.4.22"
 config = "0.13.2"
 glob = "0.3.0"
-nom = "7.1.1"
-serde = { features = ["derive"], version = "1.0.148" }
-serde_json = "1.0.89"
+serde = { features = ["derive"], version = "1" }
+serde_json = "1"
 strum = { features = ["derive"], version = "0.24.1" }
 url = "2.3.1"
+
+# wasm-bindgen = { features = ["serde-serialize"], optional = true, version = "0.2.83" }
 
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]

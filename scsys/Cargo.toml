@@ -31,14 +31,11 @@ full = [
 ]
 
 wasm = [
-    "actors",
-    "core",
-    "scsys-crypto/wasm",
-    "scsys-gen/wasm"
+    "scsys-core/default"
 ]
 
 actors = ["scsys-actors"]
-core = ["scsys-core"]
+core = ["scsys-core/default"]
 crypto = ["scsys-crypto/default"]
 derive = ["scsys-derive"]
 gen = ["scsys-gen/default"]
