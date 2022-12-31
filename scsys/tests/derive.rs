@@ -10,7 +10,7 @@ mod tests {
     use scsys::Hashable;
     use scsys::{Named, Temporal, Timestamp};
 
-    #[derive(Default, Hashable, Named, Temporal)]
+    #[derive(Default, Hashable, Temporal)]
     pub struct TestStruct {
         timestamp: Timestamp,
     }
@@ -21,19 +21,13 @@ mod tests {
         }
     }
 
-    #[derive(Named)]
+    #[derive(Default)]
     struct Pancakes;
-
-    #[test]
-    fn test_simple_derive() {
-        let a = Pancakes::name();
-        assert_eq!(a, String::from("Pancakes"))
-    }
 
     #[test]
     fn test_hashable_derive() {
         let _a = TestStruct::default();
         // let hash = a.hash();
-        assert_eq!(TestStruct::name(), String::from("TestStruct"));
+        assert!(true)
     }
 }
