@@ -34,8 +34,7 @@ pub(crate) mod types {
     pub type BaseError = Box<dyn std::error::Error>;
     /// Type alias for a boxed error with send, sync, and static flags enabled
     pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
-    /// Type alias of a result implementing the [BaseError]
-    pub type Result<T = (), E = BaseError> = std::result::Result<T, E>;
+
     /// Type alias for the standard result used
     pub type BoxResult<T = (), E = BoxError> = Result<T, E>;
     /// Type alias for [bson::DateTime]

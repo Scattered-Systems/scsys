@@ -101,17 +101,17 @@ impl TryFrom<&str> for Timestamp {
     }
 }
 
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn test_timestamp() {
-        let ts = Timestamp::now();
-        let str_ts = ts.to_rfc3339();
-        let a = Timestamp::from(&ts);
-        let b = Timestamp::try_from(str_ts).unwrap();
-        assert_eq!(a, b)
+        let boundary = Timestamp::now();
+        let a = Timestamp::from(&boundary);
+        let b = Timestamp::try_from(boundary.to_rfc3339()).ok().unwrap();
+        assert_eq!(&a, &b);
     }
 
     #[test]

@@ -1,20 +1,17 @@
 /*
     Appellation: extract <module>
-    Creator: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
+    Contrib: FL03 <jo3mccain@icloud.com>
+    Description: ... Summary ...
 */
 pub use self::{extractor::*, files::*, utils::*};
 
 mod extractor;
 mod files;
 
-pub trait ExtractorSpec<T> {
-    fn extract(&self) -> Vec<T>;
-}
+pub trait Extraction<S: ToString> {
+    type Res: std::str::FromStr + ToString;
 
-pub trait FileExtSpec: ExtractorSpec<String> {
-    fn path(&self) -> std::path::Path;
+    fn extract(bp: char, data: &S, exclude: Option<&[char]>) -> Vec<Self::Res>;
 }
 
 pub(crate) mod utils {
@@ -22,7 +19,7 @@ pub(crate) mod utils {
     use std::str::FromStr;
 
     /// Implements the basic algorithm used by the extractor
-    pub fn base_extractor<S: ToString, T: FromStr + ToString>(
+    pub fn extractor<S: ToString, T: FromStr + ToString>(
         bp: char,
         data: &S,
         exclude: Option<&[char]>,
@@ -56,8 +53,8 @@ mod tests {
     #[test]
     fn test_extractor_comma() {
         let a = Extractor::new(',', "[0, 0, 0, 0]".to_string(), None);
-
-        assert_eq!(a.extract::<u8>(), vec![0, 0, 0, 0])
+        let b = extractor::<&str, u8>(',', &"[0, 0, 0, 0]", None);
+        assert_eq!(a.extract::<u8>(), b)
     }
 
     #[test]

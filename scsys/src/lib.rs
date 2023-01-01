@@ -20,7 +20,8 @@ pub use scsys_macros::*;
 pub mod prelude {
     #[cfg(feature = "actors")]
     pub use super::actors::{
-        agents::*, catalysts::*, contexts::*, handlers::*, messages::*, sessions::*, states::*,
+        agents::*, catalysts::*, contexts::*, handlers::*, loggers::*, messages::*, networking::*,
+        providers::*, sessions::*, states::*,
     };
     #[cfg(feature = "crypto")]
     pub use super::crypto::*;
@@ -28,9 +29,7 @@ pub mod prelude {
     pub use super::gen::*;
     pub use super::*;
     #[cfg(feature = "core")]
-    pub use super::{
-        accounts::*, errors::*, events::*, extract::*, loggers::*, networking::*, providers::*,
-    };
+    pub use super::{accounts::*, errors::*, extract::*};
     // Extras
     #[cfg(feature = "bson")]
     pub use bson;

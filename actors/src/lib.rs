@@ -10,7 +10,10 @@ pub mod agents;
 pub mod catalysts;
 pub mod contexts;
 pub mod handlers;
+pub mod loggers;
 pub mod messages;
+pub mod networking;
+pub mod providers;
 pub mod sessions;
 pub mod states;
 

@@ -4,6 +4,7 @@
     Description: ... Summary ...
 */
 use crate::{BoxResult, ConfigFile, ConfigFileVec};
+use chrono::{DateTime, TimeZone, Utc};
 use std::io::{self, BufRead, BufReader};
 use std::{fs::File, str::FromStr, string::ToString};
 
@@ -50,6 +51,22 @@ pub fn project_root() -> std::path::PathBuf {
         .nth(1)
         .unwrap()
         .to_path_buf()
+}
+///
+pub fn chrono_datetime_now() -> DateTime<Utc> {
+    Utc::now()
+}
+///
+pub fn chrono_into_bson<T: TimeZone>(data: DateTime<T>) -> bson::DateTime {
+    bson::DateTime::from_chrono(data)
+}
+///
+pub fn ts_rfc3339() -> String {
+    Utc::now().to_rfc3339()
+}
+///
+pub fn timestamp() -> i64 {
+    Utc::now().timestamp()
 }
 
 #[cfg(test)]
