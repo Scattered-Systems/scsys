@@ -9,6 +9,16 @@
 */
 use serde::{Deserialize, Serialize};
 
+pub trait AppellationSpec {
+    type Id;
+    type Key;
+    type Name: ToString;
+
+    fn id(&self) -> &Self::Id;
+    fn key(&self) -> &Self::Key;
+    fn name(&self) -> &Self::Name;
+}
+
 #[derive(Clone, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Appellation<T = String> {
     pub id: T,

@@ -9,7 +9,7 @@ license = "Apache-2.0"
 name = "scsys"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.38" # TODO: Update the package version
+version = "0.1.39" # TODO: Update the package version
 
 [features]
 default = [
@@ -31,14 +31,11 @@ full = [
 ]
 
 wasm = [
-    "actors",
-    "core",
-    "scsys-crypto/wasm",
-    "scsys-gen/wasm"
+    "scsys-core/default"
 ]
 
 actors = ["scsys-actors"]
-core = ["scsys-core"]
+core = ["scsys-core/default"]
 crypto = ["scsys-crypto/default"]
 derive = ["scsys-derive"]
 gen = ["scsys-gen/default"]
@@ -58,12 +55,12 @@ bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, v
 chrono = { optional = true, version = "0.4.22" }
 config = { optional = true, version = "0.13.2" }
 
-scsys-actors = { features = [], optional = true, path = "../actors", version = "0.1.38" }
-scsys-core = { features = [], optional = true, path = "../core", version = "0.1.38" }
-scsys-crypto = { features = ["wasm"], optional = true, path = "../crypto", version = "0.1.38" }
-scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.38" }
-scsys-gen = { features = ["wasm"], optional = true, path = "../gen", version = "0.1.38" }
-scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.38" }
+scsys-actors = { features = [], optional = true, path = "../actors", version = "0.1.39" }
+scsys-core = { features = [], optional = true, path = "../core", version = "0.1.39" }
+scsys-crypto = { features = ["wasm"], optional = true, path = "../crypto", version = "0.1.39" }
+scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.39" }
+scsys-gen = { features = ["wasm"], optional = true, path = "../gen", version = "0.1.39" }
+scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.39" }
 
 [package.metadata.docs.rs]
 all-features = true

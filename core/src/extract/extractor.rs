@@ -4,7 +4,7 @@
     Description:
         ... Summary ...
 */
-use crate::{extract::base_extractor, DEFAULT_IGNORE_CHARS};
+use crate::{extract::extractor, DEFAULT_IGNORE_CHARS};
 use std::str::FromStr;
 
 /// Implements the formal interface for operating the extraction features
@@ -28,6 +28,6 @@ impl<'a> Extractor<'a> {
     where
         <T as FromStr>::Err: std::fmt::Debug,
     {
-        base_extractor::<String, T>(self.breakpoint, &self.data, Some(self.exclude))
+        extractor::<String, T>(self.breakpoint, &self.data, Some(self.exclude))
     }
 }

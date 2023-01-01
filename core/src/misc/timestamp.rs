@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use crate::{timestamp, DefaultTimezone, Temporal};
+use crate::{timestamp, DefaultTimezone, Temporal, TemporalExt};
 use serde::{Deserialize, Serialize};
 use std::convert::{From, TryFrom};
 use strum::EnumVariantNames;
@@ -18,7 +18,7 @@ pub enum Timestamp {
 
 impl Timestamp {
     pub fn new() -> Self {
-        Self::timestamp()
+        Self::Ts(timestamp())
     }
     pub fn now() -> chrono::DateTime<DefaultTimezone> {
         chrono::Utc::now()
@@ -26,8 +26,8 @@ impl Timestamp {
     pub fn rfc3339() -> Self {
         Self::Rfc3339(chrono::Utc::now().to_rfc3339())
     }
-    pub fn timestamp() -> Self {
-        Self::Ts(timestamp())
+    pub fn timestamp(&self) -> i64 {
+        self.into()
     }
 }
 
@@ -42,12 +42,12 @@ impl std::fmt::Display for Timestamp {
         write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }
-
 impl Temporal for Timestamp {
-    fn timestamp(&self) -> i64 {
+    fn created(&self) -> i64 {
         self.into()
     }
 }
+impl TemporalExt for Timestamp {}
 
 impl From<&Timestamp> for Timestamp {
     fn from(data: &Timestamp) -> Self {
@@ -101,17 +101,17 @@ impl TryFrom<&str> for Timestamp {
     }
 }
 
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn test_timestamp() {
-        let ts = Timestamp::now();
-        let str_ts = ts.to_rfc3339();
-        let a = Timestamp::from(&ts);
-        let b = Timestamp::try_from(str_ts).unwrap();
-        assert_eq!(a, b)
+        let boundary = Timestamp::now();
+        let a = Timestamp::from(&boundary);
+        let b = Timestamp::try_from(boundary.to_rfc3339()).ok().unwrap();
+        assert_eq!(&a, &b);
     }
 
     #[test]
