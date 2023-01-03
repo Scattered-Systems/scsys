@@ -29,7 +29,7 @@ pub mod prelude {
     pub use super::gen::*;
     pub use super::*;
     #[cfg(feature = "core")]
-    pub use super::{accounts::*, errors::*, extract::*};
+    pub use super::{errors::*, extract::*};
     // Extras
     #[cfg(feature = "bson")]
     pub use bson;

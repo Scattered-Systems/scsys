@@ -45,8 +45,6 @@ impl std::fmt::Display for Server {
     }
 }
 
-const DEFAULT_IGNORE_CHARS: &[char] = &['[', ']', ',', '.', ' '];
-
 /// Implements the basic algorithm used by the extractor
 fn extractor<S: ToString, T: FromStr + ToString>(
     bp: char,
@@ -57,7 +55,7 @@ where
     <T as FromStr>::Err: std::fmt::Debug,
 {
     let data = data.to_string();
-    let skip = exclude.unwrap_or(DEFAULT_IGNORE_CHARS);
+    let skip = exclude.unwrap_or(&['[', ']', ',', '.', ' ']);
     let trimmed: &str = data.trim_matches(skip);
     trimmed
         .split(bp)

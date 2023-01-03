@@ -101,7 +101,6 @@ impl TryFrom<&str> for Timestamp {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

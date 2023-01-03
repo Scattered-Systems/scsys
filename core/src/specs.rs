@@ -26,8 +26,6 @@ pub trait Named {
     }
 }
 
-
-
 pub trait TemporalExt: Temporal {
     fn chrono_to_bson(&self, data: ChronoDateTime) -> bson::DateTime {
         chrono_into_bson::<Utc>(data)

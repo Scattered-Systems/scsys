@@ -15,9 +15,11 @@ proc-macro = true
 test = false
 
 [dependencies]
-proc-macro2 = "1.0.48"
-quote = "1.0.22"
-syn = { features = ["full"], version = "1.0.106" }
+proc-macro2 = "1"
+quote = "1"
+syn = { features = ["full"], version = "1" }
+serde = { features = ["derive"], version = "1"}
+serde_json = "1"
 
 [package.metadata.docs.rs]
 all-features = true

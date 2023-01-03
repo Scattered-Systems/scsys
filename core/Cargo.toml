@@ -19,15 +19,15 @@ crate-type = ["cdylib", "rlib"]
 test = true
 
 [dependencies]
-anyhow = "1.0.68"
-bson = { features = ["chrono-0_4", "uuid-0_8"], version = "2.4.0" }
-chrono = "0.4.22"
-config = "0.13.2"
-glob = "0.3.0"
+anyhow = "1"
+bson = { features = ["chrono-0_4", "uuid-0_8"], version = "2.4" }
+chrono = "0.4"
+config = "0.13"
+glob = "0.3"
 serde = { features = ["derive"], version = "1" }
 serde_json = "1"
-strum = { features = ["derive"], version = "0.24.1" }
-url = "2.3.1"
+strum = { features = ["derive"], version = "0.24" }
+url = "2.3"
 
 # wasm-bindgen = { features = ["serde-serialize"], optional = true, version = "0.2.83" }
 
