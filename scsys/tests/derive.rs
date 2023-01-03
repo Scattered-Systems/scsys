@@ -5,29 +5,24 @@
 */
 #[cfg(feature = "derive")]
 #[cfg(test)]
-mod tests {
-    use scsys::prelude::*;
-    use scsys::Hashable;
-    use scsys::Timestamp;
 
-    #[derive(Default, Hashable)]
-    pub struct TestStruct {
-        timestamp: Timestamp,
-    }
+use scsys::prelude::Hashable;
+use scsys::{Hash, SerdeDisplay, Timestamp};
+use serde::{Deserialize, Serialize};
 
-    impl std::fmt::Display for TestStruct {
-        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-            write!(f, "{}", self.timestamp)
-        }
-    }
+#[derive(Default, Hash, SerdeDisplay, Deserialize, Serialize)]
+pub struct TestStruct {
+    timestamp: Timestamp,
+}
 
-    #[derive(Default)]
-    struct Pancakes;
 
-    #[test]
-    fn test_hashable_derive() {
-        let a = TestStruct::default();
-        let _hash = a.hash();
-        assert!(true)
-    }
+#[derive(Default)]
+struct Pancakes;
+
+#[test]
+fn test_hashable_derive() {
+    let a = TestStruct::default();
+    let _hash = a.hash();
+    let _string = a.to_string();
+    assert!(true)
 }

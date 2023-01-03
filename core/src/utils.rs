@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use crate::{BoxResult, ConfigFile, ConfigFileVec};
+use crate::{DEFAULT_IGNORE_CHARS, BoxResult, ConfigFile, ConfigFileVec};
 use chrono::{DateTime, TimeZone, Utc};
 use std::io::{self, BufRead, BufReader};
 use std::{fs::File, str::FromStr, string::ToString};
@@ -20,6 +20,23 @@ pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> Bo
 pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
     let f = |p: std::path::PathBuf| ConfigFile::from(p).required(required);
     collect_files_as(&f, pattern).expect("Failed to find any similar files...")
+}
+/// Implements the basic algorithm used by the extractor
+pub fn extractor<S: ToString, T: FromStr + ToString>(
+    bp: char,
+    data: &S,
+    exclude: Option<&[char]>,
+) -> Vec<T>
+where
+    <T as FromStr>::Err: std::fmt::Debug,
+{
+    let data = data.to_string();
+    let skip = exclude.unwrap_or(DEFAULT_IGNORE_CHARS);
+    let trimmed: &str = data.trim_matches(skip);
+    trimmed
+        .split(bp)
+        .map(|i| i.trim_matches(skip).parse::<T>().unwrap())
+        .collect()
 }
 /// Attempts to collect configuration files, following the given pattern, into a ConfigFileVec
 pub fn try_collect_config_files(pattern: &str, required: bool) -> BoxResult<ConfigFileVec> {

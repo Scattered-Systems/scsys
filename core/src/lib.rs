@@ -6,7 +6,6 @@
 #[doc(inline)]
 pub use self::{misc::*, primitives::*, specs::*, utils::*};
 
-pub mod accounts;
 pub mod errors;
 pub mod extract;
 
