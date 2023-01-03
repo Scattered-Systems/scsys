@@ -8,7 +8,7 @@ keywords = ["derive", "macros", "scsys"]
 license = "Apache-2.0"
 name = "scsys-derive"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.39" # TODO: Update the package version
+version = "0.1.40" # TODO: Update the package version
 
 [lib]
 proc-macro = true
