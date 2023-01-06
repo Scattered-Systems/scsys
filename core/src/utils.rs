@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use crate::{DEFAULT_IGNORE_CHARS, BoxResult, ConfigFile, ConfigFileVec};
+use crate::{BoxResult, ConfigFile, ConfigFileVec, DEFAULT_IGNORE_CHARS};
 use chrono::{DateTime, TimeZone, Utc};
 use std::io::{self, BufRead, BufReader};
 use std::{fs::File, str::FromStr, string::ToString};

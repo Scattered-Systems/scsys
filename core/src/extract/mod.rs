@@ -14,13 +14,11 @@ pub trait Extraction<S: ToString> {
     fn extract(bp: char, data: &S, exclude: Option<&[char]>) -> Vec<Self::Res>;
 }
 
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::extractor;
-    
+
     #[test]
     fn test_file_extractor() {
         let fp = "../README.md";

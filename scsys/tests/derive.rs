@@ -5,7 +5,6 @@
 */
 #[cfg(feature = "derive")]
 #[cfg(test)]
-
 use scsys::prelude::Hashable;
 use scsys::{Hash, SerdeDisplay, Timestamp};
 use serde::{Deserialize, Serialize};
@@ -14,7 +13,6 @@ use serde::{Deserialize, Serialize};
 pub struct TestStruct {
     timestamp: Timestamp,
 }
-
 
 #[derive(Default)]
 struct Pancakes;
