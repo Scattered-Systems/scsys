@@ -19,6 +19,6 @@ impl<Cnf: Configurable> Context<Cnf> {
 
 impl<Cnf: Configurable> std::fmt::Display for Context<Cnf> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
+        write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }

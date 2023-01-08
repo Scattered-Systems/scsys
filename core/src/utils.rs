@@ -61,6 +61,10 @@ pub fn fnl_remove<T: Clone + ToString>(data: T) -> String {
 pub fn is_float<T: ToString>(data: &T) -> bool {
     f64::from_str(&data.to_string()).is_ok()
 }
+
+pub fn package_name() -> String {
+    env!("CARGO_PKG_NAME").to_string()
+}
 /// Fetch the project root unless specified otherwise with a CARGO_MANIFEST_DIR env variable
 pub fn project_root() -> std::path::PathBuf {
     std::path::Path::new(&env!("CARGO_MANIFEST_DIR"))
