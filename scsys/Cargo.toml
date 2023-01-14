@@ -15,7 +15,6 @@ version = "0.1.41" # TODO: Update the package version
 default = [
     "actors",
     "core",
-    "crypto",
     "derive",
     "gen",
     "macros"
@@ -23,7 +22,6 @@ default = [
 full = [
     "actors",
     "core",
-    "crypto",
     "gen",
     "derive", 
     "macros", 
@@ -36,14 +34,12 @@ wasm = [
 
 actors = ["scsys-actors"]
 core = ["scsys-core/default"]
-crypto = ["scsys-crypto/default"]
 derive = ["scsys-derive"]
 gen = ["scsys-gen/default"]
 macros = ["scsys-macros"]
 
-extras = ["bson", "chrono", "config"]
-bson = ["bson/default", "bson/chrono-0_4", "bson/serde_with", "bson/uuid-0_8"]
-chrono = ["chrono/default"]
+extras = ["config"]
+
 config = ["config/default"]
 
 [lib]
@@ -57,13 +53,10 @@ serde = { features = ["derive"], version = "1" }
 serde_json = "1"
 
 [dependencies]
-bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], optional = true, version = "2.4.0" }
-chrono = { optional = true, version = "0.4.22" }
-config = { optional = true, version = "0.13.2" }
+config = { optional = true, version = "0.13" }
 
 scsys-actors = { features = [], optional = true, path = "../actors", version = "0.1.41" }
 scsys-core = { features = [], optional = true, path = "../core", version = "0.1.41" }
-scsys-crypto = { features = ["wasm"], optional = true, path = "../crypto", version = "0.1.41" }
 scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.41" }
 scsys-gen = { features = ["wasm"], optional = true, path = "../gen", version = "0.1.41" }
 scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.41" }

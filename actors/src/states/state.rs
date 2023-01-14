@@ -6,12 +6,23 @@
 use super::{StatePack, Stateful, StatefulExt};
 use crate::messages::Message;
 
+use decanter::prelude::{H256, Hash, Hashable};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+#[derive(Clone, Copy, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub enum States {
+    #[default]
+    Error = 0,
+    Idle = 1,
+}
+
+impl StatePack for States {}
+
+
 /// Implement the standard structure of a state
-#[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
-pub struct State<S: StatePack, T: Default = String> {
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub struct State<S: StatePack = States, T: Default = H256> {
     pub events: Vec<String>,
     pub message: Message<T>,
     pub metadata: Value,
@@ -63,6 +74,12 @@ impl<S: StatePack, T: Default> Default for State<S, T> {
 impl<S: StatePack, T: Default> From<T> for State<S, T> {
     fn from(data: T) -> Self {
         Self::new(None, Some(Message::from(data)), None)
+    }
+}
+
+impl std::fmt::Display for States {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }
 

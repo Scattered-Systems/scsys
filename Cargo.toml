@@ -10,7 +10,6 @@ exclude = [
 
 members = [
     "core",
-    "crypto",
     "derive",
     "gen",
     "macros",
