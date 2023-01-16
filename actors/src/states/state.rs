@@ -6,7 +6,7 @@
 use super::{StatePack, Stateful, StatefulExt};
 use crate::messages::Message;
 
-use decanter::prelude::{H256, Hash, Hashable};
+use decanter::prelude::{Hash, Hashable, H256};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -18,7 +18,6 @@ pub enum States {
 }
 
 impl StatePack for States {}
-
 
 /// Implement the standard structure of a state
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]

@@ -12,10 +12,10 @@ pub(crate) mod specs {
     use std::sync::Arc;
 
     pub trait StatePack: Default + ToString {
-        fn by_ref(self: &Self) -> &Self {
-            &self
+        fn by_ref(&self) -> &Self {
+            self
         }
-        fn by_ref_mut(self: &mut Self) -> &mut Self {
+        fn by_ref_mut(&mut self) -> &mut Self {
             self
         }
     }

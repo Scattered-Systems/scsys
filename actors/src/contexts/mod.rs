@@ -13,10 +13,10 @@ pub(crate) mod specs {
     pub trait Configurable: Serialize {
         type Settings;
 
-        fn by_ref(self: &Self) -> &Self {
+        fn by_ref(&self) -> &Self {
             self
         }
-        fn by_mut_ref(self: &Self) -> &Self {
+        fn by_mut_ref(&self) -> &Self {
             self
         }
         fn settings(&self) -> &Self::Settings;
@@ -32,10 +32,10 @@ pub(crate) mod specs {
         type Cnf: Configurable;
         type Ctx;
 
-        fn by_ref(self: &Self) -> &Self {
+        fn by_ref(&self) -> &Self {
             self
         }
-        fn by_mut_ref(self: &Self) -> &Self {
+        fn by_mut_ref(&self) -> &Self {
             self
         }
         fn context(&self) -> &Self::Ctx;
