@@ -23,7 +23,9 @@ impl TryFrom<String> for ServerHost {
     type Error = Box<dyn std::error::Error + Send + Sync>;
 
     fn try_from(data: String) -> Result<Self, Self::Error> {
-        let res = extractor('.', &data, None).try_into().unwrap_or([0, 0, 0, 0]);
+        let res = extractor('.', &data, None)
+            .try_into()
+            .unwrap_or([0, 0, 0, 0]);
         Ok(Self::new(res))
     }
 }
