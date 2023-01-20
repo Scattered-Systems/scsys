@@ -110,6 +110,7 @@ mod tests {
             write!(f, "{}", serde_json::to_string(&self).unwrap())
         }
     }
+
     #[test]
     fn test_default_state() {
         let a = State::<States, serde_json::Value>::default();

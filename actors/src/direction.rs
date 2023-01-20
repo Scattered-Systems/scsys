@@ -3,11 +3,12 @@
     Creator: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
+use decanter::{crypto::Hashable, Hash};
 use serde::{Deserialize, Serialize};
 use std::convert::From;
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub enum Direction<S, T> {
+pub enum Direction<S = String, T = String> {
     Input(S),
     Output(T),
 }

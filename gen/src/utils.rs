@@ -3,7 +3,11 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use rand::{distributions::{Alphanumeric, Standard}, prelude::Distribution, Rng};
+use rand::{
+    distributions::{Alphanumeric, Standard},
+    prelude::Distribution,
+    Rng,
+};
 
 /// Consolidate resources required for generating random numbers
 pub fn generate_random_number<T>() -> T
@@ -25,7 +29,6 @@ pub fn generate_random_string(len: usize) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-
 
     #[test]
     fn test_random_number() {

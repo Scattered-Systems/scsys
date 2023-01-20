@@ -8,6 +8,14 @@ use chrono::{DateTime, TimeZone, Utc};
 use std::io::{self, BufRead, BufReader};
 use std::{fs::File, str::FromStr, string::ToString};
 
+/// Function wrapper for [Utc]; which results in a [DateTime] of timezone [Utc]
+pub fn chrono_datetime_now() -> DateTime<Utc> {
+    Utc::now()
+}
+///
+pub fn chrono_into_bson<T: TimeZone>(data: DateTime<T>) -> bson::DateTime {
+    bson::DateTime::from_chrono(data)
+}
 /// A generic function wrapper extending glob::glob
 pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> BoxResult<Vec<T>> {
     let mut files = Vec::<T>::new();
@@ -21,7 +29,7 @@ pub fn collect_config_files(pattern: &str, required: bool) -> ConfigFileVec {
     let f = |p: std::path::PathBuf| ConfigFile::from(p).required(required);
     collect_files_as(&f, pattern).expect("Failed to find any similar files...")
 }
-/// Implements the basic algorithm used by the extractor
+/// A simple extraction utility for getting values from a string and converting them into a [Vec]
 pub fn extractor<S: ToString, T: FromStr + ToString>(
     bp: char,
     data: &S,
@@ -37,11 +45,6 @@ where
         .split(bp)
         .map(|i| i.trim_matches(skip).parse::<T>().unwrap())
         .collect()
-}
-/// Attempts to collect configuration files, following the given pattern, into a ConfigFileVec
-pub fn try_collect_config_files(pattern: &str, required: bool) -> BoxResult<ConfigFileVec> {
-    let f = |p: std::path::PathBuf| ConfigFile::from(p).required(required);
-    collect_files_as(&f, pattern)
 }
 /// This function converts the file found at path (fp) into a Vec<String>
 pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {
@@ -73,13 +76,14 @@ pub fn project_root() -> std::path::PathBuf {
         .unwrap()
         .to_path_buf()
 }
-///
-pub fn chrono_datetime_now() -> DateTime<Utc> {
-    Utc::now()
+/// Attempts to collect configuration files, following the given pattern, into a ConfigFileVec
+pub fn try_collect_config_files(pattern: &str, required: bool) -> BoxResult<ConfigFileVec> {
+    let f = |p: std::path::PathBuf| ConfigFile::from(p).required(required);
+    collect_files_as(&f, pattern)
 }
-///
-pub fn chrono_into_bson<T: TimeZone>(data: DateTime<T>) -> bson::DateTime {
-    bson::DateTime::from_chrono(data)
+/// This function attempts to convert the given input into a [std::net::SocketAddr]
+pub fn try_str_to_socketaddr(addr: impl ToString) -> Result<std::net::SocketAddr, std::net::AddrParseError> {
+    addr.to_string().parse()
 }
 ///
 pub fn ts_rfc3339() -> String {

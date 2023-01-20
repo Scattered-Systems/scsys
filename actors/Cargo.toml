@@ -10,18 +10,21 @@ name = "scsys-actors"
 repository = "https://github.com/scattered-systems/scsys"
 version = "0.1.41" # TODO: Update the package version
 
+[features]
+default = ["decanter/derive"]
+wasm = ["decanter/wasm"]
+
 [lib]
 crate-type = ["cdylib", "rlib"]
 test = true
 
 [dev-dependencies]
-scsys-core = { path = "../core" }
 
 [dependencies]
 bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" }
 chrono = "0.4.22"
 config = "0.13.2"
-decanter = { features = ["derive"], version = "0.1.1" }
+decanter = { features = ["derive", "wasm"], version = "0.1.2" }
 glob = "0.3.0"
 serde = { features = ["derive"], version = "1" }
 serde_json = "1"
@@ -30,3 +33,7 @@ url = "2.3.1"
 
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]
+
+[target.wasm32-unknown-unknown]
+
+[target.wasm32-wasi]

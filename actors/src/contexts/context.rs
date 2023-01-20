@@ -4,6 +4,7 @@
     Description: ... Summary ...
 */
 use super::Configurable;
+use decanter::prelude::{hasher, Hashable};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
@@ -14,6 +15,12 @@ pub struct Context<Cnf: Configurable> {
 impl<Cnf: Configurable> Context<Cnf> {
     pub fn new(cnf: Cnf) -> Self {
         Self { cnf }
+    }
+}
+
+impl<Cnf: Configurable> Hashable for Context<Cnf> {
+    fn hash(&self) -> decanter::prelude::H256 {
+        hasher(self).into()
     }
 }
 
