@@ -2,10 +2,12 @@
 
 [![Clippy](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml)
 [![Rust](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml)
+[![crates.io](https://img.shields.io/crates/v/scsys.svg)](https://crates.io/crates/scsys)
+[![docs.rs](https://docs.rs/scsys/badge.svg)](https://docs.rs/scsys)
 
 ***
 
-Welcome to scsys, this crate was created in support of the Scattered-Systems ecosystem. The crate is reserved primarily for implementing a variety of critical primitives and utilities.
+Welcome to scsys, this repository is home to mission-critical primitives and utilities leveraged throughout the ecosystem.
 
 ## Getting Started
 
@@ -23,21 +25,21 @@ cd scsys
 #### *Build the workspace locally*
 
 ```bash
-cargo xtask build 
+cargo build -v --workspace
 ```
 
-or 
+or
 
 ```bash
-cargo xtask build --release
+cargo build --release -v --workspace
 ```
 
-#### *Auto*
+#### *Testing*
 
 Automatically format and analyze the codebase before building then testing.
 
 ```bash
-cargo xtask auto
+cargo test --all -F full --release -v
 ```
 
 ## Usage

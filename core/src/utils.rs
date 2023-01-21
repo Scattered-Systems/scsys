@@ -82,7 +82,9 @@ pub fn try_collect_config_files(pattern: &str, required: bool) -> BoxResult<Conf
     collect_files_as(&f, pattern)
 }
 /// This function attempts to convert the given input into a [std::net::SocketAddr]
-pub fn try_str_to_socketaddr(addr: impl ToString) -> Result<std::net::SocketAddr, std::net::AddrParseError> {
+pub fn try_str_to_socketaddr(
+    addr: impl ToString,
+) -> Result<std::net::SocketAddr, std::net::AddrParseError> {
     addr.to_string().parse()
 }
 ///

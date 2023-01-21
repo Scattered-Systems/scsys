@@ -1,14 +1,13 @@
 [package]
-authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
-categories = []
-description = "scsys-macros"
-edition = "2021"
-homepage = "https://github.com/scattered-systems/scsys/wiki"
-keywords = ["macros", "scsys"]
-license = "Apache-2.0"
 name = "scsys-macros"
-repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.41" # TODO: Update the package version
+
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -24,3 +23,7 @@ syn = { features = ["full"], version = "1.0.107" }
 [package.metadata.docs.rs]
 all-features = true
 rustc-args = ["--cfg", "docsrs"]
+
+[target.wasm32-unknown-unknown]
+
+[target.wasm32-wasi]

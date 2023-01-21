@@ -1,14 +1,13 @@
 [package]
-authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
-categories = []
-description = "scsys-gen"
-edition = "2021"
-homepage = "https://github.com/scattered-systems/scsys/wiki"
-keywords = ["scsys"]
-license = "Apache-2.0"
 name = "scsys-gen"
-repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.41" # TODO: Update the package version
+
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
 
 [features]
 default = []
@@ -32,3 +31,8 @@ rand = "0.8.5"
 [package.metadata.docs.rs]
 all-features = true
 rustc-args = ["--cfg", "docsrs"]
+
+[target.wasm32-unknown-unknown]
+
+[target.wasm32-wasi]
+

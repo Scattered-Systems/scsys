@@ -1,14 +1,13 @@
 [package]
-authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
-categories = []
-description = "scsys-actors"
-edition = "2021"
-homepage = "https://github.com/scattered-systems/scsys/wiki"
-keywords = ["core", "primitives", "scsys"]
-license = "Apache-2.0"
 name = "scsys-actors"
-repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.41" # TODO: Update the package version
+
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
 
 [features]
 default = ["decanter/derive"]
@@ -26,8 +25,8 @@ chrono = "0.4.22"
 config = "0.13.2"
 decanter = { features = ["derive", "wasm"], version = "0.1.2" }
 glob = "0.3.0"
-serde = { features = ["derive"], version = "1" }
-serde_json = "1"
+serde.workspace = true
+serde_json.workspace = true
 strum = { features = ["derive"], version = "0.24.1" }
 url = "2.3.1"
 
