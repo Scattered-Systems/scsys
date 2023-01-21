@@ -12,7 +12,8 @@ version.workspace = true
 
 [features]
 default = []
-# wasm = ["wasm-bindgen/serde-serialize"]
+
+wasm = []
 
 [lib]
 crate-type = ["cdylib", "rlib"]

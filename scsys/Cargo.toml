@@ -16,9 +16,7 @@ version.workspace = true
 default = [
     "actors",
     "core",
-    "derive",
     "gen",
-    "macros"
 ]
 full = [
     "actors",
@@ -31,10 +29,11 @@ full = [
 
 wasm = [
     "scsys-actors/wasm",
-    "scsys-core/default"
+    "scsys-core/wasm",
+    "scsys-gen/wasm"
 ]
 
-actors = ["scsys-actors"]
+actors = ["scsys-actors/default"]
 core = ["scsys-core/default"]
 derive = ["scsys-derive"]
 gen = ["scsys-gen/default"]
@@ -58,7 +57,7 @@ serde_json.workspace = true
 config = { optional = true, version = "0.13" }
 
 scsys-actors = { features = ["wasm"], optional = true, path = "../actors", version = "0.1.41" }
-scsys-core = { features = [], optional = true, path = "../core", version = "0.1.41" }
+scsys-core = { features = ["wasm"], optional = true, path = "../core", version = "0.1.41" }
 scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.41" }
 scsys-gen = { features = ["wasm"], optional = true, path = "../gen", version = "0.1.41" }
 scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.41" }
