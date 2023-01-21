@@ -4,6 +4,7 @@
     Description: ... Summary ...
 */
 use super::Configurable;
+use decanter::prelude::{hasher, Hashable};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
@@ -17,8 +18,14 @@ impl<Cnf: Configurable> Context<Cnf> {
     }
 }
 
+impl<Cnf: Configurable> Hashable for Context<Cnf> {
+    fn hash(&self) -> decanter::prelude::H256 {
+        hasher(self).into()
+    }
+}
+
 impl<Cnf: Configurable> std::fmt::Display for Context<Cnf> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
+        write!(f, "{}", serde_json::to_string(&self).unwrap())
     }
 }

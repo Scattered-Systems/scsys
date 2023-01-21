@@ -43,7 +43,6 @@ jobs:
         package:
           - scsys-actors
           - scsys-core
-          - scsys-crypto
           - scsys-derive
           - scsys-gen
           - scsys-macros

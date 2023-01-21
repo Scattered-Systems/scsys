@@ -5,7 +5,7 @@
         ... Summary ...
 */
 #[doc(inline)]
-pub use self::{proxy::ReverseProxy, server::Server};
+pub use self::{proxy::*, server::*};
 
 mod proxy;
 mod server;

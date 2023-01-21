@@ -11,22 +11,14 @@ pub(crate) mod specs {
     use crate::messages::Message;
     use std::sync::Arc;
 
-    pub trait Eventful: Clone + Default + ToString {
-        type Event: Clone + Default + ToString;
-
-        fn by_arc(self: Arc<Self>) -> Arc<Self> {
+    pub trait StatePack: Default + ToString {
+        fn by_ref(&self) -> &Self {
             self
         }
-        fn event(&self) -> Self::Event
-        where
-            Self: Sized;
-        fn timestamp(self) -> i64;
-        fn now(self) -> i64 {
-            chrono::Utc::now().timestamp()
+        fn by_ref_mut(&mut self) -> &mut Self {
+            self
         }
     }
-
-    pub trait StatePack: Default + ToString {}
 
     pub trait Stateful<S: StatePack>: Clone + Default {
         type Data;

@@ -4,6 +4,7 @@
     Description: ... Summary ...
 */
 use crate::{messages::Message, Direction};
+use decanter::{crypto::Hashable, Hash};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]

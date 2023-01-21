@@ -13,6 +13,3 @@ pub(crate) mod misc;
 pub(crate) mod primitives;
 pub(crate) mod specs;
 pub(crate) mod utils;
-
-/// Type alias for [anyhow::Result]
-pub type Result<T = ()> = anyhow::Result<T>;

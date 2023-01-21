@@ -5,7 +5,30 @@
         ... Summary ...
 */
 use serde::{Deserialize, Serialize};
-use std::str::FromStr;
+use std::{net::SocketAddr, str::FromStr};
+
+#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub struct ServerHost([u8; 4]);
+
+impl ServerHost {
+    pub fn new(host: [u8; 4]) -> Self {
+        Self(host)
+    }
+    pub fn host(&self) -> &[u8; 4] {
+        &self.0
+    }
+}
+
+impl TryFrom<String> for ServerHost {
+    type Error = Box<dyn std::error::Error + Send + Sync>;
+
+    fn try_from(data: String) -> Result<Self, Self::Error> {
+        let res = extractor('.', &data, None)
+            .try_into()
+            .unwrap_or([0, 0, 0, 0]);
+        Ok(Self::new(res))
+    }
+}
 
 #[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
 pub struct Server {
@@ -17,15 +40,17 @@ impl Server {
     pub fn new(host: String, port: u16) -> Self {
         Self { host, port }
     }
-    pub fn address(&self) -> std::net::SocketAddr {
-        std::net::SocketAddr::from(self.pieces())
-    }
-    pub fn pieces(&self) -> ([u8; 4], u16) {
-        let host: [u8; 4] = extractor('.', &self.host.clone(), None)
+    pub fn host(&self) -> [u8; 4] {
+        extractor('.', &self.host.clone(), None)
             .try_into()
             .ok()
-            .unwrap();
-        (host, self.port)
+            .unwrap()
+    }
+    pub fn address(&self) -> SocketAddr {
+        SocketAddr::from(self.pieces())
+    }
+    pub fn pieces(&self) -> ([u8; 4], u16) {
+        (self.host(), self.port)
     }
 }
 

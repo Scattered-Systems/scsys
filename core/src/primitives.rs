@@ -6,6 +6,9 @@
 #[doc(inline)]
 pub use self::{constants::*, types::*};
 
+/// Type alias for [anyhow::Result]
+pub type Result<T = ()> = anyhow::Result<T>;
+
 pub(crate) mod constants {
     pub const SCASE: &str = "snake_case";
     ///
@@ -27,14 +30,11 @@ pub(crate) mod types {
     pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
 
     /// Type alias for async errors
-    pub type AsyncError = Box<dyn std::error::Error + Send + Sync + 'static>;
+    pub type AsyncError = Box<dyn std::error::Error + Send + Sync>;
     /// Type alias for async results
     pub type AsyncResult<T = ()> = Result<T, AsyncError>;
-    /// Type alias for a boxed standard error
-    pub type BaseError = Box<dyn std::error::Error>;
     /// Type alias for a boxed error with send, sync, and static flags enabled
-    pub type BoxError = Box<dyn std::error::Error + Send + Sync + 'static>;
-
+    pub type BoxError = Box<dyn std::error::Error>;
     /// Type alias for the standard result used
     pub type BoxResult<T = (), E = BoxError> = Result<T, E>;
     /// Type alias for [bson::DateTime]
@@ -65,6 +65,7 @@ pub(crate) mod types {
     pub type Locked<T> = Arc<Mutex<T>>;
     /// Type alias for [std::io::Result]
     pub type IOResult<T = ()> = std::io::Result<T>;
+    
     /// Type alias for a stateful hash map
     pub type StateMap<Hs, V = (usize, usize)> = HashMap<Hs, V>;
 }

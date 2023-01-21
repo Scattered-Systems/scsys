@@ -1,14 +1,14 @@
 [package]
-authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
-categories = []
-description = "scsys-core"
-edition = "2021"
-homepage = "https://github.com/scattered-systems/scsys/wiki"
-keywords = ["core", "primitives", "scsys"]
-license = "Apache-2.0"
 name = "scsys-core"
-repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.40" # TODO: Update the package version
+
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
+
 
 [features]
 default = []
@@ -24,12 +24,14 @@ bson = { features = ["chrono-0_4", "uuid-0_8"], version = "2.4" }
 chrono = "0.4"
 config = "0.13"
 glob = "0.3"
-serde = { features = ["derive"], version = "1" }
-serde_json = "1"
+serde.workspace = true
+serde_json.workspace = true
 strum = { features = ["derive"], version = "0.24" }
 url = "2.3"
 
-# wasm-bindgen = { features = ["serde-serialize"], optional = true, version = "0.2.83" }
-
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]
+
+[target.wasm32-unknown-unknown]
+
+[target.wasm32-wasi]
