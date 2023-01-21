@@ -36,7 +36,7 @@ jobs:
           rustup update
           rustup default ${{ matrix.toolchain }}
       - run: cargo build -F full --release -v --workspace
-      - run: cargo test --all --release -v
+      - run: cargo test --all -F full --release -v
   features:
     if: ${{ github.event.inputs.publish }}
     name: Publish (features)
