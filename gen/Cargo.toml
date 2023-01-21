@@ -1,4 +1,7 @@
 [package]
+categories = []
+description = "scsys-gen"
+keywords = []
 name = "scsys-gen"
 
 authors.workspace = true
