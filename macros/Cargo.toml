@@ -1,4 +1,7 @@
 [package]
+categories = []
+description = "scsys-macros"
+keywords = []
 name = "scsys-macros"
 
 authors.workspace = true

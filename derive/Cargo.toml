@@ -1,4 +1,7 @@
 [package]
+categories = []
+description = "scsys-derive implements a host of useful procedural macros for use throughout the ecosystem"
+keywords = []
 name = "scsys-derive"
 
 authors.workspace = true

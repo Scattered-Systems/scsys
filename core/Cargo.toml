@@ -1,4 +1,7 @@
 [package]
+categories = []
+description = "scsys-core implements several mission-critical primitives and utilities generalized for day-to-day use"
+keywords = []
 name = "scsys-core"
 
 authors.workspace = true

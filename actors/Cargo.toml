@@ -1,4 +1,7 @@
 [package]
+categories = []
+description = "scsys-actors"
+keywords = []
 name = "scsys-actors"
 
 authors.workspace = true
