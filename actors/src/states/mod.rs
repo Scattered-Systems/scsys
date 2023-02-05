@@ -7,7 +7,6 @@ pub use self::state::*;
 
 pub(crate) mod state;
 
-
 use crate::messages::Message;
 use std::sync::Arc;
 
@@ -40,6 +39,5 @@ pub trait StatefulExt<S: StatePack>: Stateful<S> {
     fn now() -> i64 {
         chrono::Utc::now().timestamp()
     }
-    fn update_state(&mut self, msg: Option<Message<Self::Data>>, state: S) -> &Self;
+    fn update(&mut self, msg: Option<Message<Self::Data>>, state: S);
 }
-
