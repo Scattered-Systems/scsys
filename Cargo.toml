@@ -26,7 +26,7 @@ keywords = ["blockchain", "primitives", "scsys"]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.41"
+version = "0.1.42"
 
 [workspace.dependencies]
 serde = { features = ["derive"], version = "1" }
