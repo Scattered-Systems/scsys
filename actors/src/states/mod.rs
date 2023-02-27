@@ -10,7 +10,8 @@ pub(crate) mod state;
 use crate::messages::Message;
 use std::sync::Arc;
 
-pub trait StatePack: Default + ToString {
+/// [StatePack] describes the possible states being wrapped by a [Stateful] structure.
+pub trait StatePack: Default + ToString + std::convert::From<i64> + std::convert::Into<i64> {
     fn by_ref(&self) -> &Self {
         self
     }
