@@ -5,23 +5,32 @@
         ... Summary ...
 */
 use serde::{Deserialize, Serialize};
-use strum::{EnumString, EnumVariantNames};
+use smart_default::SmartDefault;
+use strum::{Display, EnumString, EnumVariantNames};
 
 #[derive(
-    Clone, Debug, Deserialize, EnumString, EnumVariantNames, Eq, Hash, PartialEq, Serialize,
+    Clone,
+    Debug,
+    Deserialize,
+    Display,
+    EnumString,
+    EnumVariantNames,
+    Eq,
+    Hash,
+    Ord,
+    PartialEq,
+    PartialOrd,
+    Serialize,
+    SmartDefault,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum Error {
     Async,
-    Boxed,
+    #[default]
+    Custom(String),
     Connection,
+    ExtractionError,
     IO,
-    Default,
-    Generic(String),
 }
 
-impl Default for Error {
-    fn default() -> Self {
-        Self::Default
-    }
-}
+impl std::error::Error for Error {}

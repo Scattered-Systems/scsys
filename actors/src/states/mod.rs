@@ -11,7 +11,9 @@ use crate::messages::Message;
 use std::sync::Arc;
 
 /// [StatePack] describes the possible states being wrapped by a [Stateful] structure.
-pub trait StatePack: Default + ToString + std::convert::From<i64> + std::convert::Into<i64> {
+pub trait StatePack:
+    Default + ToString + std::convert::From<i64> + std::convert::Into<i64>
+{
     fn by_ref(&self) -> &Self {
         self
     }

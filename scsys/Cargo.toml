@@ -1,13 +1,12 @@
 [package]
-categories = []
-description = "scsys lays the foundation for the Scattered-Systems ecosystem, delivering critical primitives throughout"
-keywords = ["blockchain", "primitives", "scsys"]
-name = "scsys"
-
 authors.workspace = true
+categories.workspace = true
+description.workspace = true
 edition.workspace = true
 homepage.workspace = true
 license.workspace = true
+keywords.workspace = true
+name = "scsys"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
@@ -16,12 +15,10 @@ version.workspace = true
 default = [
     "actors",
     "core",
-    "gen",
 ]
 full = [
     "actors",
     "core",
-    "gen",
     "derive", 
     "macros", 
     "extras"
@@ -30,13 +27,11 @@ full = [
 wasm = [
     "scsys-actors/wasm",
     "scsys-core/wasm",
-    "scsys-gen/wasm"
 ]
 
 actors = ["scsys-actors/default"]
 core = ["scsys-core/default"]
 derive = ["scsys-derive"]
-gen = ["scsys-gen/default"]
 macros = ["scsys-macros"]
 
 extras = ["config"]
@@ -56,11 +51,10 @@ serde_json.workspace = true
 [dependencies]
 config = { optional = true, version = "0.13" }
 
-scsys-actors = { features = ["wasm"], optional = true, path = "../actors", version = "0.1.41" }
-scsys-core = { features = ["wasm"], optional = true, path = "../core", version = "0.1.41" }
-scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.41" }
-scsys-gen = { features = ["wasm"], optional = true, path = "../gen", version = "0.1.41" }
-scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.41" }
+scsys-actors = { features = ["wasm"], optional = true, path = "../actors", version = "0.1.42" }
+scsys-core = { features = ["wasm"], optional = true, path = "../core", version = "0.1.42" }
+scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.42" }
+scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.42" }
 
 [package.metadata.docs.rs]
 all-features = true

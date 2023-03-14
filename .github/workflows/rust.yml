@@ -5,10 +5,10 @@ env:
 
 on:
   pull_request:
-    branches: [ "main", "master", "prod*" ]
+    branches-ignore: [ "dev*" ]
     tags: [ "nightly*",  "v*.*.*" ]
   push:
-    branches: [ "main", "master", "prod*" ]
+    branches-ignore: [ "dev*" ]
     tags: [ "nightly*",  "v*.*.*" ]
   schedule:
     - cron: "30 9 * * *"
@@ -23,20 +23,24 @@ on:
 jobs:
   build:
     name: Build and Test
-    runs-on: ubuntu-latest
+    
     strategy:
       matrix:
+        platform: [ ubuntu-latest ]
         toolchain:
           - stable
           - nightly
+    runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
       - name: rustup
         run: |
           rustup update
           rustup default ${{ matrix.toolchain }}
-      - run: cargo build -F full --release -v --workspace
-      - run: cargo test --all -F full --release -v
+      - name: Build
+        run: cargo build -F full --release -v --workspace
+      - name: Test
+        run: cargo test --all -F full --release -v
   features:
     if: ${{ github.event.inputs.publish }}
     name: Publish (features)
@@ -47,7 +51,6 @@ jobs:
           - scsys-actors
           - scsys-core
           - scsys-derive
-          - scsys-gen
           - scsys-macros
     steps:
       - uses: actions/checkout@v3

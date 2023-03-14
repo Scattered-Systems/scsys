@@ -7,11 +7,11 @@ use crate::Result;
 use serde::{Deserialize, Serialize};
 use url::Url;
 
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct Link<T: std::string::ToString>(T);
+#[derive(Clone, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+pub struct Link<T: ToString>(T);
 
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct Uri(pub String);
+#[derive(Clone, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+pub struct Uri(String);
 
 impl Uri {
     pub fn new(data: String) -> Self {
@@ -20,5 +20,8 @@ impl Uri {
     pub fn parse(&self) -> Result<Url> {
         let url = Url::parse(self.0.as_str())?;
         Ok(url)
+    }
+    pub fn uri(&self) -> String {
+        self.0.clone()
     }
 }

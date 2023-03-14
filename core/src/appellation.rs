@@ -19,7 +19,7 @@ pub trait AppellationSpec {
     fn name(&self) -> &Self::Name;
 }
 
-#[derive(Clone, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+#[derive(Clone, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct Appellation<T = String> {
     pub id: T,
     pub key: T, // Key is meant for use with items like a CID from IPFS
