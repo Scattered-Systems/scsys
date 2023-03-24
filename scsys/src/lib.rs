@@ -4,27 +4,29 @@
     Description:
         ... Summary ...
 */
+pub use self::specs::*;
+
+pub(crate) mod specs;
+
 #[cfg(feature = "actors")]
 pub use scsys_actors as actors;
 #[cfg(feature = "core")]
-pub use scsys_core::*;
+pub use scsys_core as core;
 #[cfg(feature = "derive")]
 pub use scsys_derive::*;
-#[cfg(feature = "gen")]
-pub use scsys_gen as gen;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
 
 pub mod prelude {
+    pub use super::*;
+
     #[cfg(feature = "actors")]
     pub use super::actors::{
-        agents::*, catalysts::*, contexts::*, handlers::*, loggers::*, messages::*, networking::*,
-        providers::*, sessions::*, states::*,
+        agents::*, catalysts::*, contexts::*, handlers::*, loggers::*, messages::*, states::*,
     };
 
-    pub use super::*;
     #[cfg(feature = "core")]
-    pub use super::{errors::*, extract::*};
+    pub use super::core::{errors::*, extract::*};
     // Extras
     #[cfg(feature = "config")]
     pub use config;

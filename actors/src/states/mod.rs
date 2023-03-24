@@ -1,46 +1,34 @@
 /*
     Appellation: states <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
+    Description: ... summary ...
 */
+
 pub use self::state::*;
 
 pub(crate) mod state;
 
-use crate::messages::Message;
-use std::sync::Arc;
+/// [Stateful] describes a stateful object
+pub trait Stateful<S: StateSpec>: Clone {
+    /// [Stateful::state] is used to get the state of the object
+    fn state(&self) -> S;
+    /// [Stateful::update_state] is used to update the state of the object
+    fn update_state(&mut self, state: S);
+}
 
-/// [StatePack] describes the possible states being wrapped by a [Stateful] structure.
-pub trait StatePack:
-    Default + ToString + std::convert::From<i64> + std::convert::Into<i64>
+impl Stateful<i64> for i64 {
+    fn state(&self) -> i64 {
+        *self
+    }
+    fn update_state(&mut self, state: i64) {
+        *self = state;
+    }
+}
+
+/// [StateSpec] is used by [Stateful] to describe a specific state
+pub trait StateSpec:
+    Copy + Default + Eq + Ord + std::fmt::Display + std::ops::Add<Output = Self>
 {
-    fn by_ref(&self) -> &Self {
-        self
-    }
-    fn by_ref_mut(&mut self) -> &mut Self {
-        self
-    }
 }
 
-pub trait Stateful<S: StatePack>: Clone + Default {
-    type Data;
-    fn by_ref(&self) -> Self {
-        self.clone()
-    }
-    fn by_ref_mut(&mut self) -> Self {
-        self.clone()
-    }
-    fn by_arc(self: Arc<Self>) -> Arc<Self> {
-        self
-    }
-    fn message(self) -> Message<Self::Data>;
-    fn state(self) -> S;
-    fn timestamp(self) -> i64;
-}
-
-pub trait StatefulExt<S: StatePack>: Stateful<S> {
-    fn now() -> i64 {
-        chrono::Utc::now().timestamp()
-    }
-    fn update(&mut self, msg: Option<Message<Self::Data>>, state: S);
-}
+impl StateSpec for i64 {}
