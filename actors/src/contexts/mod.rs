@@ -3,41 +3,17 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-pub use self::{context::*, specs::*};
+pub use self::context::*;
 
 pub(crate) mod context;
 
-pub(crate) mod specs {
-    use serde::Serialize;
 
-    pub trait Configurable: Serialize {
-        type Settings;
+pub trait Configurable<Cnf> {
+    fn config(&self) -> &Cnf;
+    fn config_mut(&mut self) -> &mut Cnf;
+}
 
-        fn by_ref(&self) -> &Self {
-            self
-        }
-        fn by_mut_ref(&self) -> &Self {
-            self
-        }
-        fn settings(&self) -> &Self::Settings;
-    }
-
-    pub trait ConfigurableExt: Serialize {
-        fn build() -> Result<Self, config::ConfigError>
-        where
-            Self: Sized;
-    }
-
-    pub trait Contextual: ToString {
-        type Cnf: Configurable;
-        type Ctx;
-
-        fn by_ref(&self) -> &Self {
-            self
-        }
-        fn by_mut_ref(&self) -> &Self {
-            self
-        }
-        fn context(&self) -> &Self::Ctx;
-    }
+pub trait Contextual<Cnf, Ctx>: Configurable<Cnf> {
+    fn context(&self) -> &Ctx;
+    fn context_mut(&mut self) -> &mut Ctx;
 }

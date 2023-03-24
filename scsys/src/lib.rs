@@ -22,7 +22,7 @@ pub mod prelude {
 
     #[cfg(feature = "actors")]
     pub use super::actors::{
-        agents::*, catalysts::*, contexts::*, handlers::*, loggers::*, messages::*, states::*,
+        agents::*, catalysts::*, contexts::*, loggers::*, messages::*, states::*,
     };
 
     #[cfg(feature = "core")]

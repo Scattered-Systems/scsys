@@ -50,19 +50,19 @@ impl From<String> for Error {
 
 impl From<std::io::Error> for Error {
     fn from(error: std::io::Error) -> Self {
-        Error::IOError(error.into())
+        Error::IOError(error.to_string())
     }
 }
 
 impl From<Box<dyn std::error::Error>> for Error {
     fn from(error: Box<dyn std::error::Error>) -> Self {
-        Error::Error(error.into())
+        Error::Error(error.to_string())
     }
 }
 
 impl From<Box<dyn std::error::Error + Send + Sync>> for Error {
     fn from(error: Box<dyn std::error::Error + Send + Sync>) -> Self {
-        Error::AsyncError(error.into())
+        Error::AsyncError(error.to_string())
     }
 }
 
