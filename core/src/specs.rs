@@ -4,22 +4,16 @@
     Description: ... Summary ...
 */
 
-pub trait Addressable<Addr> {
-    fn address(self) -> Addr;
-}
-/// Trait for signaling a structure with a dedicated build stage
-pub trait Buildable {
-    type Error;
-    fn build() -> Result<Self, Self::Error>
-    where
-        Self: Sized;
+/// Interface for identifiable data-structures
+pub trait Identifiable<Id> {
+    fn id(&self) -> &Id;
 }
 
-/// Quickly derive elligible naming schematics for the desired structure
-pub trait Named {
+/// Interface for nameable data-structures
+pub trait Nameable {
     fn name(&self) -> String;
     fn slug(&self) -> String {
-        self.name().to_lowercase()
+        self.name().to_lowercase().replace(" ", "-")
     }
 }
 
