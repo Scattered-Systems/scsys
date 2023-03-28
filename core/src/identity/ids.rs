@@ -3,7 +3,8 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use crate::{generate_random_number, generate_random_string, BsonOid};
+use crate::{generate_random_number, generate_random_string};
+use bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 use smart_default::SmartDefault;
 use strum::{Display, EnumString, EnumVariantNames};
@@ -27,14 +28,16 @@ use strum::{Display, EnumString, EnumVariantNames};
 pub enum Id {
     Int(i64),
     #[default]
-    Object(BsonOid),
+    Object(ObjectId),
     String(String),
-    Null,
 }
 
 impl Id {
     pub fn gen_rint() -> Self {
         Self::Int(generate_random_number())
+    }
+    pub fn gen_robj() -> Self {
+        Self::Object(ObjectId::new())
     }
     //
     pub fn gen_rstr(len: Option<usize>) -> Self {
@@ -48,8 +51,8 @@ impl From<i64> for Id {
     }
 }
 
-impl From<BsonOid> for Id {
-    fn from(data: BsonOid) -> Self {
+impl From<ObjectId> for Id {
+    fn from(data: ObjectId) -> Self {
         Self::Object(data)
     }
 }

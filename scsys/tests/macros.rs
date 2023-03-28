@@ -4,13 +4,11 @@
     Description:
         ... Summary ...
 */
-
 #[cfg(test)]
+#[cfg(feature = "macros")]
 mod tests {
-    #[cfg(feature = "macros")]
     use scsys::extend_path;
 
-    #[cfg(feature = "macros")]
     #[test]
     fn test_extend_path() {
         let a = extend_path!["/tmp"; ["daemon.out", "daemon.err", "pid.test"]];

@@ -3,23 +3,35 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description:  ... Summary ...
 */
-#[cfg(feature = "derive")]
+
 #[cfg(test)]
+#[cfg(feature = "derive")]
 mod tests {
-    use scsys::{SerdeDisplay, Timestamp};
+    use scsys::{Named, SerdeDisplay, Timestamp};
     use serde::{Deserialize, Serialize};
 
-    #[derive(Default, SerdeDisplay, Deserialize, Serialize)]
+    #[derive(
+        Clone,
+        Debug,
+        Default,
+        Deserialize,
+        Eq,
+        Hash,
+        Named,
+        Ord,
+        PartialEq,
+        PartialOrd,
+        SerdeDisplay,
+        Serialize,
+    )]
     pub struct TestStruct {
         timestamp: Timestamp,
     }
 
-    #[derive(Default)]
-    struct Pancakes;
-
     #[test]
-    fn test_hashable_derive() {
+    fn test_serde_display() {
         let a = TestStruct::default();
+        assert_eq!(a.name(), "TestStruct");
         let _string = a.to_string();
         assert!(true)
     }

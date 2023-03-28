@@ -31,5 +31,3 @@ impl<Cnf> Contextual<Cnf, Self> for Context<Cnf> {
         self
     }
 }
-
-

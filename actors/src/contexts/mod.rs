@@ -7,7 +7,6 @@ pub use self::context::*;
 
 pub(crate) mod context;
 
-
 pub trait Configurable<Cnf> {
     fn config(&self) -> &Cnf;
     fn config_mut(&mut self) -> &mut Cnf;

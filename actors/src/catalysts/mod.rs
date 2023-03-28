@@ -4,41 +4,6 @@
     Description:
         Catalysts address transformations of state, type, or otherwise.
 */
-pub use self::{catalyst::*, specs::*};
+pub use self::catalyst::*;
 
-pub(crate) mod catalyst;
-
-pub(crate) mod specs {
-    use std::convert::Into;
-
-    pub trait Transformable<T>: Into<T> {}
-
-    pub trait Converter<S, T>
-    where
-        S: Clone + Transformable<T>,
-    {
-        fn data(&self) -> &[S];
-        fn catalyst(&mut self) -> Vec<T>
-        where
-            S: Iterator,
-        {
-            self.data()
-                .to_owned()
-                .iter()
-                .cloned()
-                .map(|i| i.into())
-                .collect::<Vec<_>>()
-        }
-    }
-
-    pub trait Transformation<S> {
-        fn data(&self) -> Vec<S>;
-        fn transform<T>(
-            &self,
-            catalyst: fn(&S) -> T,
-        ) -> Result<Vec<T>, Box<dyn std::error::Error>> {
-            let res = self.data().iter().map(catalyst).collect::<Vec<_>>();
-            Ok(res)
-        }
-    }
-}
+mod catalyst;

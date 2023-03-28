@@ -8,10 +8,12 @@ keywords = ["blockchain", "primitives", "scsys"]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.1.42"
+version = "0.2.0"
 
 [workspace.dependencies]
+anyhow = "1"
 chrono = "0.4"
+glob = "0.3"
 serde = { features = ["derive"], version = "1" }
 serde_json = "1"
 smart-default = "0.6"

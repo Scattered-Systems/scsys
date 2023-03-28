@@ -3,18 +3,43 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description:
         An appellation is defined to be a name or title given to a person or thing.
-        In this context, an appellation is a name or title given to a computational object.
-        Appellation's are mathematically similar to a basis from linear-algebra; allowing all variations of the objects to be
-        simply represented via a single identifier. This is critical for the efficient storage and retrieval of data from a multi-layered
-        peer-to-peer network. For instance, when a user requests a specific piece of data, the request is first processed locally, searching
-        for the data on the users personal network. If the data is not found, the request is then forwarded to the public layer of the network before
-        finally skimming a type of data-marketplace for the data.
+        For our purposes, an appellation describes a novel naming schematic used to accelaerate the process of identifying persistent objects hosted on a multi-layered peer-to-peer network.
 
-        An appellation can best best be thought of as a three-tuple of elements: (id, name, title).
+        An appellation is composed of three parts: a classifier, an identifier, and a name.
+            The class is a classifier that describes the type of object being identified.
+            The id is a unique identifier that distinguishes the object from all other objects of the same class.
+            The name is a human-readable string that is used to identify the object in a human-readable context.
 */
+use crate::{Classifier, Identifier};
 
-pub trait Appellation<I, J, K> {
-    fn id(&self) -> &I;
-    fn name(&self) -> &J;
-    fn title(&self) -> &K;
+pub trait Appellation<Cls, Id>
+where
+    Cls: Classifier,
+    Id: Identifier,
+{
+    fn class(&self) -> &Cls;
+    fn id(&self) -> &Id;
+    fn name(&self) -> String;
+    fn slug(&self) -> String {
+        self.name().to_lowercase().replace(" ", "-")
+    }
+}
+
+impl<Cls, Id, T> Appellation<Cls, Id> for (Cls, Id, T)
+where
+    Cls: Classifier,
+    Id: Identifier,
+    T: ToString,
+{
+    fn class(&self) -> &Cls {
+        &self.0
+    }
+
+    fn id(&self) -> &Id {
+        &self.1
+    }
+
+    fn name(&self) -> String {
+        self.2.to_string()
+    }
 }

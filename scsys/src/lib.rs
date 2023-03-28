@@ -4,9 +4,6 @@
     Description:
         ... Summary ...
 */
-pub use self::specs::*;
-
-pub(crate) mod specs;
 
 #[cfg(feature = "actors")]
 pub use scsys_actors as actors;
@@ -21,9 +18,7 @@ pub mod prelude {
     pub use super::*;
 
     #[cfg(feature = "actors")]
-    pub use super::actors::{
-        agents::*, catalysts::*, contexts::*, loggers::*, messages::*, states::*,
-    };
+    pub use super::actors::{catalysts::*, contexts::*, loggers::*, messages::*, states::*};
 
     #[cfg(feature = "core")]
     pub use super::core::{errors::*, extract::*};

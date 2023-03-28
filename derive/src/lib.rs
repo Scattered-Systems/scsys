@@ -11,6 +11,14 @@ extern crate syn;
 use proc_macro::TokenStream;
 use syn::{parse_macro_input, DeriveInput};
 
+/// Interface for nameable data-structures
+trait Nameable {
+    fn name(&self) -> String;
+    fn slug(&self) -> String {
+        self.name().to_lowercase().replace(" ", "-")
+    }
+}
+
 #[proc_macro_derive(Named, attributes(Alternative))]
 pub fn named(input: TokenStream) -> TokenStream {
     // Parse the inputs into the proper struct
@@ -25,8 +33,8 @@ pub fn named(input: TokenStream) -> TokenStream {
 pub(crate) fn impl_named(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
     let name = &ast.ident;
     let res = quote::quote! {
-        impl Named for #name {
-            fn name() -> String {
+        impl Nameable for #name {
+            fn name(&self) -> String {
                 format!("{}", stringify!(#name))
             }
         }

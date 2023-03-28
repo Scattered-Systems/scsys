@@ -47,10 +47,10 @@ test = true
 [dependencies]
 config = { optional = true, version = "0.13" }
 
-scsys-actors = { features = ["wasm"], optional = true, path = "../actors", version = "0.1.42" }
-scsys-core = { features = ["wasm"], optional = true, path = "../core", version = "0.1.42" }
-scsys-derive = { features = [], optional = true, path = "../derive", version = "0.1.42" }
-scsys-macros = { features = [], optional = true, path = "../macros", version = "0.1.42" }
+scsys-actors = { features = ["wasm"], optional = true, path = "../actors", version = "0.2.0" }
+scsys-core = { features = ["wasm"], optional = true, path = "../core", version = "0.2.0" }
+scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0" }
+scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0" }
 
 [dev-dependencies]
 serde.workspace = true

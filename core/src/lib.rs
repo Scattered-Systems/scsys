@@ -4,13 +4,14 @@
     Description: ... Summary ...
 */
 #[doc(inline)]
-pub use self::{ids::*, primitives::*, specs::*, timestamp::*, utils::*};
+pub use self::{classify::*, identity::*, primitives::*, specs::*, timestamp::*, utils::*};
 
 pub mod appellation;
 pub mod errors;
 pub mod extract;
 
-pub(crate) mod ids;
+mod classify;
+mod identity;
 pub(crate) mod primitives;
 pub(crate) mod specs;
 pub(crate) mod timestamp;
