@@ -34,9 +34,10 @@ core = ["scsys-core/default"]
 derive = ["scsys-derive"]
 macros = ["scsys-macros"]
 
-extras = ["config"]
+extras = [
 
-config = ["config/default"]
+]
+
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -45,7 +46,7 @@ test = true
 [build-dependencies]
 
 [dependencies]
-config = { optional = true, version = "0.13" }
+
 
 scsys-actors = { features = ["wasm"], optional = true, path = "../actors", version = "0.2.0" }
 scsys-core = { features = ["wasm"], optional = true, path = "../core", version = "0.2.0" }

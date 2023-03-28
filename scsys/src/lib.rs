@@ -21,8 +21,7 @@ pub mod prelude {
     pub use super::actors::{catalysts::*, contexts::*, loggers::*, messages::*, states::*};
 
     #[cfg(feature = "core")]
+    pub use super::core::*;
+    #[cfg(feature = "core")]
     pub use super::core::{errors::*, extract::*};
-    // Extras
-    #[cfg(feature = "config")]
-    pub use config;
 }

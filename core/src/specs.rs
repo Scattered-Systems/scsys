@@ -32,6 +32,14 @@ pub trait Justify<T> {
     }
 }
 
+/// Interface for nameable data-structures
+pub trait Name {
+    fn name(&self) -> String;
+    fn slug(&self) -> String {
+        self.name().to_lowercase().replace(" ", "-")
+    }
+}
+
 /// Interface for time-related data-structures
 pub trait Temporal {
     fn timestamp(&self) -> i64;

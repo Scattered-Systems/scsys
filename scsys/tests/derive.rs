@@ -7,7 +7,7 @@
 #[cfg(test)]
 #[cfg(feature = "derive")]
 mod tests {
-    use scsys::{Named, SerdeDisplay, Timestamp};
+    use scsys::prelude::{Name, SerdeDisplay, Timestamp};
     use serde::{Deserialize, Serialize};
 
     #[derive(
@@ -17,7 +17,7 @@ mod tests {
         Deserialize,
         Eq,
         Hash,
-        Named,
+        Name,
         Ord,
         PartialEq,
         PartialOrd,
