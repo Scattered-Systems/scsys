@@ -15,7 +15,6 @@ mod tests {
     #[test]
     fn test_error_default() {
         let actual = Error::default();
-        let expected = Error::Default;
-        assert_eq!(actual, expected)
+        assert_eq!(actual, Error::Custom(Default::default()))
     }
 }

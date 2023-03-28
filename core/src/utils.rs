@@ -3,21 +3,21 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... Summary ...
 */
-use crate::{BoxResult, ConfigFile, ConfigFileVec, DEFAULT_IGNORE_CHARS};
-use chrono::{DateTime, TimeZone, Utc};
-use std::io::{self, BufRead, BufReader};
-use std::{fs::File, str::FromStr, string::ToString};
+use crate::{BoxResult, ConfigFile, ConfigFileVec, IOResult, DEFAULT_IGNORE_CHARS};
+use rand::{
+    distributions::{Alphanumeric, Standard},
+    prelude::Distribution,
+    Rng,
+};
+use std::io::{BufRead, BufReader};
+use std::{
+    fs::File,
+    path::{Path, PathBuf},
+    str::FromStr,
+};
 
-/// Function wrapper for [Utc]; which results in a [DateTime] of timezone [Utc]
-pub fn chrono_datetime_now() -> DateTime<Utc> {
-    Utc::now()
-}
-///
-pub fn chrono_into_bson<T: TimeZone>(data: DateTime<T>) -> bson::DateTime {
-    bson::DateTime::from_chrono(data)
-}
 /// A generic function wrapper extending glob::glob
-pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> BoxResult<Vec<T>> {
+pub fn collect_files_as<T>(f: &dyn Fn(PathBuf) -> T, pat: &str) -> BoxResult<Vec<T>> {
     let mut files = Vec::<T>::new();
     for r in glob::glob(pat)? {
         files.push(f(r?))
@@ -47,10 +47,10 @@ where
         .collect()
 }
 /// This function converts the file found at path (fp) into a Vec<String>
-pub fn file_to_vec(fp: String) -> io::Result<Vec<String>> {
+pub fn file_to_vec(fp: String) -> IOResult<Vec<String>> {
     let file_in = File::open(fp)?;
     let file_reader = BufReader::new(file_in);
-    Ok(file_reader.lines().filter_map(io::Result::ok).collect())
+    Ok(file_reader.lines().filter_map(IOResult::ok).collect())
 }
 /// Remove the first and last charecters of a string
 pub fn fnl_remove<T: Clone + ToString>(data: T) -> String {
@@ -60,17 +60,33 @@ pub fn fnl_remove<T: Clone + ToString>(data: T) -> String {
     chars.next_back();
     chars.as_str().to_string()
 }
+///
+pub fn generate_random_number<T>() -> T
+where
+    Standard: Distribution<T>,
+{
+    let mut rnd = rand::thread_rng();
+    rnd.gen::<T>()
+}
+///
+pub fn generate_random_string(len: usize) -> String {
+    rand::thread_rng()
+        .sample_iter(&Alphanumeric)
+        .take(len)
+        .map(char::from)
+        .collect()
+}
 /// Simple function wrapper evaluating the claim that the given information is of type f64
 pub fn is_float<T: ToString>(data: &T) -> bool {
     f64::from_str(&data.to_string()).is_ok()
 }
-
+/// [package_name] is a simple functional wrapper for [env("CARGO_PKG_NAME")]
 pub fn package_name() -> String {
     env!("CARGO_PKG_NAME").to_string()
 }
 /// Fetch the project root unless specified otherwise with a CARGO_MANIFEST_DIR env variable
-pub fn project_root() -> std::path::PathBuf {
-    std::path::Path::new(&env!("CARGO_MANIFEST_DIR"))
+pub fn project_root() -> PathBuf {
+    Path::new(&env!("CARGO_MANIFEST_DIR"))
         .ancestors()
         .nth(1)
         .unwrap()
@@ -78,7 +94,7 @@ pub fn project_root() -> std::path::PathBuf {
 }
 /// Attempts to collect configuration files, following the given pattern, into a ConfigFileVec
 pub fn try_collect_config_files(pattern: &str, required: bool) -> BoxResult<ConfigFileVec> {
-    let f = |p: std::path::PathBuf| ConfigFile::from(p).required(required);
+    let f = |p: PathBuf| ConfigFile::from(p).required(required);
     collect_files_as(&f, pattern)
 }
 /// This function attempts to convert the given input into a [std::net::SocketAddr]
@@ -86,14 +102,6 @@ pub fn try_str_to_socketaddr(
     addr: impl ToString,
 ) -> Result<std::net::SocketAddr, std::net::AddrParseError> {
     addr.to_string().parse()
-}
-///
-pub fn ts_rfc3339() -> String {
-    Utc::now().to_rfc3339()
-}
-///
-pub fn timestamp() -> i64 {
-    Utc::now().timestamp()
 }
 
 #[cfg(test)]

@@ -65,7 +65,7 @@ pub(crate) mod types {
     pub type Locked<T> = Arc<Mutex<T>>;
     /// Type alias for [std::io::Result]
     pub type IOResult<T = ()> = std::io::Result<T>;
-    
+
     /// Type alias for a stateful hash map
     pub type StateMap<Hs, V = (usize, usize)> = HashMap<Hs, V>;
 }

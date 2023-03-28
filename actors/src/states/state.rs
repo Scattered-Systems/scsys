@@ -6,89 +6,118 @@
 use super::{StatePack, Stateful, StatefulExt};
 use crate::messages::Message;
 
+use chrono::Utc;
 use decanter::prelude::{Hash, Hashable, H256};
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
+use strum::{Display, EnumString, EnumVariantNames};
 
-#[derive(Clone, Copy, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub enum States {
-    #[default]
-    Error = 0,
-    Idle = 1,
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub struct State<S: Clone + StatePack = States, T: Clone + Default + Serialize = H256> {
+    msg: Message<T>,
+    state: S,
+    ts: i64,
 }
 
-impl StatePack for States {}
-
-/// Implement the standard structure of a state
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct State<S: StatePack = States, T: Default = H256> {
-    pub events: Vec<String>,
-    pub message: Message<T>,
-    pub metadata: Value,
-    pub state: S,
-    pub timestamp: i64,
-}
-
-impl<S: StatePack, T: Default> State<S, T> {
-    pub fn new(events: Option<Vec<String>>, message: Option<Message<T>>, state: Option<S>) -> Self {
+impl<S: Clone + StatePack, T: Clone + Default + Serialize> State<S, T> {
+    pub fn new(msg: Option<Message<T>>, state: S) -> Self {
         Self {
-            events: events.unwrap_or_default(),
-            message: message.unwrap_or_default(),
-            metadata: Default::default(),
-            state: state.unwrap_or_default(),
-            timestamp: chrono::Utc::now().timestamp(),
+            msg: msg.unwrap_or_default(),
+            state,
+            ts: Utc::now().timestamp(),
         }
     }
 }
 
-impl<S: Clone + StatePack, T: Clone + Default> Stateful<S> for State<S, T> {
+impl<S: Clone + StatePack, T: Clone + Default + Serialize> std::fmt::Display for State<S, T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.state.to_string())
+    }
+}
+
+impl<S: Clone + StatePack, T: Clone + Default + Serialize> Stateful<S> for State<S, T> {
     type Data = T;
 
     fn message(self) -> Message<Self::Data> {
-        self.message
-    }
-
-    fn timestamp(self) -> i64 {
-        self.timestamp
+        self.msg
     }
 
     fn state(self) -> S {
         self.state
     }
+
+    fn timestamp(self) -> i64 {
+        self.ts
+    }
 }
-impl<S: Clone + StatePack, T: Clone + Default> StatefulExt<S> for State<S, T> {
-    fn update_state(&mut self, msg: Option<Message<Self::Data>>, state: S) -> &Self {
-        self.message = msg.unwrap_or_default();
+impl<S: Clone + StatePack, T: Clone + Default + Serialize> StatefulExt<S> for State<S, T> {
+    fn update(&mut self, msg: Option<Message<Self::Data>>, state: S) {
+        if let Some(m) = msg {
+            self.msg = m;
+        }
         self.state = state;
-        self.timestamp = Self::now();
-        self
-    }
-}
-impl<S: StatePack, T: Default> Default for State<S, T> {
-    fn default() -> Self {
-        Self::new(None, None, None)
+        self.ts = chrono::Utc::now().timestamp();
     }
 }
 
-impl<S: StatePack, T: Default> From<T> for State<S, T> {
-    fn from(data: T) -> Self {
-        Self::new(None, Some(Message::from(data)), None)
+impl<S: Clone + StatePack, T: Clone + Default + Serialize> From<&S> for State<S, T> {
+    fn from(d: &S) -> Self {
+        Self::new(None, d.clone())
     }
 }
 
-impl std::fmt::Display for States {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string(&self).unwrap())
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Deserialize,
+    Display,
+    EnumString,
+    EnumVariantNames,
+    Eq,
+    Hash,
+    Ord,
+    PartialEq,
+    PartialOrd,
+    Serialize,
+)]
+#[strum(serialize_all = "snake_case")]
+pub enum States {
+    #[default]
+    Valid = 0,
+    Invalid = 1,
+}
+
+impl States {
+    pub fn invalid() -> Self {
+        Self::Invalid
+    }
+    pub fn valid() -> Self {
+        Self::Valid
     }
 }
 
-impl<S: StatePack, T: Default> std::fmt::Display for State<S, T>
-where
-    S: Serialize,
-    T: Serialize,
-{
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string(&self).unwrap())
+impl StatePack for States {}
+
+impl From<usize> for States {
+    fn from(d: usize) -> Self {
+        Self::from(d as i64)
+    }
+}
+
+impl From<i64> for States {
+    fn from(d: i64) -> Self {
+        match d {
+            0 => States::invalid(),
+            1 => States::valid(),
+            _ => States::invalid(),
+        }
+    }
+}
+
+impl From<States> for i64 {
+    fn from(d: States) -> i64 {
+        d as i64
     }
 }
 
@@ -96,26 +125,15 @@ where
 mod tests {
     use super::*;
 
-    #[derive(Clone, Debug, Default, Deserialize, Eq, PartialEq, Serialize)]
-    enum States {
-        #[default]
-        A = 0,
-        B = 1,
-    }
-
-    impl StatePack for States {}
-
-    impl std::fmt::Display for States {
-        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-            write!(f, "{}", serde_json::to_string(&self).unwrap())
-        }
-    }
-
     #[test]
     fn test_default_state() {
-        let a = State::<States, serde_json::Value>::default();
+        let mut a = State::<States, String>::default();
         let b = a.clone();
+        assert_eq!(a.clone().state(), States::valid());
 
-        assert_eq!(&a, &b);
+        a.update(None, States::invalid());
+
+        assert_eq!(a.clone().state(), States::invalid());
+        assert_ne!(b.timestamp(), a.timestamp())
     }
 }

@@ -21,8 +21,7 @@ pub mod prelude {
         agents::*, catalysts::*, contexts::*, handlers::*, loggers::*, messages::*, networking::*,
         providers::*, sessions::*, states::*,
     };
-    #[cfg(feature = "gen")]
-    pub use super::gen::*;
+
     pub use super::*;
     #[cfg(feature = "core")]
     pub use super::{errors::*, extract::*};

@@ -8,12 +8,6 @@ pub use self::{extractor::*, files::*};
 mod extractor;
 mod files;
 
-pub trait Extraction<S: ToString> {
-    type Res: std::str::FromStr + ToString;
-
-    fn extract(bp: char, data: &S, exclude: Option<&[char]>) -> Vec<Self::Res>;
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

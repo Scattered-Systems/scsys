@@ -2,10 +2,10 @@ name: Clippy
 
 on:
   pull_request:
-    branches: [ "main", "master", "prod*" ]
+    branches-ignore: [ "dev*" ]
     tags: [ "nightly*",  "v*.*.*" ]
   push:
-    branches: [ "main", "master", "prod*" ]
+    branches-ignore: [ "dev*" ]
     tags: [ "nightly*",  "v*.*.*" ]
   schedule:
     - cron: "30 9 * * *"
