@@ -8,6 +8,14 @@ pub use self::state::*;
 
 pub(crate) mod state;
 
+use std::sync::{Arc, Mutex};
+
+/// [AsyncStateful] describes an async stateful object
+pub trait AsyncStateful<S: StateSpec>: Clone {
+    fn state(&self) -> Arc<Mutex<S>>;
+    fn update_state(&mut self, state: Arc<Mutex<S>>);
+}
+
 /// [Stateful] describes a stateful object
 pub trait Stateful<S: StateSpec>: Clone {
     /// [Stateful::state] is used to get the state of the object
