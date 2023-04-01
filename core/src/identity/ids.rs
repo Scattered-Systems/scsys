@@ -43,6 +43,13 @@ impl Id {
     pub fn gen_rstr(len: Option<usize>) -> Self {
         Self::String(generate_random_string(len.unwrap_or(12)))
     }
+    pub fn id_as_string(&self) -> String {
+        match self {
+            Id::Int(data) => data.to_string(),
+            Id::Object(data) => data.to_hex(),
+            Id::String(data) => data.clone(),
+        }
+    }
 }
 
 impl From<i64> for Id {
@@ -62,6 +69,8 @@ impl From<String> for Id {
         Self::String(data)
     }
 }
+
+
 
 #[cfg(test)]
 mod tests {

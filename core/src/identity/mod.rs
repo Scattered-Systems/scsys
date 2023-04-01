@@ -12,13 +12,17 @@ use bson::oid::ObjectId;
 
 pub type BoxedId = Box<dyn Identifier>;
 
+pub struct Identity {
+    id: BoxedId,
+}
+
 /// Interface for identifiable data-structures
 pub trait Identifiable<Id: Identifier> {
     fn id(&self) -> &Id;
 }
 
 /// Interface for identifier data-structures
-pub trait Identifier {}
+pub trait Identifier: ToString {}
 
 impl Identifier for i8 {}
 

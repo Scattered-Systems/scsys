@@ -31,7 +31,7 @@ config = "0.13"
 getrandom = { features = ["js"], version = "0.2" }
 glob.workspace = true
 predicates = "2.1"
-rand = "0.8.5"
+rand = "0.8"
 serde.workspace = true
 serde_json.workspace = true
 smart-default.workspace = true

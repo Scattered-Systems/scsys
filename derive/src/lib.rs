@@ -45,7 +45,7 @@ pub fn serde_display(input: TokenStream) -> TokenStream {
     gen.into()
 }
 
-pub(crate) fn impl_serde_display(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+fn impl_serde_display(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
     let name = &ast.ident;
     let res = quote::quote! {
         impl std::fmt::Display for #name {

@@ -25,6 +25,32 @@ where
     }
 }
 
+pub trait FromAppellation<Cls, Id>
+where
+    Cls: Classifier,
+    Id: Identifier,
+{
+    fn from_appellation(appellation: impl Appellation<Cls, Id>) -> Self;
+}
+
+pub trait TryFromAppellation<Cls, Id>
+where
+    Cls: Classifier,
+    Id: Identifier,
+    Self: Sized,
+{
+    type Error;
+    fn try_from_appellation(appellation: impl Appellation<Cls, Id>) -> Result<Self, Self::Error>;
+}
+
+pub trait IntoAppellation<Cls, Id>
+where
+    Cls: Classifier,
+    Id: Identifier,
+{
+    fn into_appellation(self) -> dyn Appellation<Cls, Id>;
+}
+
 impl<Cls, Id, T> Appellation<Cls, Id> for (Cls, Id, T)
 where
     Cls: Classifier,

@@ -12,7 +12,7 @@ pub mod extract;
 
 mod classify;
 mod identity;
-pub(crate) mod primitives;
-pub(crate) mod specs;
-pub(crate) mod timestamp;
-pub(crate) mod utils;
+mod primitives;
+mod specs;
+mod timestamp;
+mod utils;
