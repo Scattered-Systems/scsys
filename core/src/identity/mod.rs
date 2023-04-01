@@ -12,10 +12,6 @@ use bson::oid::ObjectId;
 
 pub type BoxedId = Box<dyn Identifier>;
 
-pub struct Identity {
-    id: BoxedId,
-}
-
 /// Interface for identifiable data-structures
 pub trait Identifiable<Id: Identifier> {
     fn id(&self) -> &Id;
