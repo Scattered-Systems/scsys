@@ -4,12 +4,10 @@
     Description:
         ... Summary ...
 */
-pub use self::{logger::Logger, utils::*};
+pub use self::logger::*;
 
 mod logger;
 
 pub trait Loggable {
     fn level(&self) -> String;
 }
-
-pub(crate) mod utils {}

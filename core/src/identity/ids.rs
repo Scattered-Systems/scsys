@@ -70,8 +70,6 @@ impl From<String> for Id {
     }
 }
 
-
-
 #[cfg(test)]
 mod tests {
     use super::*;

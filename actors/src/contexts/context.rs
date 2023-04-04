@@ -4,7 +4,6 @@
     Description: ... Summary ...
 */
 use super::{Configurable, Contextual};
-use decanter::prelude::{hasher, Hashable};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]

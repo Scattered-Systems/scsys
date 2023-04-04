@@ -4,7 +4,6 @@
     Description: ... Summary ...
 */
 use crate::{messages::Message, Direction};
-use decanter::{crypto::Hashable, Hash};
 use serde::{Deserialize, Serialize};
 
 pub struct Catalyzer {

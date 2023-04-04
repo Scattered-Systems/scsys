@@ -4,7 +4,7 @@
     Description: ... summary ...
 */
 use super::StateSpec;
-use decanter::prelude::{hasher, Hashable, H256};
+use decanter::prelude::Hashable;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString, EnumVariantNames};
 
@@ -19,6 +19,7 @@ use strum::{Display, EnumString, EnumVariantNames};
     EnumVariantNames,
     Eq,
     Hash,
+    Hashable,
     Ord,
     PartialEq,
     PartialOrd,
@@ -38,12 +39,6 @@ impl State {
     }
     pub fn valid() -> Self {
         Self::Valid
-    }
-}
-
-impl Hashable for State {
-    fn hash(&self) -> H256 {
-        hasher(self).into()
     }
 }
 
