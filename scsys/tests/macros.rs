@@ -7,7 +7,7 @@
 #[cfg(test)]
 #[cfg(feature = "macros")]
 mod tests {
-    use scsys::extend_path;
+    use scsys::{extend_path, shared};
 
     #[test]
     fn test_extend_path() {
@@ -15,5 +15,11 @@ mod tests {
         let b = vec!["/tmp/daemon.out", "/tmp/daemon.err", "/tmp/pid.test"];
 
         assert_eq!(a, b)
+    }
+
+    #[test]
+    fn test_shared() {
+        let a = shared!(String::from("Hello, World!"));
+        assert!(a.lock().is_ok());
     }
 }

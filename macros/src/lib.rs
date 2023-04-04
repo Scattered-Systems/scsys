@@ -6,12 +6,19 @@
 */
 pub use self::utils::*;
 
-pub(crate) mod utils;
+mod utils;
+
+#[macro_export]
+macro_rules! shared {
+    ($arg:expr) => {
+        std::sync::Arc::new(std::sync::Mutex::new($arg))
+    };
+}
 
 #[macro_export]
 macro_rules! create_method {
-    ($vis:vis $name:ident) => {
-        $vis fn $name(&self) {}
+    ($vis:vis $name:ident, $arg:ident, $argty: ty) => {
+        $vis fn $name($arg: $argty) {}
     };
 }
 
