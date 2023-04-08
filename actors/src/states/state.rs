@@ -37,9 +37,19 @@ impl State {
     pub fn invalid() -> Self {
         Self::Invalid
     }
+    pub fn invalidate(&mut self) {
+        *self = Self::Invalid;
+    }
+    pub fn is_valid(&self) -> bool {
+        *self == Self::Valid
+    }
     pub fn valid() -> Self {
         Self::Valid
     }
+    pub fn validate(&mut self) {
+        *self = Self::Valid;
+    }
+    
 }
 
 impl StateSpec for State {}
