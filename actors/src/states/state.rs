@@ -25,15 +25,24 @@ use strum::{Display, EnumString, EnumVariantNames};
     PartialOrd,
     Serialize,
 )]
-#[repr(i64)]
+#[repr(u8)]
 #[strum(serialize_all = "snake_case")]
-pub enum State {
+pub enum States {
     #[default]
     Valid = 0,
     Invalid = 1,
 }
 
-impl State {
+impl States {
+    pub fn all() -> Vec<Self> {
+        vec![Self::Invalid, Self::Valid]
+    }
+    pub fn others(&self) -> Vec<Self> {
+        match self {
+            Self::Invalid => vec![Self::Valid],
+            Self::Valid => vec![Self::Invalid],
+        }
+    }
     pub fn invalid() -> Self {
         Self::Invalid
     }
@@ -52,12 +61,12 @@ impl State {
     
 }
 
-impl StateSpec for State {}
+impl StateSpec for States {}
 
-impl std::ops::Add for State {
-    type Output = State;
+impl std::ops::Mul for States {
+    type Output = States;
 
-    fn add(self, rhs: Self) -> Self::Output {
+    fn mul(self, rhs: Self) -> Self::Output {
         match self {
             Self::Invalid => match rhs {
                 Self::Invalid => Self::Invalid,
@@ -71,29 +80,29 @@ impl std::ops::Add for State {
     }
 }
 
-impl std::ops::AddAssign for State {
-    fn add_assign(&mut self, rhs: Self) {
-        *self = *self + rhs;
+impl std::ops::MulAssign for States {
+    fn mul_assign(&mut self, rhs: Self) {
+        *self = *self * rhs;
     }
 }
 
-impl From<usize> for State {
+impl From<usize> for States {
     fn from(d: usize) -> Self {
         Self::from(d as i64)
     }
 }
 
-impl From<i64> for State {
+impl From<i64> for States {
     fn from(d: i64) -> Self {
-        match d.abs() {
-            0 => State::valid(),
-            _ => State::invalid(),
+        match d.abs() % 2 {
+            0 => States::valid(),
+            _ => States::invalid(),
         }
     }
 }
 
-impl From<State> for i64 {
-    fn from(d: State) -> i64 {
+impl From<States> for i64 {
+    fn from(d: States) -> i64 {
         d as i64
     }
 }
@@ -103,11 +112,18 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_default_state() {
-        let a = State::default();
+    fn test_states() {
+        let a = States::default();
         let mut b = a;
-        b += a;
-        assert_eq!(a, State::valid());
-        assert_eq!(b, State::valid());
+        b *= a;
+        assert_eq!(a, States::valid());
+        assert_eq!(b, States::valid());
+    }
+
+    #[test]
+    fn test_states_iter() {
+        let a = States::all();
+        assert_eq!(a.len(), 2);
+        assert_eq!(a[0], States::invalid());
     }
 }

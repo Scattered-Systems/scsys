@@ -4,7 +4,7 @@
     Description: ... summary ...
 */
 use decanter::prelude::Hashable;
-use scsys_core::Timestamp;
+use scsys_core::{BsonOid, Timestamp};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::Display;
@@ -13,14 +13,16 @@ use std::fmt::Display;
     Clone, Debug, Default, Deserialize, Eq, Hash, Hashable, Ord, PartialEq, PartialOrd, Serialize,
 )]
 pub struct Message<T = Value> {
+    id: String,
     pub data: Option<T>,
     pub ts: i64,
 }
 
 impl<T> Message<T> {
     pub fn new(data: Option<T>) -> Self {
+        let id = BsonOid::default().to_hex();
         let ts = Timestamp::default().into();
-        Self { data, ts }
+        Self { id, data, ts }
     }
     pub fn content(&self) -> &Option<T> {
         &self.data

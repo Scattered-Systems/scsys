@@ -46,8 +46,6 @@ test = true
 [build-dependencies]
 
 [dependencies]
-
-
 scsys-actors = { features = ["wasm"], optional = true, path = "../actors", version = "0.2.0" }
 scsys-core = { features = ["wasm"], optional = true, path = "../core", version = "0.2.0" }
 scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0" }

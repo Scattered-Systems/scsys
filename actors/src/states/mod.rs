@@ -7,6 +7,7 @@ pub use self::state::*;
 
 mod state;
 
+use std::ops::MulAssign;
 use std::sync::{Arc, Mutex};
 
 /// [AsyncStateful] describes an async stateful object
@@ -33,8 +34,7 @@ impl Stateful<i64> for i64 {
 }
 
 /// [StateSpec] is used by [Stateful] to describe a specific state
-pub trait StateSpec:
-    Copy + Default + Eq + Ord + std::fmt::Display + std::ops::Add<Output = Self>
+pub trait StateSpec: Clone + Default + Eq + Ord + ToString + MulAssign
 {
 }
 
