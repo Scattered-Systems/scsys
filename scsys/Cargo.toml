@@ -24,6 +24,7 @@ full = [
     "extras"
 ]
 
+wasi = []
 wasm = [
     "scsys-actors/wasm",
     "scsys-core/wasm",

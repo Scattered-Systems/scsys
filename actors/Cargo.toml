@@ -13,6 +13,8 @@ version.workspace = true
 
 [features]
 default = ["decanter/derive"]
+
+wasi = []
 wasm = ["decanter/wasm"]
 
 [lib]

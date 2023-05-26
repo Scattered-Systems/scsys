@@ -15,9 +15,7 @@ version.workspace = true
 [features]
 default = []
 
-wasm = [
-    "getrandom/js"
-]
+wasm = []
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -28,7 +26,6 @@ anyhow.workspace = true
 bson = { features = ["chrono-0_4", "uuid-0_8"], version = "2.4" }
 chrono.workspace = true
 config = "0.13"
-getrandom = { features = ["js"], version = "0.2" }
 glob.workspace = true
 predicates = "2.1"
 rand = "0.8"
@@ -40,6 +37,7 @@ strum.workspace = true
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]
 
-[target.wasm32-unknown-unknown]
+[target.wasm32-unknown-unknown.dependencies]
+getrandom = { features = ["js"], version = "0.2" }
 
 [target.wasm32-wasi]

@@ -78,13 +78,14 @@ macro_rules! extend_path {
     }
 }
 
+#[cfg(feature = "gen")]
 #[macro_export]
 macro_rules! rstr {
     ( $( $x:expr ),* ) => {
         {
             let mut tmp = Vec::new();
             $(
-                tmp.push($crate::utils::gen_random_string($x));
+                tmp.push($gen::gen_random_string($x));
             )*
             tmp
         }
