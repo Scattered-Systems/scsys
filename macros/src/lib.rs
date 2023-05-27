@@ -4,13 +4,21 @@
     Description:
         ... Summary ...
 */
-pub use self::utils::*;
 
-mod utils;
+pub(crate) mod utils;
 
 #[macro_export]
 macro_rules! shared {
-    ($arg:expr) => {
+    ( $( $arg:expr ),* ) => {
+        {
+            let mut res = Vec::new();
+            $(
+                res.push(std::sync::Arc::new(std::sync::Mutex::new($arg)));
+            )*
+            res
+        }
+    };
+    ( $arg:expr ) => {
         std::sync::Arc::new(std::sync::Mutex::new($arg))
     };
 }
@@ -24,6 +32,16 @@ macro_rules! create_method {
 
 #[macro_export]
 macro_rules! string {
+    ( $x:expr ) => {
+        {
+            $x.to_string()
+        }
+    };
+    ( $x:ident ) => {
+        {
+            $x.to_string()
+        }
+    };
     ( $( $x:expr ),* ) => {
         {
             let mut res = Vec::new();
@@ -31,13 +49,6 @@ macro_rules! string {
                 res.push($x.to_string());
             )*
             res
-        }
-    };
-    ( $x:expr ) => {
-        {
-            $(
-                $x.to_string()
-            )*
         }
     };
 }
@@ -85,7 +96,7 @@ macro_rules! rstr {
         {
             let mut tmp = Vec::new();
             $(
-                tmp.push($gen::gen_random_string($x));
+                tmp.push($crate::utils::gen::gen_random_string($x));
             )*
             tmp
         }
