@@ -9,6 +9,9 @@ pub(crate) mod utils;
 
 #[macro_export]
 macro_rules! shared {
+    ( $arg:expr ) => {
+        std::sync::Arc::new(std::sync::Mutex::new($arg))
+    };
     ( $( $arg:expr ),* ) => {
         {
             let mut res = Vec::new();
@@ -17,9 +20,6 @@ macro_rules! shared {
             )*
             res
         }
-    };
-    ( $arg:expr ) => {
-        std::sync::Arc::new(std::sync::Mutex::new($arg))
     };
 }
 
