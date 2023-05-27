@@ -41,6 +41,7 @@ extras = [
 
 
 [lib]
+bench = true
 crate-type = ["cdylib", "rlib"]
 test = true
 

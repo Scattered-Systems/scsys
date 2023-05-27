@@ -28,7 +28,7 @@ test = false
 [dependencies]
 proc-macro2 = "1"
 quote = "1"
-rand = { optional = true, version =  "0.8" }
+rand = { features = [], optional = true, version =  "0.8" }
 syn = { features = ["full"], version = "1" }
 
 [package.metadata.docs.rs]
@@ -36,5 +36,8 @@ all-features = true
 rustc-args = ["--cfg", "docsrs"]
 
 [target.wasm32-unknown-unknown]
+
+[target.wasm32-unknown-unknown.dependencies]
+getrandom = { features = ["js"], version = "0.2" }
 
 [target.wasm32-wasi]

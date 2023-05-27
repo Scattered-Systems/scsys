@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
     Description: ... summary ...
 */
-use super::StateSpec;
+use super::specs::StateSpec;
 use decanter::prelude::Hashable;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString, EnumVariantNames};
@@ -58,7 +58,6 @@ impl States {
     pub fn validate(&mut self) {
         *self = Self::Valid;
     }
-    
 }
 
 impl StateSpec for States {}

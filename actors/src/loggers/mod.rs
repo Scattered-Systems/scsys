@@ -8,6 +8,8 @@ pub use self::logger::*;
 
 mod logger;
 
-pub trait Loggable {
-    fn level(&self) -> String;
+pub(crate) mod specs {
+    pub trait Loggable {
+        fn level(&self) -> String;
+    }
 }
