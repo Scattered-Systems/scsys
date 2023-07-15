@@ -40,7 +40,4 @@ pub trait Name {
     }
 }
 
-/// Interface for time-related data-structures
-pub trait Temporal {
-    fn timestamp(&self) -> i64;
-}
+

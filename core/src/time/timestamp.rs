@@ -1,9 +1,10 @@
 /*
     Appellation: timestamp <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
-use crate::{BsonDateTime, ChronoDateTime, DefaultTimezone, Temporal};
+/// # Timestamp
+use super::Temporal;
+use crate::{BsonDateTime, ChronoDateTime, DefaultTimezone};
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumVariantNames};
 

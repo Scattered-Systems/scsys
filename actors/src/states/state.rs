@@ -6,6 +6,60 @@ use decanter::prelude::Hashable;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumIter, EnumString, EnumVariantNames};
 
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+pub struct State {
+    message: String,
+    state: States,
+}
+
+impl State {
+    pub fn new(message: impl ToString, state: States) -> Self {
+        Self {
+            message: message.to_string(),
+            state,
+        }
+    }
+    /// Sets the state to [States::Invalid]
+    pub fn invalidate(&mut self) {
+        self.state = States::Invalid;
+    }
+    /// Returns true if the state is [States::Valid]
+    pub fn is_valid(&self) -> bool {
+        self.state == States::Valid
+    }
+    /// Returns the message
+    pub fn message(&self) -> &str {
+        &self.message
+    }
+
+    pub fn set_message(&mut self, message: impl ToString) {
+        self.message = message.to_string();
+    }
+    pub fn set_state(&mut self, state: States) {
+        self.state = state;
+    }
+    /// Returns the current state
+    pub fn state(&self) -> States {
+        self.state
+    }
+
+    pub fn update(&mut self, state: State) {
+        *self = state;
+    }
+}
+
+impl From<States> for State {
+    fn from(state: States) -> Self {
+        Self::new("", state)
+    }
+}
+
+impl From<State> for States {
+    fn from(q: State) -> Self {
+        q.state
+    }
+}
+
 #[derive(
     Clone,
     Copy,
@@ -48,8 +102,6 @@ impl States {
         *self = state;
     }
 }
-
-
 
 impl std::ops::Mul for States {
     type Output = States;
