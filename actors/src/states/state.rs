@@ -48,6 +48,12 @@ impl State {
     }
 }
 
+impl std::fmt::Display for State {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string(self).unwrap())
+    }
+}
+
 impl From<States> for State {
     fn from(state: States) -> Self {
         Self::new("", state)
@@ -79,7 +85,7 @@ impl From<State> for States {
     Serialize,
 )]
 #[repr(u8)]
-#[strum(serialize_all = "snake_case")]
+#[strum(serialize_all = "lowercase")]
 pub enum States {
     Invalid = 0,
     #[default]

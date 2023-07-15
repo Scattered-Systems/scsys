@@ -4,7 +4,7 @@
 */
 pub use self::context::*;
 
-pub(crate) mod context;
+mod context;
 
 pub trait Configurable<Cnf> {
     fn config(&self) -> &Cnf;
