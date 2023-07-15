@@ -35,6 +35,7 @@ members = [
     "macros",
     "scsys"
 ]
+resolver = "2"
 
 [profile.dev]
 codegen-units = 256

@@ -17,19 +17,17 @@ full = [
     "gen"
 ]
 
-gen = [
-    "rand"
-]
+gen = []
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-test = false
+test = true
 
 [dependencies]
 proc-macro2 = "1"
 quote = "1"
-rand = { features = [], optional = true, version =  "0.8" }
-syn = { features = ["full"], version = "1" }
+rand = { features = [], version =  "0.8" }
+syn = { features = ["full"], version = "2" }
 
 [package.metadata.docs.rs]
 all-features = true

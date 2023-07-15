@@ -1,8 +1,8 @@
 /*
     Appellation: states <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... summary ...
 */
+/// # States
 pub use self::state::*;
 
 mod state;
@@ -37,5 +37,5 @@ pub(crate) mod specs {
     /// [StateSpec] is used by [Stateful] to describe a specific state
     pub trait StateSpec: Clone + Default + Eq + Ord + ToString + MulAssign {}
 
-    impl StateSpec for i64 {}
+    impl<T> StateSpec for T where T: Clone + Default + Eq + Ord + ToString + MulAssign {}
 }

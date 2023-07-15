@@ -37,11 +37,6 @@ macro_rules! string {
             $x.to_string()
         }
     };
-    ( $x:ident ) => {
-        {
-            $x.to_string()
-        }
-    };
     ( $( $x:expr ),* ) => {
         {
             let mut res = Vec::new();
