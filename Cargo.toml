@@ -29,11 +29,13 @@ exclude = [
 ]
 
 members = [
+    "actors",
     "core",
     "derive",
     "macros",
     "scsys"
 ]
+resolver = "2"
 
 [profile.dev]
 codegen-units = 256

@@ -4,7 +4,7 @@
     Description: ... summary ...
 */
 use decanter::prelude::Hashable;
-use scsys_core::{BsonOid, Timestamp};
+use scsys_core::prelude::{BsonOid, Timestamp};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::Display;

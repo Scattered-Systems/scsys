@@ -24,6 +24,7 @@ full = [
     "extras"
 ]
 
+wasi = []
 wasm = [
     "scsys-actors/wasm",
     "scsys-core/wasm",
@@ -40,6 +41,7 @@ extras = [
 
 
 [lib]
+bench = true
 crate-type = ["cdylib", "rlib"]
 test = true
 
