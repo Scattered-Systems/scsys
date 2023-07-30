@@ -19,4 +19,8 @@ pub mod prelude {
     pub use super::actors::prelude::*;
     #[cfg(feature = "core")]
     pub use super::core::prelude::*;
+    #[cfg(feature = "derive")]
+    pub use scsys_derive::*;
+    #[cfg(feature = "macros")]
+    pub use scsys_macros::*;
 }

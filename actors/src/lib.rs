@@ -1,8 +1,10 @@
 /*
     Appellation: actors <library>
     Creator: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
+//! # Actors
+//! 
+//! 
 pub use self::{direction::*, specs::*};
 
 pub mod catalysts;
