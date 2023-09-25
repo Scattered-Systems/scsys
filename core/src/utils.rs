@@ -1,14 +1,9 @@
 /*
     Appellation: utils <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
 use crate::{BoxResult, ConfigFile, ConfigFileVec, IOResult, DEFAULT_IGNORE_CHARS};
-use rand::{
-    distributions::{Alphanumeric, Standard},
-    prelude::Distribution,
-    Rng,
-};
+
 use std::io::{BufRead, BufReader};
 use std::{
     fs::File,
@@ -60,22 +55,7 @@ pub fn fnl_remove<T: Clone + ToString>(data: T) -> String {
     chars.next_back();
     chars.as_str().to_string()
 }
-///
-pub fn generate_random_number<T>() -> T
-where
-    Standard: Distribution<T>,
-{
-    let mut rnd = rand::thread_rng();
-    rnd.gen::<T>()
-}
-///
-pub fn generate_random_string(len: usize) -> String {
-    rand::thread_rng()
-        .sample_iter(&Alphanumeric)
-        .take(len)
-        .map(char::from)
-        .collect()
-}
+
 /// Simple function wrapper evaluating the claim that the given information is of type f64
 pub fn is_float<T: ToString>(data: &T) -> bool {
     f64::from_str(&data.to_string()).is_ok()

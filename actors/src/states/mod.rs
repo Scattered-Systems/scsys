@@ -25,7 +25,10 @@ pub(crate) mod specs {
         fn update_state(&mut self, state: S);
     }
 
-    impl<Q> Stateful<Q> for Q where Q: StateSpec {
+    impl<Q> Stateful<Q> for Q
+    where
+        Q: StateSpec,
+    {
         fn state(&self) -> Q {
             *self
         }
@@ -35,9 +38,7 @@ pub(crate) mod specs {
     }
 
     /// [StateSpec] is used by [Stateful] to describe a specific state
-    pub trait StateSpec: Copy + Default + Eq + Ord + ToString {
-
-    }
+    pub trait StateSpec: Copy + Default + Eq + Ord + ToString {}
 
     pub trait StateSpecExt: MulAssign + StateSpec {}
 

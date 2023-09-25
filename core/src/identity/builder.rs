@@ -1,7 +1,6 @@
 /*
     Appellation: ids <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
 use super::Id;
 use bson::oid::ObjectId;
@@ -50,9 +49,7 @@ impl IdentityBuilder {
 
     pub fn build(self) -> Id {
         match self.class {
-            Ids::Num => Id::gen_rint(),
-            Ids::Obj => Id::Object(ObjectId::new()),
-            Ids::Str => Id::gen_rstr(None),
+            _ => Id::Object(ObjectId::new()),
         }
     }
 }

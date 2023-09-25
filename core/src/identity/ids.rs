@@ -1,9 +1,7 @@
 /*
     Appellation: ids <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
-use crate::{generate_random_number, generate_random_string};
 use bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
 use smart_default::SmartDefault;
@@ -26,47 +24,25 @@ use strum::{Display, EnumString, EnumVariantNames};
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum Id {
-    Int(i64),
     #[default]
     Object(ObjectId),
-    String(String),
 }
 
 impl Id {
-    pub fn gen_rint() -> Self {
-        Self::Int(generate_random_number())
-    }
     pub fn gen_robj() -> Self {
         Self::Object(ObjectId::new())
     }
-    //
-    pub fn gen_rstr(len: Option<usize>) -> Self {
-        Self::String(generate_random_string(len.unwrap_or(12)))
-    }
+
     pub fn id_as_string(&self) -> String {
         match self {
-            Id::Int(data) => data.to_string(),
-            Id::Object(data) => data.to_hex(),
-            Id::String(data) => data.clone(),
+            Self::Object(data) => data.to_hex(),
         }
-    }
-}
-
-impl From<i64> for Id {
-    fn from(data: i64) -> Self {
-        Self::Int(data)
     }
 }
 
 impl From<ObjectId> for Id {
     fn from(data: ObjectId) -> Self {
         Self::Object(data)
-    }
-}
-
-impl From<String> for Id {
-    fn from(data: String) -> Self {
-        Self::String(data)
     }
 }
 

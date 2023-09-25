@@ -10,7 +10,9 @@
             The id is a unique identifier that distinguishes the object from all other objects of the same class.
             The name is a human-readable string that is used to identify the object in a human-readable context.
 */
-use crate::{Classifier, Identifier};
+//! # appellation
+use crate::classify::Classifier;
+use crate::identity::Identifier;
 
 pub trait Appellation<Cls, Id>
 where

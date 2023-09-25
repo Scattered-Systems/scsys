@@ -2,7 +2,6 @@
     Appellation: timestamp <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-/// # Timestamp
 use super::Temporal;
 use crate::{BsonDateTime, ChronoDateTime, DefaultTimezone};
 use serde::{Deserialize, Serialize};

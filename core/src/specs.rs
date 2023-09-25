@@ -1,7 +1,6 @@
 /*
     Appellation: specs <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
 
 /// Interface for data-structures that can be compared for equality
@@ -39,5 +38,3 @@ pub trait Name {
         self.name().to_lowercase().replace(" ", "-")
     }
 }
-
-
