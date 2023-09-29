@@ -10,7 +10,10 @@ pub(crate) mod primitives;
 pub(crate) mod specs;
 pub(crate) mod utils;
 
+pub mod generators;
+
 pub mod prelude {
+    pub use super::generators::*;
     pub use super::primitives::*;
     pub use super::specs::*;
     pub use super::utils::*;

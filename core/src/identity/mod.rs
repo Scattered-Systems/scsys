@@ -1,8 +1,8 @@
 /*
     Appellation: identity <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
+//! # identity
 pub use self::{builder::*, ids::*};
 
 mod builder;
