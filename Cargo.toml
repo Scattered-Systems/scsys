@@ -11,7 +11,7 @@ repository = "https://github.com/scattered-systems/scsys"
 version = "0.2.0"
 
 [workspace.dependencies]
-decanter = { features = ["derive"], git = "https://github.com/FL03/decanter.git", branch = "v0.1.6", version = "0.1.6" }
+decanter = { features = ["derive"], git = "https://github.com/FL03/decanter.git", branch = "v0.1.7", version = "0.1.7" }
 
 anyhow = "1"
 chrono = "0.4"

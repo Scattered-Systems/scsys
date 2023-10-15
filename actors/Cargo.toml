@@ -12,16 +12,14 @@ repository.workspace = true
 version.workspace = true
 
 [features]
-default = ["decanter/derive"]
-
-wasi = []
-wasm = ["decanter/wasm"]
+default = []
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 test = true
 
 [dependencies]
+async-trait = "0.1"
 chrono.workspace = true
 decanter.workspace = true
 glob.workspace = true

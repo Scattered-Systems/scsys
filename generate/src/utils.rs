@@ -2,7 +2,6 @@
     Appellation: utils <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use rand::distributions::uniform::{SampleRange, SampleUniform};
 use rand::distributions::{uniform, Alphanumeric, Distribution, Standard};
 use rand::Rng;
 

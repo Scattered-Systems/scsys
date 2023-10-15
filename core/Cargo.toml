@@ -15,8 +15,6 @@ version.workspace = true
 [features]
 default = []
 
-wasm = []
-
 [lib]
 crate-type = ["cdylib", "rlib"]
 test = true
