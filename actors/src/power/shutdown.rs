@@ -5,11 +5,6 @@
 use super::Power;
 use tokio::sync::broadcast;
 
-
-
-
-
-
 /// Listens for the server shutdown signal.
 ///
 /// Shutdown is signalled using a `broadcast::Receiver`. Only a single value is

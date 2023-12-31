@@ -11,7 +11,6 @@ pub trait AsyncReceiver<T: Send + Sync> {
     async fn recv(&mut self) -> Result<T, Self::Error>;
 }
 
-
 pub trait Receiver<T> {
     type Error;
 
@@ -30,7 +29,6 @@ pub trait Sender<T> {
 
     fn send(&mut self, value: T) -> Result<(), Self::Error>;
 }
-
 
 impl<T> Receiver<T> for std::sync::mpsc::Receiver<T> {
     type Error = std::sync::mpsc::RecvError;
@@ -73,5 +71,3 @@ impl<T: Clone + Send + Sync> AsyncReceiver<T> for tokio::sync::broadcast::Receiv
         tokio::sync::broadcast::Receiver::recv(self).await
     }
 }
-
-

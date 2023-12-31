@@ -11,16 +11,15 @@
             The name is a human-readable string that is used to identify the object in a human-readable context.
 */
 //! # appellation
-use crate::classify::Classifier;
-use crate::identity::Identifier;
+use crate::prelude::{Classifier, Identifier};
 
-pub trait Appellation<Cls, Id>
+pub trait Appellation<Cls>
 where
     Cls: Classifier,
-    Id: Identifier,
 {
+    type Id: Identifier;
     fn class(&self) -> &Cls;
-    fn id(&self) -> &Id;
+    fn id(&self) -> &Self::Id;
     fn name(&self) -> String;
     fn slug(&self) -> String {
         self.name().to_lowercase().replace(" ", "-")
@@ -32,7 +31,7 @@ where
     Cls: Classifier,
     Id: Identifier,
 {
-    fn from_appellation(appellation: impl Appellation<Cls, Id>) -> Self;
+    fn from_appellation(appellation: impl Appellation<Cls, Id = Id>) -> Self;
 }
 
 pub trait TryFromAppellation<Cls, Id>
@@ -42,7 +41,9 @@ where
     Self: Sized,
 {
     type Error;
-    fn try_from_appellation(appellation: impl Appellation<Cls, Id>) -> Result<Self, Self::Error>;
+    fn try_from_appellation(
+        appellation: impl Appellation<Cls, Id = Id>,
+    ) -> Result<Self, Self::Error>;
 }
 
 pub trait IntoAppellation<Cls, Id>
@@ -50,15 +51,16 @@ where
     Cls: Classifier,
     Id: Identifier,
 {
-    fn into_appellation(self) -> dyn Appellation<Cls, Id>;
+    fn into_appellation(self) -> dyn Appellation<Cls, Id = Id>;
 }
 
-impl<Cls, Id, T> Appellation<Cls, Id> for (Cls, Id, T)
+impl<Cls, Id, T> Appellation<Cls> for (Cls, Id, T)
 where
     Cls: Classifier,
     Id: Identifier,
     T: ToString,
 {
+    type Id = Id;
     fn class(&self) -> &Cls {
         &self.0
     }
