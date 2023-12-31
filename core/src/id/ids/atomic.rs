@@ -22,6 +22,12 @@ impl AsRef<usize> for AtomicId {
     }
 }
 
+impl AsMut<usize> for AtomicId {
+    fn as_mut(&mut self) -> &mut usize {
+        &mut self.0
+    }
+}
+
 impl Default for AtomicId {
     fn default() -> Self {
         Self::new()
@@ -29,8 +35,20 @@ impl Default for AtomicId {
 }
 
 impl std::fmt::Display for AtomicId {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:#x}", self.0)
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl From<usize> for AtomicId {
+    fn from(id: usize) -> Self {
+        Self(id)
+    }
+}
+
+impl From<AtomicId> for usize {
+    fn from(id: AtomicId) -> Self {
+        id.0
     }
 }
 
