@@ -2,9 +2,8 @@
     Appellation: state <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use decanter::prelude::Hashable;
 use serde::{Deserialize, Serialize};
-use strum::{Display, EnumIter, EnumString, EnumVariantNames};
+use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct State {
@@ -73,16 +72,17 @@ impl From<State> for States {
     Default,
     Deserialize,
     Display,
+    EnumCount,
+    EnumIs,
     EnumIter,
     EnumString,
-    EnumVariantNames,
     Eq,
     Hash,
-    Hashable,
     Ord,
     PartialEq,
     PartialOrd,
     Serialize,
+    VariantNames,
 )]
 #[repr(u8)]
 #[strum(serialize_all = "lowercase")]
@@ -96,9 +96,6 @@ impl States {
     /// [State::Invalid] variant constructor
     pub fn invalid() -> Self {
         Self::Invalid
-    }
-    pub fn is_valid(&self) -> bool {
-        *self == Self::Valid
     }
     /// [State::Valid] variant constructor
     pub fn valid() -> Self {

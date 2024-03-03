@@ -6,10 +6,7 @@ pub use self::message::*;
 
 mod message;
 
-pub(crate) mod specs {
-
-    pub trait MessageSpec {
-        fn message(&self) -> &Self;
-        fn timestamp(&self) -> i64;
-    }
+pub trait MessageSpec {
+    fn message(&self) -> &Self;
+    fn timestamp(&self) -> i64;
 }

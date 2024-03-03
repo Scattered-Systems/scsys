@@ -7,25 +7,26 @@ pub use self::shutdown::*;
 pub(crate) mod shutdown;
 
 use serde::{Deserialize, Serialize};
-use smart_default::SmartDefault;
-use strum::{Display, EnumIter, EnumString, EnumVariantNames};
+use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 #[derive(
     Clone,
     Copy,
     Debug,
+    Default,
     Deserialize,
     Display,
+    EnumCount,
+    EnumIs,
     EnumIter,
     EnumString,
-    EnumVariantNames,
     Eq,
     Hash,
     Ord,
     PartialEq,
     PartialOrd,
     Serialize,
-    SmartDefault,
+    VariantNames,
 )]
 #[repr(u8)]
 #[serde(rename_all = "snake_case")]
@@ -43,10 +44,6 @@ impl Power {
 
     pub fn on() -> Self {
         Power::On
-    }
-
-    pub fn is_off(&self) -> bool {
-        matches!(self, Power::Off)
     }
 }
 
@@ -70,16 +67,13 @@ impl From<Power> for bool {
 
 impl From<Power> for u8 {
     fn from(p: Power) -> Self {
-        match p {
-            Power::On => 1,
-            Power::Off => 0,
-        }
+        p as u8
     }
 }
 
 impl From<u8> for Power {
     fn from(u: u8) -> Self {
-        match u % 2 {
+        match u % Self::COUNT as u8 {
             1 => Power::On,
             _ => Power::Off,
         }

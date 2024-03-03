@@ -1,31 +1,31 @@
 /*
     Appellation: direction <module>
     Creator: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
-use decanter::prelude::Hashable;
 use serde::{Deserialize, Serialize};
-use smart_default::SmartDefault;
-use strum::{Display, EnumString, EnumVariantNames};
+use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 #[derive(
     Clone,
     Copy,
     Debug,
+    Default,
     Deserialize,
     Display,
+    EnumCount,
+    EnumIs,
+    EnumIter,
     EnumString,
-    EnumVariantNames,
     Eq,
     Hash,
-    Hashable,
     Ord,
     PartialEq,
     PartialOrd,
     Serialize,
-    SmartDefault,
+    VariantNames,
 )]
 #[repr(i64)]
+#[serde(rename_all = "snake_case")]
 #[strum(serialize_all = "snake_case")]
 pub enum Direction {
     #[default]

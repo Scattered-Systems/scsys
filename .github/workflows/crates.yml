@@ -23,12 +23,24 @@ on:
         type: boolean
 
 jobs:
+  base:
+    name: Publish (core)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [ core ]
+    env:
+      PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish (${{ env.PACKAGE_NAME }})
+        run: cargo publish --all-features -v -p ${{ env.PACKAGE_NAME }} --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
   features:
     name: Publish (features)
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [ actors, core, derive, macros ]
+        package: [ actors, core, derive, generate, macros ]
     env:
       PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
     steps:

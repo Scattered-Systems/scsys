@@ -9,7 +9,6 @@ pub use self::{direction::*, specs::*};
 
 pub mod catalysts;
 pub mod contexts;
-pub mod events;
 pub mod loggers;
 pub mod messages;
 pub mod power;

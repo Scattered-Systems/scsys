@@ -4,7 +4,7 @@
 */
 use serde::{Deserialize, Serialize};
 use smart_default::SmartDefault;
-use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, EnumVariantNames};
+use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 #[derive(
     Clone,
@@ -15,7 +15,6 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, EnumVariantNames};
     EnumIs,
     EnumIter,
     EnumString,
-    EnumVariantNames,
     Eq,
     Hash,
     Ord,
@@ -23,6 +22,7 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, EnumVariantNames};
     PartialOrd,
     Serialize,
     SmartDefault,
+    VariantNames,
 )]
 #[non_exhaustive]
 #[repr(usize)]

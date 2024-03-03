@@ -5,7 +5,7 @@
 use super::Temporal;
 use crate::{BsonDateTime, ChronoDateTime, DefaultTimezone};
 use serde::{Deserialize, Serialize};
-use strum::{Display, EnumVariantNames};
+use strum::{Display, VariantNames};
 
 /// Timestamp implements a host of useful utilities for stamping data
 #[derive(
@@ -13,13 +13,13 @@ use strum::{Display, EnumVariantNames};
     Debug,
     Deserialize,
     Display,
-    EnumVariantNames,
     Eq,
     Hash,
     Ord,
     PartialEq,
     PartialOrd,
     Serialize,
+    VariantNames,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum Timestamp {

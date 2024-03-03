@@ -1,9 +1,8 @@
 /*
     Appellation: scsys-macros <library>
     Contributors: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
 */
+//! # scsys-macros
 
 pub(crate) mod utils;
 

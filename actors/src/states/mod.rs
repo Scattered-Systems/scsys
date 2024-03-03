@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 /// # States
-pub use self::{state::*, utils::*};
+pub use self::state::*;
 
 pub(crate) mod state;
 
@@ -42,5 +42,3 @@ pub trait StateSpec: Copy + Default + Eq + Ord + ToString {}
 pub trait StateSpecExt: MulAssign + StateSpec {}
 
 impl<T> StateSpec for T where T: Copy + Default + Eq + Ord + ToString + MulAssign {}
-
-pub(crate) mod utils {}
