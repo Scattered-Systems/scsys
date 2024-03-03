@@ -11,22 +11,22 @@ extern crate syn;
 use proc_macro::TokenStream;
 use syn::{parse_macro_input, DeriveInput};
 
-#[proc_macro_derive(Named, attributes(Alternative))]
-pub fn named(input: TokenStream) -> TokenStream {
+#[proc_macro_derive(Name, attributes(Alternative))]
+pub fn name(input: TokenStream) -> TokenStream {
     // Parse the inputs into the proper struct
     let ast = parse_macro_input!(input as DeriveInput);
 
     // Build the impl
-    let gen = impl_named(&ast);
+    let gen = impl_name(&ast);
 
     gen.into()
 }
 
-pub(crate) fn impl_named(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+fn impl_name(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
     let name = &ast.ident;
     let res = quote::quote! {
-        impl Named for #name {
-            fn name() -> String {
+        impl scsys::prelude::Name for #name {
+            fn name(&self) -> String {
                 format!("{}", stringify!(#name))
             }
         }
@@ -45,7 +45,7 @@ pub fn serde_display(input: TokenStream) -> TokenStream {
     gen.into()
 }
 
-pub(crate) fn impl_serde_display(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+fn impl_serde_display(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
     let name = &ast.ident;
     let res = quote::quote! {
         impl std::fmt::Display for #name {

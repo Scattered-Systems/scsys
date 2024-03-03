@@ -1,22 +1,41 @@
 /*
     Appellation: scsys-macros <library>
     Contributors: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
 */
-pub use self::utils::*;
+//! # scsys-macros
 
 pub(crate) mod utils;
 
 #[macro_export]
+macro_rules! shared {
+    ( $arg:expr ) => {
+        std::sync::Arc::new(std::sync::Mutex::new($arg))
+    };
+    ( $( $arg:expr ),* ) => {
+        {
+            let mut res = Vec::new();
+            $(
+                res.push(std::sync::Arc::new(std::sync::Mutex::new($arg)));
+            )*
+            res
+        }
+    };
+}
+
+#[macro_export]
 macro_rules! create_method {
-    ($vis:vis $name:ident) => {
-        $vis fn $name(&self) {}
+    ($vis:vis $name:ident, $arg:ident, $argty: ty) => {
+        $vis fn $name($arg: $argty) {}
     };
 }
 
 #[macro_export]
 macro_rules! string {
+    ( $x:expr ) => {
+        {
+            $x.to_string()
+        }
+    };
     ( $( $x:expr ),* ) => {
         {
             let mut res = Vec::new();
@@ -24,13 +43,6 @@ macro_rules! string {
                 res.push($x.to_string());
             )*
             res
-        }
-    };
-    ( $x:expr ) => {
-        {
-            $(
-                $x.to_string()
-            )*
         }
     };
 }
@@ -71,13 +83,14 @@ macro_rules! extend_path {
     }
 }
 
+#[cfg(feature = "gen")]
 #[macro_export]
 macro_rules! rstr {
     ( $( $x:expr ),* ) => {
         {
             let mut tmp = Vec::new();
             $(
-                tmp.push($crate::utils::gen_random_string($x));
+                tmp.push($crate::utils::gen::gen_random_string($x));
             )*
             tmp
         }

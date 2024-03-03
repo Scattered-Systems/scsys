@@ -1,46 +1,44 @@
 /*
     Appellation: states <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
+/// # States
 pub use self::state::*;
 
 pub(crate) mod state;
 
-use crate::messages::Message;
-use std::sync::Arc;
+use std::ops::MulAssign;
+use std::sync::{Arc, Mutex};
 
-/// [StatePack] describes the possible states being wrapped by a [Stateful] structure.
-pub trait StatePack:
-    Default + ToString + std::convert::From<i64> + std::convert::Into<i64>
+/// [AsyncStateful] describes an async stateful object
+pub trait AsyncStateful<S: StateSpec> {
+    fn state(&self) -> Arc<Mutex<S>>;
+    fn update_state(&mut self, state: Arc<Mutex<S>>);
+}
+
+/// [Stateful] describes a stateful object
+pub trait Stateful<S: StateSpec> {
+    /// [Stateful::state] is used to get the state of the object
+    fn state(&self) -> S;
+    /// [Stateful::update_state] is used to update the state of the object
+    fn update_state(&mut self, state: S);
+}
+
+impl<Q> Stateful<Q> for Q
+where
+    Q: StateSpec,
 {
-    fn by_ref(&self) -> &Self {
-        self
+    fn state(&self) -> Q {
+        *self
     }
-    fn by_ref_mut(&mut self) -> &mut Self {
-        self
+    fn update_state(&mut self, state: Q) {
+        *self = state;
     }
 }
 
-pub trait Stateful<S: StatePack>: Clone + Default {
-    type Data;
-    fn by_ref(&self) -> Self {
-        self.clone()
-    }
-    fn by_ref_mut(&mut self) -> Self {
-        self.clone()
-    }
-    fn by_arc(self: Arc<Self>) -> Arc<Self> {
-        self
-    }
-    fn message(self) -> Message<Self::Data>;
-    fn state(self) -> S;
-    fn timestamp(self) -> i64;
-}
+/// [StateSpec] is used by [Stateful] to describe a specific state
+pub trait StateSpec: Copy + Default + Eq + Ord + ToString {}
 
-pub trait StatefulExt<S: StatePack>: Stateful<S> {
-    fn now() -> i64 {
-        chrono::Utc::now().timestamp()
-    }
-    fn update(&mut self, msg: Option<Message<Self::Data>>, state: S);
-}
+pub trait StateSpecExt: MulAssign + StateSpec {}
+
+impl<T> StateSpec for T where T: Copy + Default + Eq + Ord + ToString + MulAssign {}

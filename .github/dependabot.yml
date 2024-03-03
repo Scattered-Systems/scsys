@@ -1,5 +1,9 @@
 version: 2
 updates:
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: daily
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -14,6 +18,10 @@ updates:
       interval: daily
   - package-ecosystem: cargo
     directory: /derive
+    schedule:
+      interval: daily
+  - package-ecosystem: cargo
+    directory: /generate
     schedule:
       interval: daily
   - package-ecosystem: cargo

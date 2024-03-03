@@ -1,13 +1,12 @@
 [package]
-categories = []
-description = "scsys-derive implements a host of useful procedural macros for use throughout the ecosystem"
-keywords = []
-name = "scsys-derive"
-
 authors.workspace = true
+categories.workspace = true
+description = "scsys-derive implements a host of useful procedural macros for use throughout the ecosystem"
 edition.workspace = true
 homepage.workspace = true
+keywords.workspace = true
 license.workspace = true
+name = "scsys-derive"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
@@ -19,7 +18,7 @@ test = false
 [dependencies]
 proc-macro2 = "1"
 quote = "1"
-syn = { features = ["full"], version = "1" }
+syn = { features = ["full"], version = "2" }
 serde.workspace = true
 serde_json.workspace = true
 

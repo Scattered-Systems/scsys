@@ -1,25 +1,31 @@
 /*
-    Appellation: scsys-actors <library>
+    Appellation: actors <library>
     Creator: FL03 <jo3mccain@icloud.com>
-    Description:
-        ... Summary ...
 */
-pub use self::{direction::*, justify::*};
+//! # Actors
+//!
+//!
+pub use self::{direction::*, specs::*};
 
-pub mod agents;
 pub mod catalysts;
 pub mod contexts;
-pub mod handlers;
 pub mod loggers;
 pub mod messages;
-pub mod networking;
-pub mod providers;
-pub mod sessions;
+pub mod power;
 pub mod states;
 
-pub(crate) mod direction;
-pub(crate) mod justify;
+mod direction;
+mod specs;
 
 pub type Job = Box<dyn FnOnce() + Send + 'static>;
 
-pub trait Temporal {}
+pub mod prelude {
+    pub use super::catalysts::*;
+    pub use super::contexts::*;
+    pub use super::direction::*;
+    pub use super::loggers::*;
+    pub use super::messages::*;
+    pub use super::power::*;
+    pub use super::specs::*;
+    pub use super::states::*;
+}

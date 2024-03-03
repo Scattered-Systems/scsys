@@ -1,49 +1,48 @@
 /*
     Appellation: message <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... summary ...
 */
-use chrono::Utc;
-use decanter::{crypto::Hashable, Hash};
+use scsys_core::prelude::{BsonOid, Timestamp};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::Display;
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct Message<T = Value> {
-    pub data: Vec<T>,
-    pub timestamp: i64,
+    id: String,
+    pub data: Option<T>,
+    pub ts: i64,
 }
 
 impl<T> Message<T> {
-    pub fn new(data: Vec<T>) -> Self {
-        let timestamp = Utc::now().timestamp();
-        Self { data, timestamp }
+    pub fn new(data: Option<T>) -> Self {
+        let id = BsonOid::default().to_hex();
+        let ts = Timestamp::default().into();
+        Self { id, data, ts }
     }
-    pub fn content(&self) -> &Vec<T> {
+    pub fn content(&self) -> &Option<T> {
         &self.data
-    }
-    pub fn push(&mut self, data: T) -> &Self {
-        self.data.push(data);
-        self
     }
 }
 
-impl<T> std::convert::From<Vec<T>> for Message<T> {
-    fn from(data: Vec<T>) -> Self {
+impl<T> Display for Message<T>
+where
+    T: Serialize,
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string(&self).unwrap())
+    }
+}
+
+impl<T> From<Option<T>> for Message<T> {
+    fn from(data: Option<T>) -> Self {
         Self::new(data)
     }
 }
 
-impl<T> std::convert::From<T> for Message<T> {
+impl<T> From<T> for Message<T> {
     fn from(data: T) -> Self {
-        Self::new(vec![data])
-    }
-}
-
-impl<T: Serialize> Display for Message<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string(&self).unwrap())
+        Self::new(Some(data))
     }
 }
 

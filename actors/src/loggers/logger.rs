@@ -1,12 +1,11 @@
 /*
     Appellation: loggers <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
-use super::Loggable;
+use super::specs::Loggable;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct Logger {
     pub level: String,
 }
@@ -15,8 +14,11 @@ impl Logger {
     pub fn new(level: String) -> Self {
         Self { level }
     }
-    pub fn setup(&mut self, key: Option<&str>) -> &Self {
-        let key = key.unwrap_or("RUST_LOG");
+    pub fn set_level(mut self, level: impl ToString) {
+        self.level = level.to_string();
+    }
+    pub fn setup_env(mut self, level: Option<&str>) -> Self {
+        let key = level.unwrap_or("RUST_LOG");
         if let Some(v) = std::env::var_os(key) {
             self.level = v.into_string().expect("Failed to convert into string...");
         } else {
@@ -28,7 +30,7 @@ impl Logger {
 
 impl Default for Logger {
     fn default() -> Self {
-        Self::from("info")
+        Self::new("info".to_string())
     }
 }
 
@@ -38,14 +40,11 @@ impl Loggable for Logger {
     }
 }
 
-impl std::convert::From<&Logger> for Logger {
-    fn from(data: &Logger) -> Self {
-        Self::new(data.level.clone())
-    }
-}
-
-impl std::convert::From<&str> for Logger {
-    fn from(level: &str) -> Self {
+impl<T> From<&T> for Logger
+where
+    T: ToString,
+{
+    fn from(level: &T) -> Self {
         Self::new(level.to_string())
     }
 }

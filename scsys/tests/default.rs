@@ -1,12 +1,9 @@
 #[cfg(test)]
-mod tests {
-    #[cfg(feature = "actors")]
-    use scsys::actors::agents::Agent;
+#[test]
+fn lib_compiles() {
+    let f = |i: usize| i * i;
 
-    #[test]
-    fn lib_compiles() {
-        let a = Agent::new(String::new());
-        let b = Agent::from(&a);
-        assert_eq!(&a, &b)
-    }
+    assert_eq!(f(2), 4);
+    assert_eq!(f(3), 9);
+    assert_ne!(f(2), 3);
 }

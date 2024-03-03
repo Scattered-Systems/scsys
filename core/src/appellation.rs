@@ -2,44 +2,74 @@
     Appellation: appellation <module>
     Contrib: FL03 <jo3mccain@icloud.com>
     Description:
-        An appellation is a more concise definition for the abstract naming schemes native to blockchain technologies,
-        wrapping mission critical tags into a streamlined naming convention
+        An appellation is defined to be a name or title given to a person or thing.
+        For our purposes, an appellation describes a novel naming schematic used to accelaerate the process of identifying persistent objects hosted on a multi-layered peer-to-peer network.
 
-        Each appellation must contain an origin, optionally proof of ownership, optionally proof of
+        An appellation is composed of three parts: a classifier, an identifier, and a name.
+            The class is a classifier that describes the type of object being identified.
+            The id is a unique identifier that distinguishes the object from all other objects of the same class.
+            The name is a human-readable string that is used to identify the object in a human-readable context.
 */
-use serde::{Deserialize, Serialize};
+//! # appellation
+use crate::prelude::{Classifier, Identifier};
 
-pub trait AppellationSpec {
-    type Id;
-    type Key;
-    type Name: ToString;
-
+pub trait Appellation<Cls>
+where
+    Cls: Classifier,
+{
+    type Id: Identifier;
+    fn class(&self) -> &Cls;
     fn id(&self) -> &Self::Id;
-    fn key(&self) -> &Self::Key;
-    fn name(&self) -> &Self::Name;
-}
-
-#[derive(Clone, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
-pub struct Appellation<T = String> {
-    pub id: T,
-    pub key: T, // Key is meant for use with items like a CID from IPFS
-    pub label: T,
-}
-
-impl<T> Appellation<T> {
-    pub fn new(id: T, key: T, label: T) -> Self {
-        Self { id, key, label }
+    fn name(&self) -> String;
+    fn slug(&self) -> String {
+        self.name().to_lowercase().replace(" ", "-")
     }
 }
 
-impl<T: Serialize> std::fmt::Debug for Appellation<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string_pretty(&self).unwrap())
-    }
+pub trait FromAppellation<Cls, Id>
+where
+    Cls: Classifier,
+    Id: Identifier,
+{
+    fn from_appellation(appellation: impl Appellation<Cls, Id = Id>) -> Self;
 }
 
-impl<T: Serialize> std::fmt::Display for Appellation<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string(&self).unwrap())
+pub trait TryFromAppellation<Cls, Id>
+where
+    Cls: Classifier,
+    Id: Identifier,
+    Self: Sized,
+{
+    type Error;
+    fn try_from_appellation(
+        appellation: impl Appellation<Cls, Id = Id>,
+    ) -> Result<Self, Self::Error>;
+}
+
+pub trait IntoAppellation<Cls, Id>
+where
+    Cls: Classifier,
+    Id: Identifier,
+{
+    fn into_appellation(self) -> dyn Appellation<Cls, Id = Id>;
+}
+
+impl<Cls, Id, T> Appellation<Cls> for (Cls, Id, T)
+where
+    Cls: Classifier,
+    Id: Identifier,
+    T: ToString,
+{
+    type Id = Id;
+    fn class(&self) -> &Cls {
+        &self.0
+    }
+
+    fn id(&self) -> &Id {
+        &self.1
+    }
+
+    fn name(&self) -> String {
+        self.2.to_string()
     }
 }

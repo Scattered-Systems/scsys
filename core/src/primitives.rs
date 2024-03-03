@@ -1,7 +1,6 @@
 /*
     Appellation: primitives <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
 #[doc(inline)]
 pub use self::{constants::*, types::*};
@@ -9,7 +8,7 @@ pub use self::{constants::*, types::*};
 /// Type alias for [anyhow::Result]
 pub type Result<T = ()> = anyhow::Result<T>;
 
-pub(crate) mod constants {
+mod constants {
     pub const SCASE: &str = "snake_case";
     ///
     pub const DEFAULT_HTTP_PORT: u16 = 8080;
@@ -21,22 +20,22 @@ pub(crate) mod constants {
     pub const LOCALHOST_STR: &str = "127.0.0.1";
 }
 
-pub(crate) mod types {
+mod types {
+    pub use bson::oid::ObjectId;
+    pub use config::{ConfigBuilder, ConfigError};
     use std::{
         collections::HashMap,
         sync::{Arc, Mutex},
     };
 
-    pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
-
     /// Type alias for async errors
     pub type AsyncError = Box<dyn std::error::Error + Send + Sync>;
     /// Type alias for async results
-    pub type AsyncResult<T = ()> = Result<T, AsyncError>;
+    pub type AsyncResult<T = ()> = std::result::Result<T, AsyncError>;
     /// Type alias for a boxed error with send, sync, and static flags enabled
     pub type BoxError = Box<dyn std::error::Error>;
     /// Type alias for the standard result used
-    pub type BoxResult<T = (), E = BoxError> = Result<T, E>;
+    pub type BoxResult<T = (), E = BoxError> = std::result::Result<T, E>;
     /// Type alias for [bson::DateTime]
     pub type BsonDateTime = bson::DateTime;
     /// Type alias for [bson::oid::ObjectId]

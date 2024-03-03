@@ -1,67 +1,67 @@
 /*
     Appellation: state <module>
-    Contrib: FL03 <jo3mccain@icloud.com> (https://github.com/FL03)
-    Description: ... Summary ...
+    Contrib: FL03 <jo3mccain@icloud.com>
 */
-use super::{StatePack, Stateful, StatefulExt};
-use crate::messages::Message;
-
-use chrono::Utc;
-use decanter::prelude::{Hash, Hashable, H256};
 use serde::{Deserialize, Serialize};
-use strum::{Display, EnumString, EnumVariantNames};
+use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub struct State<S: Clone + StatePack = States, T: Clone + Default + Serialize = H256> {
-    msg: Message<T>,
-    state: S,
-    ts: i64,
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+pub struct State {
+    message: String,
+    state: States,
 }
 
-impl<S: Clone + StatePack, T: Clone + Default + Serialize> State<S, T> {
-    pub fn new(msg: Option<Message<T>>, state: S) -> Self {
+impl State {
+    pub fn new(message: impl ToString, state: States) -> Self {
         Self {
-            msg: msg.unwrap_or_default(),
+            message: message.to_string(),
             state,
-            ts: Utc::now().timestamp(),
         }
     }
-}
-
-impl<S: Clone + StatePack, T: Clone + Default + Serialize> std::fmt::Display for State<S, T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.state.to_string())
+    /// Sets the state to [States::Invalid]
+    pub fn invalidate(&mut self) {
+        self.state = States::Invalid;
     }
-}
-
-impl<S: Clone + StatePack, T: Clone + Default + Serialize> Stateful<S> for State<S, T> {
-    type Data = T;
-
-    fn message(self) -> Message<Self::Data> {
-        self.msg
+    /// Returns true if the state is [States::Valid]
+    pub fn is_valid(&self) -> bool {
+        self.state == States::Valid
+    }
+    /// Returns the message
+    pub fn message(&self) -> &str {
+        &self.message
     }
 
-    fn state(self) -> S {
+    pub fn set_message(&mut self, message: impl ToString) {
+        self.message = message.to_string();
+    }
+    pub fn set_state(&mut self, state: States) {
+        self.state = state;
+    }
+    /// Returns the current state
+    pub fn state(&self) -> States {
         self.state
     }
 
-    fn timestamp(self) -> i64 {
-        self.ts
-    }
-}
-impl<S: Clone + StatePack, T: Clone + Default + Serialize> StatefulExt<S> for State<S, T> {
-    fn update(&mut self, msg: Option<Message<Self::Data>>, state: S) {
-        if let Some(m) = msg {
-            self.msg = m;
-        }
-        self.state = state;
-        self.ts = chrono::Utc::now().timestamp();
+    pub fn update(&mut self, state: State) {
+        *self = state;
     }
 }
 
-impl<S: Clone + StatePack, T: Clone + Default + Serialize> From<&S> for State<S, T> {
-    fn from(d: &S) -> Self {
-        Self::new(None, d.clone())
+impl std::fmt::Display for State {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string(self).unwrap())
+    }
+}
+
+impl From<States> for State {
+    fn from(state: States) -> Self {
+        Self::new("", state)
+    }
+}
+
+impl From<State> for States {
+    fn from(q: State) -> Self {
+        q.state
     }
 }
 
@@ -72,32 +72,63 @@ impl<S: Clone + StatePack, T: Clone + Default + Serialize> From<&S> for State<S,
     Default,
     Deserialize,
     Display,
+    EnumCount,
+    EnumIs,
+    EnumIter,
     EnumString,
-    EnumVariantNames,
     Eq,
     Hash,
     Ord,
     PartialEq,
     PartialOrd,
     Serialize,
+    VariantNames,
 )]
-#[strum(serialize_all = "snake_case")]
+#[repr(u8)]
+#[strum(serialize_all = "lowercase")]
 pub enum States {
+    Invalid = 0,
     #[default]
-    Valid = 0,
-    Invalid = 1,
+    Valid = 1,
 }
 
 impl States {
+    /// [State::Invalid] variant constructor
     pub fn invalid() -> Self {
         Self::Invalid
     }
+    /// [State::Valid] variant constructor
     pub fn valid() -> Self {
         Self::Valid
     }
+    pub fn update(&mut self, state: Self) {
+        *self = state;
+    }
 }
 
-impl StatePack for States {}
+impl std::ops::Mul for States {
+    type Output = States;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        let res = self as u8 * rhs as u8;
+        Self::from(res)
+    }
+}
+
+impl std::ops::MulAssign for States {
+    fn mul_assign(&mut self, rhs: Self) {
+        *self = *self * rhs;
+    }
+}
+
+impl From<u8> for States {
+    fn from(d: u8) -> Self {
+        match d % 2 {
+            1 => States::valid(),
+            _ => States::invalid(),
+        }
+    }
+}
 
 impl From<usize> for States {
     fn from(d: usize) -> Self {
@@ -107,8 +138,7 @@ impl From<usize> for States {
 
 impl From<i64> for States {
     fn from(d: i64) -> Self {
-        match d {
-            0 => States::invalid(),
+        match d.abs() % 2 {
             1 => States::valid(),
             _ => States::invalid(),
         }
@@ -124,16 +154,21 @@ impl From<States> for i64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use strum::IntoEnumIterator;
 
     #[test]
-    fn test_default_state() {
-        let mut a = State::<States, String>::default();
-        let b = a.clone();
-        assert_eq!(a.clone().state(), States::valid());
+    fn test_states() {
+        let a = States::default();
+        let mut b = a;
+        b *= a;
+        assert_eq!(a, States::valid());
+        assert_eq!(b, States::valid());
+    }
 
-        a.update(None, States::invalid());
-
-        assert_eq!(a.clone().state(), States::invalid());
-        assert_ne!(b.timestamp(), a.timestamp())
+    #[test]
+    fn test_states_iter() {
+        let a: Vec<States> = States::iter().collect();
+        assert_eq!(a.len(), 2);
+        assert_eq!(a[0], States::invalid());
     }
 }

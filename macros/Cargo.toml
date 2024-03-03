@@ -1,32 +1,41 @@
 [package]
+authors.workspace = true
 categories = []
 description = "scsys-macros"
-keywords = []
-name = "scsys-macros"
-
-authors.workspace = true
 edition.workspace = true
 homepage.workspace = true
+keywords = []
 license.workspace = true
+name = "scsys-macros"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
+[features]
+default = []
+full = [
+    "gen"
+]
+
+gen = []
+
 [lib]
 crate-type = ["cdylib", "rlib"]
-test = false
+test = true
 
 [dependencies]
-bson = { features = ["chrono-0_4", "serde_with", "uuid-0_8"], version = "2.4.0" }
-proc-macro2 = "1.0.49"
-quote = "1.0.23"
-rand = "0.8.5"
-syn = { features = ["full"], version = "1.0.107" }
+proc-macro2 = "1"
+quote = "1"
+rand = { features = [], version =  "0.8" }
+syn = { features = ["full"], version = "2" }
 
 [package.metadata.docs.rs]
 all-features = true
 rustc-args = ["--cfg", "docsrs"]
 
 [target.wasm32-unknown-unknown]
+
+[target.wasm32-unknown-unknown.dependencies]
+getrandom = { features = ["js"], version = "0.2" }
 
 [target.wasm32-wasi]

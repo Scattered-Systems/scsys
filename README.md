@@ -7,7 +7,8 @@
 
 ***
 
-Welcome to scsys, this repository is home to mission-critical primitives and utilities leveraged throughout the ecosystem.
+Welcome to scsys, this crate is dedicated to supporting the Scattered-Systems, DAO LLC ecosystem and inspires to be a well-designed wrapper around the standard Rust library that facilitates 
+the creation of dynamic, distributed systems.
 
 ## Getting Started
 
