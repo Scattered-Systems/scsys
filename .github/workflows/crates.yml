@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [ actors, core, derive, generate, macros ]
+        package: [ actors, core, derive, macros ]
     env:
       PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
     steps:

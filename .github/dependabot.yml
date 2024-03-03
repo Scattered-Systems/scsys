@@ -21,10 +21,6 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: cargo
-    directory: /generate
-    schedule:
-      interval: daily
-  - package-ecosystem: cargo
     directory: /macros
     schedule:
       interval: daily
