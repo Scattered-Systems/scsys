@@ -22,7 +22,7 @@ mod constants {
 
 mod types {
     pub use bson::oid::ObjectId;
-    pub use config::{AsyncConfigBuilder, ConfigBuilder, ConfigError};
+    pub use config::{ConfigBuilder, ConfigError};
     use std::{
         collections::HashMap,
         sync::{Arc, Mutex},

@@ -21,7 +21,7 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, VariantNames};
     PartialOrd,
     Serialize,
     SmartDefault,
-    VariantNames
+    VariantNames,
 )]
 #[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]

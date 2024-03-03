@@ -5,12 +5,10 @@
 //! # Errors
 //!
 //!
-pub use self::{error::*, kinds::*, utils::*};
+pub use self::{error::*, kinds::*};
 
 pub(crate) mod error;
 pub(crate) mod kinds;
-
-pub(crate) mod utils {}
 
 #[cfg(test)]
 mod tests {
