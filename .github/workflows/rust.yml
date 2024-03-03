@@ -8,28 +8,27 @@ env:
   CARGO_TERM_COLOR: always
 
 on:
-  pull_request:
-    branches-ignore: [ "beta*", "dev*", "next*" ]
   push:
-    branches-ignore: [ "beta*", "dev*", "next*" ]
+    branches: [ main ]
     tags: [ "nightly*",  "v*.*.*" ]
   release:
+    types: [ created ]
   repository_dispatch:
-    types: [ "rust" ]
+    types: [ rust ]
   schedule:
-    - cron: "30 21 * * *" # 9:30pm UTC
+    - cron: "30 21 * * 0" # 9:30pm UTC
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build and Test
+  builder:
+    name: Build
     strategy:
       matrix:
-        platform: [ ubuntu-latest ]
-        toolchain: [ nightly ]
+        platform: [ macos-latest, ubuntu-latest, windows-latest ]
+        toolchain: [ stable, nightly ]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: setup (langspace)
         run: |
           rustup update
@@ -37,15 +36,38 @@ jobs:
       - name: Build
         run: cargo build -F full --release -v --workspace
       - name: Cache build
-        uses: actions/cache@v3
+        id: cache-build
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
             target/release
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+  test:
+    name: Test
+    needs: [ builder ]
+    strategy:
+      matrix:
+        toolchain: [ stable, nightly ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: setup (langspace)
+        run: |
+          rustup update
+          rustup default ${{ matrix.toolchain }}
       - name: Test
         run: cargo test --all -F full --release -v
+  bench:
+    name: Benchmark
+    needs: [ builder ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: setup (langspace)
+        run: |
+          rustup update
+          rustup default nightly
       - name: Bench
-        if: matrix.toolchain == 'nightly'
         run: cargo bench --all -F full -v
