@@ -2,20 +2,19 @@ name: Clippy
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 on:
   pull_request:
-    branches-ignore: [ "beta*", "dev*", "next*" ]
+    branches: [ main ]
   push:
-    branches-ignore: [ "beta*", "dev*", "next*" ]
-    tags: [ "nightly*",  "v*.*.*" ]
+    branches: [ main ]
+    tags: [ nightly*,  v*.*.* ]
   release:
-      types: [created]
   repository_dispatch:
     types: [ clippy ]
   schedule:
-    - cron: "30 21 * * *" # 9:30am UTC
+    - cron: "30 21 * * 0" # 9:30am UTC
   workflow_dispatch:
 
 permissions:
@@ -28,7 +27,7 @@ jobs:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: setup (rust)
         uses: actions-rs/toolchain@v1
         with:
@@ -45,7 +44,7 @@ jobs:
           --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
         continue-on-error: true
       - name: Upload analysis
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: rust-clippy-results.sarif
           wait-for-processing: true

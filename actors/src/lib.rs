@@ -3,15 +3,15 @@
     Creator: FL03 <jo3mccain@icloud.com>
 */
 //! # Actors
-//! 
-//! 
+//!
+//!
 pub use self::{direction::*, specs::*};
 
 pub mod catalysts;
 pub mod contexts;
-pub mod events;
 pub mod loggers;
 pub mod messages;
+pub mod power;
 pub mod states;
 
 mod direction;
@@ -25,6 +25,7 @@ pub mod prelude {
     pub use super::direction::*;
     pub use super::loggers::*;
     pub use super::messages::*;
+    pub use super::power::*;
     pub use super::specs::*;
     pub use super::states::*;
 }

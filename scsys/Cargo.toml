@@ -19,20 +19,27 @@ default = [
 full = [
     "actors",
     "core",
-    "derive", 
-    "macros", 
+    "derive",
+    "gen",
     "extras"
 ]
 
 wasi = []
-wasm = [
-    "scsys-actors/wasm",
-    "scsys-core/wasm",
-]
+wasm = []
 
-actors = ["scsys-actors/default"]
-core = ["scsys-core/default"]
-derive = ["scsys-derive"]
+actors = [
+    "scsys-actors"
+]
+core = [
+    "scsys-core"
+]
+derive = [
+    "scsys-derive", 
+    "macros"
+]
+gen = [
+    "scsys-generate"
+]
 macros = ["scsys-macros"]
 
 extras = [
@@ -48,9 +55,10 @@ test = true
 [build-dependencies]
 
 [dependencies]
-scsys-actors = { features = ["wasm"], optional = true, path = "../actors", version = "0.2.0" }
-scsys-core = { features = ["wasm"], optional = true, path = "../core", version = "0.2.0" }
+scsys-actors = { features = [], optional = true, path = "../actors", version = "0.2.0" }
+scsys-core = { features = [], optional = true, path = "../core", version = "0.2.0" }
 scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0" }
+scsys-generate = { features = [], optional = true, path = "../generate", version = "0.2.0" }
 scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0" }
 
 [dev-dependencies]

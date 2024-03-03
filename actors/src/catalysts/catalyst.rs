@@ -1,10 +1,9 @@
 /*
-    Appellation: catalyst <module>
-    Creator: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
+    Appellation: catalyst <mod>
+    Contrib: FL03 <jo3mccain@icloud.com>
 */
-use crate::{messages::Message, Direction};
-use serde::{Deserialize, Serialize};
+use crate::messages::Message;
+use crate::Direction;
 
 pub struct Catalyzer {
     pub direction: Direction,
@@ -13,7 +12,6 @@ pub struct Catalyzer {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
 
     #[test]
     fn test_default() {}

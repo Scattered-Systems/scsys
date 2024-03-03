@@ -1,17 +1,13 @@
 /*
     Appellation: message <module>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... summary ...
 */
-use decanter::prelude::Hashable;
 use scsys_core::prelude::{BsonOid, Timestamp};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::Display;
 
-#[derive(
-    Clone, Debug, Default, Deserialize, Eq, Hash, Hashable, Ord, PartialEq, PartialOrd, Serialize,
-)]
+#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct Message<T = Value> {
     id: String,
     pub data: Option<T>,

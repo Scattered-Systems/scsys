@@ -6,38 +6,32 @@ edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
 license.workspace = true
-name = "scsys-core"
+name = "scsys-generate"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
-
 
 [features]
 default = []
 
 [lib]
-bench = false
+bench = true
 crate-type = ["cdylib", "rlib"]
-doctest = true
 test = true
 
+[build-dependencies]
+
 [dependencies]
-anyhow.workspace = true
-bson = { features = ["chrono-0_4", "uuid-0_8"], version = "2.9" }
-chrono = "0.4"
-config = "0.14"
-glob = "0.3"
-predicates = "3"
 rand = "0.8"
-serde.workspace = true
-serde_json.workspace = true
-smart-default.workspace = true
-strum.workspace = true
+
+[dev-dependencies]
 
 [package.metadata.docs.rs]
+all-features = true
 rustc-args = ["--cfg", "docsrs"]
 
 [target.wasm32-unknown-unknown.dependencies]
 getrandom = { features = ["js"], version = "0.2" }
 
 [target.wasm32-wasi]
+

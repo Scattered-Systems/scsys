@@ -1,5 +1,5 @@
 // bench.rs
-#![feature(test)]
+#![cfg(bench)]
 
 extern crate test;
 

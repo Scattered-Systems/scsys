@@ -1,29 +1,31 @@
 /*
     Appellation: scsys-core <library>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
+//! # scsys-core
 #[doc(inline)]
-pub use self::{classify::*, identity::*, primitives::*, specs::*, utils::*};
+pub use self::{primitives::*, specs::*, utils::*};
 
 pub mod appellation;
+pub mod classify;
 pub mod errors;
 pub mod extract;
+pub mod id;
 pub mod time;
 
-mod classify;
-mod identity;
-mod primitives;
-mod specs;
-mod utils;
+pub(crate) mod primitives;
+pub(crate) mod specs;
+pub(crate) mod utils;
 
 pub mod prelude {
-    pub use super::appellation::*;
-    pub use super::errors::*;
-    pub use super::extract::*;
-    pub use super::identity::*;
-    pub use super::primitives::*;
-    pub use super::specs::*;
-    pub use super::time::*;
-    pub use super::utils::*;
+    pub use crate::primitives::*;
+    pub use crate::specs::*;
+    pub use crate::utils::*;
+
+    pub use crate::appellation::*;
+    pub use crate::classify::*;
+    pub use crate::errors::*;
+    pub use crate::extract::*;
+    pub use crate::id::*;
+    pub use crate::time::*;
 }
