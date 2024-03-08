@@ -32,7 +32,7 @@ tokio = { features = ["sync"], version = "1" }
 
 [dependencies.scsys-core]
 path = "../core"
-version = "0.2.0"
+version = "0.2.0-alpha"
 
 [dev-dependencies]
 
