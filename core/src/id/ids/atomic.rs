@@ -4,6 +4,7 @@
 */
 use crate::id::Identifier;
 use serde::{Deserialize, Serialize};
+use std::ops::{Deref, DerefMut};
 
 #[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct AtomicId(usize);
@@ -24,6 +25,20 @@ impl AsRef<usize> for AtomicId {
 
 impl AsMut<usize> for AtomicId {
     fn as_mut(&mut self) -> &mut usize {
+        &mut self.0
+    }
+}
+
+impl Deref for AtomicId {
+    type Target = usize;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl DerefMut for AtomicId {
+    fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
     }
 }

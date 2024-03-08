@@ -11,8 +11,12 @@ pub(crate) mod timestamp;
 
 /// Interface for time-related data-structures
 pub trait Temporal {
-    fn timestamp(&self) -> i64;
+    type Timestamp;
+
+    fn timestamp(&self) -> Self::Timestamp;
 }
+
+
 
 pub(crate) mod utils {
 

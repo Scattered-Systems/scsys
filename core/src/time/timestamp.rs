@@ -53,7 +53,9 @@ impl Timestamp {
 }
 
 impl Temporal for Timestamp {
-    fn timestamp(&self) -> i64 {
+    type Timestamp = i64;
+
+    fn timestamp(&self) -> Self::Timestamp {
         match self.clone() {
             Self::Rfc3339(ts) => chrono::DateTime::parse_from_rfc3339(ts.as_str())
                 .unwrap()
@@ -130,6 +132,6 @@ mod tests {
         let a = m.clone();
         let b: i64 = m.clone().into();
         assert_eq!(&m, &a);
-        assert_eq!(&a.timestamp(), &b);
+        assert_eq!(a.timestamp(), b);
     }
 }
