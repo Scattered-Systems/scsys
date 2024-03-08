@@ -1,4 +1,4 @@
-name: Crates
+name: crates.io
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -9,26 +9,26 @@ env:
 
 on:
   push:
-    tags: [ "nightly*",  "v*.*.*" ]
+    tags: [nightly*, v*.*.*]
   release:
-    types: [ published ]
+    types: [created]
   repository_dispatch:
-    types: [ publish ]
+    types: [publish]
   workflow_dispatch:
     inputs:
       publish:
         default: true
-        description: 'Publish'
+        description: "Publish"
         required: true
         type: boolean
 
 jobs:
-  base:
+  core:
     name: Publish (core)
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [ core ]
+        package: [core]
     env:
       PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
     steps:
@@ -37,17 +37,18 @@ jobs:
         run: cargo publish --all-features -v -p ${{ env.PACKAGE_NAME }} --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
   features:
     name: Publish (features)
+    needs: core
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [ actors, core, derive, macros ]
+        package: [actors, derive, macros]
     env:
       PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
     steps:
       - uses: actions/checkout@v4
       - name: Publish (${{ env.PACKAGE_NAME }})
         run: cargo publish --all-features -v -p ${{ env.PACKAGE_NAME }} --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
-  publish:
+  sdk:
     env:
       PACKAGE_NAME: ${{ github.event.repository.name }}
     name: Publish (sdk)
