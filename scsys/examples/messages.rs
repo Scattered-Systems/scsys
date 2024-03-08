@@ -1,3 +1,7 @@
+/*
+    Appellation: messages <example>
+    Creator: FL03 <jo3mccain@icloud.com>
+*/
 use scsys::core::id::ids::AtomicId;
 use scsys::prelude::Message;
 

@@ -6,7 +6,7 @@
 pub use self::{constants::*, types::*};
 
 /// Type alias for [anyhow::Result]
-pub type Result<T = ()> = anyhow::Result<T>;
+pub type Result<T = ()> = std::result::Result<T, crate::errors::Error>;
 
 mod constants {
     pub const SCASE: &str = "snake_case";

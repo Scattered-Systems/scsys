@@ -51,6 +51,10 @@ bench = true
 crate-type = ["cdylib", "rlib"]
 test = true
 
+[[example]]
+name = "messages"
+required-features = ["actors"]
+
 [[test]]
 name = "derive"
 required-features = ["derive"]
@@ -59,10 +63,10 @@ required-features = ["derive"]
 [build-dependencies]
 
 [dependencies]
-scsys-actors = { features = [], optional = true, path = "../actors", version = "0.2.0-alpha" }
-scsys-core = { features = [], optional = true, path = "../core", version = "0.2.0-alpha" }
-scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0-alpha" }
-scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0-alpha" }
+scsys-actors = { features = [], optional = true, path = "../actors", version = "0.2.0-nightly" }
+scsys-core = { features = [], optional = true, path = "../core", version = "0.2.0-nightly" }
+scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0-nightly" }
+scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0-nightly" }
 
 [dev-dependencies]
 serde.workspace = true

@@ -27,7 +27,6 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, VariantNames};
 #[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]
 pub enum ErrorKind {
-    Arithmetic,
     Async,
     Connection,
     #[default]
@@ -120,7 +119,13 @@ pub enum OperationalError {
 }
 
 impl OperationalError {
+    pub fn arithmetic() -> Self {
+        Self::Arithmetic
+    }
 
+    pub fn system() -> Self {
+        Self::System
+    }
 }
 
 macro_rules! error_kind {
