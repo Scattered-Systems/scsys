@@ -2,6 +2,13 @@
     Appellation: specs <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+//! # Specs
+//! 
+//! 
+
+pub mod appellation;
+pub mod classify;
+
 
 /// Interface for data-structures that can be compared for equality
 pub trait Contain<T>
@@ -20,21 +27,17 @@ where
     }
 }
 
-pub trait Justify<T> {
-    fn justification(&self) -> String;
-    fn justify(&self, elem: &T) -> bool;
-    fn justify_all(&self, iter: impl IntoIterator<Item = T>) -> bool {
-        iter.into_iter().all(|i| self.justify(&i))
-    }
-    fn justify_some(&self, iter: impl IntoIterator<Item = T>) -> bool {
-        iter.into_iter().any(|i| self.justify(&i))
-    }
-}
-
 /// Interface for nameable data-structures
 pub trait Name {
     fn name(&self) -> String;
     fn slug(&self) -> String {
         self.name().to_lowercase().replace(" ", "-")
     }
+}
+
+
+pub(crate) mod prelude {
+    pub use super::{Contain, Name};
+    pub use super::appellation::*;
+    pub use super::classify::*;
 }

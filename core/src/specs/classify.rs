@@ -1,8 +1,18 @@
 /*
-    Appellation: classifier <module>
+    Appellation: classify <specs>
     Contrib: FL03 <jo3mccain@icloud.com>
-    Description: ... Summary ...
 */
+//! # Classify
+//! 
+//! 
+
+pub trait Classifiable<Cls: Classifier> {
+    fn class(&self) -> &Cls;
+}
+
+pub trait Classify<Cls: Classifier> {
+    fn classify(&self, target: Box<dyn Classifiable<Cls>>) -> Cls;
+}
 
 /// Interface for classifier objects
 pub trait Classifier {}

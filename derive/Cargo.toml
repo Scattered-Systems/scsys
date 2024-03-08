@@ -12,6 +12,8 @@ repository.workspace = true
 version.workspace = true
 
 [lib]
+bench = false
+doctest = false
 proc-macro = true
 test = false
 

@@ -51,6 +51,11 @@ bench = true
 crate-type = ["cdylib", "rlib"]
 test = true
 
+[[test]]
+name = "derive"
+required-features = ["derive"]
+
+
 [build-dependencies]
 
 [dependencies]
