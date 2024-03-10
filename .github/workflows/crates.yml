@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [core]
+        package: [ core ]
     env:
       PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
     steps:
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [actors, derive, macros]
+        package: [ actors, derive, macros, stores ]
     env:
       PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
     steps:

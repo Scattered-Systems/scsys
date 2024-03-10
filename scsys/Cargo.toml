@@ -15,10 +15,12 @@ version.workspace = true
 default = [
     "actors",
     "core",
+    "stores",
 ]
 full = [
     "actors",
     "core",
+    "stores",
     "derive",
     "extras"
 ]
@@ -33,17 +35,25 @@ actors = [
 core = [
     "dep:scsys-core"
 ]
+
 derive = [
     "dep:scsys-derive", 
     "macros"
 ]
+
 macros = [
     "dep:scsys-macros"
+]
+
+stores = [
+    "dep:scsys-stores"
 ]
 
 extras = [
 
 ]
+
+serde = []
 
 
 [lib]
@@ -63,10 +73,11 @@ required-features = ["derive"]
 [build-dependencies]
 
 [dependencies]
-scsys-actors = { features = [], optional = true, path = "../actors", version = "0.2.0-nightly" }
-scsys-core = { features = [], optional = true, path = "../core", version = "0.2.0-nightly" }
-scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0-nightly" }
-scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0-nightly" }
+scsys-actors = { features = [], optional = true, path = "../actors", version = "0.2.0" }
+scsys-core = { features = [], optional = true, path = "../core", version = "0.2.0" }
+scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0" }
+scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0" }
+scsys-stores = { features = [], optional = true, path = "../stores", version = "0.2.0" }
 
 [dev-dependencies]
 serde.workspace = true

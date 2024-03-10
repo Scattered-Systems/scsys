@@ -12,6 +12,8 @@ pub use scsys_core as core;
 pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
+#[cfg(feature = "stores")]
+pub use scsys_stores as stores;
 
 pub mod prelude {
     #[cfg(feature = "actors")]
@@ -22,4 +24,6 @@ pub mod prelude {
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]
     pub use scsys_macros::*;
+    #[cfg(feature = "stores")]
+    pub use crate::stores::prelude::*;
 }
