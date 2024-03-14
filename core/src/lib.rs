@@ -20,7 +20,7 @@ pub mod prelude {
     pub use crate::utils::*;
 
     pub use crate::errors::*;
-    pub use crate::id::*;
+    pub use crate::id::prelude::*;
     pub use crate::specs::prelude::*;
     pub use crate::time::*;
 }

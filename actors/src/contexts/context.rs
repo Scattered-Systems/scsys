@@ -3,9 +3,11 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 use super::{Configurable, Contextual};
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, PartialEq, Serialize)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
+#[derive(Clone, Debug, Default, Eq, Hash, PartialEq)]
 pub struct Context<Cnf> {
     pub cnf: Cnf,
 }

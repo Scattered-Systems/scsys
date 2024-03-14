@@ -2,23 +2,22 @@
     Appellation: message <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use scsys::prelude::{systime, BsonOid};
+use scsys::prelude::{systime, AtomicId};
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
-use std::fmt::Display;
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
-pub struct Message<T = Value> {
-    id: String,
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+pub struct Message<T = String> {
+    id: AtomicId,
     data: Option<T>,
     ts: u128,
 }
 
 impl<T> Message<T> {
     pub fn new(data: Option<T>) -> Self {
-        let id = BsonOid::default().to_hex();
         Self {
-            id,
+            id: AtomicId::new(),
             data,
             ts: systime(),
         }
@@ -28,8 +27,8 @@ impl<T> Message<T> {
         self.data.as_ref()
     }
 
-    pub fn id(&self) -> &str {
-        &self.id
+    pub fn id(&self) -> usize {
+        *self.id
     }
 
     pub fn timestamp(&self) -> u128 {
@@ -37,18 +36,13 @@ impl<T> Message<T> {
     }
 }
 
-impl<T> Display for Message<T>
+impl<T> std::fmt::Display for Message<T>
 where
-    T: Serialize,
+    T: std::fmt::Display,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         if let Some(data) = self.content() {
-            return write!(
-                f,
-                "Timestamp: {}\n{:?}",
-                self.ts,
-                serde_json::to_string_pretty(data).unwrap()
-            );
+            return write!(f, "Timestamp: {}\n{}", self.ts, data,);
         }
         write!(f, "Timestamp: {}", self.ts)
     }

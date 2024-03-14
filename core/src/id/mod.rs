@@ -51,6 +51,13 @@ pub(crate) mod utils {
     }
 }
 
+pub(crate) mod prelude {
+    pub use super::ids::*;
+    pub use super::utils::*;
+    pub use super::Identifiable;
+    pub use super::Identifier;
+}
+
 #[cfg(test)]
 mod tests {
     use super::ids::AtomicId;
@@ -58,11 +65,10 @@ mod tests {
 
     #[test]
     fn test_atomic() {
-        let id = AtomicId::new();
-        assert_eq!(id.get(), 1);
-        assert_eq!(*id.next(), 2);
-        let id = AtomicId::new();
-        assert_eq!(id.get(), 3);
+        let a = AtomicId::new();
+        assert_eq!(*a.next(), *a + 1);
+        let b = AtomicId::new();
+        assert_eq!(*b, *a + 2);
     }
 
     #[test]

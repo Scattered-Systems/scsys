@@ -49,6 +49,7 @@ extras = [
 ]
 
 serde = [
+    "scsys-actors/serde",
     "scsys-core/serde"
 ]
 
@@ -64,17 +65,17 @@ required-features = ["actors"]
 
 [[test]]
 name = "derive"
-required-features = ["derive"]
+required-features = ["serde", "derive"]
 
 
 [build-dependencies]
 
 [dependencies]
-scsys-actors = { features = [], optional = true, path = "../actors", version = "0.2.0" }
+scsys-actors = { optional = true, path = "../actors", version = "0.2.0" }
 scsys-core = { path = "../core", version = "0.2.0" }
-scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0" }
-scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0" }
-scsys-stores = { features = [], optional = true, path = "../stores", version = "0.2.0" }
+scsys-derive = { optional = true, path = "../derive", version = "0.2.0" }
+scsys-macros = { optional = true, path = "../macros", version = "0.2.0" }
+scsys-stores = { optional = true, path = "../stores", version = "0.2.0" }
 
 [dev-dependencies]
 serde.workspace = true

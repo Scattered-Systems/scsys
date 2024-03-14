@@ -9,7 +9,7 @@ use crate::id::Identifier;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use std::ops::{Deref, DerefMut};
-use std::sync::atomic::{AtomicUsize, Ordering::Relaxed as AtomicOrdering};
+use std::sync::atomic::{AtomicUsize, Ordering::Relaxed};
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
@@ -18,7 +18,7 @@ pub struct AtomicId(usize);
 impl AtomicId {
     pub fn new() -> Self {
         static COUNTER: AtomicUsize = AtomicUsize::new(1);
-        Self(COUNTER.fetch_add(1, AtomicOrdering))
+        Self(COUNTER.fetch_add(1, Relaxed))
     }
 
     pub fn next(&self) -> Self {
@@ -29,7 +29,7 @@ impl AtomicId {
         self.0 = id;
     }
 
-    pub fn get(&self) -> usize {
+    pub const fn get(&self) -> usize {
         self.0
     }
 
