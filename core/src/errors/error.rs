@@ -4,10 +4,11 @@
 */
 use super::kinds::*;
 use crate::id::ids::AtomicId;
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
-#[serde(rename_all = "lowercase")]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Error {
     id: AtomicId,
     kind: ErrorKind,
@@ -18,7 +19,7 @@ pub struct Error {
 impl Error {
     pub fn new(kind: ErrorKind, message: String) -> Self {
         let id = AtomicId::new();
-        let ts = crate::time::system_timestamp();
+        let ts = crate::time::systime();
         Self {
             id,
             kind,
@@ -68,7 +69,7 @@ impl Error {
     }
 
     fn on_update(&mut self) {
-        self.ts = crate::time::system_timestamp();
+        self.ts = crate::time::systime();
     }
 }
 
@@ -78,7 +79,13 @@ unsafe impl Sync for Error {}
 
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "Error\nKind: {}\nTimestamp: {}\n{}", self.kind(), self.timestamp(), self.message())
+        write!(
+            f,
+            "Error\nKind: {}\nTimestamp: {}\n{}",
+            self.kind(),
+            self.timestamp(),
+            self.message()
+        )
     }
 }
 
@@ -90,61 +97,32 @@ impl From<ErrorKind> for Error {
     }
 }
 
-impl From<String> for Error {
-    fn from(message: String) -> Self {
-        Self::unknown(message)
-    }
+macro_rules! impl_error_from {
+    ($from:ty, $kind:expr) => {
+        impl From<$from> for Error {
+            fn from(err: $from) -> Self {
+                Self::new(ErrorKind::from($kind), err.to_string())
+            }
+        }
+    };
 }
 
-impl From<&str> for Error {
-    fn from(message: &str) -> Self {
-        Self::unknown(message)
-    }
-}
+impl_error_from!(anyhow::Error, ExternalError::Unknown);
 
-impl From<anyhow::Error> for Error {
-    fn from(err: anyhow::Error) -> Self {
-        Self::unknown(err)
-    }
-}
-impl From<std::io::Error> for Error {
-    fn from(err: std::io::Error) -> Self {
-        Self::new(ErrorKind::IO, err.to_string())
-    }
-}
+impl_error_from!(Box<dyn std::error::Error>, ExternalError::Unknown);
 
-impl From<std::num::ParseIntError> for Error {
-    fn from(err: std::num::ParseIntError) -> Self {
-        Self::new(ErrorKind::Parse, err.to_string())
-    }
-}
+impl_error_from!(String, ExternalError::Unknown);
 
-impl From<std::num::ParseFloatError> for Error {
-    fn from(err: std::num::ParseFloatError) -> Self {
-        Self::new(ErrorKind::Parse, err.to_string())
-    }
-}
+impl_error_from!(&str, ExternalError::Unknown);
 
-impl From<std::str::Utf8Error> for Error {
-    fn from(err: std::str::Utf8Error) -> Self {
-        Self::new(ErrorKind::Parse, err.to_string())
-    }
-}
+impl_error_from!(std::io::Error, ErrorKind::IO);
 
-impl From<std::string::FromUtf8Error> for Error {
-    fn from(err: std::string::FromUtf8Error) -> Self {
-        Self::new(ErrorKind::Parse, err.to_string())
-    }
-}
+impl_error_from!(std::num::ParseIntError, ErrorKind::Parse);
 
-impl From<std::string::FromUtf16Error> for Error {
-    fn from(err: std::string::FromUtf16Error) -> Self {
-        Self::new(ErrorKind::Parse, err.to_string())
-    }
-}
+impl_error_from!(std::num::ParseFloatError, ErrorKind::Parse);
 
+impl_error_from!(std::str::Utf8Error, ErrorKind::Parse);
 
+impl_error_from!(std::string::FromUtf8Error, ErrorKind::Parse);
 
-
-
-
+impl_error_from!(std::string::FromUtf16Error, ErrorKind::Parse);

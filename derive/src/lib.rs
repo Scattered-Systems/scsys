@@ -4,7 +4,7 @@
 
 */
 //! # scsys-derive
-//! 
+//!
 //! Useful derive macros for the scsys ecosystem
 
 extern crate proc_macro;
@@ -13,10 +13,10 @@ extern crate syn;
 
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse_macro_input, DeriveInput};
-use syn::{Data, Fields, Variant};
 use syn::punctuated::Punctuated;
 use syn::token::Comma;
+use syn::{parse_macro_input, DeriveInput};
+use syn::{Data, Fields, Variant};
 
 #[proc_macro_derive(Name, attributes(Alternative))]
 pub fn name(input: TokenStream) -> TokenStream {
@@ -64,7 +64,6 @@ fn impl_serde_display(ast: &DeriveInput) -> proc_macro2::TokenStream {
     res
 }
 
-
 #[proc_macro_derive(FunctionalConstructors)]
 pub fn derive_functional_constructors(input: TokenStream) -> TokenStream {
     let ast: DeriveInput = syn::parse(input).unwrap();
@@ -85,7 +84,11 @@ fn impl_functional_constructors(
     for variant in variants {
         let variant_name = &variant.ident;
         let constructor_name = syn::Ident::new(
-            &format!("{}_{}", name.to_string().to_lowercase(), variant_name.to_string().to_lowercase()),
+            &format!(
+                "{}_{}",
+                name.to_string().to_lowercase(),
+                variant_name.to_string().to_lowercase()
+            ),
             proc_macro2::Span::call_site(),
         );
 
@@ -114,7 +117,5 @@ fn impl_functional_constructors(
 }
 
 pub(crate) fn handle_functional_unit() -> proc_macro2::TokenStream {
-    quote! {
-        
-    }
+    quote! {}
 }

@@ -2,14 +2,19 @@
    Appellation: kinds <mod>
    Contrib: FL03 <jo3mccain@icloud.com>
 */
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use smart_default::SmartDefault;
 use strum::{Display, EnumCount, EnumIs, EnumIter, VariantNames};
 
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize,),
+    serde(rename_all = "lowercase", untagged)
+)]
 #[derive(
     Clone,
     Debug,
-    Deserialize,
     Display,
     EnumCount,
     EnumIs,
@@ -19,12 +24,10 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, VariantNames};
     Ord,
     PartialEq,
     PartialOrd,
-    Serialize,
     SmartDefault,
     VariantNames,
 )]
 #[non_exhaustive]
-#[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]
 pub enum ErrorKind {
     Async,
@@ -48,16 +51,16 @@ impl ErrorKind {
     pub fn unknown() -> Self {
         Self::Error(ExternalError::Unknown)
     }
-
-
 }
 
-
-
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize,),
+    serde(rename_all = "lowercase", untagged)
+)]
 #[derive(
     Clone,
     Debug,
-    Deserialize,
     Display,
     EnumCount,
     EnumIs,
@@ -67,12 +70,9 @@ impl ErrorKind {
     Ord,
     PartialEq,
     PartialOrd,
-    Serialize,
     SmartDefault,
     VariantNames,
 )]
-#[non_exhaustive]
-#[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]
 pub enum ExternalError {
     Custom(String),
@@ -90,12 +90,14 @@ impl ExternalError {
     }
 }
 
-
-
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize,),
+    serde(rename_all = "lowercase", untagged)
+)]
 #[derive(
     Clone,
     Debug,
-    Deserialize,
     Display,
     EnumCount,
     EnumIs,
@@ -105,12 +107,10 @@ impl ExternalError {
     Ord,
     PartialEq,
     PartialOrd,
-    Serialize,
     SmartDefault,
     VariantNames,
 )]
 #[non_exhaustive]
-#[serde(rename_all = "lowercase")]
 #[strum(serialize_all = "lowercase")]
 pub enum OperationalError {
     #[default]
@@ -130,13 +130,11 @@ impl OperationalError {
 
 macro_rules! error_kind {
     ($variant:ident, $kind:ident) => {
-
         impl From<$kind> for ErrorKind {
             fn from(kind: $kind) -> Self {
                 Self::$variant(kind)
             }
         }
-
     };
 }
 

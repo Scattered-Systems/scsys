@@ -2,7 +2,7 @@
     Appellation: message <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use scsys_core::prelude::{BsonOid, Timestamp};
+use scsys::prelude::{systime, BsonOid};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt::Display;
@@ -10,18 +10,30 @@ use std::fmt::Display;
 #[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct Message<T = Value> {
     id: String,
-    pub data: Option<T>,
-    pub ts: i64,
+    data: Option<T>,
+    ts: u128,
 }
 
 impl<T> Message<T> {
     pub fn new(data: Option<T>) -> Self {
         let id = BsonOid::default().to_hex();
-        let ts = Timestamp::default().into();
-        Self { id, data, ts }
+        Self {
+            id,
+            data,
+            ts: systime(),
+        }
     }
-    pub fn content(&self) -> &Option<T> {
-        &self.data
+
+    pub fn content(&self) -> Option<&T> {
+        self.data.as_ref()
+    }
+
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+
+    pub fn timestamp(&self) -> u128 {
+        self.ts
     }
 }
 
@@ -30,7 +42,15 @@ where
     T: Serialize,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string(&self).unwrap())
+        if let Some(data) = self.content() {
+            return write!(
+                f,
+                "Timestamp: {}\n{:?}",
+                self.ts,
+                serde_json::to_string_pretty(data).unwrap()
+            );
+        }
+        write!(f, "Timestamp: {}", self.ts)
     }
 }
 

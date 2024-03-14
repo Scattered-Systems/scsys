@@ -16,7 +16,7 @@ pub(crate) mod utils;
 
 pub mod prelude {
     pub use crate::primitives::*;
-    
+
     pub use crate::utils::*;
 
     pub use crate::errors::*;

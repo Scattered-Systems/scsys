@@ -5,11 +5,12 @@
 //! # Actors
 //!
 //!
+extern crate scsys_core as scsys;
+
 pub use self::{direction::*, specs::*};
 
 pub mod catalysts;
 pub mod contexts;
-pub mod loggers;
 pub mod messages;
 pub mod power;
 pub mod states;
@@ -23,7 +24,6 @@ pub mod prelude {
     pub use super::catalysts::*;
     pub use super::contexts::*;
     pub use super::direction::*;
-    pub use super::loggers::*;
     pub use super::messages::*;
     pub use super::power::*;
     pub use super::specs::*;

@@ -14,12 +14,11 @@ version.workspace = true
 [features]
 default = [
     "actors",
-    "core",
     "stores",
 ]
 full = [
     "actors",
-    "core",
+    "serde",
     "stores",
     "derive",
     "extras"
@@ -30,10 +29,6 @@ wasm = []
 
 actors = [
     "dep:scsys-actors"
-]
-
-core = [
-    "dep:scsys-core"
 ]
 
 derive = [
@@ -53,7 +48,9 @@ extras = [
 
 ]
 
-serde = []
+serde = [
+    "scsys-core/serde"
+]
 
 
 [lib]
@@ -74,7 +71,7 @@ required-features = ["derive"]
 
 [dependencies]
 scsys-actors = { features = [], optional = true, path = "../actors", version = "0.2.0" }
-scsys-core = { features = [], optional = true, path = "../core", version = "0.2.0" }
+scsys-core = { path = "../core", version = "0.2.0" }
 scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0" }
 scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0" }
 scsys-stores = { features = [], optional = true, path = "../stores", version = "0.2.0" }

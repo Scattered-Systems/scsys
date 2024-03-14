@@ -6,8 +6,26 @@ use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 /// The mode of a CRUD operation.
-/// 
-#[derive(Clone, Copy, Debug, Default, Deserialize, Display, EnumCount, EnumIs, EnumIter, EnumString, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, VariantNames)]
+///
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Deserialize,
+    Display,
+    EnumCount,
+    EnumIs,
+    EnumIter,
+    EnumString,
+    Eq,
+    Hash,
+    Ord,
+    PartialEq,
+    PartialOrd,
+    Serialize,
+    VariantNames,
+)]
 #[serde(rename_all = "snake_case", untagged)]
 #[strum(serialize_all = "snake_case")]
 pub enum CRUD {

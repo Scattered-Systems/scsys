@@ -16,7 +16,6 @@ where
 
 #[test]
 fn compiles() {
-
     assert_eq!(multiply(2, 2), 4);
     assert_eq!(multiply(3_f64, 3_f64), square(3_f64));
     assert_ne!(multiply(2.0, 3.0), -6.0);

@@ -1,52 +1,55 @@
 /*
-    Appellation: identity <mod>
+    Appellation: identity <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use super::IdKind;
+use super::ids::AtomicId;
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+use std::ops::Deref;
 
-pub struct Id {
-    id: String,
-    kind: IdKind,
-    name: String,
-    timestamp: i32,
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
+pub struct Id<T = AtomicId> {
+    id: T,
+    timestamp: u128,
 }
 
-impl Id {
-    pub fn new() -> Self {
+impl<T> Id<T> {
+    pub fn new(id: T) -> Self {
         Self {
-            id: String::new(),
-            kind: IdKind::default(),
-            name: String::new(),
-            timestamp: 0,
+            id,
+            timestamp: crate::time::systime(),
         }
     }
 
-    pub fn with_id(mut self, id: String) -> Self {
+    pub fn id(&self) -> &T {
+        &self.id
+    }
+
+    pub fn set(&mut self, id: T) {
         self.id = id;
-        self
+        self.on_update();
     }
 
-    pub fn with_kind(mut self, kind: IdKind) -> Self {
-        self.kind = kind;
-        self
+    pub fn timestamp(&self) -> u128 {
+        self.timestamp
     }
 
-    pub fn with_name(mut self, name: String) -> Self {
-        self.name = name;
-        self
+    fn on_update(&mut self) {
+        self.timestamp = crate::time::systime();
     }
+}
 
-    pub fn with_timestamp(mut self, timestamp: i32) -> Self {
-        self.timestamp = timestamp;
-        self
+impl<T> AsRef<T> for Id<T> {
+    fn as_ref(&self) -> &T {
+        &self.id
     }
+}
 
-    pub fn build(self) -> Self {
-        Self {
-            id: self.id,
-            kind: self.kind,
-            name: self.name,
-            timestamp: self.timestamp,
-        }
+impl<T> Deref for Id<T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        &self.id
     }
 }

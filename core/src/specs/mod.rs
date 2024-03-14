@@ -3,12 +3,11 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 //! # Specs
-//! 
-//! 
+//!
+//!
 
 pub mod appellation;
 pub mod classify;
-
 
 /// Interface for data-structures that can be compared for equality
 pub trait Contain<T>
@@ -35,9 +34,8 @@ pub trait Name {
     }
 }
 
-
 pub(crate) mod prelude {
-    pub use super::{Contain, Name};
     pub use super::appellation::*;
     pub use super::classify::*;
+    pub use super::{Contain, Name};
 }

@@ -1,19 +1,40 @@
 /*
-   Appellation: atomic <mod>
-   Contrib: FL03 <jo3mccain@icloud.com>
+    Appellation: atomic <mod>
+    Contrib: FL03 <jo3mccain@icloud.com>
 */
+//! # Atomic Id
+//!
+//!
 use crate::id::Identifier;
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use std::ops::{Deref, DerefMut};
+use std::sync::atomic::{AtomicUsize, Ordering::Relaxed as AtomicOrdering};
 
-#[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
 pub struct AtomicId(usize);
 
 impl AtomicId {
     pub fn new() -> Self {
-        use std::sync::atomic;
-        static COUNTER: atomic::AtomicUsize = atomic::AtomicUsize::new(1);
-        Self(COUNTER.fetch_add(1, atomic::Ordering::Relaxed))
+        static COUNTER: AtomicUsize = AtomicUsize::new(1);
+        Self(COUNTER.fetch_add(1, AtomicOrdering))
+    }
+
+    pub fn next(&self) -> Self {
+        Self::new()
+    }
+
+    pub fn set(&mut self, id: usize) {
+        self.0 = id;
+    }
+
+    pub fn get(&self) -> usize {
+        self.0
+    }
+
+    pub fn into_inner(self) -> usize {
+        self.0
     }
 }
 
@@ -26,6 +47,12 @@ impl AsRef<usize> for AtomicId {
 impl AsMut<usize> for AtomicId {
     fn as_mut(&mut self) -> &mut usize {
         &mut self.0
+    }
+}
+
+impl Default for AtomicId {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -43,11 +70,7 @@ impl DerefMut for AtomicId {
     }
 }
 
-impl Default for AtomicId {
-    fn default() -> Self {
-        Self::new()
-    }
-}
+impl Identifier for AtomicId {}
 
 impl std::fmt::Display for AtomicId {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -66,5 +89,3 @@ impl From<AtomicId> for usize {
         id.0
     }
 }
-
-impl Identifier for AtomicId {}

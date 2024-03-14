@@ -4,23 +4,17 @@
 */
 use super::Temporal;
 use crate::{BsonDateTime, ChronoDateTime, DefaultTimezone};
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use strum::{Display, VariantNames};
 
 /// Timestamp implements a host of useful utilities for stamping data
-#[derive(
-    Clone,
-    Debug,
-    Deserialize,
-    Display,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd,
-    Serialize,
-    VariantNames,
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize,),
+    serde(rename_all = "lowercase", untagged)
 )]
+#[derive(Clone, Debug, Display, Eq, Hash, Ord, PartialEq, PartialOrd, VariantNames)]
 #[strum(serialize_all = "snake_case")]
 pub enum Timestamp {
     Datetime(bson::DateTime),

@@ -3,11 +3,9 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 //! # identity
-pub use self::{builder::*, identity::*, kinds::*, utils::*};
+pub use self::{identity::*, utils::*};
 
-pub(crate) mod builder;
 pub(crate) mod identity;
-pub(crate) mod kinds;
 
 pub mod ids;
 
@@ -43,9 +41,9 @@ pub(crate) mod utils {
 
     pub fn rid(length: usize) -> String {
         use rand::distributions::Alphanumeric;
-        use rand::{thread_rng, Rng};
+        use rand::Rng;
 
-        thread_rng()
+        rand::thread_rng()
             .sample_iter(&Alphanumeric)
             .take(length)
             .map(char::from)
@@ -55,14 +53,16 @@ pub(crate) mod utils {
 
 #[cfg(test)]
 mod tests {
-
-    use super::*;
+    use super::ids::AtomicId;
+    use super::rid;
 
     #[test]
-    fn test_atomic_id() {
-        let id = atomic_id();
-        assert_eq!(id, 0);
-        assert_ne!(id, atomic_id());
+    fn test_atomic() {
+        let id = AtomicId::new();
+        assert_eq!(id.get(), 1);
+        assert_eq!(*id.next(), 2);
+        let id = AtomicId::new();
+        assert_eq!(id.get(), 3);
     }
 
     #[test]
