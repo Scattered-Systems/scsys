@@ -15,7 +15,7 @@ on:
   repository_dispatch:
     types: [ clippy ]
   schedule:
-    - cron: "30 21 * * 0" # Every Sunday at 9:30am UTC
+    - cron: 30 21 * * 0 # Every Sunday at 9:30PM UTC
   workflow_dispatch:
 
 permissions:
