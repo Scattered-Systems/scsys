@@ -34,7 +34,7 @@ jobs:
           rustup update
           rustup default ${{ matrix.toolchain }}
       - name: Build
-        run: cargo build ---all-features -r -v --workspace
+        run: cargo build --all-features -r -v --workspace
       - name: Cache build
         id: cache-build
         uses: actions/cache@v4
