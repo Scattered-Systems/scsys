@@ -77,11 +77,11 @@ required-features = ["serde", "derive"]
 [build-dependencies]
 
 [dependencies]
-scsys-actors = { optional = true, path = "../actors", version = "0.2.0" }
-scsys-core = { path = "../core", version = "0.2.0" }
-scsys-derive = { optional = true, path = "../derive", version = "0.2.0" }
-scsys-macros = { optional = true, path = "../macros", version = "0.2.0" }
-scsys-stores = { optional = true, path = "../stores", version = "0.2.0" }
+scsys-actors = { optional = true, path = "../actors", version = "0.2.1" }
+scsys-core = { path = "../core", version = "0.2.1" }
+scsys-derive = { optional = true, path = "../derive", version = "0.2.1" }
+scsys-macros = { optional = true, path = "../macros", version = "0.2.1" }
+scsys-stores = { optional = true, path = "../stores", version = "0.2.1" }
 
 [dev-dependencies]
 serde = { features = ["derive"], version = "1" }
