@@ -22,6 +22,7 @@ full = [
 serde = [
     "dep:serde",
     "serde-ext",
+    "scsys-core/serde",
 ]
 
 serde-ext = [

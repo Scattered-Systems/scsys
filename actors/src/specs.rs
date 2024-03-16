@@ -49,6 +49,7 @@ impl<T> Sender<T> for std::sync::mpsc::Sender<T> {
 #[cfg(feature = "tokio")]
 mod tokio_impls {
     use super::{AsyncReceiver, AsyncSender};
+    use async_trait::async_trait;
 
     #[async_trait]
     impl<T: Send + Sync> AsyncReceiver<T> for tokio::sync::mpsc::Receiver<T> {
