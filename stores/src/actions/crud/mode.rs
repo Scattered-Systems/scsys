@@ -2,6 +2,7 @@
     Appellation: mode <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
@@ -12,7 +13,6 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
     Copy,
     Debug,
     Default,
-    Deserialize,
     Display,
     EnumCount,
     EnumIs,
@@ -23,11 +23,14 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
     Ord,
     PartialEq,
     PartialOrd,
-    Serialize,
     VariantNames,
 )]
-#[serde(rename_all = "snake_case", untagged)]
-#[strum(serialize_all = "snake_case")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize),
+    serde(rename_all = "lowercase", untagged)
+)]
+#[strum(serialize_all = "lowercase")]
 pub enum CRUD {
     #[default]
     Create,

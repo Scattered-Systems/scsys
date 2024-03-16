@@ -6,7 +6,7 @@ This section is used to update intrested parties as to which versions are curren
 
 | Package | Current | Supported |
 |---------|---------|-----------|
-| scsys   | 0.1.39   | <=0.1.30 |
+|  scsys  |  0.2.0  |  <=0.2.0  |
 
 ## Reporting a Vulnerability
 

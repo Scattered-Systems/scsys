@@ -3,7 +3,7 @@
 [![Clippy](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml)
 [![Rust](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml)
 [![crates.io](https://img.shields.io/crates/v/scsys.svg)](https://crates.io/crates/scsys)
-[![docs.rs](https://docs.rs/scsys/badge.svg)](https://docs.rs/scsys)
+[![docs](https://docs.rs/scsys/badge.svg)](https://docs.rs/scsys)
 
 ***
 
@@ -16,7 +16,7 @@ Use Rust's built-in package manager [crates](https://crates.io/crates/scsys) to 
 
 ### Building from the source
 
-#### *Clone the repository*
+#### _Clone the repository_
 
 ```bash
 git clone https://github.com/scattered-systems/scsys
@@ -32,7 +32,7 @@ cargo build -v --workspace
 or
 
 ```bash
-cargo build --release -v --workspace
+cargo build -r -v --workspace
 ```
 
 #### *Testing*
@@ -40,7 +40,7 @@ cargo build --release -v --workspace
 Automatically format and analyze the codebase before building then testing.
 
 ```bash
-cargo test --all -F full --release -v
+cargo test --all-features -r -v --workspace
 ```
 
 ## Usage

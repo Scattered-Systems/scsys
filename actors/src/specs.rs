@@ -45,29 +45,35 @@ impl<T> Sender<T> for std::sync::mpsc::Sender<T> {
         std::sync::mpsc::Sender::send(self, value)
     }
 }
-#[async_trait]
-impl<T: Send + Sync> AsyncReceiver<T> for tokio::sync::mpsc::Receiver<T> {
-    type Error = tokio::sync::mpsc::error::TryRecvError;
 
-    async fn recv(&mut self) -> Result<T, Self::Error> {
-        tokio::sync::mpsc::Receiver::try_recv(self)
+#[cfg(feature = "tokio")]
+mod tokio_impls {
+    use super::{AsyncReceiver, AsyncSender};
+
+    #[async_trait]
+    impl<T: Send + Sync> AsyncReceiver<T> for tokio::sync::mpsc::Receiver<T> {
+        type Error = tokio::sync::mpsc::error::TryRecvError;
+
+        async fn recv(&mut self) -> Result<T, Self::Error> {
+            tokio::sync::mpsc::Receiver::try_recv(self)
+        }
     }
-}
 
-#[async_trait]
-impl<T: Send + Sync> AsyncSender<T> for tokio::sync::mpsc::Sender<T> {
-    type Error = tokio::sync::mpsc::error::SendError<T>;
+    #[async_trait]
+    impl<T: Send + Sync> AsyncSender<T> for tokio::sync::mpsc::Sender<T> {
+        type Error = tokio::sync::mpsc::error::SendError<T>;
 
-    async fn send(&mut self, value: T) -> Result<(), Self::Error> {
-        tokio::sync::mpsc::Sender::send(self, value).await
+        async fn send(&mut self, value: T) -> Result<(), Self::Error> {
+            tokio::sync::mpsc::Sender::send(self, value).await
+        }
     }
-}
 
-#[async_trait]
-impl<T: Clone + Send + Sync> AsyncReceiver<T> for tokio::sync::broadcast::Receiver<T> {
-    type Error = tokio::sync::broadcast::error::RecvError;
+    #[async_trait]
+    impl<T: Clone + Send + Sync> AsyncReceiver<T> for tokio::sync::broadcast::Receiver<T> {
+        type Error = tokio::sync::broadcast::error::RecvError;
 
-    async fn recv(&mut self) -> Result<T, Self::Error> {
-        tokio::sync::broadcast::Receiver::recv(self).await
+        async fn recv(&mut self) -> Result<T, Self::Error> {
+            tokio::sync::broadcast::Receiver::recv(self).await
+        }
     }
 }

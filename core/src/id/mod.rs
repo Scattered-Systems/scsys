@@ -39,6 +39,7 @@ pub(crate) mod utils {
         COUNTER.fetch_add(1, atomic::Ordering::Relaxed)
     }
 
+    #[cfg(feature = "rand")]
     pub fn rid(length: usize) -> String {
         use rand::distributions::Alphanumeric;
         use rand::Rng;
@@ -61,7 +62,6 @@ pub(crate) mod prelude {
 #[cfg(test)]
 mod tests {
     use super::ids::AtomicId;
-    use super::rid;
 
     #[test]
     fn test_atomic() {
@@ -70,10 +70,10 @@ mod tests {
         let b = AtomicId::new();
         assert_eq!(*b, *a + 2);
     }
-
+    #[cfg(feature = "rand")]
     #[test]
     fn test_rid() {
-        let id = rid(10);
+        let id = super::rid(10);
         assert_eq!(id.len(), 10);
     }
 }

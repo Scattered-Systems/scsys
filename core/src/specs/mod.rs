@@ -26,6 +26,22 @@ where
     }
 }
 
+pub trait StringExt {
+    fn remove_first_and_last(&self) -> &str;
+}
+
+impl StringExt for str {
+    fn remove_first_and_last(&self) -> &str {
+        &self[1..self.len() - 1]
+    }
+}
+
+pub trait IntoInner {
+    type Inner;
+
+    fn into_inner(self) -> Self::Inner;
+}
+
 /// Interface for nameable data-structures
 pub trait Name {
     fn name(&self) -> String;

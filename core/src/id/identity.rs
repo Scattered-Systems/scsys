@@ -7,6 +7,11 @@ use super::ids::AtomicId;
 use serde::{Deserialize, Serialize};
 use std::ops::Deref;
 
+pub enum TypeClass {
+    Alphanumeric,
+    Numeric,
+}
+
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
 pub struct Id<T = AtomicId> {

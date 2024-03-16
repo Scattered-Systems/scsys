@@ -14,9 +14,9 @@ extern crate syn;
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::punctuated::Punctuated;
+use syn::spanned::Spanned;
 use syn::token::Comma;
-use syn::{parse_macro_input, DeriveInput};
-use syn::{Data, Fields, Variant};
+use syn::{parse_macro_input, Data, DeriveInput, Fields, Variant};
 
 #[proc_macro_derive(Name, attributes(Alternative))]
 pub fn name(input: TokenStream) -> TokenStream {
@@ -84,38 +84,52 @@ fn impl_functional_constructors(
     for variant in variants {
         let variant_name = &variant.ident;
         let constructor_name = syn::Ident::new(
-            &format!(
-                "{}_{}",
-                name.to_string().to_lowercase(),
-                variant_name.to_string().to_lowercase()
-            ),
+            &variant_name.to_string().to_lowercase(),
             proc_macro2::Span::call_site(),
         );
 
-        let fields = match &variant.fields {
-            Fields::Named(fields) => fields.named.clone(),
-            Fields::Unnamed(fields) => fields.unnamed.clone(),
-            Fields::Unit => Punctuated::new(),
+        let func = match &variant.fields {
+            Fields::Named(fields) => {
+                let field_names: Vec<_> = fields.named.iter().map(|f| &f.ident).collect();
+                let field_types: Vec<_> = fields.named.iter().map(|f| &f.ty).collect();
+
+                let constructor = quote! {
+                    pub fn #constructor_name(#(#field_names: #field_types),*) -> Self {
+                        Self::#variant_name { #(#field_names),* }
+                    }
+                };
+
+                constructor
+            }
+            Fields::Unnamed(fields) => {
+                let field_names: Vec<_> = (0..fields.unnamed.len())
+                    .map(|i| syn::Ident::new(&format!("field_{}", i), variant.span()))
+                    .collect();
+                let field_types: Vec<_> = fields.unnamed.iter().map(|f| &f.ty).collect();
+
+                let constructor = quote! {
+                    pub fn #constructor_name(#(#field_names: #field_types),*) -> Self {
+                        Self::#variant_name(#(#field_names),*)
+                    }
+                };
+
+                constructor
+            }
+            Fields::Unit => {
+                let constructor = quote! {
+                    pub fn #constructor_name() -> Self {
+                        Self::#variant_name
+                    }
+                };
+
+                constructor
+            }
         };
-
-        let field_names: Vec<_> = fields.iter().map(|f| &f.ident).collect();
-        let field_types: Vec<_> = fields.iter().map(|f| &f.ty).collect();
-
-        let constructor = quote! {
-            pub fn #variant(#(#field_names: #field_types),*) -> Self {
-                    Self::#variant_name { #(#field_names),* }
-                }
-        };
-
-        constructors.extend(constructor);
+        constructors.extend(func);
     }
     quote! {
         impl #name {
             #constructors
         }
     }
-}
-
-pub(crate) fn handle_functional_unit() -> proc_macro2::TokenStream {
-    quote! {}
 }

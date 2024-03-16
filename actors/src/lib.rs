@@ -10,6 +10,7 @@ extern crate scsys_core as scsys;
 pub use self::{direction::*, specs::*};
 
 pub mod catalysts;
+pub mod config;
 pub mod contexts;
 pub mod messages;
 pub mod power;

@@ -16,12 +16,12 @@ default = [
     "actors",
     "stores",
 ]
+
 full = [
     "actors",
-    "serde",
-    "stores",
     "derive",
-    "extras"
+    "extras",
+    "stores",
 ]
 
 wasi = []
@@ -45,12 +45,18 @@ stores = [
 ]
 
 extras = [
-
+    "serde",
+    "tokio",
 ]
 
 serde = [
     "scsys-actors/serde",
-    "scsys-core/serde"
+    "scsys-core/serde",
+    "scsys-stores/serde",
+]
+
+tokio = [
+    "scsys-actors/tokio",
 ]
 
 
@@ -78,8 +84,8 @@ scsys-macros = { optional = true, path = "../macros", version = "0.2.0" }
 scsys-stores = { optional = true, path = "../stores", version = "0.2.0" }
 
 [dev-dependencies]
-serde.workspace = true
-serde_json.workspace = true
+serde = { features = ["derive"], version = "1" }
+serde_json = "1"
 
 [package.metadata.docs.rs]
 all-features = true
