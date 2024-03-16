@@ -11,15 +11,32 @@ pub(crate) mod timestamp;
 
 /// Interface for time-related data-structures
 pub trait Temporal {
-    fn timestamp(&self) -> i64;
+    type Timestamp;
+
+    fn timestamp(&self) -> Self::Timestamp;
 }
 
 pub(crate) mod utils {
 
-    pub fn system_timestamp() -> u128 {
+    /// [systime] is a utilitarian function that returns the current system time in milliseconds.
+    pub fn systime() -> u128 {
         std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_millis()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use super::*;
+
+    #[test]
+    fn test_systime() {
+        let start = systime();
+        std::thread::sleep(std::time::Duration::from_secs(1));
+        let end = systime();
+        assert!(end > start);
     }
 }

@@ -2,15 +2,20 @@
     Appellation: direction <module>
     Creator: FL03 <jo3mccain@icloud.com>
 */
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize,),
+    serde(rename_all = "lowercase", untagged)
+)]
 #[derive(
     Clone,
     Copy,
     Debug,
     Default,
-    Deserialize,
     Display,
     EnumCount,
     EnumIs,
@@ -21,29 +26,29 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
     Ord,
     PartialEq,
     PartialOrd,
-    Serialize,
     VariantNames,
 )]
 #[repr(i64)]
-#[serde(rename_all = "snake_case")]
-#[strum(serialize_all = "snake_case")]
+#[strum(serialize_all = "lowercase")]
 pub enum Direction {
     #[default]
-    Input,
-    Output,
+    Forward,
+    Backward,
 }
 
 impl Direction {
-    pub fn input() -> Self {
-        Self::Input
+    pub fn backward() -> Self {
+        Self::Backward
     }
-    pub fn output() -> Self {
-        Self::Output
+
+    pub fn forward() -> Self {
+        Self::Forward
     }
+
     pub fn invert(mut self) -> Self {
         self = match self {
-            Self::Input => Self::Output,
-            Self::Output => Self::Input,
+            Self::Forward => Self::Backward,
+            Self::Backward => Self::Forward,
         };
         self
     }
@@ -56,9 +61,9 @@ mod tests {
 
     #[test]
     fn test_direction() {
-        assert_eq!(Direction::default(), Direction::Input);
+        assert_eq!(Direction::default(), Direction::Forward);
         let dir = Direction::from_str("input").unwrap();
-        assert_eq!(dir, Direction::Input);
+        assert_eq!(dir, Direction::Forward);
 
         assert_eq!(Direction::from_str("output"), Ok(dir.invert()));
     }

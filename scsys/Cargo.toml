@@ -14,36 +14,49 @@ version.workspace = true
 [features]
 default = [
     "actors",
-    "core",
+    "stores",
 ]
+
 full = [
     "actors",
-    "core",
     "derive",
-    "gen",
-    "extras"
+    "extras",
+    "stores",
 ]
 
 wasi = []
 wasm = []
 
 actors = [
-    "scsys-actors"
+    "dep:scsys-actors"
 ]
-core = [
-    "scsys-core"
-]
+
 derive = [
-    "scsys-derive", 
+    "dep:scsys-derive", 
     "macros"
 ]
-gen = [
-    "scsys-generate"
+
+macros = [
+    "dep:scsys-macros"
 ]
-macros = ["scsys-macros"]
+
+stores = [
+    "dep:scsys-stores"
+]
 
 extras = [
+    "serde",
+    "tokio",
+]
 
+serde = [
+    "scsys-actors/serde",
+    "scsys-core/serde",
+    "scsys-stores/serde",
+]
+
+tokio = [
+    "scsys-actors/tokio",
 ]
 
 
@@ -52,18 +65,27 @@ bench = true
 crate-type = ["cdylib", "rlib"]
 test = true
 
+[[example]]
+name = "messages"
+required-features = ["actors"]
+
+[[test]]
+name = "derive"
+required-features = ["serde", "derive"]
+
+
 [build-dependencies]
 
 [dependencies]
-scsys-actors = { features = [], optional = true, path = "../actors", version = "0.2.0" }
-scsys-core = { features = [], optional = true, path = "../core", version = "0.2.0" }
-scsys-derive = { features = [], optional = true, path = "../derive", version = "0.2.0" }
-scsys-generate = { features = [], optional = true, path = "../generate", version = "0.2.0" }
-scsys-macros = { features = [], optional = true, path = "../macros", version = "0.2.0" }
+scsys-actors = { optional = true, path = "../actors", version = "0.2.0" }
+scsys-core = { path = "../core", version = "0.2.0" }
+scsys-derive = { optional = true, path = "../derive", version = "0.2.0" }
+scsys-macros = { optional = true, path = "../macros", version = "0.2.0" }
+scsys-stores = { optional = true, path = "../stores", version = "0.2.0" }
 
 [dev-dependencies]
-serde.workspace = true
-serde_json.workspace = true
+serde = { features = ["derive"], version = "1" }
+serde_json = "1"
 
 [package.metadata.docs.rs]
 all-features = true

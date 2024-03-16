@@ -11,11 +11,6 @@ repository = "https://github.com/scattered-systems/scsys"
 version = "0.2.0"
 
 [workspace.dependencies]
-# decanter = { features = ["derive"], git = "https://github.com/FL03/decanter.git", branch = "v0.1.7", version = "0.1.7" }
-
-anyhow = "1"
-serde = { features = ["derive"], version = "1" }
-serde_json = "1"
 smart-default = "0.7"
 strum = { features = ["derive"], version = "0.26" }
 
@@ -32,10 +27,11 @@ members = [
     "actors",
     "core",
     "derive",
-    "generate",
     "macros",
-    "scsys"
+    "scsys", 
+    "stores",
 ]
+
 resolver = "2"
 
 [profile.dev]

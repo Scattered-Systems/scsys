@@ -3,11 +3,9 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 //! # identity
-pub use self::{builder::*, identity::*, kinds::*, utils::*};
+pub use self::{identity::*, utils::*};
 
-pub(crate) mod builder;
 pub(crate) mod identity;
-pub(crate) mod kinds;
 
 pub mod ids;
 
@@ -41,11 +39,12 @@ pub(crate) mod utils {
         COUNTER.fetch_add(1, atomic::Ordering::Relaxed)
     }
 
+    #[cfg(feature = "rand")]
     pub fn rid(length: usize) -> String {
         use rand::distributions::Alphanumeric;
-        use rand::{thread_rng, Rng};
+        use rand::Rng;
 
-        thread_rng()
+        rand::thread_rng()
             .sample_iter(&Alphanumeric)
             .take(length)
             .map(char::from)
@@ -53,21 +52,28 @@ pub(crate) mod utils {
     }
 }
 
+pub(crate) mod prelude {
+    pub use super::ids::*;
+    pub use super::utils::*;
+    pub use super::Identifiable;
+    pub use super::Identifier;
+}
+
 #[cfg(test)]
 mod tests {
-
-    use super::*;
+    use super::ids::AtomicId;
 
     #[test]
-    fn test_atomic_id() {
-        let id = atomic_id();
-        assert_eq!(id, 0);
-        assert_ne!(id, atomic_id());
+    fn test_atomic() {
+        let a = AtomicId::new();
+        assert_eq!(*a.next(), *a + 1);
+        let b = AtomicId::new();
+        assert_eq!(*b, *a + 2);
     }
-
+    #[cfg(feature = "rand")]
     #[test]
     fn test_rid() {
-        let id = rid(10);
+        let id = super::rid(10);
         assert_eq!(id.len(), 10);
     }
 }

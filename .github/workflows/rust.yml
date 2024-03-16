@@ -10,13 +10,13 @@ env:
 on:
   push:
     branches: [ main ]
-    tags: [ "nightly*",  "v*.*.*" ]
+    tags: [ nightly*,  v*.*.* ]
   release:
     types: [ created ]
   repository_dispatch:
     types: [ rust ]
   schedule:
-    - cron: "30 21 * * 0" # 9:30pm UTC
+    - cron: 30 21 * * 0 # Every Sunday at 9:30pm UTC
   workflow_dispatch:
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
           rustup update
           rustup default ${{ matrix.toolchain }}
       - name: Build
-        run: cargo build -F full --release -v --workspace
+        run: cargo build ---all-features -r -v --workspace
       - name: Cache build
         id: cache-build
         uses: actions/cache@v4
@@ -43,7 +43,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target/release
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ matrix.toolchain }}-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
   test:
     name: Test
     needs: [ builder ]

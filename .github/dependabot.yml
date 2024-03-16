@@ -21,14 +21,14 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: cargo
-    directory: /generate
-    schedule:
-      interval: daily
-  - package-ecosystem: cargo
     directory: /macros
     schedule:
       interval: daily
   - package-ecosystem: cargo
     directory: /scsys
+    schedule:
+      interval: daily
+  - package-ecosystem: cargo
+    directory: /stores
     schedule:
       interval: daily

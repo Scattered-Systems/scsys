@@ -2,10 +2,12 @@
     Appellation: state <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
-#[derive(Clone, Debug, Default, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
+#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct State {
     message: String,
     state: States,
@@ -18,13 +20,13 @@ impl State {
             state,
         }
     }
-    /// Sets the state to [States::Invalid]
+    /// Invalidates the current state
     pub fn invalidate(&mut self) {
         self.state = States::Invalid;
     }
-    /// Returns true if the state is [States::Valid]
+    /// Checks if the current state is valid
     pub fn is_valid(&self) -> bool {
-        self.state == States::Valid
+        self.state.is_valid()
     }
     /// Returns the message
     pub fn message(&self) -> &str {
@@ -49,7 +51,7 @@ impl State {
 
 impl std::fmt::Display for State {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", serde_json::to_string(self).unwrap())
+        write!(f, "{}", self.message)
     }
 }
 
@@ -65,12 +67,16 @@ impl From<State> for States {
     }
 }
 
+#[cfg_attr(
+    feature = "serde",
+    derive(Deserialize, Serialize,),
+    serde(rename_all = "lowercase", untagged)
+)]
 #[derive(
     Clone,
     Copy,
     Debug,
     Default,
-    Deserialize,
     Display,
     EnumCount,
     EnumIs,
@@ -81,7 +87,6 @@ impl From<State> for States {
     Ord,
     PartialEq,
     PartialOrd,
-    Serialize,
     VariantNames,
 )]
 #[repr(u8)]

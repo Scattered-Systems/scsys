@@ -11,22 +11,13 @@ readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
-[features]
-default = []
-full = [
-    "gen"
-]
-
-gen = []
-
 [lib]
-crate-type = ["cdylib", "rlib"]
-test = true
+proc-macro = true
+test = false
 
 [dependencies]
 proc-macro2 = "1"
 quote = "1"
-rand = { features = [], version =  "0.8" }
 syn = { features = ["full"], version = "2" }
 
 [package.metadata.docs.rs]
@@ -34,8 +25,5 @@ all-features = true
 rustc-args = ["--cfg", "docsrs"]
 
 [target.wasm32-unknown-unknown]
-
-[target.wasm32-unknown-unknown.dependencies]
-getrandom = { features = ["js"], version = "0.2" }
 
 [target.wasm32-wasi]

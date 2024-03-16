@@ -17,8 +17,11 @@ mod tests {
     #[test]
     fn test_error() {
         let msg = "test";
-        let err = Error::new(Errors::Error("custom".to_string()), msg.to_string());
-        assert_eq!(err.kind(), &Errors::Error("custom".to_string()));
-        assert_eq!(err.message(), msg);
+        let err = Error::new(ErrorKind::custom("custom".to_string()), msg.to_string());
+        assert_eq!(err.kind(), &ErrorKind::custom("custom".to_string()));
+        assert_eq!(
+            Error::from(anyhow::anyhow!("")).kind(),
+            &ErrorKind::unknown()
+        );
     }
 }
