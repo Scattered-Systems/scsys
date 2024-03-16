@@ -35,7 +35,7 @@ where
         .map(|i| i.trim_matches(skip).parse::<T>().unwrap())
         .collect()
 }
-/// This function converts the file found at path (fp) into a Vec<String>
+/// This function converts the file found at path (fp) into a [Vec<String>]
 pub fn file_to_vec(fp: String) -> IOResult<Vec<String>> {
     let file_in = File::open(fp)?;
     let file_reader = BufReader::new(file_in);
@@ -50,7 +50,7 @@ pub fn fnl_remove(data: impl ToString) -> String {
     chars.as_str().to_string()
 }
 
-/// [package_name] is a simple functional wrapper for [env("CARGO_PKG_NAME")]
+/// [package_name] is a simple functional wrapper for env("CARGO_PKG_NAME")
 pub fn package_name() -> String {
     env!("CARGO_PKG_NAME").to_string()
 }

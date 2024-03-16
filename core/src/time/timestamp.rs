@@ -43,6 +43,12 @@ impl Deref for Timestamp {
     }
 }
 
+impl std::fmt::Display for Timestamp {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 impl From<u128> for Timestamp {
     fn from(timestamp: u128) -> Self {
         Self(timestamp)

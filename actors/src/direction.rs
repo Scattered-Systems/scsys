@@ -32,21 +32,23 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 #[strum(serialize_all = "lowercase")]
 pub enum Direction {
     #[default]
-    Input,
-    Output,
+    Forward,
+    Backward,
 }
 
 impl Direction {
-    pub fn input() -> Self {
-        Self::Input
+    pub fn backward() -> Self {
+        Self::Backward
     }
-    pub fn output() -> Self {
-        Self::Output
+
+    pub fn forward() -> Self {
+        Self::Forward
     }
+
     pub fn invert(mut self) -> Self {
         self = match self {
-            Self::Input => Self::Output,
-            Self::Output => Self::Input,
+            Self::Forward => Self::Backward,
+            Self::Backward => Self::Forward,
         };
         self
     }
@@ -59,9 +61,9 @@ mod tests {
 
     #[test]
     fn test_direction() {
-        assert_eq!(Direction::default(), Direction::Input);
+        assert_eq!(Direction::default(), Direction::Forward);
         let dir = Direction::from_str("input").unwrap();
-        assert_eq!(dir, Direction::Input);
+        assert_eq!(dir, Direction::Forward);
 
         assert_eq!(Direction::from_str("output"), Ok(dir.invert()));
     }

@@ -20,13 +20,13 @@ impl State {
             state,
         }
     }
-    /// Sets the state to [States::Invalid]
+    /// Invalidates the current state
     pub fn invalidate(&mut self) {
         self.state = States::Invalid;
     }
-    /// Returns true if the state is [States::Valid]
+    /// Checks if the current state is valid
     pub fn is_valid(&self) -> bool {
-        self.state == States::Valid
+        self.state.is_valid()
     }
     /// Returns the message
     pub fn message(&self) -> &str {

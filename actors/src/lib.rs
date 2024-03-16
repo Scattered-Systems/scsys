@@ -9,24 +9,21 @@ extern crate scsys_core as scsys;
 
 pub use self::{direction::*, specs::*};
 
-pub mod catalysts;
 pub mod config;
-pub mod contexts;
 pub mod messages;
 pub mod power;
 pub mod states;
 
-mod direction;
-mod specs;
+pub(crate) mod direction;
+pub(crate) mod specs;
 
 pub type Job = Box<dyn FnOnce() + Send + 'static>;
 
 pub mod prelude {
-    pub use super::catalysts::*;
-    pub use super::contexts::*;
-    pub use super::direction::*;
-    pub use super::messages::*;
-    pub use super::power::*;
-    pub use super::specs::*;
-    pub use super::states::*;
+    pub use crate::config::*;
+    pub use crate::direction::*;
+    pub use crate::messages::*;
+    pub use crate::power::*;
+    pub use crate::specs::*;
+    pub use crate::states::*;
 }

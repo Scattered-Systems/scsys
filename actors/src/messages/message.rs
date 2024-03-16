@@ -2,7 +2,7 @@
     Appellation: message <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use scsys::prelude::{systime, AtomicId};
+use scsys::prelude::{AtomicId, Timestamp};
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 pub struct Message<T = String> {
     id: AtomicId,
     data: Option<T>,
-    ts: u128,
+    ts: Timestamp,
 }
 
 impl<T> Message<T> {
@@ -19,7 +19,7 @@ impl<T> Message<T> {
         Self {
             id: AtomicId::new(),
             data,
-            ts: systime(),
+            ts: Timestamp::now(),
         }
     }
 
@@ -31,7 +31,7 @@ impl<T> Message<T> {
         *self.id
     }
 
-    pub fn timestamp(&self) -> u128 {
+    pub fn timestamp(&self) -> Timestamp {
         self.ts
     }
 }
