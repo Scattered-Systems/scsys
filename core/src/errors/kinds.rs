@@ -7,6 +7,19 @@ use serde::{Deserialize, Serialize};
 use smart_default::SmartDefault;
 use strum::{Display, EnumCount, EnumIs, EnumIter, VariantNames};
 
+pub trait ErrorClass {
+    fn name(&self) -> &str;
+}
+
+#[derive(Clone)]
+pub enum Errors<E>
+where
+    E: ErrorClass,
+{
+    Custom(E),
+    Unknown,
+}
+
 #[cfg_attr(
     feature = "serde",
     derive(Deserialize, Serialize,),
@@ -128,7 +141,7 @@ impl OperationalError {
     }
 }
 
-macro_rules! error_kind {
+macro_rules! impl_kind_from {
     ($variant:ident, $kind:ident) => {
         impl From<$kind> for ErrorKind {
             fn from(kind: $kind) -> Self {
@@ -136,7 +149,12 @@ macro_rules! error_kind {
             }
         }
     };
+    ($variant:ident, $($kind:ident),*) => {
+        $(
+            impl_kind_from!($variant, $kind);
+        )*
+    };
 }
 
-error_kind!(Error, ExternalError);
-error_kind!(Operation, OperationalError);
+impl_kind_from!(Error, ExternalError);
+impl_kind_from!(Operation, OperationalError);

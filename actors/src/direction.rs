@@ -62,9 +62,9 @@ mod tests {
     #[test]
     fn test_direction() {
         assert_eq!(Direction::default(), Direction::Forward);
-        let dir = Direction::from_str("input").unwrap();
+        let dir = Direction::from_str("forward").unwrap();
         assert_eq!(dir, Direction::Forward);
 
-        assert_eq!(Direction::from_str("output"), Ok(dir.invert()));
+        assert_eq!(Direction::from_str("backward"), Ok(dir.invert()));
     }
 }

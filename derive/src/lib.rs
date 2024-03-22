@@ -57,7 +57,32 @@ fn impl_serde_display(ast: &DeriveInput) -> proc_macro2::TokenStream {
     let res = quote::quote! {
         impl std::fmt::Display for #name {
                 fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-                    write!(f, "{}", scsys::prelude::fnl_remove(serde_json::to_string(&self).unwrap()))
+                    write!(f, "{}", serde_json::to_string(&self).unwrap())
+                }
+            }
+    };
+    res
+}
+
+#[proc_macro_derive(Display)]
+pub fn any_display(input: TokenStream) -> TokenStream {
+    // Parse the inputs into the proper struct
+    let ast = parse_macro_input!(input as DeriveInput);
+
+    // Build the impl
+    let gen = impl_display(&ast);
+
+    gen.into()
+}
+
+fn impl_display(ast: &DeriveInput) -> proc_macro2::TokenStream {
+    let name = &ast.ident;
+    let _data = &ast.data;
+    let res = quote::quote! {
+        impl std::fmt::Display for #name {
+                fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                    let mut s = String::new();
+                    write!(f, "{}", s)
                 }
             }
     };
