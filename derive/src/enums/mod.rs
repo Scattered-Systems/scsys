@@ -8,7 +8,7 @@ use syn::punctuated::Punctuated;
 use syn::token::Comma;
 use syn::{Fields, Ident, Variant};
 
-fn impl_functional_constructors(
+pub fn impl_functional_constructors(
     name: &Ident,
     variants: &Punctuated<Variant, Comma>,
 ) -> TokenStream {

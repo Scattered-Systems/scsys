@@ -75,6 +75,11 @@ test = true
 name = "messages"
 required-features = ["actors"]
 
+[[example]]
+name = "params"
+required-features = ["derive"]
+
+
 [[test]]
 name = "derive"
 required-features = ["serde", "derive"]

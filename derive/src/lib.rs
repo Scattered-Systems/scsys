@@ -11,19 +11,13 @@ extern crate proc_macro;
 extern crate quote;
 extern crate syn;
 
-pub(crate) use self::utils::*;
-
 pub(crate) mod display;
 pub(crate) mod enums;
 pub(crate) mod params;
 pub(crate) mod utils;
 
 use proc_macro::TokenStream;
-use quote::{format_ident, quote};
-use syn::punctuated::Punctuated;
-use syn::spanned::Spanned;
-use syn::token::Comma;
-use syn::{parse_macro_input, Data, DeriveInput, Fields, Variant};
+use syn::{parse_macro_input, Data, DeriveInput};
 
 #[proc_macro_derive(Name, attributes(Alternative))]
 pub fn name(input: TokenStream) -> TokenStream {
@@ -82,39 +76,13 @@ pub fn derive_functional_constructors(input: TokenStream) -> TokenStream {
 }
 
 /// This macro generates a parameter struct and an enum of parameter keys.
-#[proc_macro_derive(Params, attributes(param))]
-pub fn params(input: TokenStream) -> TokenStream {
+#[proc_macro_derive(Keyed, attributes(key))]
+pub fn keyed(input: TokenStream) -> TokenStream {
     // Parse the input tokens into a syntax tree
     let input = parse_macro_input!(input as DeriveInput);
 
-    // Get the name of the struct
-    let struct_name = &input.ident;
-    let store_name = format_ident!("{}Key", struct_name);
-
-    // Generate the parameter struct definition
-    let _param_struct = match &input.data {
-        Data::Struct(s) => match &s.fields {
-            _ => {}
-        },
-        _ => panic!("Only structs are supported"),
-    };
-
-    // Generate the parameter keys enum
-    let param_keys_enum = match &input.data {
-        Data::Struct(s) => {
-            let DataStruct { fields, .. } = s;
-
-            params::generate_keys(fields, &store_name)
-        }
-        _ => panic!("Only structs are supported"),
-    };
-
-    // Combine the generated code
-    let generated_code = quote! {
-
-        #param_keys_enum
-    };
+    let gen = params::impl_keyed(&input);
 
     // Return the generated code as a TokenStream
-    generated_code.into()
+    gen.into()
 }
