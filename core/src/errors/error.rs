@@ -77,11 +77,11 @@ unsafe impl Send for Error {}
 
 unsafe impl Sync for Error {}
 
-impl std::fmt::Display for Error {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+impl core::fmt::Display for Error {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         write!(
             f,
-            "Error\nKind: {}\nTimestamp: {}\n{}",
+            "Error ({}) at {}\n{}",
             self.kind(),
             self.timestamp(),
             self.message()

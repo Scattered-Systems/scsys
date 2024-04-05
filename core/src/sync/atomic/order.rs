@@ -2,9 +2,9 @@
     Appellation: order <mod>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+use core::sync::atomic::Ordering;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-use std::sync::atomic::Ordering;
 use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 #[derive(

@@ -15,6 +15,7 @@ version.workspace = true
 default = [
     "actors",
     "stores",
+    "std",
 ]
 
 full = [
@@ -53,6 +54,11 @@ serde = [
     "scsys-actors/serde",
     "scsys-core/serde",
     "scsys-stores/serde",
+]
+
+std = [
+    "scsys-core/std",
+    "scsys-actors/std",
 ]
 
 tokio = [

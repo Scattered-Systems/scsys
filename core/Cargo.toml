@@ -13,7 +13,9 @@ version.workspace = true
 
 
 [features]
-default = []
+default = [
+    "std"
+]
 
 extras = [
     "rand",
@@ -32,6 +34,8 @@ serde = [
 serde-ext = [
     "dep:serde_json",
 ]
+
+std = []
 
 [lib]
 bench = false

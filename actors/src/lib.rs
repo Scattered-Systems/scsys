@@ -5,6 +5,9 @@
 //! # Actors
 //!
 //!
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+
 extern crate scsys_core as scsys;
 
 pub use self::{direction::*, specs::*};

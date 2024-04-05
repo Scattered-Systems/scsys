@@ -12,7 +12,9 @@ repository.workspace = true
 version.workspace = true
 
 [features]
-default = []
+default = [
+    "std",
+]
 
 full = [
     "serde",
@@ -29,6 +31,10 @@ serde-ext = [
     "dep:serde_json",
 ]
 
+std = [
+    "scsys-core/std",
+]
+
 tokio = [
     "dep:tokio",
 ]
@@ -40,8 +46,6 @@ doctest = true
 test = true
 
 [dependencies]
-scsys-core = { path = "../core", version = "0.2.1" }
-
 async-trait = "0.1"
 config = "0.14"
 futures = "0.3"
@@ -52,6 +56,10 @@ smart-default.workspace = true
 strum = { features = ["derive"], version = "0.26" }
 tokio = { optional = true, features = ["sync"], version = "1" }
 
+[dependencies.scsys-core]
+path = "../core"
+version = "0.2.1"
+# version = "0.2.1-nightly"
 
 [dev-dependencies]
 

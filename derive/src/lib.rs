@@ -11,8 +11,15 @@ extern crate proc_macro;
 extern crate quote;
 extern crate syn;
 
+pub(crate) use self::utils::*;
+
+pub(crate) mod display;
+pub(crate) mod enums;
+pub(crate) mod params;
+pub(crate) mod utils;
+
 use proc_macro::TokenStream;
-use quote::quote;
+use quote::{format_ident, quote};
 use syn::punctuated::Punctuated;
 use syn::spanned::Spanned;
 use syn::token::Comma;
@@ -47,114 +54,67 @@ pub fn serde_display(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
 
     // Build the impl
-    let gen = impl_serde_display(&ast);
+    let gen = display::impl_serde_display(&ast);
 
     gen.into()
 }
 
-fn impl_serde_display(ast: &DeriveInput) -> proc_macro2::TokenStream {
-    let name = &ast.ident;
-    let res = quote::quote! {
-        impl std::fmt::Display for #name {
-                fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-                    write!(f, "{}", serde_json::to_string(&self).unwrap())
-                }
-            }
-    };
-    res
-}
-
-#[proc_macro_derive(Display)]
+#[proc_macro_derive(Display, attributes(json))]
 pub fn any_display(input: TokenStream) -> TokenStream {
     // Parse the inputs into the proper struct
     let ast = parse_macro_input!(input as DeriveInput);
 
     // Build the impl
-    let gen = impl_display(&ast);
+    let gen = display::impl_display(&ast);
 
     gen.into()
 }
 
-fn impl_display(ast: &DeriveInput) -> proc_macro2::TokenStream {
-    let name = &ast.ident;
-    let _data = &ast.data;
-    let res = quote::quote! {
-        impl std::fmt::Display for #name {
-                fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-                    let mut s = String::new();
-                    write!(f, "{}", s)
-                }
-            }
-    };
-    res
-}
-
-#[proc_macro_derive(FunctionalConstructors)]
+#[proc_macro_derive(EnumConstructors)]
 pub fn derive_functional_constructors(input: TokenStream) -> TokenStream {
     let ast: DeriveInput = syn::parse(input).unwrap();
 
     match ast.data {
-        Data::Enum(inner) => impl_functional_constructors(&ast.ident, &inner.variants),
+        Data::Enum(inner) => enums::impl_functional_constructors(&ast.ident, &inner.variants),
         _ => panic!("This derive macro only works with enums"),
     }
     .into()
 }
 
-fn impl_functional_constructors(
-    name: &syn::Ident,
-    variants: &Punctuated<Variant, Comma>,
-) -> proc_macro2::TokenStream {
-    let mut constructors = proc_macro2::TokenStream::new();
+/// This macro generates a parameter struct and an enum of parameter keys.
+#[proc_macro_derive(Params, attributes(param))]
+pub fn params(input: TokenStream) -> TokenStream {
+    // Parse the input tokens into a syntax tree
+    let input = parse_macro_input!(input as DeriveInput);
 
-    for variant in variants {
-        let variant_name = &variant.ident;
-        let constructor_name = syn::Ident::new(
-            &variant_name.to_string().to_lowercase(),
-            proc_macro2::Span::call_site(),
-        );
+    // Get the name of the struct
+    let struct_name = &input.ident;
+    let store_name = format_ident!("{}Key", struct_name);
 
-        let func = match &variant.fields {
-            Fields::Named(fields) => {
-                let field_names: Vec<_> = fields.named.iter().map(|f| &f.ident).collect();
-                let field_types: Vec<_> = fields.named.iter().map(|f| &f.ty).collect();
+    // Generate the parameter struct definition
+    let _param_struct = match &input.data {
+        Data::Struct(s) => match &s.fields {
+            _ => {}
+        },
+        _ => panic!("Only structs are supported"),
+    };
 
-                let constructor = quote! {
-                    pub fn #constructor_name(#(#field_names: #field_types),*) -> Self {
-                        Self::#variant_name { #(#field_names),* }
-                    }
-                };
+    // Generate the parameter keys enum
+    let param_keys_enum = match &input.data {
+        Data::Struct(s) => {
+            let DataStruct { fields, .. } = s;
 
-                constructor
-            }
-            Fields::Unnamed(fields) => {
-                let field_names: Vec<_> = (0..fields.unnamed.len())
-                    .map(|i| syn::Ident::new(&format!("field_{}", i), variant.span()))
-                    .collect();
-                let field_types: Vec<_> = fields.unnamed.iter().map(|f| &f.ty).collect();
-
-                let constructor = quote! {
-                    pub fn #constructor_name(#(#field_names: #field_types),*) -> Self {
-                        Self::#variant_name(#(#field_names),*)
-                    }
-                };
-
-                constructor
-            }
-            Fields::Unit => {
-                let constructor = quote! {
-                    pub fn #constructor_name() -> Self {
-                        Self::#variant_name
-                    }
-                };
-
-                constructor
-            }
-        };
-        constructors.extend(func);
-    }
-    quote! {
-        impl #name {
-            #constructors
+            params::generate_keys(fields, &store_name)
         }
-    }
+        _ => panic!("Only structs are supported"),
+    };
+
+    // Combine the generated code
+    let generated_code = quote! {
+
+        #param_keys_enum
+    };
+
+    // Return the generated code as a TokenStream
+    generated_code.into()
 }

@@ -5,8 +5,15 @@
 //! # Core
 //!
 //!
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+
 #[doc(inline)]
-pub use self::{primitives::*, utils::*};
+pub use self::utils::*;
+
+pub(crate) mod utils;
 
 pub mod errors;
 pub mod hkt;
@@ -16,12 +23,12 @@ pub mod sync;
 pub mod time;
 pub mod types;
 
-pub(crate) mod primitives;
-pub(crate) mod utils;
+///
+pub const DEFAULT_IGNORE_CHARS: &[char] = &['[', ']', ',', '.', ' '];
 
 pub mod prelude {
-    pub use crate::primitives::*;
     pub use crate::utils::*;
+    pub use crate::DEFAULT_IGNORE_CHARS;
 
     pub use crate::errors::*;
     pub use crate::hkt::*;
