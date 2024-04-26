@@ -64,7 +64,7 @@ pub fn any_display(input: TokenStream) -> TokenStream {
     gen.into()
 }
 
-#[proc_macro_derive(EnumConstructors)]
+#[proc_macro_derive(VariantConstructors)]
 pub fn derive_functional_constructors(input: TokenStream) -> TokenStream {
     let ast: DeriveInput = syn::parse(input).unwrap();
 

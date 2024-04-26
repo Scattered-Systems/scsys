@@ -17,6 +17,12 @@ default = [
     "std"
 ]
 
+full = [
+    "default",
+    "rand",
+    "serde",
+]
+
 extras = [
     "rand",
     "serde",
@@ -43,15 +49,18 @@ crate-type = ["cdylib", "rlib"]
 doctest = true
 test = true
 
+[build-dependencies]
+
 [dependencies]
-anyhow = "1"
 glob = "0.3"
-predicates = "3"
 rand = { optional = true, version = "0.8" }
 serde = { optional = true, features = ["derive"], version = "1" }
 serde_json = { optional = true, version = "1" }
 smart-default.workspace = true
 strum = { features = ["derive"], version = "0.26" }
+
+[dev-dependencies]
+anyhow = "1"
 
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]

@@ -16,8 +16,7 @@ pub fn impl_functional_constructors(
 
     for variant in variants {
         let variant_name = &variant.ident;
-        let constructor_name =
-            Ident::new(&variant_name.to_string().to_lowercase(), Span::call_site());
+        let constructor_name = Ident::new(&snakecase(variant_name), Span::call_site());
 
         let func = match &variant.fields {
             Fields::Named(fields) => {
@@ -48,7 +47,7 @@ pub fn impl_functional_constructors(
 
                 let constructor = quote! {
                     pub fn #constructor_name(#(#field_names: #field_types),*) -> Self {
-                        Self::#variant_name { #(#field_names),* }
+                        Self::#variant_name(#(#field_names),*)
                     }
                 };
 
@@ -72,3 +71,4 @@ pub fn impl_functional_constructors(
         }
     }
 }
+

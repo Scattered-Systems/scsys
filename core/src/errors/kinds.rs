@@ -2,10 +2,8 @@
    Appellation: kinds <mod>
    Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
 use smart_default::SmartDefault;
-use strum::{Display, EnumCount, EnumIs, EnumIter, VariantNames};
+use strum::{AsRefStr, Display, EnumCount, EnumIs, EnumIter, VariantNames};
 
 pub trait ErrorClass {
     fn name(&self) -> &str;
@@ -22,10 +20,11 @@ where
 
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize,),
+    derive(serde::Deserialize, serde::Serialize,),
     serde(rename_all = "lowercase", untagged)
 )]
 #[derive(
+    AsRefStr,
     Clone,
     Debug,
     Display,
@@ -68,10 +67,11 @@ impl ErrorKind {
 
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize,),
+    derive(serde::Deserialize, serde::Serialize),
     serde(rename_all = "lowercase", untagged)
 )]
 #[derive(
+    AsRefStr,
     Clone,
     Debug,
     Display,
@@ -105,10 +105,11 @@ impl ExternalError {
 
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize,),
+    derive(serde::Deserialize, serde::Serialize),
     serde(rename_all = "lowercase", untagged)
 )]
 #[derive(
+    AsRefStr,
     Clone,
     Debug,
     Display,

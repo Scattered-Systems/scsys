@@ -18,9 +18,10 @@ pub(crate) mod utils;
 pub mod errors;
 pub mod hkt;
 pub mod id;
-pub mod specs;
+pub mod net;
 pub mod sync;
 pub mod time;
+pub mod traits;
 pub mod types;
 
 ///
@@ -33,7 +34,8 @@ pub mod prelude {
     pub use crate::errors::*;
     pub use crate::hkt::*;
     pub use crate::id::prelude::*;
-    pub use crate::specs::prelude::*;
+    pub use crate::net::prelude::*;
     pub use crate::time::*;
+    pub use crate::traits::prelude::*;
     pub use crate::types::*;
 }

@@ -13,7 +13,7 @@ pub type BoxedId = Box<dyn Identifier>;
 
 /// Interface for identifiable data-structures
 pub trait Identifiable {
-    type Id: Identifier;
+    type Id: Identifier + ?Sized;
 
     fn id(&self) -> &Self::Id;
 }
@@ -29,14 +29,27 @@ impl<Id: Identifier> Identifiable for Id {
 /// Interface for identifier data-structures
 pub trait Identifier: ToString {}
 
-// impl<T> Identifier for T where T: ToString {}
+macro_rules! impl_identifier {
+    ($($t:ty),*) => {
+        $(
+            impl_identifier!(@loop $t);
+        )*
+    };
+    (@loop $t:ty) => {
+        impl Identifier for $t {}
+    };
+}
+
+impl_identifier! {
+    u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize
+}
 
 pub(crate) mod utils {
     // https://users.rust-lang.org/t/idiomatic-rust-way-to-generate-unique-id/33805
     pub fn atomic_id() -> usize {
-        use std::sync::atomic;
-        static COUNTER: atomic::AtomicUsize = atomic::AtomicUsize::new(0);
-        COUNTER.fetch_add(1, atomic::Ordering::Relaxed)
+        use core::sync::atomic::{AtomicUsize, Ordering::Relaxed};
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+        COUNTER.fetch_add(1, Relaxed)
     }
 
     #[cfg(feature = "rand")]

@@ -4,11 +4,9 @@
 */
 use super::kinds::*;
 use crate::id::ids::AtomicId;
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
 
-#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct Error {
     id: AtomicId,
     kind: ErrorKind,
@@ -17,14 +15,12 @@ pub struct Error {
 }
 
 impl Error {
-    pub fn new(kind: ErrorKind, message: String) -> Self {
-        let id = AtomicId::new();
-        let ts = crate::time::systime();
+    pub fn new(kind: impl Into<ErrorKind>, message: impl ToString) -> Self {
         Self {
-            id,
-            kind,
-            message,
-            ts,
+            id: AtomicId::new(),
+            kind: kind.into(),
+            message: message.to_string(),
+            ts: crate::time::systime(),
         }
     }
 
@@ -77,6 +73,18 @@ unsafe impl Send for Error {}
 
 unsafe impl Sync for Error {}
 
+impl core::fmt::Debug for Error {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        write!(
+            f,
+            "*** Error ***\nKind: {}\nTimestamp: {}\nMessage:\n{}\n*** ***",
+            self.kind(),
+            self.timestamp(),
+            self.message()
+        )
+    }
+}
+
 impl core::fmt::Display for Error {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         write!(
@@ -89,6 +97,7 @@ impl core::fmt::Display for Error {
     }
 }
 
+#[cfg(feature = "std")]
 impl std::error::Error for Error {}
 
 impl From<ErrorKind> for Error {
@@ -98,31 +107,49 @@ impl From<ErrorKind> for Error {
 }
 
 macro_rules! impl_error_from {
-    ($from:ty, $kind:expr) => {
+    ($variant:ident: $($from:ty),*) => {
+        $(
+            impl_error_from!(@impl $variant: $from);
+        )*
+    };
+    ($variant:ident<$n:path>.($($from:ty),*)) => {
+        $(impl_error_from!(@impl $variant<$n>: $from);)*
+    };
+    ($variant:ident($($n:ident)::*): $($from:ty),*) => {
+        $(
+            impl_error_from!(@impl $variant($($n)::*): $from);
+        )*
+    };
+    (@impl $variant:ident($($n:ident)::*): $from:ty) => {
         impl From<$from> for Error {
             fn from(err: $from) -> Self {
-                Self::new(ErrorKind::from($kind), err.to_string())
+                Self::new(ErrorKind::$variant($($n)::*(err.into())), err.to_string())
             }
         }
     };
+    (@impl $variant:ident<$n:path>: $from:ty) => {
+        impl From<$from> for Error {
+            fn from(err: $from) -> Self {
+                Self::new(ErrorKind::$variant($n), err.to_string())
+            }
+        }
+    };
+    (@impl $variant:ident: $from:ty) => {
+        impl From<$from> for Error {
+            fn from(err: $from) -> Self {
+                Self::new(ErrorKind::$variant, err.to_string())
+            }
+        }
+    };
+
 }
 
-impl_error_from!(anyhow::Error, ExternalError::Unknown);
+impl_error_from!(Error<ExternalError::Unknown>.(String, &str));
+impl_error_from!(Parse: core::num::ParseFloatError, core::num::ParseIntError, core::str::Utf8Error);
 
-impl_error_from!(Box<dyn std::error::Error>, ExternalError::Unknown);
-
-impl_error_from!(String, ExternalError::Unknown);
-
-impl_error_from!(&str, ExternalError::Unknown);
-
-impl_error_from!(std::io::Error, ErrorKind::IO);
-
-impl_error_from!(std::num::ParseIntError, ErrorKind::Parse);
-
-impl_error_from!(std::num::ParseFloatError, ErrorKind::Parse);
-
-impl_error_from!(std::str::Utf8Error, ErrorKind::Parse);
-
-impl_error_from!(std::string::FromUtf8Error, ErrorKind::Parse);
-
-impl_error_from!(std::string::FromUtf16Error, ErrorKind::Parse);
+#[cfg(feature = "std")]
+impl_error_from!(Error<ExternalError::Unknown>.(Box<dyn std::error::Error>));
+#[cfg(feature = "std")]
+impl_error_from!(IO: std::io::Error);
+#[cfg(feature = "std")]
+impl_error_from!(Parse: std::string::FromUtf8Error, std::string::FromUtf16Error);

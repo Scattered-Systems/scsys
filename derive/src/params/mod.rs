@@ -36,7 +36,6 @@ pub fn impl_keyed(input: &DeriveInput) -> TokenStream {
     }
 }
 
-
 fn generate_keys(fields: &Fields, name: &Ident) -> TokenStream {
     match fields {
         Fields::Named(inner) => handle_named(inner, name),
