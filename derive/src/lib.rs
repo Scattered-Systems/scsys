@@ -11,6 +11,7 @@ extern crate proc_macro;
 extern crate quote;
 extern crate syn;
 
+pub(crate) mod ast;
 pub(crate) mod display;
 pub(crate) mod enums;
 pub(crate) mod params;
@@ -30,7 +31,7 @@ pub fn name(input: TokenStream) -> TokenStream {
     gen.into()
 }
 
-fn impl_name(ast: &syn::DeriveInput) -> proc_macro2::TokenStream {
+fn impl_name(ast: &DeriveInput) -> proc_macro2::TokenStream {
     let name = &ast.ident;
     let res = quote::quote! {
         impl scsys::prelude::Name for #name {

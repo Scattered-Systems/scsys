@@ -2,6 +2,7 @@
     Appellation: enum <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+use crate::utils::snakecase;
 use proc_macro2::{Span, TokenStream};
 use quote::quote;
 use syn::punctuated::Punctuated;
@@ -71,4 +72,3 @@ pub fn impl_functional_constructors(
         }
     }
 }
-

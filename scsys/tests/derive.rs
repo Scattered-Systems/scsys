@@ -33,7 +33,7 @@ pub enum SampleUnit {
     C {
         inner: usize,
     },
-    AbcDef(usize)
+    AbcDef(usize),
 }
 
 #[test]

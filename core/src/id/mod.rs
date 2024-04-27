@@ -1,92 +1,34 @@
 /*
-    Appellation: identity <module>
+    Appellation: ids <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # identity
-pub use self::{identity::*, utils::*};
+pub use self::{kinds::*, traits::*};
 
-pub(crate) mod identity;
+pub(crate) mod traits;
 
-pub mod ids;
+mod kinds {
+    pub use self::{atomic::AtomicId, indexed::IndexId};
 
-pub type BoxedId = Box<dyn Identifier>;
-
-/// Interface for identifiable data-structures
-pub trait Identifiable {
-    type Id: Identifier + ?Sized;
-
-    fn id(&self) -> &Self::Id;
-}
-
-impl<Id: Identifier> Identifiable for Id {
-    type Id = Id;
-
-    fn id(&self) -> &Self::Id {
-        self
-    }
-}
-
-/// Interface for identifier data-structures
-pub trait Identifier: ToString {}
-
-macro_rules! impl_identifier {
-    ($($t:ty),*) => {
-        $(
-            impl_identifier!(@loop $t);
-        )*
-    };
-    (@loop $t:ty) => {
-        impl Identifier for $t {}
-    };
-}
-
-impl_identifier! {
-    u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize
-}
-
-pub(crate) mod utils {
-    // https://users.rust-lang.org/t/idiomatic-rust-way-to-generate-unique-id/33805
-    pub fn atomic_id() -> usize {
-        use core::sync::atomic::{AtomicUsize, Ordering::Relaxed};
-        static COUNTER: AtomicUsize = AtomicUsize::new(0);
-        COUNTER.fetch_add(1, Relaxed)
-    }
-
-    #[cfg(feature = "rand")]
-    pub fn rid(length: usize) -> String {
-        use rand::distributions::Alphanumeric;
-        use rand::Rng;
-
-        rand::thread_rng()
-            .sample_iter(&Alphanumeric)
-            .take(length)
-            .map(char::from)
-            .collect()
-    }
+    pub mod atomic;
+    pub mod indexed;
 }
 
 pub(crate) mod prelude {
-    pub use super::ids::*;
-    pub use super::utils::*;
-    pub use super::Identifiable;
-    pub use super::Identifier;
+    pub use super::kinds::*;
+    pub use super::traits::*;
 }
 
 #[cfg(test)]
 mod tests {
-    use super::ids::AtomicId;
+    use super::traits::*;
+    use super::AtomicId;
 
     #[test]
-    fn test_atomic() {
-        let a = AtomicId::new();
-        assert_eq!(*a.next(), *a + 1);
-        let b = AtomicId::new();
-        assert_eq!(*b, *a + 2);
-    }
-    #[cfg(feature = "rand")]
-    #[test]
-    fn test_rid() {
-        let id = super::rid(10);
-        assert_eq!(id.len(), 10);
+    fn test_id() {
+        let id = 0usize.get();
+        assert_eq!(id, &0);
+        let atomic = AtomicId::new();
+        let aid = Id::<usize>::get(&atomic);
+        assert_ne!(**aid, *id);
     }
 }

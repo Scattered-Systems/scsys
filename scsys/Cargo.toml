@@ -72,6 +72,10 @@ crate-type = ["cdylib", "rlib"]
 test = true
 
 [[example]]
+name = "derive"
+required-features = ["derive"]
+
+[[example]]
 name = "messages"
 required-features = ["actors"]
 

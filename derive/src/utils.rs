@@ -12,11 +12,10 @@ pub fn capitalize_first(s: &str) -> String {
         .collect()
 }
 
-
-fn snakecase(name: impl ToString) -> String {
+pub fn snakecase(name: impl ToString) -> String {
     let text = name.to_string();
 
-    let mut buffer = String::with_capacity(text.len() + text.len()/2);
+    let mut buffer = String::with_capacity(text.len() + text.len() / 2);
 
     let mut text = text.chars();
 
@@ -33,13 +32,13 @@ fn snakecase(name: impl ToString) -> String {
 
             // insert underscore if acronym at beginning
             // ABc -> a_bc
-            if n1.0 && matches!(n2, Some((false, _))) && matches!(n3, Some((false, _))) {
-
-                if n2.unwrap().1.is_uppercase() && n3.unwrap().1.is_uppercase() {
-                    buffer.push('_');
-                }
-
-                
+            if n1.0
+                && matches!(n2, Some((false, _)))
+                && matches!(n3, Some((false, _)))
+                && n2.unwrap().1.is_uppercase()
+                && n3.unwrap().1.is_uppercase()
+            {
+                buffer.push('_');
             }
 
             buffer.push_str(&prev_n1.1.to_lowercase().to_string());

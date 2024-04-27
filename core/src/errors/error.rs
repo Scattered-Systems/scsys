@@ -3,7 +3,7 @@
    Contrib: FL03 <jo3mccain@icloud.com>
 */
 use super::kinds::*;
-use crate::id::ids::AtomicId;
+use crate::id::AtomicId;
 
 #[derive(Clone, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]

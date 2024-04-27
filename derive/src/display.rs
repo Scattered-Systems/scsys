@@ -19,7 +19,12 @@ pub fn impl_serde_display(ast: &DeriveInput) -> TokenStream {
 }
 
 pub fn impl_display(ast: &DeriveInput) -> TokenStream {
-    if let Some(_) = ast.attrs.iter().find(|attr| attr.path().is_ident("serde")) {
+    if ast
+        .attrs
+        .iter()
+        .find(|attr| attr.path().is_ident("serde"))
+        .is_some()
+    {
         return impl_serde_display(ast);
     }
     let name = &ast.ident;

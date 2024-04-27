@@ -1,49 +1,20 @@
 /*
-    Appellation: params <module>
+    Appellation: keys <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 use crate::utils::capitalize_first;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
-use syn::{Data, DataStruct, DeriveInput, Fields, FieldsNamed, Ident, Variant};
+use syn::{Fields, FieldsNamed, Ident, Variant};
 
-pub fn impl_keyed(input: &DeriveInput) -> TokenStream {
-    // Get the name of the struct
-    let struct_name = &input.ident;
-    let store_name = format_ident!("{}Key", struct_name);
-
-    // Generate the parameter struct definition
-    let _param_struct = match &input.data {
-        Data::Struct(s) => match &s.fields {
-            _ => {}
-        },
-        _ => panic!("Only structs are supported"),
-    };
-
-    // Generate the parameter keys enum
-    let param_keys_enum = match &input.data {
-        Data::Struct(s) => {
-            let DataStruct { fields, .. } = s;
-
-            generate_keys(fields, &store_name)
-        }
-        _ => panic!("Only structs are supported"),
-    };
-
-    // Combine the generated code
-    quote! {
-        #param_keys_enum
-    }
-}
-
-fn generate_keys(fields: &Fields, name: &Ident) -> TokenStream {
+pub fn generate_keys(fields: &Fields, name: &Ident) -> TokenStream {
     match fields {
         Fields::Named(inner) => handle_named(inner, name),
         _ => panic!("Only named fields are supported"),
     }
 }
 
-fn handle_named(fields: &FieldsNamed, name: &Ident) -> TokenStream {
+pub fn handle_named(fields: &FieldsNamed, name: &Ident) -> TokenStream {
     let FieldsNamed { named, .. } = fields;
     let methods = named.iter().cloned().map(|f| {
         let ident = f.ident.unwrap();
