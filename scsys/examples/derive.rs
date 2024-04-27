@@ -10,6 +10,7 @@ fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let _params = LinearParams { weight: 1.0 };
     let wk = LinearParamsKey::Weight;
     println!("{:?}", &wk);
+    println!("{:?}", Something::a());
     assert_eq!(LinearParamsKey::weight(), wk);
     // let _key = wk.key();
     Ok(())
@@ -21,7 +22,7 @@ pub struct LinearParams<T> {
     pub weight: T,
 }
 
-#[derive(VariantConstructors)]
+#[derive(Clone, Copy, Debug, VariantConstructors)]
 pub enum Something {
     A,
     B(usize),

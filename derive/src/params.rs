@@ -5,7 +5,6 @@
 
 pub mod keys;
 
-use crate::utils::capitalize_first;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use syn::{Data, DataStruct, DeriveInput};
