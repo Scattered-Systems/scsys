@@ -1,4 +1,8 @@
-#[cfg(test)]
+/*
+    Appellation: default <test>
+    Contrib: FL03 <jo3mccain@icloud.com>
+*/
+#![cfg(test)]
 
 fn addition<A, B, C>(a: A, b: B) -> C
 where

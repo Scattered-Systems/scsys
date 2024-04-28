@@ -2,12 +2,17 @@
     Appellation: specs <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # Specs
-//!
-//!
+pub use self::{appellation::*, classify::*, ext::*};
 
 pub mod appellation;
 pub mod classify;
+
+pub mod ext {
+    pub use self::{slice::*, string::StringExt};
+
+    pub mod slice;
+    pub mod string;
+}
 
 /// Interface for data-structures that can be compared for equality
 pub trait Contain<T>
@@ -26,16 +31,6 @@ where
     }
 }
 
-pub trait StringExt {
-    fn remove_first_and_last(&self) -> &str;
-}
-
-impl StringExt for str {
-    fn remove_first_and_last(&self) -> &str {
-        &self[1..self.len() - 1]
-    }
-}
-
 pub trait IntoInner {
     type Inner;
 
@@ -45,6 +40,7 @@ pub trait IntoInner {
 /// Interface for nameable data-structures
 pub trait Name {
     fn name(&self) -> String;
+
     fn slug(&self) -> String {
         self.name().to_lowercase().replace(" ", "-")
     }
@@ -53,5 +49,6 @@ pub trait Name {
 pub(crate) mod prelude {
     pub use super::appellation::*;
     pub use super::classify::*;
+    pub use super::ext::*;
     pub use super::{Contain, Name};
 }

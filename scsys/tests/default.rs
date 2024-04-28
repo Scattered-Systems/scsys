@@ -1,9 +1,18 @@
-#[cfg(test)]
-#[test]
-fn lib_compiles() {
-    let f = |i: usize| i * i;
+/*
+    Appellation: default <test>
+    Contrib: FL03 <jo3mccain@icloud.com>
+*/
+#![cfg(test)]
 
-    assert_eq!(f(2), 4);
-    assert_eq!(f(3), 9);
-    assert_ne!(f(2), 3);
+fn addition<A, B, C>(a: A, b: B) -> C
+where
+    A: std::ops::Add<B, Output = C>,
+{
+    a + b
+}
+
+#[test]
+fn compiles() {
+    assert_eq!(addition(1, 2), 3);
+    assert_ne!(addition(1_f64, 0_f64), 3_f64);
 }

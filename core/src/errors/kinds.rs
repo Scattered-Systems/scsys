@@ -2,17 +2,29 @@
    Appellation: kinds <mod>
    Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
 use smart_default::SmartDefault;
-use strum::{Display, EnumCount, EnumIs, EnumIter, VariantNames};
+use strum::{AsRefStr, Display, EnumCount, EnumIs, EnumIter, VariantNames};
+
+pub trait ErrorClass {
+    fn name(&self) -> &str;
+}
+
+#[derive(Clone)]
+pub enum Errors<E>
+where
+    E: ErrorClass,
+{
+    Custom(E),
+    Unknown,
+}
 
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize,),
+    derive(serde::Deserialize, serde::Serialize,),
     serde(rename_all = "lowercase", untagged)
 )]
 #[derive(
+    AsRefStr,
     Clone,
     Debug,
     Display,
@@ -55,10 +67,11 @@ impl ErrorKind {
 
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize,),
+    derive(serde::Deserialize, serde::Serialize),
     serde(rename_all = "lowercase", untagged)
 )]
 #[derive(
+    AsRefStr,
     Clone,
     Debug,
     Display,
@@ -92,10 +105,11 @@ impl ExternalError {
 
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize,),
+    derive(serde::Deserialize, serde::Serialize),
     serde(rename_all = "lowercase", untagged)
 )]
 #[derive(
+    AsRefStr,
     Clone,
     Debug,
     Display,
@@ -128,7 +142,7 @@ impl OperationalError {
     }
 }
 
-macro_rules! error_kind {
+macro_rules! impl_kind_from {
     ($variant:ident, $kind:ident) => {
         impl From<$kind> for ErrorKind {
             fn from(kind: $kind) -> Self {
@@ -136,7 +150,12 @@ macro_rules! error_kind {
             }
         }
     };
+    ($variant:ident, $($kind:ident),*) => {
+        $(
+            impl_kind_from!($variant, $kind);
+        )*
+    };
 }
 
-error_kind!(Error, ExternalError);
-error_kind!(Operation, OperationalError);
+impl_kind_from!(Error, ExternalError);
+impl_kind_from!(Operation, OperationalError);

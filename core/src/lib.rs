@@ -2,28 +2,44 @@
     Appellation: scsys-core <library>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # scsys-core
+//! # Core
+//!
+//!
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+
 #[doc(inline)]
-pub use self::{primitives::*, utils::*};
+pub use self::utils::*;
 
-pub mod errors;
-pub mod id;
-pub mod specs;
-pub mod sync;
-pub mod time;
-pub mod types;
+#[macro_use]
+pub(crate) mod seal;
 
-pub(crate) mod primitives;
 pub(crate) mod utils;
 
-pub mod prelude {
-    pub use crate::primitives::*;
+pub mod errors;
+pub mod hkt;
+pub mod id;
+#[doc(hidden)]
+pub mod net;
+pub mod sync;
+pub mod time;
+pub mod traits;
+pub mod types;
 
+///
+pub const DEFAULT_IGNORE_CHARS: &[char] = &['[', ']', ',', '.', ' '];
+
+pub mod prelude {
     pub use crate::utils::*;
+    pub use crate::DEFAULT_IGNORE_CHARS;
 
     pub use crate::errors::*;
+    pub use crate::hkt::*;
     pub use crate::id::prelude::*;
-    pub use crate::specs::prelude::*;
+    pub use crate::net::prelude::*;
     pub use crate::time::*;
+    pub use crate::traits::prelude::*;
     pub use crate::types::*;
 }

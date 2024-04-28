@@ -2,12 +2,11 @@
     Appellation: order <mod>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
-use std::sync::atomic::Ordering;
-use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
+use core::sync::atomic::Ordering;
+use strum::{AsRefStr, Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 #[derive(
+    AsRefStr,
     Clone,
     Copy,
     Debug,
@@ -26,7 +25,7 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 )]
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize,),
+    derive(serde::Deserialize, serde::Serialize),
     serde(rename_all = "snake_case", untagged)
 )]
 #[strum(serialize_all = "snake_case")]

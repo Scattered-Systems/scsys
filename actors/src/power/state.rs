@@ -2,16 +2,15 @@
     Appellation: state <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
-use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
+use strum::{AsRefStr, Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize,),
+    derive(serde::Deserialize, serde::Serialize),
     serde(rename_all = "lowercase", untagged)
 )]
 #[derive(
+    AsRefStr,
     Clone,
     Copy,
     Debug,
@@ -64,17 +63,12 @@ impl From<Power> for bool {
     }
 }
 
-impl From<Power> for u8 {
-    fn from(p: Power) -> Self {
-        p as u8
-    }
+macro_rules! impl_from {
+    ($($t:ty),*) => {
+        $(
+            enum_from_primitive!(Power(0: Off, 1: On)<$t>);
+        )*
+    };
 }
 
-impl From<u8> for Power {
-    fn from(u: u8) -> Self {
-        match u % Self::COUNT as u8 {
-            1 => Power::On,
-            _ => Power::Off,
-        }
-    }
-}
+impl_from!(i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, usize);

@@ -1,22 +1,18 @@
-#[cfg(test)]
+/*
+    Appellation: default <test>
+    Contrib: FL03 <jo3mccain@icloud.com>
+*/
+#![cfg(test)]
 
-pub fn multiply<A, B, C>(a: A, b: B) -> C
+fn addition<A, B, C>(a: A, b: B) -> C
 where
-    A: std::ops::Mul<B, Output = C>,
+    A: std::ops::Add<B, Output = C>,
 {
-    a * b
-}
-
-pub fn square<A>(a: A) -> A
-where
-    A: std::ops::Mul<Output = A> + Copy,
-{
-    a * a
+    a + b
 }
 
 #[test]
 fn compiles() {
-    assert_eq!(multiply(2, 2), 4);
-    assert_eq!(multiply(3_f64, 3_f64), square(3_f64));
-    assert_ne!(multiply(2.0, 3.0), -6.0);
+    assert_eq!(addition(1, 2), 3);
+    assert_ne!(addition(1_f64, 0_f64), 3_f64);
 }

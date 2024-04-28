@@ -2,178 +2,49 @@
     Appellation: state <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
-use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
+use scsys::id::AtomicId;
 
-#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct State {
-    message: String,
-    state: States,
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+#[repr(C)]
+pub struct StateBase<S, T> {
+    id: AtomicId,
+    data: T,
+    state: S,
 }
 
-impl State {
-    pub fn new(message: impl ToString, state: States) -> Self {
+impl<Q, T> StateBase<Q, T> {
+    pub fn new(data: T, state: Q) -> Self {
         Self {
-            message: message.to_string(),
+            id: AtomicId::new(),
+            data,
             state,
         }
     }
-    /// Invalidates the current state
-    pub fn invalidate(&mut self) {
-        self.state = States::Invalid;
-    }
-    /// Checks if the current state is valid
-    pub fn is_valid(&self) -> bool {
-        self.state.is_valid()
-    }
-    /// Returns the message
-    pub fn message(&self) -> &str {
-        &self.message
+
+    pub const fn id(&self) -> AtomicId {
+        self.id
     }
 
-    pub fn set_message(&mut self, message: impl ToString) {
-        self.message = message.to_string();
-    }
-    pub fn set_state(&mut self, state: States) {
-        self.state = state;
-    }
-    /// Returns the current state
-    pub fn state(&self) -> States {
-        self.state
+    pub fn data(&self) -> &T {
+        &self.data
     }
 
-    pub fn update(&mut self, state: State) {
-        *self = state;
+    pub fn data_mut(&mut self) -> &mut T {
+        &mut self.data
+    }
+
+    pub fn state(&self) -> &Q {
+        &self.state
+    }
+
+    pub fn state_mut(&mut self) -> &mut Q {
+        &mut self.state
     }
 }
 
-impl std::fmt::Display for State {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.message)
-    }
-}
-
-impl From<States> for State {
-    fn from(state: States) -> Self {
-        Self::new("", state)
-    }
-}
-
-impl From<State> for States {
-    fn from(q: State) -> Self {
-        q.state
-    }
-}
-
-#[cfg_attr(
-    feature = "serde",
-    derive(Deserialize, Serialize,),
-    serde(rename_all = "lowercase", untagged)
-)]
-#[derive(
-    Clone,
-    Copy,
-    Debug,
-    Default,
-    Display,
-    EnumCount,
-    EnumIs,
-    EnumIter,
-    EnumString,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd,
-    VariantNames,
-)]
-#[repr(u8)]
-#[strum(serialize_all = "lowercase")]
-pub enum States {
-    Invalid = 0,
-    #[default]
-    Valid = 1,
-}
-
-impl States {
-    /// [State::Invalid] variant constructor
-    pub fn invalid() -> Self {
-        Self::Invalid
-    }
-    /// [State::Valid] variant constructor
-    pub fn valid() -> Self {
-        Self::Valid
-    }
-    pub fn update(&mut self, state: Self) {
-        *self = state;
-    }
-}
-
-impl std::ops::Mul for States {
-    type Output = States;
-
-    fn mul(self, rhs: Self) -> Self::Output {
-        let res = self as u8 * rhs as u8;
-        Self::from(res)
-    }
-}
-
-impl std::ops::MulAssign for States {
-    fn mul_assign(&mut self, rhs: Self) {
-        *self = *self * rhs;
-    }
-}
-
-impl From<u8> for States {
-    fn from(d: u8) -> Self {
-        match d % 2 {
-            1 => States::valid(),
-            _ => States::invalid(),
-        }
-    }
-}
-
-impl From<usize> for States {
-    fn from(d: usize) -> Self {
-        Self::from(d as i64)
-    }
-}
-
-impl From<i64> for States {
-    fn from(d: i64) -> Self {
-        match d.abs() % 2 {
-            1 => States::valid(),
-            _ => States::invalid(),
-        }
-    }
-}
-
-impl From<States> for i64 {
-    fn from(d: States) -> i64 {
-        d as i64
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use strum::IntoEnumIterator;
-
-    #[test]
-    fn test_states() {
-        let a = States::default();
-        let mut b = a;
-        b *= a;
-        assert_eq!(a, States::valid());
-        assert_eq!(b, States::valid());
-    }
-
-    #[test]
-    fn test_states_iter() {
-        let a: Vec<States> = States::iter().collect();
-        assert_eq!(a.len(), 2);
-        assert_eq!(a[0], States::invalid());
+impl<Q, T> core::borrow::Borrow<Q> for StateBase<Q, T> {
+    fn borrow(&self) -> &Q {
+        &self.state
     }
 }
