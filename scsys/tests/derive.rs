@@ -4,7 +4,7 @@
 */
 #![cfg(test)]
 
-use scsys::prelude::{Name, SerdeDisplay, Timestamp, VariantConstructors};
+use scsys::prelude::{SerdeDisplay, Timestamp, VariantConstructors};
 use serde::{Deserialize, Serialize};
 
 #[derive(
@@ -14,7 +14,6 @@ use serde::{Deserialize, Serialize};
     Deserialize,
     Eq,
     Hash,
-    Name,
     Ord,
     PartialEq,
     PartialOrd,
@@ -38,10 +37,11 @@ pub enum SampleUnit {
 
 #[test]
 fn test_serde_display() {
-    let a = TestStruct::default();
-    assert_eq!(a.name(), "TestStruct");
-    let _string = a.to_string();
-    assert!(true)
+    let test_struct = TestStruct::default();
+    assert_eq!(
+        test_struct.to_string(),
+        serde_json::to_string(&test_struct).unwrap()
+    );
 }
 
 #[test]

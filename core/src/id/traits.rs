@@ -15,16 +15,18 @@ pub trait Identifier: ToString {
 pub trait Id<K>
 where
     K: Identifier,
+    Self: Borrow<K>,
 {
-    type Q: Borrow<K>;
-
-    fn from_id(id: Self::Q) -> Self;
-
-    fn get(&self) -> &Self::Q;
+    fn get(&self) -> &K;
 }
 
-pub trait Identifiable: Identify {
-    fn get_id(&self) -> &Self::Id;
+pub trait Identifiable<Q>
+where
+    Q: Identifier,
+{
+    type Item: Id<Q>;
+
+    fn get(&self) -> &Self::Item;
 }
 
 pub trait IdentifierExt: Identifier
@@ -58,19 +60,13 @@ pub trait IdentifyMut: Identify {
 /*
  *********** impls ***********
 */
-impl<K, Q> Id<K> for Q
+impl<K, S> Id<K> for S
 where
+    S: Borrow<K>,
     K: Identifier,
-    Q: Borrow<K>,
 {
-    type Q = Q;
-
-    fn from_id(id: Self::Q) -> Self {
-        id
-    }
-
-    fn get(&self) -> &Self::Q {
-        self
+    fn get(&self) -> &K {
+        self.borrow()
     }
 }
 

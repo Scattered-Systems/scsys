@@ -29,6 +29,6 @@ mod tests {
         assert_eq!(id, &0);
         let atomic = AtomicId::new();
         let aid = Id::<usize>::get(&atomic);
-        assert_ne!(**aid, *id);
+        assert_ne!(*aid, *id);
     }
 }

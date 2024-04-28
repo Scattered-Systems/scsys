@@ -73,7 +73,7 @@ test = true
 
 [[example]]
 name = "derive"
-required-features = ["derive"]
+required-features = ["derive", "serde"]
 
 [[example]]
 name = "messages"

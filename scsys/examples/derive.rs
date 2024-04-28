@@ -7,7 +7,8 @@ extern crate scsys;
 use scsys::{Keyed, VariantConstructors};
 
 fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let _params = LinearParams { weight: 1.0 };
+    let params = LinearParams { weight: 1.0 };
+    println!("{:?}", &params);
     let wk = LinearParamsKey::Weight;
     println!("{:?}", &wk);
     println!("{:?}", Something::a());
@@ -16,7 +17,7 @@ fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     Ok(())
 }
 
-#[derive(Keyed)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Keyed, Ord, PartialEq, PartialOrd)]
 pub struct LinearParams<T> {
     #[key]
     pub weight: T,

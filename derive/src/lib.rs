@@ -12,6 +12,7 @@ extern crate quote;
 extern crate syn;
 
 pub(crate) mod ast;
+pub(crate) mod attrs;
 pub(crate) mod display;
 pub(crate) mod enums;
 pub(crate) mod params;
@@ -20,41 +21,18 @@ pub(crate) mod utils;
 use proc_macro::TokenStream;
 use syn::{parse_macro_input, Data, DeriveInput};
 
-#[proc_macro_derive(Name, attributes(Alternative))]
-pub fn name(input: TokenStream) -> TokenStream {
-    // Parse the inputs into the proper struct
-    let ast = parse_macro_input!(input as DeriveInput);
-
-    // Build the impl
-    let gen = impl_name(&ast);
-
-    gen.into()
-}
-
-fn impl_name(ast: &DeriveInput) -> proc_macro2::TokenStream {
-    let name = &ast.ident;
-    let res = quote::quote! {
-        impl scsys::prelude::Name for #name {
-            fn name(&self) -> String {
-                format!("{}", stringify!(#name))
-            }
-        }
-    };
-    res
-}
-
 #[proc_macro_derive(SerdeDisplay)]
 pub fn serde_display(input: TokenStream) -> TokenStream {
     // Parse the inputs into the proper struct
     let ast = parse_macro_input!(input as DeriveInput);
 
     // Build the impl
-    let gen = display::impl_serde_display(&ast);
+    let gen = display::handle_serde_display(&ast.ident, &ast.generics);
 
     gen.into()
 }
 
-#[proc_macro_derive(Display, attributes(json))]
+#[proc_macro_derive(Display, attributes(display))]
 pub fn any_display(input: TokenStream) -> TokenStream {
     // Parse the inputs into the proper struct
     let ast = parse_macro_input!(input as DeriveInput);
