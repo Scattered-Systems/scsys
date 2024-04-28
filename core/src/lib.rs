@@ -21,6 +21,7 @@ pub(crate) mod utils;
 pub mod errors;
 pub mod hkt;
 pub mod id;
+#[doc(hidden)]
 pub mod net;
 pub mod sync;
 pub mod time;
