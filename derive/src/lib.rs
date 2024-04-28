@@ -21,17 +21,6 @@ pub(crate) mod utils;
 use proc_macro::TokenStream;
 use syn::{parse_macro_input, Data, DeriveInput};
 
-#[proc_macro_derive(SerdeDisplay)]
-pub fn serde_display(input: TokenStream) -> TokenStream {
-    // Parse the inputs into the proper struct
-    let ast = parse_macro_input!(input as DeriveInput);
-
-    // Build the impl
-    let gen = display::handle_serde_display(&ast.ident, &ast.generics);
-
-    gen.into()
-}
-
 #[proc_macro_derive(Display, attributes(display))]
 pub fn any_display(input: TokenStream) -> TokenStream {
     // Parse the inputs into the proper struct

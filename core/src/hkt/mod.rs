@@ -5,6 +5,7 @@
 //! # Higher Kinded Types
 //!
 //!
+pub use self::prelude::*;
 
 pub mod applicative;
 pub mod functor;
@@ -32,6 +33,12 @@ hkt!(Box);
 hkt!(Option);
 hkt!(Rc);
 hkt!(Vec);
+
+pub(crate) mod prelude {
+    pub use super::applicative::Applicative;
+    pub use super::functor::Functor;
+    pub use super::monad::Monad;
+}
 
 #[cfg(test)]
 mod tests {

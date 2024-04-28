@@ -90,12 +90,6 @@ required-features = ["actors"]
 name = "params"
 required-features = ["derive"]
 
-
-[[test]]
-name = "derive"
-required-features = ["serde", "derive"]
-
-
 [build-dependencies]
 
 [dependencies]

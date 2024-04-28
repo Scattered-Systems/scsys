@@ -11,10 +11,15 @@ mod kinds {
 
     pub mod atomic;
     pub mod indexed;
+
+    pub(crate) mod prelude {
+        pub use super::atomic::AtomicId;
+        pub use super::indexed::IndexId;
+    }
 }
 
 pub(crate) mod prelude {
-    pub use super::kinds::*;
+    pub use super::kinds::prelude::*;
     pub use super::traits::*;
 }
 

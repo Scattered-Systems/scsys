@@ -6,29 +6,32 @@
 //!
 //!
 #[doc(inline)]
-pub use scsys_core as core;
+pub use scsys_core::*;
 
 #[cfg(feature = "actors")]
 #[doc(inline)]
 pub use scsys_actors as actors;
 #[cfg(feature = "derive")]
+#[doc(inline)]
 pub use scsys_derive::*;
 #[cfg(feature = "macros")]
+#[doc(inline)]
 pub use scsys_macros::*;
 #[cfg(feature = "stores")]
 #[doc(inline)]
 pub use scsys_stores as stores;
 
 pub mod prelude {
-    #[doc(inline)]
-    pub use super::core::prelude::*;
+
 
     #[cfg(feature = "actors")]
     #[doc(inline)]
-    pub use super::actors::prelude::*;
+    pub use scsys_actors::prelude::*;
+    #[doc(inline)]
+    pub use scsys_core::prelude::*;
     #[cfg(feature = "stores")]
     #[doc(inline)]
-    pub use crate::stores::prelude::*;
+    pub use scsys_stores::prelude::*;
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]

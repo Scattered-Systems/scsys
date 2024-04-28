@@ -36,7 +36,7 @@ pub mod prelude {
     pub use crate::DEFAULT_IGNORE_CHARS;
 
     pub use crate::errors::*;
-    pub use crate::hkt::*;
+    pub use crate::hkt::prelude::*;
     pub use crate::id::prelude::*;
     pub use crate::net::prelude::*;
     pub use crate::time::*;
