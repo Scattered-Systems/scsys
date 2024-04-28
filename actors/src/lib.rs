@@ -16,7 +16,6 @@ pub(crate) mod direction;
 #[macro_use]
 pub(crate) mod macros;
 
-pub mod config;
 pub mod messages;
 pub mod power;
 pub mod states;
@@ -25,7 +24,6 @@ pub mod traits;
 pub type Job = Box<dyn FnOnce() + Send + 'static>;
 
 pub mod prelude {
-    pub use crate::config::*;
     pub use crate::direction::*;
     pub use crate::messages::*;
     pub use crate::power::*;
