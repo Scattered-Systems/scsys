@@ -8,7 +8,7 @@ keywords = ["blockchain", "primitives", "scsys"]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys"
-version = "0.2.1"
+version = "0.2.2"
 
 [workspace.dependencies]
 paste = "1"

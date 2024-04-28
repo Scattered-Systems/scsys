@@ -72,8 +72,8 @@ tokio = { optional = true, version = "1" }
 
 [dependencies.scsys-core]
 path = "../core"
-version = "0.2.1"
-# version = "0.2.1-nightly"
+version = "0.2.2"
+# version = "0.2.2-nightly"
 
 [dev-dependencies]
 

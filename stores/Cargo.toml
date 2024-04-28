@@ -32,6 +32,10 @@ serde-ext = [
 
 std = []
 
+wasi = []
+
+wasm = []
+
 [lib]
 bench = false
 crate-type = ["cdylib", "rlib"]
