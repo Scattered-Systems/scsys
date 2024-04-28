@@ -11,30 +11,37 @@ pub mod applicative;
 pub mod functor;
 pub mod monad;
 
-use std::rc::Rc;
-use std::sync::Arc;
+#[cfg(not(feature = "std"))]
+use alloc::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
+
+#[cfg(feature = "std")]
+use std::{rc::Rc, sync::Arc};
 
 pub trait HKT<U> {
     type C; // Current Type
     type T; // Type C swapped with U
 }
 
+#[macro_export]
 macro_rules! hkt {
-    ($t:ident) => {
-        impl<T, U> HKT<U> for $t<T> {
+    ($($($p:ident)::*),*) => {
+        $(
+            hkt!(@impl $($p)::*);
+        )*
+    };
+    (@impl $($p:ident)::*) => {
+        impl<T, U> HKT<U> for $($p)::*<T> {
             type C = T;
-            type T = $t<U>;
+            type T = $($p)::*<U>;
         }
     };
 }
 
-hkt!(Arc);
-hkt!(Box);
-hkt!(Option);
-hkt!(Rc);
-hkt!(Vec);
+hkt!(Arc, Box, core::option::Option, Rc, Vec);
+
 
 pub(crate) mod prelude {
+    pub use super::HKT;
     pub use super::applicative::Applicative;
     pub use super::functor::Functor;
     pub use super::monad::Monad;

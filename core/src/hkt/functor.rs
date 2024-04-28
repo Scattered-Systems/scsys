@@ -7,8 +7,11 @@
 //! A functor is a type that when mapped over, preserves the structure of the type while applying a function to the values within the type.
 //! Functors are useful for modeling the functional effects on values of parameterized data types.
 use super::HKT;
-use std::rc::Rc;
-use std::sync::Arc;
+#[cfg(not(feature = "std"))]
+use alloc::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
+
+#[cfg(feature = "std")]
+use std::{rc::Rc, sync::Arc};
 
 pub trait Functor<U>: HKT<U> {
     fn fmap<F>(&self, f: F) -> Self::T
@@ -16,23 +19,25 @@ pub trait Functor<U>: HKT<U> {
         F: Fn(&Self::C) -> U;
 }
 
-impl<T, U> Functor<U> for Arc<T> {
-    fn fmap<F>(&self, f: F) -> Arc<U>
-    where
-        F: Fn(&T) -> U,
-    {
-        Arc::new(f(self))
-    }
+macro_rules! functor {
+    ($($t:ident),* $(,)?) => {
+        $(
+            functor!(@impl $t);
+        )*
+    };
+    (@impl $t:ident) => {
+       impl<T, U> Functor<U> for $t<T> {
+            fn fmap<F>(&self, f: F) -> $t<U>
+            where
+                F: Fn(&T) -> U,
+            {
+                $t::new(f(self))
+            }
+        } 
+    };
 }
 
-impl<T, U> Functor<U> for Box<T> {
-    fn fmap<F>(&self, f: F) -> Box<U>
-    where
-        F: Fn(&T) -> U,
-    {
-        Box::new(f(self))
-    }
-}
+functor!(Arc, Box, Rc);
 
 impl<T, U> Functor<U> for Option<T> {
     fn fmap<F>(&self, f: F) -> Option<U>
@@ -46,14 +51,6 @@ impl<T, U> Functor<U> for Option<T> {
     }
 }
 
-impl<T, U> Functor<U> for Rc<T> {
-    fn fmap<F>(&self, f: F) -> Rc<U>
-    where
-        F: Fn(&T) -> U,
-    {
-        Rc::new(f(self))
-    }
-}
 
 impl<T, U> Functor<U> for Vec<T> {
     fn fmap<F>(&self, f: F) -> Vec<U>

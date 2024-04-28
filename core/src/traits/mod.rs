@@ -2,16 +2,22 @@
     Appellation: specs <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-pub use self::{appellation::*, classify::*, ext::*};
+pub use self::{appellation::*, classify::*, ext::prelude::*};
 
 pub mod appellation;
 pub mod classify;
 
 pub mod ext {
-    pub use self::{slice::*, string::StringExt};
+    pub use self::prelude::*;
 
     pub mod slice;
     pub mod string;
+
+    pub(crate) mod prelude {
+        pub use super::slice::*;
+        pub use super::string::*;
+    
+    }
 }
 
 /// Interface for data-structures that can be compared for equality
@@ -49,6 +55,6 @@ pub trait Name {
 pub(crate) mod prelude {
     pub use super::appellation::*;
     pub use super::classify::*;
-    pub use super::ext::*;
+    pub use super::ext::prelude::*;
     pub use super::{Contain, Name};
 }

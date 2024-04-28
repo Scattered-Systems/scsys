@@ -9,6 +9,8 @@ pub(crate) mod datetime;
 pub(crate) mod epoch;
 pub(crate) mod timestamp;
 
+
+
 /// Interface for time-related data-structures
 pub trait Temporal {
     type Timestamp;
@@ -19,6 +21,8 @@ pub trait Temporal {
 pub(crate) mod utils {
 
     /// [systime] is a utilitarian function that returns the current system time in milliseconds.
+    #[cfg(feature = "std")]
+    #[inline]
     pub fn systime() -> u128 {
         std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)

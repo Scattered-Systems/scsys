@@ -8,5 +8,9 @@
 
 pub mod atomic;
 
+pub(crate) mod prelude {
+    pub use super::atomic::prelude::*;
+}
+
 #[cfg(test)]
 mod tests {}

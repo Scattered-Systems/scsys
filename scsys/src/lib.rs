@@ -21,9 +21,8 @@ pub use scsys_macros::*;
 #[doc(inline)]
 pub use scsys_stores as stores;
 
+// #66 - Cleanup the prelude module(s)
 pub mod prelude {
-
-
     #[cfg(feature = "actors")]
     #[doc(inline)]
     pub use scsys_actors::prelude::*;
