@@ -9,7 +9,7 @@ pub use self::state::Power;
 
 pub(crate) mod state;
 
-#[cfg(feature = "tokio")]
+#[cfg(feature = "tokio-ext")]
 pub mod shutdown;
 
 #[cfg(test)]

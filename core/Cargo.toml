@@ -23,11 +23,6 @@ full = [
     "serde",
 ]
 
-extras = [
-    "rand",
-    "serde",
-]
-
 rand = [
     "dep:rand",
 ]
@@ -42,6 +37,10 @@ serde-ext = [
 ]
 
 std = []
+
+wasi = []
+
+wasm = []
 
 [lib]
 bench = false

@@ -11,6 +11,7 @@ repository = "https://github.com/scattered-systems/scsys"
 version = "0.2.1"
 
 [workspace.dependencies]
+paste = "1"
 smart-default = "0.7"
 strum = { features = ["derive"], version = "0.26" }
 

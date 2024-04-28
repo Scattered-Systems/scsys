@@ -17,6 +17,7 @@ default = [
 ]
 
 full = [
+    "default",
     "serde",
     "tokio"
 ]
@@ -37,6 +38,19 @@ std = [
 
 tokio = [
     "dep:tokio",
+    "tokio-ext",
+]
+
+tokio-ext = [
+    "tokio/sync",
+]
+
+wasi = [
+    "scsys-core/wasi"
+]
+
+wasm = [
+    "scsys-core/wasm"
 ]
 
 [lib]
@@ -50,11 +64,12 @@ async-trait = "0.1"
 config = "0.14"
 futures = "0.3"
 glob = "0.3"
+paste.workspace = true
 serde = { optional = true, features = ["derive"], version = "1" }
 serde_json = { optional = true, version = "1" }
 smart-default.workspace = true
-strum = { features = ["derive"], version = "0.26" }
-tokio = { optional = true, features = ["sync"], version = "1" }
+strum.workspace = true
+tokio = { optional = true, version = "1" }
 
 [dependencies.scsys-core]
 path = "../core"

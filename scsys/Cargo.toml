@@ -19,14 +19,12 @@ default = [
 ]
 
 full = [
-    "actors",
+    "default",
     "derive",
-    "extras",
-    "stores",
+    "rand",
+    "serde",
+    "tokio",
 ]
-
-wasi = []
-wasm = []
 
 actors = [
     "dep:scsys-actors"
@@ -41,13 +39,8 @@ macros = [
     "dep:scsys-macros"
 ]
 
-stores = [
-    "dep:scsys-stores"
-]
-
-extras = [
-    "serde",
-    "tokio",
+rand = [
+    "scsys-core/rand",
 ]
 
 serde = [
@@ -57,14 +50,28 @@ serde = [
 ]
 
 std = [
-    "scsys-core/std",
     "scsys-actors/std",
+    "scsys-core/std",
+    "scsys-stores/std",
+]
+
+stores = [
+    "dep:scsys-stores"
 ]
 
 tokio = [
     "scsys-actors/tokio",
 ]
 
+wasi = [
+    "scsys-actors/wasi",
+    "scsys-core/wasi"
+]
+
+wasm = [
+    "scsys-actors/wasm",
+    "scsys-core/wasm",
+]
 
 [lib]
 bench = true
