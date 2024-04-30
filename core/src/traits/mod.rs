@@ -10,13 +10,12 @@ pub mod classify;
 pub mod ext {
     pub use self::prelude::*;
 
-    pub mod slice;
-    pub mod string;
+    pub(crate) mod slice;
+    pub(crate) mod string;
 
     pub(crate) mod prelude {
         pub use super::slice::*;
         pub use super::string::*;
-    
     }
 }
 
@@ -53,8 +52,8 @@ pub trait Name {
 }
 
 pub(crate) mod prelude {
+    pub use super::{Contain, Name};
     pub use super::appellation::*;
     pub use super::classify::*;
     pub use super::ext::prelude::*;
-    pub use super::{Contain, Name};
 }

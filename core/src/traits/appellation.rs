@@ -4,13 +4,10 @@
 */
 use crate::prelude::{Classifier, Identifier};
 
-/// An appellation is defined to be a name or title given to a person or thing; often being used in the context of wine.
-/// Here, the `Appellation` is a unique object identifier that is composed of three independent parts:
-///     - Classifier
-///     - Identifier
-///     - Name
-///
-/// While the name is typically referenced by external users, the classifier and id are used to navigate through computational space.
+/// An appellation is considered to be a name or title that is used to identify an object.
+/// For our purposes, an `Appellation` is a type that is used to identify an object in a computational space.
+/// The appellation outlines a notation that combines an idenfifier, classifier, and name into a single unique
+/// identifier for an object.
 pub trait Appellation {
     type Class: Classifier;
     type Id: Identifier;
@@ -23,13 +20,6 @@ pub trait Appellation {
 
     fn slug(&self) -> String {
         self.name().to_lowercase().replace(" ", "-")
-    }
-
-    fn type_id(&self) -> core::any::TypeId
-    where
-        Self: Sized + 'static,
-    {
-        core::any::TypeId::of::<Self>()
     }
 }
 

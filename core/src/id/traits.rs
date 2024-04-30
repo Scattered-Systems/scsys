@@ -15,9 +15,10 @@ pub trait Identifier: ToString {
 pub trait Id<K>
 where
     K: Identifier,
-    Self: Borrow<K>,
 {
-    fn get(&self) -> &K;
+    type Item: Borrow<K>;
+
+    fn get(&self) -> &Self::Item;
 }
 
 pub trait Identifiable<Q>
@@ -65,8 +66,10 @@ where
     S: Borrow<K>,
     K: Identifier,
 {
-    fn get(&self) -> &K {
-        self.borrow()
+    type Item = S;
+    
+    fn get(&self) -> &Self::Item {
+        &self
     }
 }
 
