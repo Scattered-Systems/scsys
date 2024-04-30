@@ -33,7 +33,7 @@ macro_rules! functor {
             {
                 $t::new(f(self))
             }
-        } 
+        }
     };
 }
 
@@ -50,7 +50,6 @@ impl<T, U> Functor<U> for Option<T> {
         None
     }
 }
-
 
 impl<T, U> Functor<U> for Vec<T> {
     fn fmap<F>(&self, f: F) -> Vec<U>

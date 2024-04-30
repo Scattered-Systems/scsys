@@ -49,8 +49,6 @@ macro_rules! applicative {
 
 applicative!(Arc(Arc::new), Box(Box::new), Rc(Rc::new));
 
-
-
 impl<T, U> Applicative<U> for core::option::Option<T> {
     fn pure_(value: U) -> Self::T {
         Some(value)

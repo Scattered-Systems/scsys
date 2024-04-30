@@ -2,22 +2,21 @@
     Appellation: mode <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
-use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
+use strum::{
+    AsRefStr, Display, EnumCount, EnumDiscriminants, EnumIs, EnumIter, EnumString, VariantNames,
+};
 
 /// The mode of a CRUD operation.
 ///
 #[derive(
+    AsRefStr,
     Clone,
     Copy,
     Debug,
-    Default,
     Display,
     EnumCount,
+    EnumDiscriminants,
     EnumIs,
-    EnumIter,
-    EnumString,
     Eq,
     Hash,
     Ord,
@@ -27,32 +26,59 @@ use strum::{Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 )]
 #[cfg_attr(
     feature = "serde",
-    derive(Deserialize, Serialize),
+    derive(serde::Deserialize, serde::Serialize),
     serde(rename_all = "lowercase", untagged)
 )]
+#[cfg_attr(
+    feature = "serde",
+    strum_discriminants(
+        derive(serde::Deserialize, serde::Serialize),
+        serde(rename_all = "lowercase", untagged)
+    )
+)]
 #[strum(serialize_all = "lowercase")]
-pub enum CRUD {
-    #[default]
-    Create,
-    Read,
-    Update,
-    Delete,
+#[strum_discriminants(
+    name(CRUD),
+    derive(
+        AsRefStr,
+        Display,
+        EnumCount,
+        EnumIs,
+        EnumIter,
+        EnumString,
+        Hash,
+        Ord,
+        PartialOrd,
+        VariantNames
+    ),
+    strum(serialize_all = "lowercase")
+)]
+pub enum CRUDEvent<T> {
+    Create(T),
+    Read(T),
+    Update(T),
+    Delete(T),
 }
 
-impl CRUD {
-    pub fn create() -> Self {
-        Self::Create
-    }
+macro_rules! crud_constructors {
+    ($($variant:ident.$call:ident),* $(,)?) => {
+        impl<T> CRUDEvent<T> {
+            $(
+                pub fn $call(data: T) -> Self {
+                    Self::$variant(data)
+                }
+            )*
+        }
 
-    pub fn read() -> Self {
-        Self::Read
-    }
+        impl CRUD {
+            $(
+                pub fn $call() -> Self {
+                    Self::$variant
+                }
+            )*
+        }
+    };
 
-    pub fn update() -> Self {
-        Self::Update
-    }
-
-    pub fn delete() -> Self {
-        Self::Delete
-    }
 }
+
+crud_constructors!(Create.create, Read.read, Update.update, Delete.delete,);

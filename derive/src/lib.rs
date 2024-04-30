@@ -52,7 +52,7 @@ pub fn variant_constructors(input: TokenStream) -> TokenStream {
 }
 
 /*
-    ******** DEPRECATED ********
+ ******** DEPRECATED ********
 */
 
 #[proc_macro_derive(Keyed, attributes(param))]

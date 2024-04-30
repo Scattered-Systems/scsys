@@ -8,17 +8,7 @@ use scsys_derive::{Display, VariantConstructors};
 use serde::{Deserialize, Serialize};
 
 #[derive(
-    Clone,
-    Debug,
-    Default,
-    Deserialize,
-    Display,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd,
-    Serialize,
+    Clone, Debug, Default, Deserialize, Display, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize,
 )]
 #[display]
 pub struct TestStruct {

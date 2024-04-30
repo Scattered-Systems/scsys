@@ -2,14 +2,12 @@
     Appellation: types <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # types
-//!
-//!
-
-pub use self::utils::*;
 
 #[cfg(feature = "std")]
-pub use std_types::*;
+pub use self::std_types::*;
+pub use self::{direction::Direction, utils::*};
+
+pub mod direction;
 
 pub type AnyAsync = Box<dyn core::any::Any + Send + Sync + 'static>;
 
@@ -57,10 +55,10 @@ pub(crate) mod utils {
 }
 
 pub(crate) mod prelude {
-    pub use super::{AnyAsync, Result};
-    pub use super::utils::*;
     #[cfg(feature = "std")]
     pub use super::std_types::*;
+    pub use super::utils::*;
+    pub use super::{AnyAsync, Result};
 }
 
 #[cfg(test)]

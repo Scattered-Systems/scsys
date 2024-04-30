@@ -67,7 +67,7 @@ where
     K: Identifier,
 {
     type Item = S;
-    
+
     fn get(&self) -> &Self::Item {
         &self
     }

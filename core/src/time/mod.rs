@@ -9,8 +9,6 @@ pub(crate) mod datetime;
 pub(crate) mod epoch;
 pub(crate) mod timestamp;
 
-
-
 /// Interface for time-related data-structures
 pub trait Temporal {
     type Timestamp;

@@ -39,12 +39,11 @@ macro_rules! hkt {
 
 hkt!(Arc, Box, core::option::Option, Rc, Vec);
 
-
 pub(crate) mod prelude {
-    pub use super::HKT;
     pub use super::applicative::Applicative;
     pub use super::functor::Functor;
     pub use super::monad::Monad;
+    pub use super::HKT;
 }
 
 #[cfg(test)]

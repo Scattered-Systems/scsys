@@ -28,11 +28,11 @@ pub mod prelude {
     pub use scsys_actors::prelude::*;
     #[doc(inline)]
     pub use scsys_core::prelude::*;
-    #[cfg(feature = "stores")]
-    #[doc(inline)]
-    pub use scsys_stores::prelude::*;
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]
     pub use scsys_macros::*;
+    #[cfg(feature = "stores")]
+    #[doc(inline)]
+    pub use scsys_stores::prelude::*;
 }

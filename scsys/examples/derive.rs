@@ -4,8 +4,8 @@
 */
 extern crate scsys;
 
-use scsys::{Params, VariantConstructors};
 use scsys::prelude::Result;
+use scsys::{Params, VariantConstructors};
 
 fn main() -> Result<()> {
     let params = LinearParams { weight: 1.0 };

@@ -4,15 +4,15 @@
 */
 //! # Actors
 //!
-//!
+//! This library seeks to provide a suite of tools for creating and managing actors in Rust.
 #[cfg(not(feature = "std"))]
 extern crate alloc;
 
 extern crate scsys_core as scsys;
 
-pub use self::{direction::*, traits::*};
+pub use self::{actor::*, traits::*};
 
-pub(crate) mod direction;
+pub(crate) mod actor;
 #[macro_use]
 pub(crate) mod macros;
 
@@ -24,7 +24,7 @@ pub mod traits;
 pub type Job = Box<dyn FnOnce() + Send + 'static>;
 
 pub mod prelude {
-    pub use crate::direction::*;
+    pub use crate::actor::*;
     pub use crate::messages::*;
     pub use crate::power::*;
     pub use crate::states::prelude::*;
