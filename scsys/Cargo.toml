@@ -63,19 +63,10 @@ tokio = [
     "scsys-actors/tokio",
 ]
 
-wasi = [
-    "scsys-actors/wasi",
-    "scsys-core/wasi"
-]
-
-wasm = [
-    "scsys-actors/wasm",
-    "scsys-core/wasm",
-]
-
 [lib]
 bench = true
 crate-type = ["cdylib", "rlib"]
+doctest = true
 test = true
 
 [[example]]
@@ -107,6 +98,11 @@ serde_json = "1"
 [package.metadata.docs.rs]
 all-features = true
 rustc-args = ["--cfg", "docsrs"]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
 
 [target.wasm32-unknown-unknown]
 

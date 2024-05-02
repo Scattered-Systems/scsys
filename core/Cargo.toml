@@ -29,18 +29,9 @@ rand = [
 
 serde = [
     "dep:serde",
-    "serde-ext",
-]
-
-serde-ext = [
-    "dep:serde_json",
 ]
 
 std = []
-
-wasi = []
-
-wasm = []
 
 [lib]
 bench = false
@@ -54,9 +45,8 @@ test = true
 glob = "0.3"
 rand = { optional = true, version = "0.8" }
 serde = { optional = true, features = ["derive"], version = "1" }
-serde_json = { optional = true, version = "1" }
 smart-default.workspace = true
-strum = { features = ["derive"], version = "0.26" }
+strum.workspace = true
 
 [dev-dependencies]
 anyhow = "1"

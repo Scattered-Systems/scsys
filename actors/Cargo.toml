@@ -24,12 +24,7 @@ full = [
 
 serde = [
     "dep:serde",
-    "serde-ext",
     "scsys-core/serde",
-]
-
-serde-ext = [
-    "dep:serde_json",
 ]
 
 std = [
@@ -45,14 +40,6 @@ tokio-ext = [
     "tokio/sync",
 ]
 
-wasi = [
-    "scsys-core/wasi"
-]
-
-wasm = [
-    "scsys-core/wasm"
-]
-
 [lib]
 bench = false
 crate-type = ["cdylib", "rlib"]
@@ -65,7 +52,7 @@ futures = "0.3"
 glob = "0.3"
 paste.workspace = true
 serde = { optional = true, features = ["derive"], version = "1" }
-serde_json = { optional = true, version = "1" }
+# serde_json = { optional = true, version = "1" }
 smart-default.workspace = true
 strum.workspace = true
 tokio = { optional = true, version = "1" }
