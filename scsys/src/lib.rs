@@ -17,9 +17,6 @@ pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 #[doc(inline)]
 pub use scsys_macros::*;
-#[cfg(feature = "stores")]
-#[doc(inline)]
-pub use scsys_stores as stores;
 
 // #66 - Cleanup the prelude module(s)
 pub mod prelude {
@@ -32,7 +29,4 @@ pub mod prelude {
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]
     pub use scsys_macros::*;
-    #[cfg(feature = "stores")]
-    #[doc(inline)]
-    pub use scsys_stores::prelude::*;
 }

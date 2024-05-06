@@ -31,7 +31,10 @@ serde = [
     "dep:serde",
 ]
 
-std = []
+std = [
+    "serde/std",
+    "strum/std",
+]
 
 [lib]
 bench = false
@@ -44,12 +47,13 @@ test = true
 [dependencies]
 glob = "0.3"
 rand = { optional = true, version = "0.8" }
-serde = { optional = true, features = ["derive"], version = "1" }
+serde = { default-features = false, optional = true, features = ["derive"], version = "1" }
 smart-default.workspace = true
 strum.workspace = true
 
 [dev-dependencies]
 anyhow = "1"
+serde_json = "1"
 
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]

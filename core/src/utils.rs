@@ -2,27 +2,9 @@
     Appellation: utils <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(feature = "std")]
-pub use self::fs::*;
+#[cfg(not(no_std))]
+pub use self::std_utils::*;
 
-use core::fmt;
-use core::str::FromStr;
-
-/// A simple extraction utility for getting values from a string and converting them into a [Vec]
-pub fn extractor<S, T>(bp: char, data: &S, exclude: Option<&[char]>) -> Vec<T>
-where
-    S: ToString,
-    T: FromStr + ToString,
-    <T as FromStr>::Err: fmt::Debug,
-{
-    let data = data.to_string();
-    let skip = exclude.unwrap_or(crate::DEFAULT_IGNORE_CHARS);
-    let trimmed: &str = data.trim_matches(skip);
-    trimmed
-        .split(bp)
-        .map(|i| i.trim_matches(skip).parse::<T>().unwrap())
-        .collect()
-}
 /// Remove the first and last charecters of a string
 pub fn fnl_remove(data: impl ToString) -> String {
     let data = data.to_string();
@@ -30,16 +12,6 @@ pub fn fnl_remove(data: impl ToString) -> String {
     chars.next();
     chars.next_back();
     chars.as_str().to_string()
-}
-
-/// Fetch the project root unless specified otherwise with a CARGO_MANIFEST_DIR env variable
-#[cfg(feature = "std")]
-pub fn project_root() -> std::path::PathBuf {
-    std::path::Path::new(&env!("CARGO_MANIFEST_DIR"))
-        .ancestors()
-        .nth(1)
-        .unwrap()
-        .to_path_buf()
 }
 
 pub fn snakecase(name: impl ToString) -> String {
@@ -86,26 +58,41 @@ pub fn snakecase(name: impl ToString) -> String {
     buffer
 }
 
-#[cfg(feature = "std")]
-mod fs {
-    use std::fs::File;
-    use std::io::{self, BufRead, BufReader};
-    /// A generic function wrapper extending glob::glob
-    pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> Vec<T> {
-        let mut files = Vec::<T>::new();
-        for path in glob::glob(pat).expect("Failed to read glob pattern...") {
-            if let Ok(r) = path {
-                files.push(f(r))
-            }
-            continue;
-        }
-        files
+
+
+#[cfg(not(no_std))]
+mod std_utils {
+    pub use self::fs::*;
+
+    /// Fetch the project root unless specified otherwise with a CARGO_MANIFEST_DIR env variable
+    pub fn project_root() -> std::path::PathBuf {
+        std::path::Path::new(&env!("CARGO_MANIFEST_DIR"))
+            .ancestors()
+            .nth(1)
+            .unwrap()
+            .to_path_buf()
     }
 
-    /// This function converts the file found at path (fp) into a [Vec<String>]
-    pub fn file_to_vec(fp: String) -> Result<Vec<String>, io::Error> {
-        let file_in = File::open(fp)?;
-        let file_reader = BufReader::new(file_in);
-        Ok(file_reader.lines().filter_map(Result::ok).collect())
+    mod fs {
+        use std::fs::File;
+        use std::io::{self, BufRead, BufReader};
+        /// A generic function wrapper extending glob::glob
+        pub fn collect_files_as<T>(f: &dyn Fn(std::path::PathBuf) -> T, pat: &str) -> Vec<T> {
+            let mut files = Vec::<T>::new();
+            for path in glob::glob(pat).expect("Failed to read glob pattern...") {
+                if let Ok(r) = path {
+                    files.push(f(r))
+                }
+                continue;
+            }
+            files
+        }
+
+        /// This function converts the file found at path (fp) into a [Vec<String>]
+        pub fn file_to_vec(fp: String) -> Result<Vec<String>, io::Error> {
+            let file_in = File::open(fp)?;
+            let file_reader = BufReader::new(file_in);
+            Ok(file_reader.lines().filter_map(Result::ok).collect())
+        }
     }
 }

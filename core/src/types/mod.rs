@@ -9,7 +9,7 @@ pub use self::{direction::Direction, utils::*};
 
 pub mod direction;
 
-pub type AnyAsync = Box<dyn core::any::Any + Send + Sync + 'static>;
+pub type BoxAny = Box<dyn core::any::Any>;
 
 /// A type alias for [core::result::Result] that employs the [crate::errors::Error] type
 pub type Result<T = ()> = core::result::Result<T, crate::errors::Error>;
@@ -55,10 +55,11 @@ pub(crate) mod utils {
 }
 
 pub(crate) mod prelude {
+    pub use super::{BoxAny, Result};
+    pub use super::direction::Direction;
     #[cfg(feature = "std")]
     pub use super::std_types::*;
     pub use super::utils::*;
-    pub use super::{AnyAsync, Result};
 }
 
 #[cfg(test)]

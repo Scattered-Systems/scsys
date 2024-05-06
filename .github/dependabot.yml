@@ -28,7 +28,3 @@ updates:
     directory: /scsys
     schedule:
       interval: daily
-  - package-ecosystem: cargo
-    directory: /stores
-    schedule:
-      interval: daily

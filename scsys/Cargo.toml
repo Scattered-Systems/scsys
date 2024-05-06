@@ -14,7 +14,6 @@ version.workspace = true
 [features]
 default = [
     "actors",
-    "stores",
     "std",
 ]
 
@@ -27,16 +26,16 @@ full = [
 ]
 
 actors = [
-    "dep:scsys-actors"
+    "dep:scsys-actors",
 ]
 
 derive = [
     "dep:scsys-derive", 
-    "macros"
+    "macros",
 ]
 
 macros = [
-    "dep:scsys-macros"
+    "dep:scsys-macros",
 ]
 
 rand = [
@@ -46,17 +45,11 @@ rand = [
 serde = [
     "scsys-actors/serde",
     "scsys-core/serde",
-    "scsys-stores/serde",
 ]
 
 std = [
     "scsys-actors/std",
     "scsys-core/std",
-    "scsys-stores/std",
-]
-
-stores = [
-    "dep:scsys-stores"
 ]
 
 tokio = [
@@ -89,7 +82,6 @@ scsys-core = { path = "../core", version = "0.2.2" }
 scsys-actors = { optional = true, path = "../actors", version = "0.2.2" }
 scsys-derive = { optional = true, path = "../derive", version = "0.2.2" }
 scsys-macros = { optional = true, path = "../macros", version = "0.2.2" }
-scsys-stores = { optional = true, path = "../stores", version = "0.2.2" }
 
 [dev-dependencies]
 serde = { features = ["derive"], version = "1" }

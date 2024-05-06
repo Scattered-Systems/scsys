@@ -22,8 +22,7 @@ members = [
     "core",
     "derive",
     "macros",
-    "scsys", 
-    "stores",
+    "scsys",
 ]
 
 resolver = "2"
@@ -31,7 +30,7 @@ resolver = "2"
 [workspace.dependencies]
 paste = "1"
 smart-default = "0.7"
-strum = { features = ["derive"], version = "0.26" }
+strum = { default-features = false, features = ["derive"], version = "0.26" }
 
 [profile.dev]
 codegen-units = 256

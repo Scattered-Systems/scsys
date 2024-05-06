@@ -2,11 +2,10 @@
     Appellation: default <test>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#![cfg(test)]
 
 fn addition<A, B, C>(a: A, b: B) -> C
 where
-    A: std::ops::Add<B, Output = C>,
+    A: core::ops::Add<B, Output = C>,
 {
     a + b
 }

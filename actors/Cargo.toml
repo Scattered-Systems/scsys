@@ -28,7 +28,10 @@ serde = [
 ]
 
 std = [
+    "futures/std",
     "scsys-core/std",
+    "serde/std",
+    "strum/std",
 ]
 
 tokio = [
@@ -48,16 +51,17 @@ test = true
 
 [dependencies]
 async-trait = "0.1"
-futures = "0.3"
+futures = { default-features = false, features = [], version = "0.3"}
 glob = "0.3"
 paste.workspace = true
-serde = { optional = true, features = ["derive"], version = "1" }
+serde = { default-features = false, optional = true, features = ["derive"], version = "1" }
 # serde_json = { optional = true, version = "1" }
 smart-default.workspace = true
 strum.workspace = true
 tokio = { optional = true, version = "1" }
 
 [dependencies.scsys-core]
+default-features = false
 path = "../core"
 version = "0.2.2"
 # version = "0.2.2-nightly"
