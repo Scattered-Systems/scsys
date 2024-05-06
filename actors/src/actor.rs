@@ -8,5 +8,4 @@ pub mod engine;
 pub trait Actor {
     type Ctx;
     type Engine;
-    
 }

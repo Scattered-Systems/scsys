@@ -16,10 +16,6 @@ pub trait Entry<'a> {
     fn or_insert(self, default: Self::Value) -> &'a mut Self::Value;
 }
 
-pub trait OrInsert<K, V> {
-    fn or_insert(&mut self, key: K, value: V) -> &mut V;
-}
-
 pub trait Store<K, V> {
     fn get(&self, key: &K) -> Option<&V>;
 
@@ -31,7 +27,7 @@ pub trait Store<K, V> {
 }
 
 /*
-    ********* Implementations *********
+ ********* Implementations *********
 */
 macro_rules! entry {
     ($($prefix:ident)::* -> $call:ident($($arg:tt),*)) => {

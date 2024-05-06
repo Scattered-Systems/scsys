@@ -55,11 +55,11 @@ pub(crate) mod utils {
 }
 
 pub(crate) mod prelude {
-    pub use super::{BoxAny, Result};
     pub use super::direction::Direction;
     #[cfg(feature = "std")]
     pub use super::std_types::*;
     pub use super::utils::*;
+    pub use super::{BoxAny, Result};
 }
 
 #[cfg(test)]

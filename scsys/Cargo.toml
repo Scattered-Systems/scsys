@@ -13,12 +13,12 @@ version.workspace = true
 
 [features]
 default = [
-    "actors",
     "std",
 ]
 
 full = [
     "default",
+    "actors",
     "derive",
     "rand",
     "serde",

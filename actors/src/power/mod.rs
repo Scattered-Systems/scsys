@@ -9,7 +9,6 @@ pub use self::state::Power;
 
 pub(crate) mod state;
 
-
 pub mod shutdown;
 
 #[cfg(test)]

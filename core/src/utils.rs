@@ -58,8 +58,6 @@ pub fn snakecase(name: impl ToString) -> String {
     buffer
 }
 
-
-
 #[cfg(not(no_std))]
 mod std_utils {
     pub use self::fs::*;

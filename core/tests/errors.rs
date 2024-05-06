@@ -21,4 +21,3 @@ fn test_error_serde() {
     let err2: Error = serde_json::from_value(json).unwrap();
     assert_eq!(err, err2);
 }
-
