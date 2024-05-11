@@ -39,5 +39,5 @@ pub(crate) mod prelude {
     pub use super::appellation::*;
     pub use super::classify::*;
     pub use super::ext::prelude::*;
-    pub use super::{Contain, Name};
+    pub use super::{IntoInner, Name};
 }

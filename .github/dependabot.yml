@@ -3,28 +3,28 @@ updates:
   - package-ecosystem: cargo
     directory: /
     schedule:
-      interval: daily
+      interval: weekly
   - package-ecosystem: github-actions
     directory: /
     schedule:
-          interval: daily
+      interval: weekly
   - package-ecosystem: cargo
     directory: /actors
     schedule:
-      interval: daily
+      interval: weekly
   - package-ecosystem: cargo
     directory: /core
     schedule:
-      interval: daily
+      interval: weekly
   - package-ecosystem: cargo
     directory: /derive
     schedule:
-      interval: daily
+      interval: weekly
   - package-ecosystem: cargo
     directory: /macros
     schedule:
-      interval: daily
+      interval: weekly
   - package-ecosystem: cargo
     directory: /scsys
     schedule:
-      interval: daily
+      interval: weekly

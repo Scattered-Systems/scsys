@@ -2,7 +2,7 @@
     Appellation: default <bench>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#![cfg(bench)]
+#![feature(test)]
 extern crate test;
 
 use test::Bencher;
@@ -26,7 +26,7 @@ fn iterative_fibonacci(b: &mut Bencher) {
 pub mod fib {
 
     // recursive fibonacci
-    fn fibonacci(n: usize) -> u32 {
+    pub fn fibonacci(n: usize) -> u32 {
         if n < 2 {
             1
         } else {
@@ -64,12 +64,11 @@ pub mod fib {
         type Item = u32;
 
         fn next(&mut self) -> Option<u32> {
-            use std::mem::replace;
+            use core::mem::replace;
+            let next = self.curr + self.next;
+            let curr = replace(&mut self.next, next);
 
-            let new_next = self.curr + self.next;
-            let new_curr = replace(&mut self.next, new_next);
-
-            Some(replace(&mut self.curr, new_curr))
+            Some(replace(&mut self.curr, curr))
         }
     }
 }

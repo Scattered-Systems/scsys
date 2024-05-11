@@ -8,11 +8,7 @@
 use super::functor::Functor;
 use super::HKT;
 
-#[cfg(not(feature = "std"))]
-use alloc::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
-
-#[cfg(feature = "std")]
-use std::{rc::Rc, sync::Arc};
+use super::containers::*;
 
 pub trait Applicative<U>: Functor<U> {
     fn pure_(value: U) -> Self::T
@@ -25,15 +21,15 @@ pub trait Applicative<U>: Functor<U> {
 }
 
 macro_rules! applicative {
-    ($($t:ident($e:expr)),* $(,)?) => {
+    ($($t:ident),* $(,)?) => {
         $(
-            applicative!(@impl $t($e));
+            applicative!(@impl $t);
         )*
     };
-    (@impl $t:ident($e:expr)) => {
+    (@impl $t:ident) => {
         impl<T, U> Applicative<U> for $t<T> {
             fn pure_(value: U) -> Self::T {
-                $e(value)
+                $t::new(value)
             }
 
             fn seq<F>(&self, fs: <Self as HKT<F>>::T) -> $t<U>
@@ -41,20 +37,20 @@ macro_rules! applicative {
                 F: Fn(&<Self as HKT<U>>::C) -> U,
             {
                 let v = fs(self);
-                $e(v)
+                $t::new(v)
             }
         }
     };
 }
+#[cfg(any(feature = "std", all(feature = "alloc", no_std)))]
+applicative!(Arc, Box, Rc);
 
-applicative!(Arc(Arc::new), Box(Box::new), Rc(Rc::new));
-
-impl<T, U> Applicative<U> for core::option::Option<T> {
+impl<T, U> Applicative<U> for Option<T> {
     fn pure_(value: U) -> Self::T {
         Some(value)
     }
 
-    fn seq<F>(&self, fs: <Self as HKT<F>>::T) -> core::option::Option<U>
+    fn seq<F>(&self, fs: <Self as HKT<F>>::T) -> Option<U>
     where
         F: Fn(&T) -> U,
     {

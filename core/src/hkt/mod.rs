@@ -11,11 +11,15 @@ pub mod applicative;
 pub mod functor;
 pub mod monad;
 
-#[cfg(not(feature = "std"))]
-use alloc::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
+pub(crate) mod containers {
+    pub(crate) use core::option::Option;
 
-#[cfg(feature = "std")]
-use std::{rc::Rc, sync::Arc};
+    #[cfg(all(feature = "alloc", no_std))]
+    pub(crate) use alloc::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
+
+    #[cfg(feature = "std")]
+    pub(crate) use std::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
+}
 
 pub trait HKT<U> {
     type C; // Current Type
@@ -37,7 +41,13 @@ macro_rules! hkt {
     };
 }
 
-hkt!(Arc, Box, core::option::Option, Rc, Vec);
+hkt!(
+    containers::Arc,
+    containers::Box,
+    containers::Option,
+    containers::Rc,
+    containers::Vec
+);
 
 pub(crate) mod prelude {
     pub use super::applicative::Applicative;

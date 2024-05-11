@@ -6,12 +6,8 @@
 //!
 //! A functor is a type that when mapped over, preserves the structure of the type while applying a function to the values within the type.
 //! Functors are useful for modeling the functional effects on values of parameterized data types.
+use super::containers::*;
 use super::HKT;
-#[cfg(not(feature = "std"))]
-use alloc::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
-
-#[cfg(feature = "std")]
-use std::{rc::Rc, sync::Arc};
 
 pub trait Functor<U>: HKT<U> {
     fn fmap<F>(&self, f: F) -> Self::T
@@ -37,6 +33,7 @@ macro_rules! functor {
     };
 }
 
+#[cfg(any(feature = "std", all(feature = "alloc", no_std)))]
 functor!(Arc, Box, Rc);
 
 impl<T, U> Functor<U> for Option<T> {

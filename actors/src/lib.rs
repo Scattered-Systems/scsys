@@ -7,7 +7,7 @@
 //! This library seeks to provide a suite of tools for creating and managing actors in Rust.
 #![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(no_std)]
+#[cfg(feature = "alloc")]
 extern crate alloc;
 
 extern crate scsys_core as scsys;

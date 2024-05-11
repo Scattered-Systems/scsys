@@ -5,11 +5,7 @@
 use super::Applicative;
 use super::HKT;
 
-#[cfg(not(feature = "std"))]
-use alloc::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
-
-#[cfg(feature = "std")]
-use std::{rc::Rc, sync::Arc};
+use super::containers::*;
 
 pub trait Monad<U>: Applicative<U> {
     fn return_(x: U) -> Self::T
