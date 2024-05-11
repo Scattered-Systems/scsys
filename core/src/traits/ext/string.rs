@@ -14,6 +14,7 @@ impl StringExt for str {
     }
 }
 
+#[cfg(feature = "std")]
 pub trait StringFmt {
     fn snake_case(&self) -> String;
 

@@ -27,8 +27,9 @@ pub trait IntoInner {
 }
 
 /// Interface for nameable data-structures
+#[cfg(any(feature = "std", all(feature = "alloc", no_std)))]
 pub trait Name {
-    fn name(&self) -> String;
+    fn name(&self) -> &str;
 
     fn slug(&self) -> String {
         self.name().to_lowercase().replace(" ", "-")

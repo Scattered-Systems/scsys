@@ -17,6 +17,7 @@ pub use self::{traits::prelude::*, types::prelude::*, utils::*};
 pub(crate) mod macros;
 #[macro_use]
 pub(crate) mod seal;
+#[cfg(any(feature = "std", feature = "alloc"))]
 pub(crate) mod utils;
 
 pub mod errors;

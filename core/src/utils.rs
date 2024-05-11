@@ -4,6 +4,8 @@
 */
 #[cfg(feature = "std")]
 pub use self::std_utils::*;
+#[cfg(all(feature = "alloc", no_std))]
+pub use alloc::string::String;
 
 /// Remove the first and last charecters of a string
 pub fn fnl_remove(data: impl ToString) -> String {
