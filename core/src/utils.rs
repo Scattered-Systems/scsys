@@ -2,7 +2,7 @@
     Appellation: utils <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(not(no_std))]
+#[cfg(feature = "std")]
 pub use self::std_utils::*;
 
 /// Remove the first and last charecters of a string
@@ -58,7 +58,7 @@ pub fn snakecase(name: impl ToString) -> String {
     buffer
 }
 
-#[cfg(not(no_std))]
+#[cfg(feature = "std")]
 mod std_utils {
     pub use self::fs::*;
 

@@ -25,6 +25,8 @@ full = [
     "tokio",
 ]
 
+# *** [FF] Crates ***
+
 actors = [
     "dep:scsys-actors",
 ]
@@ -38,23 +40,40 @@ macros = [
     "dep:scsys-macros",
 ]
 
+# *** [FF] Dependencies ***
+alloc = [
+    "scsys-actors?/alloc",
+    "scsys-core/alloc",
+]
 rand = [
     "scsys-core/rand",
 ]
 
 serde = [
-    "scsys-actors/serde",
+    "scsys-actors?/serde",
     "scsys-core/serde",
 ]
 
+tokio = [
+    "scsys-actors?/tokio",
+]
+# *** [FF] Environments ***
+
 std = [
-    "scsys-actors/std",
+    "scsys-actors?/std",
     "scsys-core/std",
 ]
 
-tokio = [
-    "scsys-actors/tokio",
+wasi = [
+    "scsys-actors?/wasi",
+    "scsys-core/wasi",
 ]
+
+wasm = [
+    "scsys-actors?/wasm",
+    "scsys-core/wasm",
+]
+
 
 [lib]
 bench = true

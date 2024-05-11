@@ -17,6 +17,7 @@ impl Timestamp {
     }
 
     /// Create a new timestamp
+    #[cfg(feature = "std")]
     pub fn now() -> Self {
         Self(crate::time::systime())
     }

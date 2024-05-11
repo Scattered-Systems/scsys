@@ -1,5 +1,6 @@
 [package]
 authors.workspace = true
+build = "build.rs"
 categories.workspace = true
 description.workspace = true
 edition.workspace = true
@@ -23,18 +24,38 @@ full = [
     "serde",
 ]
 
+
+
+# *** [FF] Dependencies ***
+alloc = [
+    "rand?/alloc",
+    "serde?/alloc",
+]
+
 rand = [
     "dep:rand",
 ]
 
 serde = [
     "dep:serde",
+    "serde-ext",
 ]
 
+serde-ext = [
+    "rand?/serde1",
+]
+
+# *** [FF] Environment(s) ***
 std = [
-    "serde/std",
+    "rand?/std",
+    "rand?/std_rng",
+    "serde?/std",
     "strum/std",
 ]
+
+wasi = []
+
+wasm = []
 
 [lib]
 bench = false
@@ -46,10 +67,19 @@ test = true
 
 [dependencies]
 glob = "0.3"
-rand = { optional = true, version = "0.8" }
-serde = { default-features = false, optional = true, features = ["derive"], version = "1" }
 smart-default.workspace = true
 strum.workspace = true
+
+[dependencies.rand]
+default-features = false
+optional = true
+version = "0.8"
+
+[dependencies.serde]
+default-features = false
+features = ["derive"]
+optional = true
+version = "1"
 
 [dev-dependencies]
 anyhow = "1"
