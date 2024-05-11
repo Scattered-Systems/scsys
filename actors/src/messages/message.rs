@@ -3,11 +3,9 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 use scsys::prelude::{AtomicId, Timestamp};
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
 
-#[cfg_attr(feature = "serde", derive(Deserialize, Serialize,))]
 #[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct Message<T = String> {
     id: AtomicId,
     data: Option<T>,
@@ -15,48 +13,74 @@ pub struct Message<T = String> {
 }
 
 impl<T> Message<T> {
-    pub fn new(data: Option<T>) -> Self {
+    pub fn new() -> Self {
         Self {
             id: AtomicId::new(),
-            data,
+            data: None,
             ts: Timestamp::now(),
         }
     }
 
-    pub fn content(&self) -> Option<&T> {
+    pub fn clear(&mut self) {
+        self.on_update();
+        self.data = None;
+    }
+
+    pub fn data(&self) -> Option<&T> {
         self.data.as_ref()
+    }
+
+    pub fn data_mut(&mut self) -> Option<&mut T> {
+        self.data.as_mut()
     }
 
     pub fn id(&self) -> usize {
         *self.id
     }
 
+    pub fn set_data(&mut self, data: Option<T>) {
+        self.on_update();
+        self.data = data;
+    }
+
     pub fn timestamp(&self) -> Timestamp {
         self.ts
     }
+
+    pub fn with_data(mut self, data: T) -> Self {
+        self.on_update();
+        self.data = Some(data);
+        self
+    }
+
+    fn on_update(&mut self) {
+        self.ts = Timestamp::now();
+    }
 }
 
-impl<T> std::fmt::Display for Message<T>
+impl<T> core::fmt::Display for Message<T>
 where
-    T: std::fmt::Display,
+    T: core::fmt::Display,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        if let Some(data) = self.content() {
-            return write!(f, "Timestamp: {}\n{}", self.ts, data,);
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        if let Some(data) = self.data() {
+            return write!(f, "{}", data);
         }
-        write!(f, "Timestamp: {}", self.ts)
+        write!(f, "{}", self.timestamp())
     }
 }
 
 impl<T> From<Option<T>> for Message<T> {
     fn from(data: Option<T>) -> Self {
-        Self::new(data)
+        let mut msg = Message::new();
+        msg.set_data(data);
+        msg
     }
 }
 
 impl<T> From<T> for Message<T> {
     fn from(data: T) -> Self {
-        Self::new(Some(data))
+        Self::new().with_data(data)
     }
 }
 

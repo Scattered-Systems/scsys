@@ -5,33 +5,56 @@
 //! # Higher Kinded Types
 //!
 //!
+pub use self::prelude::*;
 
 pub mod applicative;
 pub mod functor;
 pub mod monad;
 
-use std::rc::Rc;
-use std::sync::Arc;
+pub(crate) mod containers {
+    pub(crate) use core::option::Option;
+
+    #[cfg(all(feature = "alloc", no_std))]
+    pub(crate) use alloc::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
+
+    #[cfg(feature = "std")]
+    pub(crate) use std::{boxed::Box, rc::Rc, sync::Arc, vec::Vec};
+}
 
 pub trait HKT<U> {
     type C; // Current Type
     type T; // Type C swapped with U
 }
 
+#[macro_export]
 macro_rules! hkt {
-    ($t:ident) => {
-        impl<T, U> HKT<U> for $t<T> {
+    ($($($p:ident)::*),*) => {
+        $(
+            hkt!(@impl $($p)::*);
+        )*
+    };
+    (@impl $($p:ident)::*) => {
+        impl<T, U> HKT<U> for $($p)::*<T> {
             type C = T;
-            type T = $t<U>;
+            type T = $($p)::*<U>;
         }
     };
 }
 
-hkt!(Arc);
-hkt!(Box);
-hkt!(Option);
-hkt!(Rc);
-hkt!(Vec);
+hkt!(
+    containers::Arc,
+    containers::Box,
+    containers::Option,
+    containers::Rc,
+    containers::Vec
+);
+
+pub(crate) mod prelude {
+    pub use super::applicative::Applicative;
+    pub use super::functor::Functor;
+    pub use super::monad::Monad;
+    pub use super::HKT;
+}
 
 #[cfg(test)]
 mod tests {

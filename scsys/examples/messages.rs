@@ -2,8 +2,7 @@
     Appellation: messages <example>
     Creator: FL03 <jo3mccain@icloud.com>
 */
-use scsys::core::id::AtomicId;
-use scsys::prelude::Message;
+use scsys::prelude::{AtomicId, Message};
 
 fn main() {
     let id = AtomicId::new();

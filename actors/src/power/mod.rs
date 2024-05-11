@@ -9,13 +9,12 @@ pub use self::state::Power;
 
 pub(crate) mod state;
 
-#[cfg(feature = "tokio-ext")]
 pub mod shutdown;
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::str::FromStr;
+    use core::str::FromStr;
 
     #[test]
     fn test_power() {

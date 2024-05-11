@@ -7,15 +7,10 @@ concurrency:
 on:
   pull_request:
     branches: [ main ]
-  push:
-    branches: [ main ]
-    tags: [ nightly*,  v*.*.* ]
   release:
     types: [ created ]
   repository_dispatch:
     types: [ clippy ]
-  schedule:
-    - cron: 30 21 * * 0 # Every Sunday at 9:30PM UTC
   workflow_dispatch:
 
 permissions:
