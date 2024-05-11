@@ -20,10 +20,12 @@ pub(crate) mod seal;
 pub(crate) mod utils;
 
 pub mod errors;
+#[cfg(any(feature = "std", feature = "alloc"))]
 pub mod hkt;
 pub mod id;
 pub mod stores;
 pub mod sync;
+#[cfg(feature = "std")]
 pub mod time;
 pub mod traits;
 pub mod types;
