@@ -4,7 +4,7 @@
 */
 use scsys::prelude::{AtomicId, Timestamp};
 
-#[derive(Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct Message<T = String> {
     id: AtomicId,
@@ -13,10 +13,10 @@ pub struct Message<T = String> {
 }
 
 impl<T> Message<T> {
-    pub fn new() -> Self {
+    pub fn new(value: T) -> Self {
         Self {
             id: AtomicId::new(),
-            data: None,
+            data: Some(value),
             ts: Timestamp::now(),
         }
     }
@@ -58,6 +58,15 @@ impl<T> Message<T> {
     }
 }
 
+impl<T> Default for Message<T> {
+    fn default() -> Self {
+        Self {
+            id: AtomicId::new(),
+            data: None,
+            ts: Timestamp::now(),
+        }
+    }
+}
 impl<T> core::fmt::Display for Message<T>
 where
     T: core::fmt::Display,
@@ -72,15 +81,16 @@ where
 
 impl<T> From<Option<T>> for Message<T> {
     fn from(data: Option<T>) -> Self {
-        let mut msg = Message::new();
-        msg.set_data(data);
-        msg
+        if let Some(msg) = data {
+            return Self::new(msg);
+        }
+        Self::default()
     }
 }
 
 impl<T> From<T> for Message<T> {
     fn from(data: T) -> Self {
-        Self::new().with_data(data)
+        Self::new(data)
     }
 }
 
@@ -90,7 +100,7 @@ mod tests {
 
     #[test]
     fn test_default_message() {
-        let a = Message::<String>::default();
+        let a = Message::<&str>::default();
         assert_eq!(&a.data, &a.data)
     }
 }

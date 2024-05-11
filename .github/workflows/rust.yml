@@ -40,23 +40,31 @@ jobs:
             target/release
           key: ${{ matrix.toolchain }}-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
   test:
-    name: Test (workspace)
+    name: Test (features)
     needs: [ builder ]
     strategy:
       matrix:
+        package: [ core ]
         flags: [ --no-default-features, --all-features ]
         toolchain: [ stable, nightly ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: rustup default ${{ matrix.toolchain }} && rustup update
-      - name: ${{ matrix.flags }}
-        run: cargo test ${{ matrix.flags }} -r -v --workspace
-  bench:
-    name: Benchmark
+      - name: Test (${{ matrix.package }})
+        run: cargo test ${{ matrix.flags }} -r -v --package ${{ matrix.package }}
+  workspace:
+    name: Workspace
     needs: [ builder ]
+    strategy:
+      matrix:
+        toolchain: [ stable, nightly ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: rustup default nightly && rustup update
-      - run: cargo bench --all-features -v --workspace
+      - run: rustup default ${{ matrix.toolchain }} && rustup update
+      - name: Test
+        run: cargo test --all-features -r -v --workspace
+      - name: Bench
+        if: matrix.toolchain == 'nightly'
+        run: cargo bench --all-features -v --workspace
