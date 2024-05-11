@@ -4,9 +4,9 @@
 */
 extern crate scsys;
 
-use scsys::Keyed;
+use scsys::Params;
 
-fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+fn main() -> scsys::prelude::Result<()> {
     let _params = LinearParams { weight: 1.0 };
     let wk = LinearParamsKey::Weight;
     println!("{:?}", &wk);
@@ -15,8 +15,8 @@ fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     Ok(())
 }
 
-#[derive(Keyed)]
+#[derive(Params)]
 pub struct LinearParams<T> {
-    #[key]
+    #[param]
     pub weight: T,
 }

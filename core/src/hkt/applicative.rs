@@ -8,8 +8,7 @@
 use super::functor::Functor;
 use super::HKT;
 
-use std::rc::Rc;
-use std::sync::Arc;
+use super::containers::*;
 
 pub trait Applicative<U>: Functor<U> {
     fn pure_(value: U) -> Self::T
@@ -21,33 +20,30 @@ pub trait Applicative<U>: Functor<U> {
         Self: HKT<F>;
 }
 
-impl<T, U> Applicative<U> for Arc<T> {
-    fn pure_(value: U) -> Self::T {
-        Arc::new(value)
-    }
+macro_rules! applicative {
+    ($($t:ident),* $(,)?) => {
+        $(
+            applicative!(@impl $t);
+        )*
+    };
+    (@impl $t:ident) => {
+        impl<T, U> Applicative<U> for $t<T> {
+            fn pure_(value: U) -> Self::T {
+                $t::new(value)
+            }
 
-    fn seq<F>(&self, fs: <Self as HKT<F>>::T) -> Arc<U>
-    where
-        F: Fn(&T) -> U,
-    {
-        let v = fs(self);
-        Arc::new(v)
-    }
+            fn seq<F>(&self, fs: <Self as HKT<F>>::T) -> $t<U>
+            where
+                F: Fn(&<Self as HKT<U>>::C) -> U,
+            {
+                let v = fs(self);
+                $t::new(v)
+            }
+        }
+    };
 }
-
-impl<T, U> Applicative<U> for Box<T> {
-    fn pure_(value: U) -> Self::T {
-        Box::new(value)
-    }
-
-    fn seq<F>(&self, fs: <Self as HKT<F>>::T) -> Box<U>
-    where
-        F: Fn(&T) -> U,
-    {
-        let v = fs(self);
-        Box::new(v)
-    }
-}
+#[cfg(any(feature = "std", all(feature = "alloc", no_std)))]
+applicative!(Arc, Box, Rc);
 
 impl<T, U> Applicative<U> for Option<T> {
     fn pure_(value: U) -> Self::T {
@@ -65,20 +61,6 @@ impl<T, U> Applicative<U> for Option<T> {
             },
             None => None,
         }
-    }
-}
-
-impl<T, U> Applicative<U> for Rc<T> {
-    fn pure_(value: U) -> Self::T {
-        Rc::new(value)
-    }
-
-    fn seq<F>(&self, fs: <Self as HKT<F>>::T) -> Rc<U>
-    where
-        F: Fn(&T) -> U,
-    {
-        let v = fs(self);
-        Rc::new(v)
     }
 }
 

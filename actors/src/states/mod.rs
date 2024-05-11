@@ -41,6 +41,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "std")]
     fn test_states_iter() {
         let a: Vec<BinaryState> = BinaryState::iter().collect();
         assert_eq!(a.len(), 2);

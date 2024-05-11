@@ -1,5 +1,6 @@
 [package]
 authors.workspace = true
+build = "build.rs"
 categories.workspace = true
 description.workspace = true
 edition.workspace = true
@@ -22,18 +23,16 @@ full = [
     "tokio"
 ]
 
+# *** [FF] Dependencies ***
+
+alloc = [
+    "scsys-core/alloc",
+    "serde?/alloc",
+]
+
 serde = [
     "dep:serde",
-    "serde-ext",
     "scsys-core/serde",
-]
-
-serde-ext = [
-    "dep:serde_json",
-]
-
-std = [
-    "scsys-core/std",
 ]
 
 tokio = [
@@ -45,12 +44,21 @@ tokio-ext = [
     "tokio/sync",
 ]
 
+# *** [FF] Environments ***
+
+std = [
+    "futures/std",
+    "scsys-core/std",
+    "serde?/std",
+    "strum/std",
+]
+
 wasi = [
-    "scsys-core/wasi"
+    "scsys-core/wasi",
 ]
 
 wasm = [
-    "scsys-core/wasm"
+    "scsys-core/wasm",
 ]
 
 [lib]
@@ -61,19 +69,30 @@ test = true
 
 [dependencies]
 async-trait = "0.1"
-futures = "0.3"
 glob = "0.3"
 paste.workspace = true
-serde = { optional = true, features = ["derive"], version = "1" }
-serde_json = { optional = true, version = "1" }
 smart-default.workspace = true
 strum.workspace = true
-tokio = { optional = true, version = "1" }
+
+[dependencies.futures]
+default-features = false
+version = "0.3"
 
 [dependencies.scsys-core]
+default-features = false
 path = "../core"
-version = "0.2.1"
-# version = "0.2.1-nightly"
+version = "0.2.2"
+# version = "0.2.2-nightly"
+
+[dependencies.serde]
+default-features = false
+features = ["derive"]
+optional = true
+version = "1"
+
+[dependencies.tokio]
+optional = true
+version = "1"
 
 [dev-dependencies]
 

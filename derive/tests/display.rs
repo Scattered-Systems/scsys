@@ -1,27 +1,18 @@
 /*
-    Appellation: derive <module>
+    Appellation: default <test>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 #![cfg(test)]
 
-use scsys::prelude::{SerdeDisplay, Timestamp, VariantConstructors};
+use scsys_derive::{Display, VariantConstructors};
 use serde::{Deserialize, Serialize};
 
 #[derive(
-    Clone,
-    Debug,
-    Default,
-    Deserialize,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd,
-    SerdeDisplay,
-    Serialize,
+    Clone, Debug, Default, Deserialize, Display, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize,
 )]
+#[display]
 pub struct TestStruct {
-    timestamp: Timestamp,
+    pub id: usize,
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, Ord, PartialEq, PartialOrd, VariantConstructors)]

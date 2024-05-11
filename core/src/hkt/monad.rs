@@ -2,11 +2,10 @@
     Appellation: monad <mod>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use super::applicative::Applicative;
+use super::Applicative;
 use super::HKT;
 
-use std::rc::Rc;
-use std::sync::Arc;
+use super::containers::*;
 
 pub trait Monad<U>: Applicative<U> {
     fn return_(x: U) -> Self::T

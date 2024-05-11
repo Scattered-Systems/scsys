@@ -9,7 +9,7 @@ use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use syn::{Data, DataStruct, DeriveInput};
 
-pub fn impl_keyed(input: &DeriveInput) -> TokenStream {
+pub fn impl_params(input: &DeriveInput) -> TokenStream {
     // Get the name of the struct
     let struct_name = &input.ident;
     let store_name = format_ident!("{}Key", struct_name);

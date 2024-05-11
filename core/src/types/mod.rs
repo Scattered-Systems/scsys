@@ -2,16 +2,14 @@
     Appellation: types <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # types
-//!
-//!
-
-pub use self::utils::*;
 
 #[cfg(feature = "std")]
-pub use std_types::*;
+pub use self::std_types::*;
+pub use self::{direction::Direction, utils::*};
 
-pub type AnyAsync = Box<dyn core::any::Any + Send + Sync + 'static>;
+pub mod direction;
+
+pub type BoxAny = Box<dyn core::any::Any>;
 
 /// A type alias for [core::result::Result] that employs the [crate::errors::Error] type
 pub type Result<T = ()> = core::result::Result<T, crate::errors::Error>;
@@ -54,6 +52,14 @@ pub(crate) mod utils {
     pub fn is_str_float<T: ToString>(data: &T) -> bool {
         f64::from_str(&data.to_string()).is_ok()
     }
+}
+
+pub(crate) mod prelude {
+    pub use super::direction::Direction;
+    #[cfg(feature = "std")]
+    pub use super::std_types::*;
+    pub use super::utils::*;
+    pub use super::{BoxAny, Result};
 }
 
 #[cfg(test)]
