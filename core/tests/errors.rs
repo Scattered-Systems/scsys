@@ -16,7 +16,10 @@ fn test_error() {
 #[test]
 #[cfg(feature = "serde")]
 fn test_error_serde() {
-    let err = Error::new(ErrorKind::custom("custom"), "test".to_string());
+    let kind = ErrorKind::custom("custom".to_string());
+    let message = "test";
+
+    let err = Error::new(kind, message);
     let json = serde_json::to_value(&err).unwrap();
     let err2: Error = serde_json::from_value(json).unwrap();
     assert_eq!(err, err2);

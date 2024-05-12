@@ -98,21 +98,21 @@ required-features = ["derive"]
 [dependencies.scsys-actors]
 optional = true
 path = "../actors"
-version = "0.2.2"
+version = "0.2.3"
 
 [dependencies.scsys-core]
 path = "../core"
-version = "0.2.2"
+version = "0.2.3"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.2.2"
+version = "0.2.3"
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.2.2"
+version = "0.2.3"
 
 [dev-dependencies]
 serde = { features = ["derive"], version = "1" }

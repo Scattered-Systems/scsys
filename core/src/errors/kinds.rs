@@ -2,6 +2,8 @@
    Appellation: kinds <mod>
    Contrib: FL03 <jo3mccain@icloud.com>
 */
+#[cfg(all(feature = "alloc", no_std))]
+use alloc::string::String;
 use smart_default::SmartDefault;
 use strum::{AsRefStr, Display, EnumCount, EnumIs, EnumIter, VariantNames};
 
@@ -41,11 +43,11 @@ where
 )]
 #[non_exhaustive]
 #[strum(serialize_all = "lowercase")]
-pub enum ErrorKind {
+pub enum ErrorKind<T = String> {
     Async,
     Connection,
     #[default]
-    Error(ExternalError),
+    Error(ExternalError<T>),
     Execution,
     IO,
     Operation(OperationalError),
@@ -55,8 +57,8 @@ pub enum ErrorKind {
     Syntax,
 }
 
-impl ErrorKind {
-    pub fn custom(error: impl ToString) -> Self {
+impl<T> ErrorKind<T> {
+    pub fn custom(error: T) -> Self {
         Self::Error(ExternalError::custom(error))
     }
 
@@ -77,7 +79,6 @@ impl ErrorKind {
     Display,
     EnumCount,
     EnumIs,
-    EnumIter,
     Eq,
     Hash,
     Ord,
@@ -87,15 +88,15 @@ impl ErrorKind {
     VariantNames,
 )]
 #[strum(serialize_all = "lowercase")]
-pub enum ExternalError {
-    Custom(String),
+pub enum ExternalError<T = String> {
+    Custom(T),
     #[default]
     Unknown,
 }
 
-impl ExternalError {
-    pub fn custom(error: impl ToString) -> Self {
-        Self::Custom(error.to_string())
+impl<T> ExternalError<T> {
+    pub fn custom(error: T) -> Self {
+        Self::Custom(error)
     }
 
     pub fn unknown() -> Self {

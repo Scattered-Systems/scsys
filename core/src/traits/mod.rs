@@ -1,8 +1,8 @@
 /*
-    Appellation: specs <module>
+    Appellation: traits <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-pub use self::{appellation::*, classify::*, ext::prelude::*};
+pub use self::prelude::*;
 
 pub mod appellation;
 pub mod classify;
@@ -15,6 +15,7 @@ pub mod ext {
 
     pub(crate) mod prelude {
         pub use super::slice::*;
+        #[cfg(any(feature = "alloc", feature = "std"))]
         pub use super::string::*;
     }
 }
@@ -27,8 +28,9 @@ pub trait IntoInner {
 }
 
 /// Interface for nameable data-structures
+#[cfg(any(feature = "std", all(feature = "alloc", no_std)))]
 pub trait Name {
-    fn name(&self) -> String;
+    fn name(&self) -> &str;
 
     fn slug(&self) -> String {
         self.name().to_lowercase().replace(" ", "-")
@@ -36,8 +38,11 @@ pub trait Name {
 }
 
 pub(crate) mod prelude {
+    #[cfg(any(feature = "alloc", feature = "std"))]
     pub use super::appellation::*;
     pub use super::classify::*;
     pub use super::ext::prelude::*;
-    pub use super::{IntoInner, Name};
+    pub use super::IntoInner;
+    #[cfg(any(feature = "alloc", feature = "std"))]
+    pub use super::Name;
 }
