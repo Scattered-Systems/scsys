@@ -2,6 +2,9 @@
     Appellation: string <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+#![cfg(any(feature = "std", all(feature = "alloc", no_std)))]
+#[cfg(all(feature = "alloc", no_std))]
+use alloc::string::String;
 
 pub trait StringExt {
     /// Remove the first and last charecters of a string
@@ -14,7 +17,6 @@ impl StringExt for str {
     }
 }
 
-#[cfg(feature = "std")]
 pub trait StringFmt {
     fn snake_case(&self) -> String;
 

@@ -24,8 +24,6 @@ full = [
     "serde",
 ]
 
-
-
 # *** [FF] Dependencies ***
 alloc = [
     "rand?/alloc",
@@ -62,6 +60,12 @@ bench = false
 crate-type = ["cdylib", "rlib"]
 doctest = true
 test = true
+
+[[test]]
+name = "errors"
+required-features = ["std"]
+
+
 
 [build-dependencies]
 

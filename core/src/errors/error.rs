@@ -4,18 +4,20 @@
 */
 use super::kinds::*;
 use crate::id::AtomicId;
+#[cfg(all(feature = "alloc", no_std))]
+use alloc::string::String;
 
 #[derive(Clone, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
-pub struct Error {
+pub struct Error<K = String> {
     id: AtomicId,
-    kind: ErrorKind,
+    kind: ErrorKind<K>,
     message: String,
     ts: u128,
 }
 
-impl Error {
-    pub fn new(kind: impl Into<ErrorKind>, message: impl ToString) -> Self {
+impl<K> Error<K> {
+    pub fn new(kind: impl Into<ErrorKind<K>>, message: impl ToString) -> Self {
         Self {
             id: AtomicId::new(),
             kind: kind.into(),
@@ -25,14 +27,14 @@ impl Error {
     }
 
     pub fn unknown(message: impl ToString) -> Self {
-        Self::new(ErrorKind::unknown(), message.to_string())
+        Self::new(ErrorKind::<K>::unknown(), message.to_string())
     }
 
     pub fn id(&self) -> usize {
         *self.id
     }
 
-    pub fn kind(&self) -> &ErrorKind {
+    pub fn kind(&self) -> &ErrorKind<K> {
         &self.kind
     }
 
@@ -44,7 +46,7 @@ impl Error {
         self.ts
     }
 
-    pub fn set_kind(&mut self, kind: ErrorKind) {
+    pub fn set_kind(&mut self, kind: ErrorKind<K>) {
         self.kind = kind;
         self.on_update();
     }
@@ -54,7 +56,7 @@ impl Error {
         self.on_update();
     }
 
-    pub fn with_kind(mut self, kind: ErrorKind) -> Self {
+    pub fn with_kind(mut self, kind: ErrorKind<K>) -> Self {
         self.kind = kind;
         self
     }
@@ -69,11 +71,11 @@ impl Error {
     }
 }
 
-unsafe impl Send for Error {}
+unsafe impl<K> Send for Error<K> {}
 
-unsafe impl Sync for Error {}
+unsafe impl<K> Sync for Error<K> {}
 
-impl core::fmt::Debug for Error {
+impl<K> core::fmt::Debug for Error<K> {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         write!(
             f,
@@ -85,7 +87,7 @@ impl core::fmt::Debug for Error {
     }
 }
 
-impl core::fmt::Display for Error {
+impl<K> core::fmt::Display for Error<K> {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         write!(
             f,
@@ -98,10 +100,10 @@ impl core::fmt::Display for Error {
 }
 
 #[cfg(feature = "std")]
-impl std::error::Error for Error {}
+impl<K> std::error::Error for Error<K> {}
 
-impl From<ErrorKind> for Error {
-    fn from(kind: ErrorKind) -> Self {
+impl<K> From<ErrorKind<K>> for Error<K> {
+    fn from(kind: ErrorKind<K>) -> Self {
         Self::new(kind, String::new())
     }
 }
@@ -121,21 +123,21 @@ macro_rules! impl_error_from {
         )*
     };
     (@impl $variant:ident($($n:ident)::*): $from:ty) => {
-        impl From<$from> for Error {
+        impl<K> From<$from> for Error<K> {
             fn from(err: $from) -> Self {
                 Self::new(ErrorKind::$variant($($n)::*(err.into())), err.to_string())
             }
         }
     };
     (@impl $variant:ident<$n:path>: $from:ty) => {
-        impl From<$from> for Error {
+        impl<K> From<$from> for Error<K> {
             fn from(err: $from) -> Self {
                 Self::new(ErrorKind::$variant($n), err.to_string())
             }
         }
     };
     (@impl $variant:ident: $from:ty) => {
-        impl From<$from> for Error {
+        impl<K> From<$from> for Error<K> {
             fn from(err: $from) -> Self {
                 Self::new(ErrorKind::$variant, err.to_string())
             }

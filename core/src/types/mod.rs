@@ -2,17 +2,23 @@
     Appellation: types <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-
+pub use self::direction::Direction;
+#[cfg(any(feature = "alloc", feature = "std"))]
+pub use self::rustic::*;
 #[cfg(feature = "std")]
 pub use self::std_types::*;
-pub use self::{direction::Direction, utils::*};
 
 pub mod direction;
 
-pub type BoxAny = Box<dyn core::any::Any>;
+#[cfg(any(feature = "alloc", feature = "std"))]
+mod rustic {
+    #[cfg(all(feature = "alloc", no_std))]
+    use alloc::boxed::Box;
+    #[cfg(feature = "std")]
+    use std::boxed::Box;
 
-/// A type alias for [core::result::Result] that employs the [crate::errors::Error] type
-pub type Result<T = ()> = core::result::Result<T, crate::errors::Error>;
+    pub type BoxAny = Box<dyn core::any::Any>;
+}
 
 #[cfg(feature = "std")]
 mod std_types {
@@ -32,44 +38,10 @@ mod std_types {
     pub type IOResult<T = ()> = std::io::Result<T>;
 }
 
-pub(crate) mod utils {
-    use core::any::{Any, TypeId};
-    use core::str::FromStr;
-
-    /// Checks to see if the input is a string
-    pub fn is_string<T: ?Sized + Any>(_s: &T) -> bool {
-        TypeId::of::<String>() == TypeId::of::<T>()
-    }
-    /// Simple function wrapper evaluating the claim that the given information is of type f64
-    pub fn is_float<T>(_val: &T) -> bool
-    where
-        T: Any + ?Sized,
-    {
-        TypeId::of::<f64>() == TypeId::of::<T>()
-    }
-
-    /// Simple function wrapper evaluating the claim that the given information is of type f64
-    pub fn is_str_float<T: ToString>(data: &T) -> bool {
-        f64::from_str(&data.to_string()).is_ok()
-    }
-}
-
 pub(crate) mod prelude {
     pub use super::direction::Direction;
+    #[cfg(any(feature = "alloc", feature = "std"))]
+    pub use super::rustic::*;
     #[cfg(feature = "std")]
     pub use super::std_types::*;
-    pub use super::utils::*;
-    pub use super::{BoxAny, Result};
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_is_string() {
-        let s = "hello";
-        assert!(!is_string(&s));
-        assert!(is_string(&s.to_string()))
-    }
 }
