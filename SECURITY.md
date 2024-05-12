@@ -14,7 +14,7 @@ This section is used to update intrested parties as to which versions are curren
 
 If you discover a vulnerability feel free to email me at support@scattered-systems.com or visit the company [website](https://scsys.eth.limo) for more information.
 
-### _GitHub_
+### GitHub
 
-- [Author](https://github.com/FL03)
-- [Company](https://github.com/scattered-systems)
+- [FL03](https://github.com/FL03)
+- [Scattered-Systems](https://github.com/scattered-systems)
