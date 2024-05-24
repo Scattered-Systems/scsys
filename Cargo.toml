@@ -28,6 +28,7 @@ members = [
 resolver = "2"
 
 [workspace.dependencies]
+num = { default-features = false, version = "0.4" }
 paste = "1"
 smart-default = "0.7"
 strum = { default-features = false, features = ["derive"], version = "0.26" }

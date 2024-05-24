@@ -26,12 +26,14 @@ full = [
 
 # *** [FF] Dependencies ***
 alloc = [
+    "num/alloc",
     "rand?/alloc",
     "serde?/alloc",
 ]
 
 rand = [
     "dep:rand",
+    "num/rand",
 ]
 
 serde = [
@@ -40,11 +42,13 @@ serde = [
 ]
 
 serde-ext = [
+    "num/serde",
     "rand?/serde1",
 ]
 
 # *** [FF] Environment(s) ***
 std = [
+    "num/std",
     "rand?/std",
     "rand?/std_rng",
     "serde?/std",
@@ -65,12 +69,11 @@ test = true
 name = "errors"
 required-features = ["std"]
 
-
-
 [build-dependencies]
 
 [dependencies]
 glob = "0.3"
+num.workspace = true
 smart-default.workspace = true
 strum.workspace = true
 

@@ -4,8 +4,11 @@
 */
 pub use self::prelude::*;
 
+pub mod adjust;
 pub mod appellation;
 pub mod classify;
+pub mod dtype;
+pub mod toggle;
 
 pub mod ext {
     pub use self::prelude::*;
@@ -38,10 +41,13 @@ pub trait Name {
 }
 
 pub(crate) mod prelude {
+    pub use super::adjust::*;
     #[cfg(any(feature = "alloc", feature = "std"))]
     pub use super::appellation::*;
     pub use super::classify::*;
+    pub use super::dtype::*;
     pub use super::ext::prelude::*;
+    pub use super::toggle::*;
     pub use super::IntoInner;
     #[cfg(any(feature = "alloc", feature = "std"))]
     pub use super::Name;
