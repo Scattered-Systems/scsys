@@ -3,6 +3,9 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 
+#[macro_use]
+mod builder;
+
 #[allow(unused_macros)]
 macro_rules! impl_fmt {
     ($name:ty: $($t:ident($($rest:tt)*)),*) => {
