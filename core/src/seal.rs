@@ -1,5 +1,5 @@
 /*
-    Appellation: seal <mod>
+    Appellation: seal <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 //! The public parts of this private module are used to create traits

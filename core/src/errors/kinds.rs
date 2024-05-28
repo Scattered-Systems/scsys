@@ -5,26 +5,13 @@
 #[cfg(all(feature = "alloc", no_std))]
 use alloc::string::String;
 use smart_default::SmartDefault;
-use strum::{AsRefStr, Display, EnumCount, EnumIs, EnumIter, VariantNames};
+use strum::{AsRefStr, Display, EnumCount, EnumIs, VariantNames};
 
-pub trait ErrorClass {
+pub trait ErrorTy {
     fn name(&self) -> &str;
 }
 
-#[derive(Clone)]
-pub enum Errors<E>
-where
-    E: ErrorClass,
-{
-    Custom(E),
-    Unknown,
-}
 
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Deserialize, serde::Serialize,),
-    serde(rename_all = "lowercase", untagged)
-)]
 #[derive(
     AsRefStr,
     Clone,
@@ -32,7 +19,6 @@ where
     Display,
     EnumCount,
     EnumIs,
-    EnumIter,
     Eq,
     Hash,
     Ord,
@@ -41,9 +27,14 @@ where
     SmartDefault,
     VariantNames,
 )]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Deserialize, serde::Serialize),
+    serde(rename_all = "lowercase", untagged)
+)]
 #[non_exhaustive]
 #[strum(serialize_all = "lowercase")]
-pub enum ErrorKind<T = String> {
+pub enum Errors<T = String> {
     Async,
     Connection,
     #[default]
@@ -57,7 +48,7 @@ pub enum ErrorKind<T = String> {
     Syntax,
 }
 
-impl<T> ErrorKind<T> {
+impl<T> Errors<T> {
     pub fn custom(error: T) -> Self {
         Self::Error(ExternalError::custom(error))
     }
@@ -67,31 +58,66 @@ impl<T> ErrorKind<T> {
     }
 }
 
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Deserialize, serde::Serialize),
-    serde(rename_all = "lowercase", untagged)
-)]
-#[derive(
-    AsRefStr,
-    Clone,
-    Debug,
-    Display,
-    EnumCount,
-    EnumIs,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd,
-    SmartDefault,
-    VariantNames,
-)]
-#[strum(serialize_all = "lowercase")]
-pub enum ExternalError<T = String> {
-    Custom(T),
-    #[default]
-    Unknown,
+
+
+
+
+
+macro_rules! err {
+    ($name:ident $($rest:tt)*) => {
+        #[derive(
+            Clone,
+            Copy,
+            Debug,
+            Eq,
+            Hash,
+            Ord,
+            PartialEq,
+            PartialOrd,
+            strum::AsRefStr,
+            strum::Display,
+            strum::EnumCount,
+            strum::EnumIs,
+            strum::VariantNames,
+        )]
+        #[cfg_attr(
+            feature = "serde",
+            derive(serde::Deserialize, serde::Serialize),
+            serde(rename_all = "lowercase", untagged)
+        )]
+        #[non_exhaustive]
+        #[strum(serialize_all = "lowercase")]
+        pub enum $name $($rest)*
+    };
+}
+
+macro_rules! impl_kind_from {
+    ($variant:ident, $kind:ident) => {
+        impl From<$kind> for Errors {
+            fn from(kind: $kind) -> Self {
+                Self::$variant(kind)
+            }
+        }
+    };
+    ($variant:ident, $($kind:ident),*) => {
+        $(
+            impl_kind_from!($variant, $kind);
+        )*
+    };
+}
+
+err! {
+    OperationalError {
+        Arithmetic,
+        System,
+    }
+}
+
+err! {
+    ExternalError<T = String> {
+        Custom(T),
+        Unknown,
+    }
 }
 
 impl<T> ExternalError<T> {
@@ -104,59 +130,13 @@ impl<T> ExternalError<T> {
     }
 }
 
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Deserialize, serde::Serialize),
-    serde(rename_all = "lowercase", untagged)
-)]
-#[derive(
-    AsRefStr,
-    Clone,
-    Debug,
-    Display,
-    EnumCount,
-    EnumIs,
-    EnumIter,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd,
-    SmartDefault,
-    VariantNames,
-)]
-#[non_exhaustive]
-#[strum(serialize_all = "lowercase")]
-pub enum OperationalError {
-    #[default]
-    Arithmetic,
-    System,
-}
 
-impl OperationalError {
-    pub fn arithmetic() -> Self {
-        Self::Arithmetic
-    }
-
-    pub fn system() -> Self {
-        Self::System
+impl<T> Default for ExternalError<T> {
+    fn default() -> Self {
+        Self::Unknown
     }
 }
 
-macro_rules! impl_kind_from {
-    ($variant:ident, $kind:ident) => {
-        impl From<$kind> for ErrorKind {
-            fn from(kind: $kind) -> Self {
-                Self::$variant(kind)
-            }
-        }
-    };
-    ($variant:ident, $($kind:ident),*) => {
-        $(
-            impl_kind_from!($variant, $kind);
-        )*
-    };
-}
 
 impl_kind_from!(Error, ExternalError);
 impl_kind_from!(Operation, OperationalError);

@@ -1,18 +1,22 @@
 ---
 about: Create a new tracking issue to track the progress of a proposal or feature.
-assignees:
-    - FL03
-labels: ['tracking']
-projects: 
-    - '@scattered-systems/scsys:features'
+assignees: [FL03]
+labels: [ 'tracking' ]
+projects: [ '@scattered-systems/scsys:features' ]
 name: Tracking Issue
 title: 'Tracking Issue:'
 ---
 
-**Describe the proposal or feature that this issue is tracking.**
+_Describe the issue(s) or feature being tracked..._
 
 ## Issues
 
 - []
 
 ## Pull Requests
+
+- []
+
+## Resources
+
+_Include any relevant links or resources..._

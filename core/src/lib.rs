@@ -13,12 +13,14 @@ extern crate alloc;
 pub use self::{traits::prelude::*, types::prelude::*};
 
 #[cfg(any(feature = "std", feature = "alloc"))]
-pub use self::errors::{Error, ErrorKind, Result};
+pub use self::errors::{Error, Errors, Result};
 #[cfg(any(feature = "std", feature = "alloc"))]
-pub use self::utils::*;
+pub use self::{primitives::*, utils::*};
 
 #[macro_use]
 pub(crate) mod macros;
+#[macro_use]
+pub(crate) mod primitives;
 #[macro_use]
 pub(crate) mod seal;
 #[cfg(any(feature = "std", feature = "alloc"))]
@@ -29,6 +31,8 @@ pub mod errors;
 #[cfg(any(feature = "std", feature = "alloc"))]
 pub mod hkt;
 pub mod id;
+#[doc(hidden)]
+pub mod name;
 pub mod stores;
 pub mod sync;
 #[cfg(feature = "std")]
@@ -38,6 +42,7 @@ pub mod types;
 
 pub mod prelude {
     pub use crate::id::prelude::*;
+    pub use crate::name::prelude::*;
     pub use crate::stores::prelude::*;
     pub use crate::sync::prelude::*;
     #[cfg(feature = "std")]

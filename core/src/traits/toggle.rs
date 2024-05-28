@@ -2,21 +2,19 @@
     Appellation: toggle <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use core::any::Any;
 
 /// Typically, [TypeTag] is used for uninitaliziable `enums` with no variants
-pub trait TypeTag: 'static {
-    fn is<T>(&self) -> bool where T: Any + ?Sized {
-        crate::type_of::<Self, T>()
-    }
-}
+pub trait TypeTag: 'static {}
 
-pub trait BinaryTag: TypeTag {
-    const MODE: bool;
+#[doc(hidden)]
+pub trait Context {
+    type Elem;
 }
 
 /*
  ************* Implementations *************
 */
 
-impl<T> TypeTag for T where T: 'static {}
+impl dyn TypeTag {}
+
+impl<T> dyn Context<Elem = T> {}

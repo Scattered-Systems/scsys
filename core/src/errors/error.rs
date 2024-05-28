@@ -11,13 +11,13 @@ use alloc::string::String;
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct Error<K = String> {
     id: AtomicId,
-    kind: ErrorKind<K>,
+    kind: Errors<K>,
     message: String,
     ts: u128,
 }
 
 impl<K> Error<K> {
-    pub fn new(kind: impl Into<ErrorKind<K>>, message: impl ToString) -> Self {
+    pub fn new(kind: impl Into<Errors<K>>, message: impl ToString) -> Self {
         Self {
             id: AtomicId::new(),
             kind: kind.into(),
@@ -27,14 +27,14 @@ impl<K> Error<K> {
     }
 
     pub fn unknown(message: impl ToString) -> Self {
-        Self::new(ErrorKind::<K>::unknown(), message.to_string())
+        Self::new(Errors::<K>::unknown(), message.to_string())
     }
 
     pub fn id(&self) -> usize {
         *self.id
     }
 
-    pub fn kind(&self) -> &ErrorKind<K> {
+    pub fn kind(&self) -> &Errors<K> {
         &self.kind
     }
 
@@ -46,7 +46,7 @@ impl<K> Error<K> {
         self.ts
     }
 
-    pub fn set_kind(&mut self, kind: ErrorKind<K>) {
+    pub fn set_kind(&mut self, kind: Errors<K>) {
         self.kind = kind;
         self.on_update();
     }
@@ -56,7 +56,7 @@ impl<K> Error<K> {
         self.on_update();
     }
 
-    pub fn with_kind(mut self, kind: ErrorKind<K>) -> Self {
+    pub fn with_kind(mut self, kind: Errors<K>) -> Self {
         self.kind = kind;
         self
     }
@@ -102,8 +102,8 @@ impl<K> core::fmt::Display for Error<K> {
 #[cfg(feature = "std")]
 impl<K> std::error::Error for Error<K> {}
 
-impl<K> From<ErrorKind<K>> for Error<K> {
-    fn from(kind: ErrorKind<K>) -> Self {
+impl<K> From<Errors<K>> for Error<K> {
+    fn from(kind: Errors<K>) -> Self {
         Self::new(kind, String::new())
     }
 }
@@ -125,21 +125,21 @@ macro_rules! impl_error_from {
     (@impl $variant:ident($($n:ident)::*): $from:ty) => {
         impl<K> From<$from> for Error<K> {
             fn from(err: $from) -> Self {
-                Self::new(ErrorKind::$variant($($n)::*(err.into())), err.to_string())
+                Self::new(Errors::$variant($($n)::*(err.into())), err.to_string())
             }
         }
     };
     (@impl $variant:ident<$n:path>: $from:ty) => {
         impl<K> From<$from> for Error<K> {
             fn from(err: $from) -> Self {
-                Self::new(ErrorKind::$variant($n), err.to_string())
+                Self::new(Errors::$variant($n), err.to_string())
             }
         }
     };
     (@impl $variant:ident: $from:ty) => {
         impl<K> From<$from> for Error<K> {
             fn from(err: $from) -> Self {
-                Self::new(ErrorKind::$variant, err.to_string())
+                Self::new(Errors::$variant, err.to_string())
             }
         }
     };
