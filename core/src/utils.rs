@@ -2,10 +2,20 @@
     Appellation: utils <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+use core::any::{Any, TypeId};
 #[cfg(feature = "std")]
 pub use self::std_utils::*;
 #[cfg(all(feature = "alloc", no_std))]
 pub use alloc::string::String;
+
+/// Compare two types
+pub fn type_of<U, V>() -> bool
+where
+    U: Any + ?Sized,
+    V: Any + ?Sized,
+{
+    TypeId::of::<U>() == TypeId::of::<V>()
+}
 
 /// Remove the first and last charecters of a string
 pub fn fnl_remove(data: impl ToString) -> String {

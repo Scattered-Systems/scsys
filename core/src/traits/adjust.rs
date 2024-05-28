@@ -12,7 +12,7 @@ pub trait Adjust<T> {
 }
 
 /// `Decrement` is a trait describing the ability to decrement a value.
-/// 
+///
 pub trait Decrement {
     type Output;
 
@@ -28,7 +28,11 @@ pub trait Increment {
 /*
  ******** implementations ********
 */
-impl<S, T> Decrement for S where S: One, for<'a> &'a S: Sub<S, Output = T> {
+impl<S, T> Decrement for S
+where
+    S: One,
+    for<'a> &'a S: Sub<S, Output = T>,
+{
     type Output = T;
 
     fn dec(&self) -> Self::Output {
@@ -36,7 +40,11 @@ impl<S, T> Decrement for S where S: One, for<'a> &'a S: Sub<S, Output = T> {
     }
 }
 
-impl<S, T> Increment for S where S: One, for<'a> &'a S: Add<S, Output = T> {
+impl<S, T> Increment for S
+where
+    S: One,
+    for<'a> &'a S: Add<S, Output = T>,
+{
     type Output = T;
 
     fn inc(&self) -> Self::Output {
