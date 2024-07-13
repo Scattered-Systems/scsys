@@ -2,12 +2,11 @@
     Appellation: utils <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use core::any::{Any, TypeId};
 #[cfg(feature = "std")]
 pub use self::std_utils::*;
 #[cfg(all(feature = "alloc", no_std))]
 pub use alloc::string::String;
-
+use core::any::{Any, TypeId};
 
 pub(crate) mod std_utils;
 

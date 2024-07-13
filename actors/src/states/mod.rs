@@ -11,12 +11,12 @@ pub(crate) mod state;
 pub(crate) mod traits;
 
 pub mod kinds {
-    pub use self::binary::BinaryState;
+    pub use self::binary::{BinState, BinaryState};
 
     pub mod binary;
 
     pub(crate) mod prelude {
-        pub use super::binary::BinaryState;
+        pub use super::binary::{BinState, BinaryState};
     }
 }
 
@@ -28,16 +28,16 @@ pub(crate) mod prelude {
 
 #[cfg(test)]
 mod tests {
-    use super::kinds::BinaryState;
+    use super::*;
     use strum::IntoEnumIterator;
 
     #[test]
     fn test_states() {
-        let a = BinaryState::default();
-        let mut b = a;
-        b *= a;
-        assert_eq!(a, BinaryState::valid());
-        assert_eq!(b, BinaryState::valid());
+        let data = "sample";
+        let a = BinState::valid(data);
+        let b = BinState::invalid(data);
+        assert_ne!(a, b);
+        assert_eq!(a.as_ref(), b.as_ref());
     }
 
     #[test]

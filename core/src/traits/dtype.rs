@@ -17,7 +17,6 @@ pub trait IsType: 'static {
 
 /// [DType] provides additional information regarding the current type
 pub trait DType: Any {
-
     fn type_id(&self) -> TypeId {
         Any::type_id(self)
     }
@@ -25,7 +24,6 @@ pub trait DType: Any {
     fn type_name(&self) -> &'static str {
         core::any::type_name::<Self>()
     }
-
 }
 
 pub trait DTypeExt: DType {
@@ -41,7 +39,10 @@ pub trait DTypeExt: DType {
         Any::type_id(self)
     }
 
-    fn type_name<T>() -> &'static str where T: ?Sized {
+    fn type_name<T>() -> &'static str
+    where
+        T: ?Sized,
+    {
         core::any::type_name::<T>()
     }
 }
@@ -51,6 +52,4 @@ pub trait DTypeExt: DType {
 */
 impl<T: 'static> IsType for T {}
 
-impl dyn DType {
-    
-}
+impl dyn DType {}

@@ -5,6 +5,8 @@
 
 #[macro_use]
 mod builder;
+#[macro_use]
+mod get;
 
 #[allow(unused_macros)]
 macro_rules! impl_fmt {

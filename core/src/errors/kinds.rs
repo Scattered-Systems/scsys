@@ -11,7 +11,6 @@ pub trait ErrorTy {
     fn name(&self) -> &str;
 }
 
-
 #[derive(
     AsRefStr,
     Clone,
@@ -57,11 +56,6 @@ impl<T> Errors<T> {
         Self::Error(ExternalError::Unknown)
     }
 }
-
-
-
-
-
 
 macro_rules! err {
     ($name:ident $($rest:tt)*) => {
@@ -130,13 +124,11 @@ impl<T> ExternalError<T> {
     }
 }
 
-
 impl<T> Default for ExternalError<T> {
     fn default() -> Self {
         Self::Unknown
     }
 }
-
 
 impl_kind_from!(Error, ExternalError);
 impl_kind_from!(Operation, OperationalError);
