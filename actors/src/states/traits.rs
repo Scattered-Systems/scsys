@@ -10,7 +10,7 @@ pub trait State<Q>
 where
     Q: StateKind,
 {
-    type State: Borrow<Q>;
+    type Kind: Borrow<Q>;
 }
 
 pub trait StateData {
@@ -39,5 +39,5 @@ where
     Q: StateKind,
     S: Borrow<Q>,
 {
-    type State = S;
+    type Kind = S;
 }
