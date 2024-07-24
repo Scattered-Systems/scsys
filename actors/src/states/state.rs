@@ -2,7 +2,6 @@
     Appellation: state <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use core::borrow::{Borrow, BorrowMut};
 use scsys::id::AtomicId;
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -44,13 +43,13 @@ impl<Q, T> StateBase<Q, T> {
     }
 }
 
-impl<Q, T> Borrow<Q> for StateBase<Q, T> {
+impl<Q, T> core::borrow::Borrow<Q> for StateBase<Q, T> {
     fn borrow(&self) -> &Q {
         &self.state
     }
 }
 
-impl<Q, T> BorrowMut<Q> for StateBase<Q, T> {
+impl<Q, T> core::borrow::BorrowMut<Q> for StateBase<Q, T> {
     fn borrow_mut(&mut self) -> &mut Q {
         &mut self.state
     }

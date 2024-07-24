@@ -30,7 +30,7 @@ pub trait HKT<U> {
 macro_rules! hkt {
     ($($($p:ident)::*),*) => {
         $(
-            hkt!(@impl $($p)::*);
+            $crate::hkt!(@impl $($p)::*);
         )*
     };
     (@impl $($p:ident)::*) => {

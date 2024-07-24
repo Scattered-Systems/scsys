@@ -2,13 +2,16 @@
     Appellation: functor <mod>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # Functor
-//!
-//! A functor is a type that when mapped over, preserves the structure of the type while applying a function to the values within the type.
-//! Functors are useful for modeling the functional effects on values of parameterized data types.
+
 use super::containers::*;
 use super::HKT;
 
+/// # Functor
+///
+/// Formally, a functor describes the morphisms between categories. 
+/// 
+/// A functor is a type that when mapped over, preserves the structure of the type while applying a function to the values within the type.
+/// Functors are useful for modeling the functional effects on values of parameterized data types.
 pub trait Functor<U>: HKT<U> {
     fn fmap<F>(&self, f: F) -> Self::T
     where
