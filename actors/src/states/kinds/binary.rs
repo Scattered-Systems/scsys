@@ -2,9 +2,6 @@
     Appellation: binary <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use crate::states::StateKind;
-use strum::{EnumCount, EnumIs, VariantNames};
-
 /// An enumerated type representing the possible binary states of a particular value.
 #[derive(
     Clone,
@@ -15,10 +12,10 @@ use strum::{EnumCount, EnumIs, VariantNames};
     Ord,
     PartialEq,
     PartialOrd,
-    EnumCount,
+    strum::EnumCount,
     strum::EnumDiscriminants,
-    EnumIs,
-    VariantNames,
+    strum::EnumIs,
+    strum::VariantNames,
 )]
 #[cfg_attr(
     feature = "serde",
@@ -34,11 +31,11 @@ use strum::{EnumCount, EnumIs, VariantNames};
         PartialOrd,
         strum::AsRefStr,
         strum::Display,
-        EnumCount,
-        EnumIs,
+        strum::EnumCount,
+        strum::EnumIs,
         strum::EnumIter,
         strum::EnumString,
-        VariantNames
+        strum::VariantNames
     )
 )]
 #[strum(serialize_all = "lowercase")]
@@ -95,8 +92,11 @@ impl<Q> BinState<Q> {
 }
 
 impl BinaryState {
-    pub fn new(state: u8) -> Self {
-        match state % Self::COUNT as u8 {
+    pub const LEN: usize = 2;
+
+    pub fn from_u8(state: u8) -> Self {
+
+        match state % Self::LEN as u8 {
             0 => Self::Invalid,
             1 => Self::Valid,
             _ => panic!("Invalid binary state: {}", state),
@@ -168,8 +168,6 @@ where
 /*
     ************* Implementations *************
 */
-impl StateKind for BinState {}
-impl StateKind for BinaryState {}
 
 macro_rules! impl_std_unary {
     ($($($p:ident)::*.$call:ident),*) => {
@@ -183,7 +181,7 @@ macro_rules! impl_std_unary {
             type Output = BinaryState;
 
             fn $call(self) -> Self::Output {
-                BinaryState::new($($p)::*::$call(self as u8))
+                BinaryState::from_u8($($p)::*::$call(self as u8))
             }
         }
     }
@@ -210,7 +208,7 @@ macro_rules! impl_std_binary {
 
             fn $call(self, rhs: BinaryState) -> Self::Output {
                 let res = $($p)::*::$call(self as u8, rhs as u8);
-                BinaryState::new(res)
+                BinaryState::from_u8(res)
             }
         }
 
@@ -219,7 +217,7 @@ macro_rules! impl_std_binary {
 
             fn $call(self, rhs: &'a BinaryState) -> Self::Output {
                 let res = $($p)::*::$call(*self as u8, *rhs as u8);
-                BinaryState::new(res)
+                BinaryState::from_u8(res)
             }
         }
 
@@ -228,7 +226,7 @@ macro_rules! impl_std_binary {
 
             fn $call(self, rhs: BinaryState) -> Self::Output {
                 let res = $($p)::*::$call(*self as u8, rhs as u8);
-                BinaryState::new(res)
+                BinaryState::from_u8(res)
             }
         }
 
@@ -237,7 +235,7 @@ macro_rules! impl_std_binary {
 
             fn $call(self, rhs: &'a BinaryState) -> Self::Output {
                 let res = $($p)::*::$call(self as u8, *rhs as u8);
-                BinaryState::new(res)
+                BinaryState::from_u8(res)
             }
         }
     };
@@ -263,7 +261,7 @@ macro_rules! impl_std_binary {
 
             fn $call(self, rhs: T) -> Self::Output {
                 let res = $($p)::*::$call(self as u8, rhs);
-                BinaryState::new(res)
+                BinaryState::from_u8(res)
             }
         }
 
@@ -272,7 +270,7 @@ macro_rules! impl_std_binary {
 
             fn $call(self, rhs: T) -> Self::Output {
                 let res = $($p)::*::$call(*self as u8, rhs);
-                BinaryState::new(res)
+                BinaryState::from_u8(res)
             }
         }
     };
