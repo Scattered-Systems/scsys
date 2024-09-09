@@ -1,9 +1,9 @@
 ---
+about: Create a report to help us improve
+assignees: [ FL03 ]
+labels: [ enhancement ]
 name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+title: 'Feature Request: '
 
 ---
 

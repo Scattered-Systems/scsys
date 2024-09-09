@@ -8,8 +8,8 @@ use super::HKT;
 
 /// # Functor
 ///
-/// Formally, a functor describes the morphisms between categories. 
-/// 
+/// Formally, a functor describes the morphisms between categories.
+///
 /// A functor is a type that when mapped over, preserves the structure of the type while applying a function to the values within the type.
 /// Functors are useful for modeling the functional effects on values of parameterized data types.
 pub trait Functor<U>: HKT<U> {
