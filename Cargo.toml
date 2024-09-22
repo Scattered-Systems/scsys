@@ -1,14 +1,14 @@
 [workspace.package]
-authors = ["FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems (https://github.com/scattered-systems)"]
+authors = ["FL03 <jo3mccain@icloud.com>", "Scattered-Systems <jo3mccain@scattered-systems.com>"]
 categories = []
 description = "scsys is a collection of primitives and utilities for use throughout the ecosystem."
 edition = "2021"
 homepage = "https://github.com/scattered-systems/scsys/wiki"
-keywords = ["blockchain", "primitives", "scsys"]
+keywords = ["primitives", "scsys", "toolkit", "utilities"]
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/scattered-systems/scsys"
-version = "0.2.2"
+repository = "https://github.com/scattered-systems/scsys.git"
+version = "0.2.3"
 
 [workspace]
 default-members = [
@@ -22,12 +22,15 @@ members = [
     "core",
     "derive",
     "macros",
-    "scsys",
+    "scsys", 
+    "utils",
 ]
 
 resolver = "2"
 
 [workspace.dependencies]
+lazy_static = "1"
+num = { default-features = false, version = "0.4" }
 paste = "1"
 smart-default = "0.7"
 strum = { default-features = false, features = ["derive"], version = "0.26" }
@@ -49,7 +52,7 @@ debug = false
 debug-assertions = false
 incremental = false
 lto = false
-panic = "unwind"
+panic = "abort"
 rpath = false
 opt-level = "z"
 overflow-checks = false

@@ -20,20 +20,25 @@ default = [
 
 full = [
     "default",
+    "chrono",
     "rand",
     "serde",
 ]
 
-
-
-# *** [FF] Dependencies ***
+# ******* [FF] Dependencies *******
 alloc = [
+    "num/alloc",
     "rand?/alloc",
     "serde?/alloc",
 ]
 
+chrono = [
+    "dep:chrono"
+]
+
 rand = [
     "dep:rand",
+    "num/rand",
 ]
 
 serde = [
@@ -42,11 +47,14 @@ serde = [
 ]
 
 serde-ext = [
+    "num/serde",
     "rand?/serde1",
 ]
 
-# *** [FF] Environment(s) ***
+# ******* [FF] Environment *******
 std = [
+    "alloc",
+    "num/std",
     "rand?/std",
     "rand?/std_rng",
     "serde?/std",
@@ -55,7 +63,9 @@ std = [
 
 wasi = []
 
-wasm = []
+wasm = [
+    "getrandom/js",
+]
 
 [lib]
 bench = false
@@ -63,12 +73,26 @@ crate-type = ["cdylib", "rlib"]
 doctest = true
 test = true
 
+[[test]]
+name = "errors"
+required-features = ["std"]
+
 [build-dependencies]
+
+[dev-dependencies]
+anyhow = "1"
+serde_json = "1"
 
 [dependencies]
 glob = "0.3"
+num.workspace = true
+paste = "1"
 smart-default.workspace = true
 strum.workspace = true
+
+[dependencies.chrono]
+optional = true
+version = "0.4"
 
 [dependencies.rand]
 default-features = false
@@ -81,14 +105,10 @@ features = ["derive"]
 optional = true
 version = "1"
 
-[dev-dependencies]
-anyhow = "1"
-serde_json = "1"
-
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]
 
 [target.wasm32-unknown-unknown.dependencies]
-getrandom = { features = ["js"], version = "0.2" }
+getrandom = "0.2"
 
 [target.wasm32-wasi]

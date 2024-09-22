@@ -23,9 +23,10 @@ full = [
     "rand",
     "serde",
     "tokio",
+    "utils",
 ]
 
-# *** [FF] Crates ***
+# ********* [FF] Packages *********
 
 actors = [
     "dep:scsys-actors",
@@ -40,18 +41,29 @@ macros = [
     "dep:scsys-macros",
 ]
 
+utils = [
+    "dep:scsys-utils",
+]
+
 # *** [FF] Dependencies ***
 alloc = [
-    "scsys-actors?/alloc",
     "scsys-core/alloc",
+    "scsys-actors?/alloc",
+    "scsys-utils?/alloc",
 ]
+
+chrono = [
+    "scsys-core/chrono",
+]
+
 rand = [
     "scsys-core/rand",
 ]
 
 serde = [
-    "scsys-actors?/serde",
     "scsys-core/serde",
+    "scsys-actors?/serde",
+    "scsys-utils?/serde",
 ]
 
 tokio = [
@@ -60,8 +72,9 @@ tokio = [
 # *** [FF] Environments ***
 
 std = [
-    "scsys-actors?/std",
     "scsys-core/std",
+    "scsys-actors?/std",
+    "scsys-utils?/std",
 ]
 
 wasi = [
@@ -96,23 +109,31 @@ required-features = ["derive"]
 [build-dependencies]
 
 [dependencies.scsys-actors]
+default-features = false
 optional = true
 path = "../actors"
-version = "0.2.2"
+version = "0.2.3"
 
 [dependencies.scsys-core]
+default-features = false
 path = "../core"
-version = "0.2.2"
+version = "0.2.3"
 
 [dependencies.scsys-derive]
 optional = true
 path = "../derive"
-version = "0.2.2"
+version = "0.2.3"
 
 [dependencies.scsys-macros]
 optional = true
 path = "../macros"
-version = "0.2.2"
+version = "0.2.3"
+
+[dependencies.scsys-utils]
+default-features = false
+optional = true
+path = "../utils"
+version = "0.2.3"
 
 [dev-dependencies]
 serde = { features = ["derive"], version = "1" }

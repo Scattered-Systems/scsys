@@ -20,6 +20,7 @@ pub trait Applicative<U>: Functor<U> {
         Self: HKT<F>;
 }
 
+#[allow(unused_macros)]
 macro_rules! applicative {
     ($($t:ident),* $(,)?) => {
         $(
@@ -42,7 +43,8 @@ macro_rules! applicative {
         }
     };
 }
-#[cfg(any(feature = "std", all(feature = "alloc", no_std)))]
+
+#[cfg(feature = "alloc")]
 applicative!(Arc, Box, Rc);
 
 impl<T, U> Applicative<U> for Option<T> {
@@ -64,6 +66,7 @@ impl<T, U> Applicative<U> for Option<T> {
     }
 }
 
+#[cfg(feature = "alloc")]
 impl<T, U> Applicative<U> for Vec<T> {
     fn pure_(value: U) -> Self::T {
         vec![value]

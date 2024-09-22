@@ -2,7 +2,8 @@
     Appellation: appellation <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use crate::prelude::{Classifier, Identifier};
+use crate::id::Identifier;
+use crate::traits::Classifier;
 
 /// An appellation is considered to be a name or title that is used to identify an object.
 /// For our purposes, an `Appellation` is a type that is used to identify an object in a computational space.
@@ -16,46 +17,17 @@ pub trait Appellation {
 
     fn id(&self) -> &Self::Id;
 
-    fn name(&self) -> String;
-
-    fn slug(&self) -> String {
-        self.name().to_lowercase().replace(" ", "-")
-    }
+    fn name(&self) -> &str;
 }
 
-pub trait FromAppellation<Cls, Id>
-where
-    Cls: Classifier,
-    Id: Identifier,
-{
-    fn from_appellation(appellation: impl Appellation<Class = Cls, Id = Id>) -> Self;
-}
-
-pub trait TryFromAppellation<Cls, Id>
-where
-    Cls: Classifier,
-    Id: Identifier,
-    Self: Sized,
-{
-    type Error;
-    fn try_from_appellation(
-        appellation: impl Appellation<Class = Cls, Id = Id>,
-    ) -> Result<Self, Self::Error>;
-}
-
-pub trait IntoAppellation<Cls, Id>
-where
-    Cls: Classifier,
-    Id: Identifier,
-{
-    fn into_appellation(self) -> dyn Appellation<Class = Cls, Id = Id>;
-}
-
+/*
+ ************* Implementations *************
+*/
 impl<Cls, Id, T> Appellation for (Cls, Id, T)
 where
     Cls: Classifier,
     Id: Identifier,
-    T: ToString,
+    T: AsRef<str>,
 {
     type Class = Cls;
     type Id = Id;
@@ -68,7 +40,7 @@ where
         &self.1
     }
 
-    fn name(&self) -> String {
-        self.2.to_string()
+    fn name(&self) -> &str {
+        self.2.as_ref()
     }
 }

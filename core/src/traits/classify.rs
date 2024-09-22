@@ -2,6 +2,7 @@
     Appellation: classify <specs>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+
 /// Interface for classifiable objects
 pub trait Classifiable {
     type Class: Classifier;
@@ -12,10 +13,10 @@ pub trait Classifiable {
 /// Denotes an object that may be used as a classifier
 pub trait Classifier {}
 
-macro_rules! impl_classifier {
+macro_rules! classifier {
     ($($t:ty),*) => {
         $(
-            impl_classifier!(@loop $t);
+            classifier!(@loop $t);
         )*
     };
     (@loop $t:ty) => {
@@ -23,6 +24,7 @@ macro_rules! impl_classifier {
     };
 }
 
-impl_classifier!(
-    f32, f64, i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, usize, &str, String, char
-);
+classifier!(f32, f64, i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, usize, &str, char);
+
+#[cfg(feature = "alloc")]
+classifier!(alloc::string::String);

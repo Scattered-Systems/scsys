@@ -2,6 +2,9 @@
     Appellation: string <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+#![cfg(feature = "alloc")]
+
+use alloc::string::String;
 
 pub trait StringExt {
     /// Remove the first and last charecters of a string

@@ -2,6 +2,12 @@
     Appellation: macros <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+#![allow(unused)]
+
+#[macro_use]
+pub(crate) mod builder;
+#[macro_use]
+pub(crate) mod get;
 
 #[allow(unused_macros)]
 macro_rules! impl_fmt {

@@ -2,10 +2,12 @@
     Appellation: traits <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+#[cfg(feature = "alloc")]
+use alloc::string::{String, ToString};
 use core::borrow::Borrow;
 
 /// An `Identifier` is a type that can be used as an identifier
-pub trait Identifier: ToString {
+pub trait Identifier {
     private!();
 }
 
@@ -21,18 +23,10 @@ where
     fn get(&self) -> &Self::Item;
 }
 
-pub trait Identifiable<Q>
-where
-    Q: Identifier,
-{
-    type Item: Id<Q>;
-
-    fn get(&self) -> &Self::Item;
-}
-
+#[cfg(feature = "alloc")]
 pub trait IdentifierExt: Identifier
 where
-    Self: Copy + Eq + Ord + core::hash::Hash,
+    Self: Copy + Eq + Ord + ToString + core::hash::Hash,
 {
 }
 
@@ -40,12 +34,6 @@ pub trait HashId: Identifier
 where
     Self: Eq + core::hash::Hash,
 {
-}
-
-pub trait IntoId {
-    type Id: Identifier;
-
-    fn into_id(self) -> Self::Id;
 }
 
 pub trait Identify {
@@ -59,7 +47,7 @@ pub trait IdentifyMut: Identify {
 }
 
 /*
- *********** impls ***********
+ ************* Implementations *************
 */
 impl<K, S> Id<K> for S
 where
@@ -86,7 +74,8 @@ where
 
 impl<Id> HashId for Id where Id: Eq + Identifier + core::hash::Hash {}
 
-impl<Id> IdentifierExt for Id where Id: Copy + Eq + Identifier + Ord + core::hash::Hash {}
+#[cfg(feature = "alloc")]
+impl<Id> IdentifierExt for Id where Id: Copy + Eq + Identifier + Ord + ToString + core::hash::Hash {}
 
 macro_rules! identifier {
     ($($t:ty),*) => {
@@ -102,4 +91,7 @@ macro_rules! identifier {
 }
 
 identifier!(f32, f64, i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, usize);
-identifier!(bool, char, &str, String);
+identifier!(bool, char, &str);
+
+#[cfg(feature = "alloc")]
+identifier!(String);

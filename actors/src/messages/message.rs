@@ -9,7 +9,7 @@ use scsys::prelude::{AtomicId, Timestamp};
 pub struct Message<T = String> {
     id: AtomicId,
     data: Option<T>,
-    ts: Timestamp,
+    ts: Timestamp<u64>,
 }
 
 impl<T> Message<T> {

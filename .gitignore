@@ -1,12 +1,63 @@
+## Config
+*.env
+*.env.*
 
+!.env.example
+
+## Development
+
+### JetBrains
+**/.idea/
+
+**/*.iml
+### VisualStudio Code
+**/.vscode/
+
+## Languages
+
+### Node.js
+**/.DS_Store/
+
+**/build/
+**/node_modules/
+
+**/npm-debug.log
+
+**/package-lock.json
+**/pnpm-lock.*
+
+**/yarn-error.log
+**/yarn-debug.log
+**/yarn.lock
+
+### Python
+**/__pycache__/
+**/.pytest_cache/
+**/env/
+**/venv/
+
+**/*.pyc
 
 ### Rust
 **/target/
 
 **/Cargo.lock
 
-**/*.bk
-**/*.bk-*
+**/*.rs.bk
+**/*.rs.bk-*
 
-*-log.*
-**/log.*
+*.log
+*.log.*
+
+## Miscellaneous
+
+### Extensions
+
+*.log
+*.log.*
+
+## Operating Systems
+
+### NixOs
+
+!**/flake.lock

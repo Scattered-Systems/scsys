@@ -1,8 +1,8 @@
 name: Rust
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 env:
   CARGO_TERM_COLOR: always
@@ -17,53 +17,64 @@ on:
   workflow_dispatch:
 
 jobs:
-  builder:
-    name: Build
+  workspace:
     strategy:
       matrix:
-        platform: [ macos-latest, ubuntu-latest, windows-latest ]
+        platform: [ ubuntu-latest ] # [ macos-latest, ubuntu-latest, windows-latest ]
+        target: [ x86_64-unknown-linux-gnu ]
         toolchain: [ stable, nightly ]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
-      - name: setup (langspace)
-        run: rustup default ${{ matrix.toolchain }} && rustup update
-      - name: Build
-        run: cargo build --all-features -r -v --workspace
-      - name: Cache build
-        id: cache-build
+      - 
+        name: checkout
+        uses: actions/checkout@v4
+      - 
+        name: rustup
+        run: |
+          rustup default ${{ matrix.toolchain }} 
+          rustup update
+      - 
+        name: build
+        run: cargo build --all-features -r -v --workspace --target ${{ matrix.target }}
+      - 
+        name: test
+        run: cargo test --all-features -r -v --workspace --target ${{ matrix.target }}
+      - 
+        continue-on-error: true
+        name: Test (no_std)
+        run: cargo test --no-default-features -p scsys-core -r -v
+      - 
+        name: bench
+        if: matrix.toolchain == 'nightly'
+        run: cargo bench --all-features -v --workspace
+      - 
+        id: rust-cache
+        name: cache
         uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
+            target/debug
             target/release
-          key: ${{ matrix.toolchain }}-${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-  test:
+          key: ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-${{ matrix.toolchain }}-
+            ${{ runner.os }}-cargo-
+            ${{ runner.os }}-
+  no_std:
     continue-on-error: true
-    name: Test (features)
+    name: Build (no_std)
     strategy:
       matrix:
         package: [ core ]
-        flags: [ --no-default-features, --all-features ]
+        flags: [ --no-default-features ]
         toolchain: [ stable, nightly ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: rustup default ${{ matrix.toolchain }} && rustup update
-      - name: Test (${{ matrix.package }})
-        run: cargo test ${{ matrix.flags }} -p ${{ matrix.package }} -r -v
-  workspace:
-    name: Workspace
-    strategy:
-      matrix:
-        toolchain: [ stable, nightly ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: rustup default ${{ matrix.toolchain }} && rustup update
-      - name: Test
-        run: cargo test --all-features -r -v --workspace
-      - name: Bench
-        if: matrix.toolchain == 'nightly'
-        run: cargo bench --all-features -v --workspace
+      - 
+        name: rustup
+        run: rustup default ${{ matrix.toolchain }} && rustup update
+
+
