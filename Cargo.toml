@@ -28,7 +28,6 @@ members = [
 resolver = "2"
 
 [workspace.dependencies]
-anyhow = "1"
 lazy_static = "1"
 num = { default-features = false, version = "0.4" }
 paste = "1"
@@ -41,7 +40,7 @@ debug = true
 debug-assertions = true
 incremental = true
 lto = false
-panic = "abort"
+panic = "unwind"
 rpath = false
 opt-level = 0
 overflow-checks = true

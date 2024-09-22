@@ -2,7 +2,7 @@
     Appellation: dtype <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use crate::type_of;
+use crate::utils::type_of;
 use core::any::{Any, TypeId};
 
 pub trait IsType: 'static {

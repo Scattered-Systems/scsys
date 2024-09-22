@@ -31,6 +31,10 @@ alloc = [
     "serde?/alloc",
 ]
 
+chrono = [
+    "dep:chrono"
+]
+
 rand = [
     "dep:rand",
     "num/rand",
@@ -48,6 +52,7 @@ serde-ext = [
 
 # ******* [FF] Environment *******
 std = [
+    "alloc",
     "num/std",
     "rand?/std",
     "rand?/std_rng",
@@ -82,6 +87,10 @@ glob = "0.3"
 num.workspace = true
 smart-default.workspace = true
 strum.workspace = true
+
+[dependencies.chrono]
+optional = true
+version = "0.4"
 
 [dependencies.rand]
 default-features = false

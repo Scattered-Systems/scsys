@@ -5,7 +5,7 @@
 //! # Name
 //!
 //! This module works to implement various naming conventions and name-related primitives.
-
+#[doc(inline)]
 pub use self::casing::*;
 
 pub(crate) mod casing;

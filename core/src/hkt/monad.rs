@@ -28,45 +28,41 @@ pub trait Monad<U>: Applicative<U> {
     }
 }
 
-impl<T, U> Monad<U> for Arc<T> {
-    fn bind<F>(&self, mut fs: F) -> Arc<U>
-    where
-        F: FnMut(&T) -> Arc<U>,
-    {
-        fs(self)
-    }
+#[allow(unused_macros)]
+macro_rules! monad {
+    ($($t:ident),* $(,)?) => {
+        $(
+            monad!(@impl $t);
+        )*
+    };
+    (@impl $t:ident) => {
+        impl<T, U> Monad<U> for $t<T> {
+            fn bind<F>(&self, mut fs: F) -> $t<U>
+            where
+                F: FnMut(&T) -> $t<U>,
+            {
+                fs(self)
+            }
+        }
+    };
 }
 
-impl<T, U> Monad<U> for Box<T> {
-    fn bind<F>(&self, mut fs: F) -> Box<U>
-    where
-        F: FnMut(&T) -> Box<U>,
-    {
-        fs(self)
-    }
-}
+#[cfg(feature = "alloc")]
+monad!(Arc, Box, Rc);
 
 impl<T, U> Monad<U> for Option<T> {
     fn bind<F>(&self, mut fs: F) -> Option<U>
     where
         F: FnMut(&T) -> Option<U>,
     {
-        match *self {
-            Some(ref value) => fs(value),
+        match self {
+            Some(x) => fs(x),
             None => None,
         }
     }
 }
 
-impl<T, U> Monad<U> for Rc<T> {
-    fn bind<F>(&self, mut fs: F) -> Rc<U>
-    where
-        F: FnMut(&T) -> Rc<U>,
-    {
-        fs(self)
-    }
-}
-
+#[cfg(feature = "alloc")]
 impl<T, U> Monad<U> for Vec<T> {
     fn bind<F>(&self, mut fs: F) -> Vec<U>
     where

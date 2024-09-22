@@ -16,14 +16,12 @@ on:
 
 jobs:
   core:
-    name: Publish (core)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: publish
         run: cargo publish --all-features -v -p ${{ github.event.repository.name }}-core --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
   features:
-    name: Publish (features)
     needs: core
     runs-on: ubuntu-latest
     strategy:
@@ -33,10 +31,9 @@ jobs:
       PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
     steps:
       - uses: actions/checkout@v4
-      - name: Publish (${{ env.PACKAGE_NAME }})
+      - name: publish (${{ env.PACKAGE_NAME }})
         run: cargo publish --all-features -v -p ${{ env.PACKAGE_NAME }} --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
   sdk:
-    name: Publish (sdk)
     needs: features
     runs-on: ubuntu-latest
     steps:

@@ -2,8 +2,8 @@
     Appellation: string <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#![cfg(any(feature = "std", all(feature = "alloc", no_std)))]
-#[cfg(all(feature = "alloc", no_std))]
+#![cfg(feature = "alloc")]
+
 use alloc::string::String;
 
 pub trait StringExt {

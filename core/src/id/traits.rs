@@ -2,7 +2,7 @@
     Appellation: traits <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(all(feature = "alloc", no_std))]
+#[cfg(feature = "alloc")]
 use alloc::string::{String, ToString};
 use core::borrow::Borrow;
 
@@ -23,7 +23,7 @@ where
     fn get(&self) -> &Self::Item;
 }
 
-#[cfg(any(all(feature = "alloc", no_std), feature = "std"))]
+#[cfg(feature = "alloc")]
 pub trait IdentifierExt: Identifier
 where
     Self: Copy + Eq + Ord + ToString + core::hash::Hash,
@@ -74,7 +74,7 @@ where
 
 impl<Id> HashId for Id where Id: Eq + Identifier + core::hash::Hash {}
 
-#[cfg(any(all(feature = "alloc", no_std), feature = "std"))]
+#[cfg(feature = "alloc")]
 impl<Id> IdentifierExt for Id where Id: Copy + Eq + Identifier + Ord + ToString + core::hash::Hash {}
 
 macro_rules! identifier {
@@ -93,5 +93,5 @@ macro_rules! identifier {
 identifier!(f32, f64, i8, i16, i32, i64, i128, isize, u8, u16, u32, u64, u128, usize);
 identifier!(bool, char, &str);
 
-#[cfg(any(feature = "alloc", feature = "std"))]
+#[cfg(feature = "alloc")]
 identifier!(String);

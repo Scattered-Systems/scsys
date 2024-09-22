@@ -4,8 +4,8 @@
 */
 use super::kinds::*;
 use crate::id::AtomicId;
-#[cfg(all(feature = "alloc", no_std))]
-use alloc::string::String;
+#[cfg(feature = "alloc")]
+use alloc::string::{String, ToString};
 
 #[derive(Clone, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
@@ -13,7 +13,6 @@ pub struct Error<K = String> {
     id: AtomicId,
     kind: Errors<K>,
     message: String,
-    ts: u128,
 }
 
 impl<K> Error<K> {
@@ -22,7 +21,6 @@ impl<K> Error<K> {
             id: AtomicId::new(),
             kind: kind.into(),
             message: message.to_string(),
-            ts: crate::time::systime(),
         }
     }
 
@@ -42,18 +40,12 @@ impl<K> Error<K> {
         &self.message
     }
 
-    pub fn timestamp(&self) -> u128 {
-        self.ts
-    }
-
     pub fn set_kind(&mut self, kind: Errors<K>) {
         self.kind = kind;
-        self.on_update();
     }
 
     pub fn set_message(&mut self, message: String) {
         self.message = message;
-        self.on_update();
     }
 
     pub fn with_kind(mut self, kind: Errors<K>) -> Self {
@@ -65,10 +57,6 @@ impl<K> Error<K> {
         self.message = message;
         self
     }
-
-    fn on_update(&mut self) {
-        self.ts = crate::time::systime();
-    }
 }
 
 unsafe impl<K> Send for Error<K> {}
@@ -79,10 +67,9 @@ impl<K> core::fmt::Debug for Error<K> {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         write!(
             f,
-            "*** Error ***\nKind: {}\nTimestamp: {}\nMessage:\n{}\n*** ***",
-            self.kind(),
-            self.timestamp(),
-            self.message()
+            "[{kind}]: {msg}",
+            kind = self.kind(),
+            msg = self.message()
         )
     }
 }
@@ -91,17 +78,16 @@ impl<K> core::fmt::Display for Error<K> {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         write!(
             f,
-            "Error ({}) at {}\n{}",
-            self.kind(),
-            self.timestamp(),
-            self.message()
+            "[{kind}]: {msg}",
+            kind = self.kind(),
+            msg = self.message()
         )
     }
 }
 
-#[cfg(feature = "std")]
-impl<K> std::error::Error for Error<K> {}
+impl<K> core::error::Error for Error<K> {}
 
+#[cfg(feature = "alloc")]
 impl<K> From<Errors<K>> for Error<K> {
     fn from(kind: Errors<K>) -> Self {
         Self::new(kind, String::new())

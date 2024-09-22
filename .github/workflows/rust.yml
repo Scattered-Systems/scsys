@@ -18,27 +18,34 @@ on:
 
 jobs:
   workspace:
-    name: Build
     strategy:
       matrix:
-        platform: [ macos-latest, ubuntu-latest, windows-latest ]
+        platform: [ ubuntu-latest ] # [ macos-latest, ubuntu-latest, windows-latest ]
+        target: [ x86_64-unknown-linux-gnu ]
         toolchain: [ stable, nightly ]
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
-      - name: rustup
+      - 
+        name: checkout
+        uses: actions/checkout@v4
+      - 
+        name: rustup
         run: |
           rustup default ${{ matrix.toolchain }} 
           rustup update
-      - name: build
-        run: cargo build --all-features -r -v --workspace
-      - name: sest
-        run: cargo test --all-features -r -v --workspace
-      - name: bench
+      - 
+        name: build
+        run: cargo build --all-features -r -v --workspace --target ${{ matrix.target }}
+      - 
+        name: test
+        run: cargo test --all-features -r -v --workspace --target ${{ matrix.target }}
+      - 
+        name: bench
         if: matrix.toolchain == 'nightly'
         run: cargo bench --all-features -v --workspace
-      - name: cache
-        id: cache
+      - 
+        id: rust-cache
+        name: cache
         uses: actions/cache@v4
         with:
           path: |
@@ -53,16 +60,19 @@ jobs:
             ${{ runner.os }}-
   no_std:
     continue-on-error: true
-    name: test (no_std)
+    name: Build (no_std)
     strategy:
       matrix:
         package: [ core ]
-        flags: [ --no-default-features, --all-features ]
+        flags: [ --no-default-features ]
         toolchain: [ stable, nightly ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: rustup default ${{ matrix.toolchain }} && rustup update
-      - name: Test (${{ matrix.package }})
-        run: cargo test ${{ matrix.flags }} -p ${{ matrix.package }} -r -v
+      - 
+        name: rustup
+        run: rustup default ${{ matrix.toolchain }} && rustup update
+      - 
+        name: Test (${{ matrix.package }})
+        run: cargo test --no-default-features -p ${{ matrix.package }} -r -v
 

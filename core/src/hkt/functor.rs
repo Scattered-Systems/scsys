@@ -18,6 +18,7 @@ pub trait Functor<U>: HKT<U> {
         F: Fn(&Self::C) -> U;
 }
 
+#[allow(unused_macros)]
 macro_rules! functor {
     ($($t:ident),* $(,)?) => {
         $(
@@ -36,7 +37,7 @@ macro_rules! functor {
     };
 }
 
-#[cfg(any(feature = "std", all(feature = "alloc", no_std)))]
+#[cfg(feature = "alloc")]
 functor!(Arc, Box, Rc);
 
 impl<T, U> Functor<U> for Option<T> {
@@ -51,6 +52,7 @@ impl<T, U> Functor<U> for Option<T> {
     }
 }
 
+#[cfg(feature = "alloc")]
 impl<T, U> Functor<U> for Vec<T> {
     fn fmap<F>(&self, f: F) -> Vec<U>
     where

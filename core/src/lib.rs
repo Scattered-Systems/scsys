@@ -10,45 +10,42 @@
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
-pub use self::{traits::prelude::*, types::prelude::*};
+pub use self::{traits::prelude::*, types::prelude::*, utils::*};
 
-#[cfg(any(feature = "std", feature = "alloc"))]
+#[cfg(feature = "alloc")]
 pub use self::errors::{Error, Errors, Result};
-#[cfg(any(feature = "std", feature = "alloc"))]
-pub use self::{primitives::*, utils::*};
 
 #[macro_use]
 pub(crate) mod macros;
 #[macro_use]
-pub(crate) mod primitives;
-#[macro_use]
 pub(crate) mod seal;
-#[cfg(any(feature = "std", feature = "alloc"))]
 pub(crate) mod utils;
 
-#[cfg(any(feature = "std", feature = "alloc"))]
+#[cfg(feature = "alloc")]
 pub mod errors;
-#[cfg(any(feature = "std", feature = "alloc"))]
 pub mod hkt;
 pub mod id;
 #[doc(hidden)]
 pub mod name;
+#[doc(hidden)]
 pub mod stores;
 pub mod sync;
-#[cfg(feature = "std")]
 pub mod time;
 pub mod traits;
 pub mod types;
 
 pub mod prelude {
+    pub use super::hkt::prelude::*;
+    #[cfg(feature = "alloc")]
+    pub use crate::errors::prelude::*;
     pub use crate::id::prelude::*;
+    #[doc(hidden)]
     pub use crate::name::prelude::*;
+    #[doc(hidden)]
     pub use crate::stores::prelude::*;
     pub use crate::sync::prelude::*;
-    #[cfg(feature = "std")]
-    pub use crate::time::*;
+    pub use crate::time::prelude::*;
     pub use crate::traits::prelude::*;
     pub use crate::types::prelude::*;
-    #[cfg(any(feature = "std", feature = "alloc"))]
-    pub use crate::{errors::prelude::*, hkt::prelude::*, utils::*};
+    pub use crate::utils::*;
 }

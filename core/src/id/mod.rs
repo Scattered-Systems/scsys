@@ -2,6 +2,10 @@
     Appellation: ids <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+//! # Identity
+//!
+//! The identity module provides a set of traits and types for generating unique identifiers.
+#[doc(inline)]
 pub use self::{kinds::*, traits::*};
 
 pub(crate) mod traits;

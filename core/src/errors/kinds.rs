@@ -2,7 +2,7 @@
    Appellation: kinds <mod>
    Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(all(feature = "alloc", no_std))]
+#[cfg(feature = "alloc")]
 use alloc::string::String;
 use smart_default::SmartDefault;
 use strum::{AsRefStr, Display, EnumCount, EnumIs, VariantNames};
@@ -58,7 +58,7 @@ impl<T> Errors<T> {
 }
 
 macro_rules! err {
-    ($name:ident $($rest:tt)*) => {
+    ($(#[$meta:meta])* $name:ident $($rest:tt)*) => {
         #[derive(
             Clone,
             Copy,
@@ -81,6 +81,7 @@ macro_rules! err {
         )]
         #[non_exhaustive]
         #[strum(serialize_all = "lowercase")]
+        $(#[$meta])*
         pub enum $name $($rest)*
     };
 }
