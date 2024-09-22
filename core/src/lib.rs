@@ -4,7 +4,7 @@
 */
 //! # Core
 //!
-//! This library provides a set of common utilities, types, and other primitives used 
+//! This library provides a set of common utilities, types, and other primitives used
 //! throughout the ecosystem.
 #![cfg_attr(not(feature = "std"), no_std)]
 
