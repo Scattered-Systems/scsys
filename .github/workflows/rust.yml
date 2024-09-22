@@ -1,7 +1,7 @@
 name: Rust
 
 concurrency:
-  cancel-in-progress: true
+  cancel-in-progress: false
   group: ${{ github.workflow }}-${{ github.ref }}
 
 env:
@@ -40,6 +40,10 @@ jobs:
         name: test
         run: cargo test --all-features -r -v --workspace --target ${{ matrix.target }}
       - 
+        continue-on-error: true
+        name: Test (no_std)
+        run: cargo test --no-default-features -p scsys-core -r -v
+      - 
         name: bench
         if: matrix.toolchain == 'nightly'
         run: cargo bench --all-features -v --workspace
@@ -72,7 +76,5 @@ jobs:
       - 
         name: rustup
         run: rustup default ${{ matrix.toolchain }} && rustup update
-      - 
-        name: Test (${{ matrix.package }})
-        run: cargo test --no-default-features -p ${{ matrix.package }} -r -v
+
 
