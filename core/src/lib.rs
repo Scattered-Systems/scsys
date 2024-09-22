@@ -4,15 +4,18 @@
 */
 //! # Core
 //!
-//!
+//! This library provides a set of common utilities, types, and other primitives used 
+//! throughout the ecosystem.
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
-pub use self::{traits::prelude::*, types::prelude::*, utils::*};
+#[doc(inline)]
+pub use self::{state::State, traits::prelude::*, types::prelude::*, utils::*};
 
 #[cfg(feature = "alloc")]
+#[doc(inline)]
 pub use self::errors::{Error, Errors, Result};
 
 #[macro_use]
@@ -25,6 +28,7 @@ pub(crate) mod utils;
 pub mod errors;
 pub mod hkt;
 pub mod id;
+pub mod state;
 #[doc(hidden)]
 pub mod stores;
 pub mod sync;
@@ -37,6 +41,7 @@ pub mod prelude {
     #[cfg(feature = "alloc")]
     pub use crate::errors::prelude::*;
     pub use crate::id::prelude::*;
+    pub use crate::state::prelude::*;
     #[doc(hidden)]
     pub use crate::stores::prelude::*;
     pub use crate::sync::prelude::*;

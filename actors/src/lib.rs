@@ -12,7 +12,7 @@ extern crate alloc;
 
 extern crate scsys_core as scsys;
 
-pub use self::{state::State, traits::*};
+pub use self::traits::*;
 
 pub(crate) mod actor;
 #[macro_use]
@@ -20,7 +20,6 @@ pub(crate) mod macros;
 
 pub mod messages;
 pub mod power;
-pub mod state;
 pub mod traits;
 
 pub type Job = Box<dyn FnOnce() + Send + 'static>;
@@ -29,6 +28,5 @@ pub mod prelude {
     pub use crate::actor::*;
     pub use crate::messages::*;
     pub use crate::power::*;
-    pub use crate::state::prelude::*;
     pub use crate::traits::prelude::*;
 }

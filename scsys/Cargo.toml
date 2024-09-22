@@ -51,13 +51,19 @@ alloc = [
     "scsys-actors?/alloc",
     "scsys-utils?/alloc",
 ]
+
+chrono = [
+    "scsys-core/chrono",
+]
+
 rand = [
     "scsys-core/rand",
 ]
 
 serde = [
-    "scsys-actors?/serde",
     "scsys-core/serde",
+    "scsys-actors?/serde",
+    "scsys-utils?/serde",
 ]
 
 tokio = [

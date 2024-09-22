@@ -86,6 +86,7 @@ serde_json = "1"
 [dependencies]
 glob = "0.3"
 num.workspace = true
+paste = "1"
 smart-default.workspace = true
 strum.workspace = true
 
