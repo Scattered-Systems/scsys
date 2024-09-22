@@ -20,26 +20,31 @@ permissions:
 
 jobs:
   clippy:
-    name: Clippy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: setup (rust)
+      - 
+        name: checkout
+        uses: actions/checkout@v4
+      - 
+        name: setup (rust)
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           components: clippy
           override: true
-      - name: setup (clippy)
+      - 
+        name: setup (clippy)
         run: cargo install clippy-sarif sarif-fmt
-      - name: analyze
+      - 
+        name: analyze
         run:
           cargo clippy
           --all-features
           --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
         continue-on-error: true
-      - name: Upload analysis
+      - 
+        name: Upload analysis
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: rust-clippy-results.sarif
