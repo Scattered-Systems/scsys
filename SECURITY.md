@@ -12,7 +12,7 @@ This section is used to update intrested parties as to which versions are curren
 
 ## Reporting a Vulnerability
 
-If you discover a vulnerability feel free to email me at support@scattered-systems.com or visit the company [website](https://scsys.eth.limo) for more information.
+If you discover a vulnerability feel free to email me at [support@scattered-systems.com] or visit the company [website](https://scsys.eth.limo) for more information.
 
 ### GitHub
 

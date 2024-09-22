@@ -10,6 +10,7 @@ macro_rules! enum_from_primitive {
     (@impl $name:ident($($k:literal: $v:ident),*)<$t:ty>) => {
         impl From<$t> for $name {
             fn from(d: $t) -> Self {
+                use strum::EnumCount;
                 match d as usize % Self::COUNT {
                     $(
                         $k => $name::$v,

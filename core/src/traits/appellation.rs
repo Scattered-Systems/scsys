@@ -2,10 +2,8 @@
     Appellation: appellation <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#![cfg(any(feature = "std", all(feature = "alloc", no_std)))]
-use crate::prelude::{Classifier, Identifier};
-#[cfg(all(feature = "alloc", no_std))]
-use alloc::string::String;
+use crate::id::Identifier;
+use crate::traits::Classifier;
 
 /// An appellation is considered to be a name or title that is used to identify an object.
 /// For our purposes, an `Appellation` is a type that is used to identify an object in a computational space.
@@ -19,11 +17,7 @@ pub trait Appellation {
 
     fn id(&self) -> &Self::Id;
 
-    fn name(&self) -> String;
-
-    fn slug(&self) -> String {
-        self.name().to_lowercase().replace(" ", "-")
-    }
+    fn name(&self) -> &str;
 }
 
 /*
@@ -33,7 +27,7 @@ impl<Cls, Id, T> Appellation for (Cls, Id, T)
 where
     Cls: Classifier,
     Id: Identifier,
-    T: ToString,
+    T: AsRef<str>,
 {
     type Class = Cls;
     type Id = Id;
@@ -46,7 +40,7 @@ where
         &self.1
     }
 
-    fn name(&self) -> String {
-        self.2.to_string()
+    fn name(&self) -> &str {
+        self.2.as_ref()
     }
 }

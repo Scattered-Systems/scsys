@@ -1,10 +1,11 @@
 name: crates.io
 
 concurrency:
+  cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
 
 env:
+  CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
   CARGO_TERM_COLOR: always
 
 on:
@@ -16,30 +17,43 @@ on:
 
 jobs:
   core:
-    name: Publish (core)
+    env:
+      PACKAGE: ${{ github.event.repository.name }}-${{ matrix.package }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [ core ]
     steps:
-      - uses: actions/checkout@v4
-      - name: publish
-        run: cargo publish --all-features -v -p ${{ github.event.repository.name }}-core --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      - 
+        name: checkout
+        uses: actions/checkout@v4
+      - 
+        name: publish (${{ matrix.package }})
+        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
   features:
-    name: Publish (features)
+    env:
+      PACKAGE: ${{ github.event.repository.name }}-${{ matrix.package }}
     needs: core
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [ actors, derive, macros, ]
-    env:
-      PACKAGE_NAME: ${{ github.event.repository.name }}-${{ matrix.package }}
+        package: [ actors, derive, macros, utils ]
     steps:
-      - uses: actions/checkout@v4
-      - name: Publish (${{ env.PACKAGE_NAME }})
-        run: cargo publish --all-features -v -p ${{ env.PACKAGE_NAME }} --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      - 
+        name: checkout
+        uses: actions/checkout@v4
+      - 
+        name: publish (${{ matrix.package }})
+        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
   sdk:
-    name: Publish (sdk)
-    needs: features
+    env:
+      PACKAGE: ${{ github.event.repository.name }}
+    needs: [ core, features ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: publish
-        run: cargo publish --all-features -v -p ${{ github.event.repository.name }} --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
+      - 
+        name: checkout
+        uses: actions/checkout@v4
+      - 
+        name: publish
+        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}

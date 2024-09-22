@@ -4,46 +4,49 @@
 */
 //! # Core
 //!
-//!
+//! This library provides a set of common utilities, types, and other primitives used 
+//! throughout the ecosystem.
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
-pub use self::{traits::prelude::*, types::prelude::*};
+#[doc(inline)]
+pub use self::{state::State, traits::prelude::*, types::prelude::*, utils::*};
 
-#[cfg(any(feature = "std", feature = "alloc"))]
-pub use self::errors::{Error, ErrorKind, Result};
-#[cfg(any(feature = "std", feature = "alloc"))]
-pub use self::utils::*;
+#[cfg(feature = "alloc")]
+#[doc(inline)]
+pub use self::errors::{Error, Errors, Result};
 
 #[macro_use]
 pub(crate) mod macros;
 #[macro_use]
 pub(crate) mod seal;
-#[cfg(any(feature = "std", feature = "alloc"))]
 pub(crate) mod utils;
 
-#[cfg(any(feature = "std", feature = "alloc"))]
+#[cfg(feature = "alloc")]
 pub mod errors;
-#[cfg(any(feature = "std", feature = "alloc"))]
 pub mod hkt;
 pub mod id;
+pub mod state;
+#[doc(hidden)]
 pub mod stores;
 pub mod sync;
-#[cfg(feature = "std")]
 pub mod time;
 pub mod traits;
 pub mod types;
 
 pub mod prelude {
+    pub use super::hkt::prelude::*;
+    #[cfg(feature = "alloc")]
+    pub use crate::errors::prelude::*;
     pub use crate::id::prelude::*;
+    pub use crate::state::prelude::*;
+    #[doc(hidden)]
     pub use crate::stores::prelude::*;
     pub use crate::sync::prelude::*;
-    #[cfg(feature = "std")]
-    pub use crate::time::*;
+    pub use crate::time::prelude::*;
     pub use crate::traits::prelude::*;
     pub use crate::types::prelude::*;
-    #[cfg(any(feature = "std", feature = "alloc"))]
-    pub use crate::{errors::prelude::*, hkt::prelude::*, utils::*};
+    pub use crate::utils::*;
 }

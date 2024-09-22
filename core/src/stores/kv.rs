@@ -2,10 +2,7 @@
     Appellation: store <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(all(feature = "alloc", no_std))]
-use alloc::collections::{btree_map, BTreeMap};
-#[cfg(feature = "std")]
-use std::collections::{btree_map, BTreeMap};
+#![allow(unused_macros)]
 
 pub trait Entry<'a> {
     type Key;
@@ -80,10 +77,10 @@ macro_rules! impl_store {
     };
 }
 
-#[cfg(any(feature = "alloc", feature = "std"))]
-impl_entry!(btree_map where K: Ord);
-#[cfg(any(feature = "alloc", feature = "std"))]
-impl_store!(BTreeMap<K, V>, where K: Ord);
+#[cfg(feature = "alloc")]
+impl_entry!(alloc::collections::btree_map where K: Ord);
+#[cfg(feature = "alloc")]
+impl_store!(alloc::collections::BTreeMap<K, V>, where K: Ord);
 
 #[cfg(feature = "std")]
 impl_entry!(std::collections::hash_map where K: Eq + core::hash::Hash);

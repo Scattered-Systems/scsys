@@ -2,22 +2,34 @@
     Appellation: traits <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+#[doc(inline)]
 pub use self::prelude::*;
 
+pub mod adjust;
 pub mod appellation;
 pub mod classify;
+pub mod dtype;
+pub mod toggle;
 
 pub mod ext {
-    pub use self::prelude::*;
+    pub use self::slice::*;
+    #[cfg(feature = "alloc")]
+    pub use self::string::*;
 
-    pub(crate) mod slice;
-    pub(crate) mod string;
+    mod slice;
+    mod string;
 
-    pub(crate) mod prelude {
-        pub use super::slice::*;
-        #[cfg(any(feature = "alloc", feature = "std"))]
-        pub use super::string::*;
-    }
+    pub(crate) mod prelude {}
+}
+
+pub(crate) mod prelude {
+    pub use super::adjust::*;
+    pub use super::appellation::*;
+    pub use super::classify::*;
+    pub use super::dtype::*;
+    pub use super::ext::*;
+    pub use super::toggle::*;
+    pub use super::{IntoInner, Name};
 }
 
 /// [IntoInner] is typically used for basic structures that wrap a single value.
@@ -28,21 +40,6 @@ pub trait IntoInner {
 }
 
 /// Interface for nameable data-structures
-#[cfg(any(feature = "std", all(feature = "alloc", no_std)))]
 pub trait Name {
     fn name(&self) -> &str;
-
-    fn slug(&self) -> String {
-        self.name().to_lowercase().replace(" ", "-")
-    }
-}
-
-pub(crate) mod prelude {
-    #[cfg(any(feature = "alloc", feature = "std"))]
-    pub use super::appellation::*;
-    pub use super::classify::*;
-    pub use super::ext::prelude::*;
-    pub use super::IntoInner;
-    #[cfg(any(feature = "alloc", feature = "std"))]
-    pub use super::Name;
 }

@@ -4,19 +4,19 @@
 */
 extern crate scsys_core as scsys;
 
-use scsys::errors::{Error, ErrorKind};
+use scsys::errors::{Error, Errors};
 
 #[test]
 fn test_error() {
     let msg = "test";
-    let err = Error::new(ErrorKind::custom("custom"), msg.to_string());
-    assert_eq!(err.kind(), &ErrorKind::custom("custom"));
+    let err = Error::new(Errors::custom("custom"), msg.to_string());
+    assert_eq!(err.kind(), &Errors::custom("custom"));
 }
 
 #[test]
 #[cfg(feature = "serde")]
 fn test_error_serde() {
-    let kind = ErrorKind::custom("custom".to_string());
+    let kind = Errors::custom("custom".to_string());
     let message = "test";
 
     let err = Error::new(kind, message);
