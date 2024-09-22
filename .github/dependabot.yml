@@ -9,6 +9,10 @@ updates:
     schedule:
       interval: monthly
   - package-ecosystem: cargo
+    directory: /scsys
+    schedule:
+      interval: weekly
+  - package-ecosystem: cargo
     directory: /actors
     schedule:
       interval: weekly
@@ -25,6 +29,6 @@ updates:
     schedule:
       interval: weekly
   - package-ecosystem: cargo
-    directory: /scsys
+    directory: /utils
     schedule:
       interval: weekly

@@ -22,7 +22,8 @@ members = [
     "core",
     "derive",
     "macros",
-    "scsys",
+    "scsys", 
+    "utils",
 ]
 
 resolver = "2"

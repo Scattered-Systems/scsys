@@ -26,8 +26,6 @@ pub mod errors;
 pub mod hkt;
 pub mod id;
 #[doc(hidden)]
-pub mod name;
-#[doc(hidden)]
 pub mod stores;
 pub mod sync;
 pub mod time;
@@ -39,8 +37,6 @@ pub mod prelude {
     #[cfg(feature = "alloc")]
     pub use crate::errors::prelude::*;
     pub use crate::id::prelude::*;
-    #[doc(hidden)]
-    pub use crate::name::prelude::*;
     #[doc(hidden)]
     pub use crate::stores::prelude::*;
     pub use crate::sync::prelude::*;
