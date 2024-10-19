@@ -11,6 +11,20 @@ readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
+[[example]]
+name = "derive"
+required-features = ["derive", "serde"]
+
+[[test]]
+name = "derive"
+required-features = ["derive"]
+
+[lib]
+bench = true
+crate-type = ["cdylib", "rlib"]
+doctest = true
+test = true
+
 [features]
 default = [
     "std",
@@ -86,25 +100,6 @@ wasm = [
     "scsys-actors?/wasm",
     "scsys-core/wasm",
 ]
-
-
-[lib]
-bench = true
-crate-type = ["cdylib", "rlib"]
-doctest = true
-test = true
-
-[[example]]
-name = "derive"
-required-features = ["derive", "serde"]
-
-[[example]]
-name = "messages"
-required-features = ["actors"]
-
-[[example]]
-name = "params"
-required-features = ["derive"]
 
 [build-dependencies]
 

@@ -10,6 +10,7 @@ pub(crate) mod ast;
 pub(crate) mod attrs;
 pub(crate) mod display;
 pub(crate) mod enums;
+pub(crate) mod gsw;
 pub(crate) mod params;
 pub(crate) mod utils;
 
@@ -49,6 +50,24 @@ pub fn variant_constructors(input: TokenStream) -> TokenStream {
         _ => panic!("This derive macro only works with enums"),
     }
     .into()
+}
+
+#[proc_macro_derive(Getter)]
+pub fn getter_derive(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+    gsw::impl_getter(&input).into()
+}
+
+#[proc_macro_derive(Set)]
+pub fn set_derive(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+    gsw::impl_set(&input).into()
+}
+
+#[proc_macro_derive(With)]
+pub fn with_derive(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+    gsw::impl_with(&input).into()
 }
 
 /*
