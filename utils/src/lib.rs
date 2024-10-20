@@ -10,11 +10,11 @@ extern crate alloc;
 
 #[cfg(feature = "alloc")]
 #[doc(inline)]
-pub use self::casing::*;
+pub use self::str::*;
 
-pub mod casing;
+pub mod str;
 
 #[allow(unused_imports)]
 pub mod prelude {
-    pub use crate::casing::prelude::*;
+    pub use crate::str::prelude::*;
 }

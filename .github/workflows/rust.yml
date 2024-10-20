@@ -8,7 +8,7 @@ env:
   CARGO_TERM_COLOR: always
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
   release:
     types: [ created ]
@@ -55,8 +55,7 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            target/debug
-            target/release
+            target
           key: ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-${{ matrix.toolchain }}-
