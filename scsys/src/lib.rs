@@ -18,6 +18,9 @@ pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 #[doc(inline)]
 pub use scsys_macros::*;
+#[cfg(feature = "utils")]
+#[doc(inline)]
+pub use scsys_util::*;
 
 // #66 - Cleanup the prelude module(s)
 pub mod prelude {

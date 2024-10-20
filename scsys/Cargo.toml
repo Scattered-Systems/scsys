@@ -56,14 +56,14 @@ macros = [
 ]
 
 utils = [
-    "dep:scsys-utils",
+    "dep:scsys-util",
 ]
 
 # *** [FF] Dependencies ***
 alloc = [
     "scsys-core/alloc",
     "scsys-actors?/alloc",
-    "scsys-utils?/alloc",
+    "scsys-util?/alloc",
 ]
 
 chrono = [
@@ -77,7 +77,7 @@ rand = [
 serde = [
     "scsys-core/serde",
     "scsys-actors?/serde",
-    "scsys-utils?/serde",
+    "scsys-util?/serde",
 ]
 
 tokio = [
@@ -88,7 +88,7 @@ tokio = [
 std = [
     "scsys-core/std",
     "scsys-actors?/std",
-    "scsys-utils?/std",
+    "scsys-util?/std",
 ]
 
 wasi = [
@@ -124,7 +124,7 @@ optional = true
 path = "../macros"
 version = "0.2.4"
 
-[dependencies.scsys-utils]
+[dependencies.scsys-util]
 default-features = false
 optional = true
 path = "../utils"

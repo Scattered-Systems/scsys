@@ -1,5 +1,5 @@
 [package]
-name = "scsys-utils"
+name = "scsys-util"
 authors.workspace = true
 categories.workspace = true
 description.workspace = true
