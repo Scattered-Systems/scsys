@@ -16,44 +16,36 @@ on:
   workflow_dispatch:
 
 jobs:
-  core:
-    env:
-      PACKAGE: ${{ github.event.repository.name }}-${{ matrix.package }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package: [ core ]
-    steps:
-      - 
-        name: checkout
-        uses: actions/checkout@v4
-      - 
-        name: publish (${{ matrix.package }})
-        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
-  features:
-    env:
-      PACKAGE: ${{ github.event.repository.name }}-${{ matrix.package }}
-    needs: core
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package: [ actors, derive, macros, utils ]
-    steps:
-      - 
-        name: checkout
-        uses: actions/checkout@v4
-      - 
-        name: publish (${{ matrix.package }})
-        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
-  sdk:
-    env:
-      PACKAGE: ${{ github.event.repository.name }}
-    needs: [ core, features ]
+  crates-io:
     runs-on: ubuntu-latest
     steps:
       - 
         name: checkout
         uses: actions/checkout@v4
+      - 
+        name: rustup
+        run: |
+          rustup update
       - 
         name: publish
-        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
+        run: |
+          cargo publish --all-features -v -p scsys-core
+          cargo publish --all-features -v -p scsys-actors
+          cargo publish --all-features -v -p scsys-derive
+          cargo publish --all-features -v -p scsys-macros
+          cargo publish --all-features -v -p scsys-utils
+          cargo publish --all-features -v -p scsys
+      - 
+        id: rust-cache
+        name: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+            ${{ runner.os }}-cargo-
+            ${{ runner.os }}-
