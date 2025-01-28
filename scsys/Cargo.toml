@@ -28,19 +28,20 @@ test = true
 [features]
 default = [
     "std",
+    "utils",
 ]
 
 full = [
     "default",
     "actors",
+    "chrono",
     "derive",
     "rand",
     "serde",
     "tokio",
-    "utils",
 ]
 
-# ********* [FF] Packages *********
+# ********* [FF] Features *********
 
 actors = [
     "dep:scsys-actors",
@@ -59,7 +60,7 @@ utils = [
     "dep:scsys-util",
 ]
 
-# *** [FF] Dependencies ***
+# ********* [FF] Dependencies *********
 alloc = [
     "scsys-core/alloc",
     "scsys-actors?/alloc",
@@ -83,8 +84,8 @@ serde = [
 tokio = [
     "scsys-actors?/tokio",
 ]
-# *** [FF] Environments ***
 
+# ********* [FF] Environments *********
 std = [
     "scsys-core/std",
     "scsys-actors?/std",
