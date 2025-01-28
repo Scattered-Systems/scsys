@@ -36,11 +36,8 @@ rand = [
 
 serde = [
     "dep:serde",
-    "serde-ext",
-]
-
-serde-ext = [
     "num/serde",
+    "serde?/derive",
     "rand?/serde1",
 ]
 
@@ -77,25 +74,18 @@ anyhow = "1"
 serde_json = "1"
 
 [dependencies]
+# shared
 num.workspace = true
 strum.workspace = true
 
-
-[dependencies.rand]
-default-features = false
-optional = true
-version = "0.8"
-
-[dependencies.serde]
-default-features = false
-features = ["derive"]
-optional = true
-version = "1"
+# optional 
+rand = { default-features = false, optional = true, version = "0.9" }
+serde = { default-features = false, optional = true, version = "1" }
 
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]
 
-[target.wasm32-unknown-unknown.dependencies]
+[target.'cfg(target_family = "wasm32")'.dependencies]
 getrandom = "0.2"
 
 [target.wasm32-wasi]

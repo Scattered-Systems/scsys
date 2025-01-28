@@ -1,55 +1,32 @@
 [package]
-authors.workspace = true
 build = "build.rs"
+name = "scsys-core"
+
+authors.workspace = true
 categories.workspace = true
 description.workspace = true
 edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
 license.workspace = true
-name = "scsys-core"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
 
 [features]
-default = [
-    "std"
-]
+default = ["std"]
 
-full = [
-    "default",
-    "chrono",
-    "rand",
-    "serde",
-]
+full = ["default", "chrono", "rand", "serde"]
 
 # ******* [FF] Dependencies *******
-alloc = [
-    "num/alloc",
-    "rand?/alloc",
-    "serde?/alloc",
-]
+alloc = ["num/alloc", "rand?/alloc", "serde?/alloc"]
 
-chrono = [
-    "dep:chrono"
-]
+chrono = ["dep:chrono"]
 
-rand = [
-    "dep:rand",
-    "num/rand",
-]
+rand = ["dep:rand", "num/rand"]
 
-serde = [
-    "dep:serde",
-    "serde-ext",
-]
-
-serde-ext = [
-    "num/serde",
-    "rand?/serde1",
-]
+serde = ["dep:serde", "serde?/derive", "num/serde", "rand?/serde1"]
 
 # ******* [FF] Environment *******
 std = [
@@ -59,13 +36,12 @@ std = [
     "rand?/std_rng",
     "serde?/std",
     "strum/std",
+    "thiserror/std",
 ]
 
 wasi = []
 
-wasm = [
-    "getrandom/js",
-]
+wasm = ["getrandom/js"]
 
 [lib]
 bench = false
@@ -77,33 +53,24 @@ test = true
 name = "errors"
 required-features = ["std"]
 
-[build-dependencies]
 
 [dev-dependencies]
-anyhow = "1"
-serde_json = "1"
+anyhow.workspace = true
+serde_json.workspace = true
 
 [dependencies]
-glob = "0.3"
 num.workspace = true
-paste = "1"
 smart-default.workspace = true
 strum.workspace = true
+thiserror.workspace = true
 
-[dependencies.chrono]
-optional = true
-version = "0.4"
+glob = "0.3"
+paste = "1"
 
-[dependencies.rand]
-default-features = false
-optional = true
-version = "0.8"
+chrono = { optional = true, version = "0.3" }
+rand = { default-features = false, optional = true, version = "0.8" }
+serde = { default-features = false, optional = true, version = "0.8" }
 
-[dependencies.serde]
-default-features = false
-features = ["derive"]
-optional = true
-version = "1"
 
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]
