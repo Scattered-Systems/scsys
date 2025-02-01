@@ -109,6 +109,6 @@ version = "1"
 rustc-args = ["--cfg", "docsrs"]
 
 [target.wasm32-unknown-unknown.dependencies]
-getrandom = "0.2"
+getrandom = "0.3"
 
 [target.wasm32-wasi]
