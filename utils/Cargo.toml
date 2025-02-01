@@ -84,7 +84,7 @@ strum.workspace = true
 [dependencies.rand]
 default-features = false
 optional = true
-version = "0.8"
+version = "0.9"
 
 [dependencies.serde]
 default-features = false
