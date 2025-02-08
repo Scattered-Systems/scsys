@@ -13,20 +13,25 @@ readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
+[lib]
+bench = false
+crate-type = [ "cdylib", "rlib", "staticlib" ]
+doctest = true
+test = true
 
 [features]
-default = ["std"]
+default = [ "std" ]
 
-full = ["default", "chrono", "rand", "serde"]
+full = [ "chrono", "default", "rand", "serde" ]
 
 # ******* [FF] Dependencies *******
-alloc = ["num/alloc", "rand?/alloc", "serde?/alloc"]
+alloc = [ "num/alloc", "rand?/alloc", "serde?/alloc" ]
 
-chrono = ["dep:chrono"]
+chrono = [ "dep:chrono" ]
 
-rand = ["dep:rand", "num/rand"]
+rand = [ "dep:rand", "num/rand" ]
 
-serde = ["dep:serde", "serde?/derive", "num/serde", "rand?/serde1"]
+serde = [ "dep:serde", "dep:serde_derive", "num/serde", "rand?/serde", "serde?/derive" ]
 
 # ******* [FF] Environment *******
 std = [
@@ -39,43 +44,37 @@ std = [
     "thiserror/std",
 ]
 
-wasi = []
+wasi = [  ]
 
-wasm = ["getrandom/js"]
-
-[lib]
-bench = false
-crate-type = ["cdylib", "rlib"]
-doctest = true
-test = true
+wasm = [ "getrandom/wasm_js" ]
 
 [[test]]
 name = "errors"
-required-features = ["std"]
-
+required-features = [ "std" ]
 
 [dev-dependencies]
-anyhow.workspace = true
-serde_json.workspace = true
+anyhow = { workspace = true }
+serde_json = { workspace = true }
 
 [dependencies]
-num.workspace = true
-smart-default.workspace = true
-strum.workspace = true
-thiserror.workspace = true
+# shared
+num = { workspace = true }
+paste = { workspace = true }
+rand = { optional = true, workspace = true }
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+smart-default = { workspace = true }
+strum = { workspace = true }
+thiserror = { workspace = true }
 
+# feature=specific
+chrono = { optional = true, version = "0.4" }
 glob = "0.3"
-paste = "1"
-
-chrono = { optional = true, version = "0.3" }
-rand = { default-features = false, optional = true, version = "0.8" }
-serde = { default-features = false, optional = true, version = "0.8" }
-
 
 [package.metadata.docs.rs]
-rustc-args = ["--cfg", "docsrs"]
+rustc-args = [ "--cfg", "docsrs" ]
 
 [target.wasm32-unknown-unknown.dependencies]
-getrandom = "0.2"
+getrandom = "0.3"
 
 [target.wasm32-wasi]

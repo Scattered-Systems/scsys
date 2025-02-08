@@ -1,12 +1,13 @@
 [package]
+name = "scsys-macros"
+
 authors.workspace = true
-categories = []
-description = "scsys-macros"
+categories.workspace = true
+description.workspace = true
 edition.workspace = true
 homepage.workspace = true
-keywords = []
+keywords.workspace = true
 license.workspace = true
-name = "scsys-macros"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
@@ -23,7 +24,3 @@ syn = { features = ["full"], version = "2" }
 [package.metadata.docs.rs]
 all-features = true
 rustc-args = ["--cfg", "docsrs"]
-
-[target.wasm32-unknown-unknown]
-
-[target.wasm32-wasi]

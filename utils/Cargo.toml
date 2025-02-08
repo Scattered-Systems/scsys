@@ -36,9 +36,10 @@ rand = [
 
 serde = [
     "dep:serde",
+    "dep:serde_derive",
     "num/serde",
     "serde?/derive",
-    "rand?/serde1",
+    "rand?/serde",
 ]
 
 # ******* [FF] Environment *******
@@ -54,7 +55,7 @@ std = [
 wasi = []
 
 wasm = [
-    "getrandom/js",
+    "getrandom/wasm_js",
 ]
 
 [lib]
@@ -75,17 +76,16 @@ serde_json = "1"
 
 [dependencies]
 # shared
-num.workspace = true
-strum.workspace = true
-
-# optional 
-rand = { default-features = false, optional = true, version = "0.9" }
-serde = { default-features = false, optional = true, version = "1" }
+num = { workspace = true }
+rand = { optional = true, workspace = true }
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+strum = { workspace = true }
 
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]
 
 [target.'cfg(target_family = "wasm32")'.dependencies]
-getrandom = "0.2"
+getrandom = "0.3"
 
 [target.wasm32-wasi]

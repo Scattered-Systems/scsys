@@ -45,7 +45,7 @@ impl<T, U> Functor<U> for Option<T> {
     where
         F: Fn(&T) -> U,
     {
-        if let Some(ref value) = self {
+        if let &Some(ref value) = self {
             return Some(f(value));
         }
         None

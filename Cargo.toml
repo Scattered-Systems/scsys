@@ -29,11 +29,16 @@ members = [
 resolver = "3"
 
 [workspace.dependencies]
+# project
+scsys-core = { default-features = false, path = "./core", version = "0.2.4" }
+# shared
 anyhow = "1"
 lazy_static = "1"
 num = { default-features = false, version = "0.4" }
 paste = "1"
-serde = { default-features = false, features = ["derive"], version = "1" }
+rand = { default-features = false, version = "0.9" }
+serde = { default-features = false, version = "1" }
+serde_derive = { version = "1" }
 serde_json = "1"
 smart-default = "0.7"
 strum = { default-features = false, features = ["derive"], version = "0.26" }

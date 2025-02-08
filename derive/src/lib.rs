@@ -23,9 +23,9 @@ pub fn display(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
 
     // Build the impl
-    let gen = display::impl_display(&ast);
+    let res = display::impl_display(&ast);
 
-    gen.into()
+    res.into()
 }
 
 /// This macro generates a parameter struct and an enum of parameter keys.
@@ -34,10 +34,10 @@ pub fn params(input: TokenStream) -> TokenStream {
     // Parse the input tokens into a syntax tree
     let input = parse_macro_input!(input as DeriveInput);
 
-    let gen = params::impl_params(&input);
+    let res = params::impl_params(&input);
 
     // Return the generated code as a TokenStream
-    gen.into()
+    res.into()
 }
 
 /// This macro automatically generates functional constructors for all enclosed variants.
@@ -80,8 +80,8 @@ pub fn keyed(input: TokenStream) -> TokenStream {
     // Parse the input tokens into a syntax tree
     let input = parse_macro_input!(input as DeriveInput);
 
-    let gen = params::impl_params(&input);
+    let res = params::impl_params(&input);
 
     // Return the generated code as a TokenStream
-    gen.into()
+    res.into()
 }
