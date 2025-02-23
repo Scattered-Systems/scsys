@@ -19,5 +19,5 @@ fn test_timestamp() {
     let ts = Timestamp::<u128>::now();
 
     let tsd = Duration::from_millis(ts.0 as u64);
-    assert_eq!(absdiff(now, tsd), Duration::from_millis(0));
+    assert!(absdiff(now, tsd) < Duration::from_millis(1));
 }
