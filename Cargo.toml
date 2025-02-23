@@ -1,10 +1,10 @@
 [workspace.package]
-authors = ["FL03 <jo3mccain@icloud.com>", "Scattered-Systems <jo3mccain@scattered-systems.com>"]
-categories = []
+authors = [ "FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", "Scattered-Systems <support@scsys.io> (https://github.com/scattered-systems)" ]
+categories = [  ]
 description = "scsys is a collection of primitives and utilities for use throughout the ecosystem."
 edition = "2024"
 homepage = "https://github.com/scattered-systems/scsys/wiki"
-keywords = ["primitives", "scsys", "toolkit", "utilities"]
+keywords = [ "primitives", "scsys", "toolkit", "utilities" ]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys.git"
@@ -15,14 +15,13 @@ default-members = [
     "scsys",
 ]
 
-exclude = []
+exclude = [  ]
 
 members = [
-    "actors",
     "core",
     "derive",
     "macros",
-    "scsys", 
+    "scsys",
     "utils",
 ]
 
@@ -42,11 +41,11 @@ num = { default-features = false, version = "0.4" }
 paste = "1"
 rand = { default-features = false, version = "0.9" }
 rand_distr = { default-features = false, version = "0.5" }
-serde = { default-features = false, features = ["derive"], version = "1" }
+serde = { default-features = false, features = [ "derive" ], version = "1" }
 serde_derive = { version = "1" }
 serde_json = "1"
 smart-default = "0.7"
-strum = { default-features = false, features = ["derive"], version = "0.27" }
+strum = { default-features = false, features = [ "derive" ], version = "0.27" }
 thiserror = { default-features = false, version = "2" }
 
 [profile.dev]
@@ -55,10 +54,10 @@ debug = true
 debug-assertions = true
 incremental = true
 lto = false
-panic = "unwind"
-rpath = false
 opt-level = 0
 overflow-checks = true
+panic = "abort"
+rpath = false
 
 [profile.release]
 codegen-units = 16
@@ -66,7 +65,7 @@ debug = false
 debug-assertions = false
 incremental = false
 lto = false
-panic = "abort"
-rpath = false
 opt-level = "z"
 overflow-checks = false
+panic = "abort"
+rpath = false

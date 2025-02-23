@@ -15,7 +15,7 @@ version.workspace = true
 
 [lib]
 bench = false
-crate-type = [ "cdylib", "rlib" ]
+crate-type = [ "cdylib", "rlib", "staticlib" ]
 doctest = true
 test = true
 

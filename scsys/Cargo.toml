@@ -15,7 +15,7 @@ version.workspace = true
 
 [lib]
 bench = true
-crate-type = [ "cdylib", "rlib" ]
+crate-type = [ "cdylib", "rlib", "staticlib" ]
 doctest = true
 test = true
 
@@ -26,7 +26,6 @@ default = [
 ]
 
 full = [
-    "actors",
     "default",
     "derive",
     "json",
@@ -34,14 +33,9 @@ full = [
     "rand",
     "serde",
     "time",
-    "tokio",
 ]
 
 # ********* [FF] Features *********
-
-actors = [
-    "dep:scsys-actors",
-]
 
 derive = [
     "dep:scsys-derive",
@@ -57,7 +51,6 @@ utils = [
 
 # ********* [FF] Dependencies *********
 alloc = [
-    "scsys-actors?/alloc",
     "scsys-core/alloc",
     "scsys-util?/alloc",
 ]
@@ -71,7 +64,6 @@ rand = [
 ]
 
 serde = [
-    "scsys-actors?/serde",
     "scsys-core/serde",
     "scsys-util?/serde",
 ]
@@ -80,31 +72,23 @@ time = [
     "scsys-core/time",
 ]
 
-tokio = [
-    "scsys-actors?/tokio",
-]
-
 # ********* [FF] Environments *********
 std = [
-    "scsys-actors?/std",
     "scsys-core/std",
     "scsys-util?/std",
 ]
 
 wasi = [
-    "scsys-actors?/wasi",
     "scsys-core/wasi",
 ]
 
 wasm = [
-    "scsys-actors?/wasm",
     "scsys-core/wasm",
 ]
 
 [dependencies]
 scsys-core = { default-features = false, path = "../core", version = "0.2.4" }
 
-scsys-actors = { default-features = false, optional = true, path = "../actors", version = "0.2.4" }
 scsys-derive = { default-features = false, optional = true, path = "../derive", version = "0.2.4" }
 scsys-macros = { default-features = false, optional = true, path = "../macros", version = "0.2.4" }
 scsys-util = { default-features = false, optional = true, path = "../utils", version = "0.2.4" }
