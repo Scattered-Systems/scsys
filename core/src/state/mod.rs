@@ -6,25 +6,23 @@
 //!
 //! This module contains the stateful types and traits for the library.
 #[doc(inline)]
-pub use self::{interface::State, kinds::*};
+pub use self::nstate::*;
 
-mod interface;
-mod kinds;
+pub mod nstate;
 
 pub(crate) mod prelude {
-    pub use super::interface::*;
-    pub use super::kinds::*;
+    pub use super::nstate::*;
     pub use super::{RawState, Stateful};
 }
 
-/// [Stateful]
-pub trait Stateful<T> {
-    type State: RawState<Inner = T>;
+/// a trait for denoting stateful entities
+pub trait Stateful {
+    type State: RawState;
 }
+
 /// [RawState]
 pub trait RawState {
     type Inner;
-    type Tag;
 }
 
 /*
@@ -32,9 +30,8 @@ pub trait RawState {
 */
 impl<Q, T> RawState for State<Q, T> {
     type Inner = T;
-    type Tag = Q;
 }
 
-impl<Q, T> Stateful<T> for State<Q, T> {
+impl<Q, T> Stateful for State<Q, T> {
     type State = State<Q, T>;
 }
