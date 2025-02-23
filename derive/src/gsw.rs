@@ -1,5 +1,5 @@
 use quote::quote;
-use syn::{spanned::Spanned, DeriveInput};
+use syn::{DeriveInput, spanned::Spanned};
 
 pub fn impl_getter(input: &DeriveInput) -> proc_macro2::TokenStream {
     let name = &input.ident;

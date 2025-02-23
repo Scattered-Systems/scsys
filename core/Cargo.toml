@@ -15,23 +15,29 @@ version.workspace = true
 
 [lib]
 bench = false
-crate-type = [ "cdylib", "rlib", "staticlib" ]
+crate-type = [ "cdylib", "rlib" ]
 doctest = true
 test = true
 
 [features]
 default = [ "std" ]
 
-full = [ "chrono", "default", "rand", "serde" ]
+full = [ "default", "rand", "serde", "time" ]
 
 # ******* [FF] Dependencies *******
 alloc = [ "num/alloc", "rand?/alloc", "serde?/alloc" ]
 
-chrono = [ "dep:chrono" ]
+chrono = [ "dep:chrono", "chrono?/clock" ]
 
-rand = [ "dep:rand", "num/rand" ]
+json = [ "dep:serde_json", "serde" ]
+
+rand = [ "dep:rand", "dep:rand_distr", "num/rand", "rng" ]
+
+rng = [ "dep:getrandom", "rand?/small_rng", "rand?/thread_rng" ]
 
 serde = [ "dep:serde", "dep:serde_derive", "num/serde", "rand?/serde", "serde?/derive" ]
+
+time = [ "chrono" ]
 
 # ******* [FF] Environment *******
 std = [
@@ -46,35 +52,41 @@ std = [
 
 wasi = [  ]
 
-wasm = [ "getrandom/wasm_js" ]
-
-[[test]]
-name = "errors"
-required-features = [ "std" ]
+wasm = [ "getrandom?/wasm_js" ]
 
 [dev-dependencies]
-anyhow = { workspace = true }
-serde_json = { workspace = true }
+approx = { workspace = true }
 
 [dependencies]
-# shared
-num = { workspace = true }
-paste = { workspace = true }
+# optional
+chrono = { optional = true, workspace = true }
+getrandom = { optional = true, workspace = true }
 rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+
+# required
+glob = { workspace = true }
+num = { workspace = true }
+paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { workspace = true }
 thiserror = { workspace = true }
 
-# feature=specific
-chrono = { optional = true, version = "0.4" }
-glob = "0.3"
-
 [package.metadata.docs.rs]
 rustc-args = [ "--cfg", "docsrs" ]
 
-[target.wasm32-unknown-unknown.dependencies]
-getrandom = "0.3"
+# ********* tests *********
+[[test]]
+name = "default"
 
-[target.wasm32-wasi]
+[[test]]
+name = "state"
+required-features = [ "std" ]
+
+[[test]]
+name = "time"
+required-features = [ "std", "time" ]
+

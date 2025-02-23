@@ -27,7 +27,6 @@ pub trait Applicative<U>: Functor<U> {
         Self: HKT<F>;
 }
 
-
 pub trait Monad<U>: Applicative<U> {
     fn return_(x: U) -> Self::T
     where
@@ -49,11 +48,8 @@ pub trait Monad<U>: Applicative<U> {
     }
 }
 
-
-
-
 /*
-    ************* Implementations *************
+ ************* Implementations *************
 */
 #[macro_export]
 macro_rules! hkt {
@@ -258,4 +254,3 @@ mod tests {
         assert_eq!(v2, [1]);
     }
 }
-

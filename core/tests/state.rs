@@ -2,9 +2,7 @@
     Appellation: state <test>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-extern crate scsys_core as scsys;
-
-use scsys::state::*;
+use scsys_core::state::*;
 
 #[test]
 fn test_nary_state() {

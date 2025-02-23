@@ -18,6 +18,7 @@ default = [
 
 full = [
     "default",
+    "json",
     "rand",
     "serde",
 ]
@@ -29,9 +30,15 @@ alloc = [
     "serde?/alloc",
 ]
 
+json = ["dep:serde_json", "serde"]
+
 rand = [
     "dep:rand",
     "num/rand",
+]
+
+rng = [
+    "dep:getrandom",
 ]
 
 serde = [
@@ -55,7 +62,7 @@ std = [
 wasi = []
 
 wasm = [
-    "getrandom/wasm_js",
+    "getrandom?/wasm_js",
 ]
 
 [lib]
@@ -64,28 +71,24 @@ crate-type = ["cdylib", "rlib"]
 doctest = true
 test = true
 
-[[test]]
-name = "casing"
-required-features = ["alloc"]
-
-[build-dependencies]
-
 [dev-dependencies]
-anyhow = "1"
-serde_json = "1"
+anyhow = { workspace = true }
+serde_json = { workspace = true }
 
 [dependencies]
 # shared
 num = { workspace = true }
+getrandom = { optional = true, workspace = true }
 rand = { optional = true, workspace = true }
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
 strum = { workspace = true }
 
 [package.metadata.docs.rs]
 rustc-args = ["--cfg", "docsrs"]
 
-[target.'cfg(target_family = "wasm32")'.dependencies]
-getrandom = "0.3"
-
-[target.wasm32-wasi]
+# ******* tests *******
+[[test]]
+name = "casing"
+required-features = ["alloc"]

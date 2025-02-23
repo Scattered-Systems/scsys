@@ -151,7 +151,7 @@ impl From<Duration> for Timestamp<u128> {
     }
 }
 
-#[cfg(feature = "chrono")]
+#[cfg(feature = "time")]
 impl<Tz> From<chrono::DateTime<Tz>> for Timestamp<i64>
 where
     Tz: chrono::TimeZone,

@@ -7,23 +7,15 @@ categories.workspace = true
 description.workspace = true
 edition.workspace = true
 homepage.workspace = true
-license.workspace = true
 keywords.workspace = true
+license.workspace = true
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
-[[example]]
-name = "derive"
-required-features = ["derive", "serde"]
-
-[[test]]
-name = "derive"
-required-features = ["derive"]
-
 [lib]
 bench = true
-crate-type = ["cdylib", "rlib"]
+crate-type = [ "cdylib", "rlib" ]
 doctest = true
 test = true
 
@@ -34,12 +26,14 @@ default = [
 ]
 
 full = [
-    "default",
     "actors",
-    "chrono",
+    "default",
     "derive",
+    "json",
+    "macros",
     "rand",
     "serde",
+    "time",
     "tokio",
 ]
 
@@ -50,8 +44,7 @@ actors = [
 ]
 
 derive = [
-    "dep:scsys-derive", 
-    "macros",
+    "dep:scsys-derive",
 ]
 
 macros = [
@@ -64,13 +57,13 @@ utils = [
 
 # ********* [FF] Dependencies *********
 alloc = [
-    "scsys-core/alloc",
     "scsys-actors?/alloc",
+    "scsys-core/alloc",
     "scsys-util?/alloc",
 ]
 
-chrono = [
-    "scsys-core/chrono",
+json = [
+    "scsys-core/json",
 ]
 
 rand = [
@@ -78,9 +71,13 @@ rand = [
 ]
 
 serde = [
-    "scsys-core/serde",
     "scsys-actors?/serde",
+    "scsys-core/serde",
     "scsys-util?/serde",
+]
+
+time = [
+    "scsys-core/time",
 ]
 
 tokio = [
@@ -89,8 +86,8 @@ tokio = [
 
 # ********* [FF] Environments *********
 std = [
-    "scsys-core/std",
     "scsys-actors?/std",
+    "scsys-core/std",
     "scsys-util?/std",
 ]
 
@@ -105,8 +102,9 @@ wasm = [
 ]
 
 [dependencies]
-scsys-actors = { default-features = false, optional = true, path = "../actors", version = "0.2.4" }
 scsys-core = { default-features = false, path = "../core", version = "0.2.4" }
+
+scsys-actors = { default-features = false, optional = true, path = "../actors", version = "0.2.4" }
 scsys-derive = { default-features = false, optional = true, path = "../derive", version = "0.2.4" }
 scsys-macros = { default-features = false, optional = true, path = "../macros", version = "0.2.4" }
 scsys-util = { default-features = false, optional = true, path = "../utils", version = "0.2.4" }
@@ -117,9 +115,19 @@ serde_json = { workspace = true }
 
 [package.metadata.docs.rs]
 all-features = true
-rustc-args = ["--cfg", "docsrs"]
+rustc-args = [ "--cfg", "docsrs" ]
 version = "v{{version}}"
 
 [package.metadata.release]
 no-dev-version = true
 tag-name = "{{version}}"
+
+# ********* examples *********
+[[example]]
+name = "derive"
+required-features = [ "derive", "serde" ]
+
+# ********* test *********
+[[test]]
+name = "derive"
+required-features = [ "derive" ]

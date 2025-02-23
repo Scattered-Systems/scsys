@@ -15,7 +15,7 @@ pub(crate) mod params;
 pub(crate) mod utils;
 
 use proc_macro::TokenStream;
-use syn::{parse_macro_input, Data, DeriveInput};
+use syn::{Data, DeriveInput, parse_macro_input};
 
 #[proc_macro_derive(Display, attributes(display))]
 pub fn display(input: TokenStream) -> TokenStream {

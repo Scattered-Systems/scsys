@@ -52,7 +52,6 @@ impl CaseType {
     }
 }
 
-
 #[cfg(feature = "alloc")]
 mod utils {
     use alloc::string::String;
