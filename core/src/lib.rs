@@ -28,7 +28,6 @@ pub mod id;
 pub mod state;
 #[doc(hidden)]
 pub mod stores;
-pub mod sync;
 pub mod time;
 
 pub mod traits {
@@ -46,30 +45,46 @@ pub mod traits {
     pub mod wrapper;
 
     pub(crate) mod prelude {
+        #[doc(inline)]
         pub use super::adjust::*;
+        #[doc(inline)]
         pub use super::appellation::*;
+        #[doc(inline)]
         pub use super::classify::*;
+        #[doc(inline)]
         pub use super::convert::*;
+        #[doc(inline)]
         pub use super::dtype::*;
+        #[doc(inline)]
         #[cfg(feature = "alloc")]
         pub use super::string::*;
+        #[doc(inline)]
         pub use super::toggle::*;
+        #[doc(inline)]
         pub use super::wrapper::*;
     }
 }
 pub mod types;
 
 pub mod prelude {
+    #[doc(no_inline)]
     pub use super::hkt::prelude::*;
+    #[doc(no_inline)]
     #[cfg(feature = "alloc")]
     pub use crate::error::*;
+    #[doc(no_inline)]
     pub use crate::id::prelude::*;
+    #[doc(no_inline)]
     pub use crate::state::prelude::*;
+    #[doc(no_inline)]
     #[doc(hidden)]
     pub use crate::stores::prelude::*;
-    pub use crate::sync::prelude::*;
+    #[doc(no_inline)]
     pub use crate::time::prelude::*;
+    #[doc(no_inline)]
     pub use crate::traits::prelude::*;
+    #[doc(no_inline)]
     pub use crate::types::prelude::*;
+    #[doc(no_inline)]
     pub use crate::utils::*;
 }
