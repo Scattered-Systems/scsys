@@ -5,21 +5,17 @@
 use scsys::prelude::Result;
 
 fn main() -> Result<()> {
-    let params = LinearParams { weight: 1.0 };
-    println!("{:?}", params.weight());
-    let wk = LinearParamsKey::Weight;
-    println!("{:?}", &wk);
-    println!("{:?}", Something::a());
-    assert_eq!(LinearParamsKey::weight(), wk);
-    // let _key = wk.key();
+    let variant = Something::a();
+    println!("Variant: {:?}", variant);
+    let variant = Something::b(42);
+    println!("Variant: {:?}", variant);
+    let variant = Something::c(1, 2);
+    println!("Variant: {:?}", variant);
     Ok(())
 }
 
-#[derive(
-    Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::Getter, scsys::Params,
-)]
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::Getter)]
 pub struct LinearParams<T> {
-    #[param]
     pub weight: T,
 }
 

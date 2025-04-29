@@ -57,7 +57,7 @@ where
     type Item = S;
 
     fn get(&self) -> &Self::Item {
-        &self
+        self
     }
 }
 

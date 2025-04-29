@@ -87,24 +87,34 @@ wasm = [
 ]
 
 [dependencies]
-scsys-core = { default-features = false, path = "../core", version = "0.2.4" }
+scsys-core = { workspace = true }
 
-scsys-derive = { default-features = false, optional = true, path = "../derive", version = "0.2.4" }
-scsys-macros = { default-features = false, optional = true, path = "../macros", version = "0.2.4" }
-scsys-util = { default-features = false, optional = true, path = "../utils", version = "0.2.4" }
+scsys-derive = { optional = true, workspace = true }
+scsys-macros = { optional = true, workspace = true }
+scsys-util = { optional = true, workspace = true }
 
 [dev-dependencies]
+anyhow = { features = ["std"], workspace = true }
+criterion = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 
 [package.metadata.docs.rs]
-all-features = true
+all-features = false
+features = ["full"]
 rustc-args = [ "--cfg", "docsrs" ]
 version = "v{{version}}"
 
 [package.metadata.release]
 no-dev-version = true
 tag-name = "{{version}}"
+
+# ********* benches *********
+[[bench]]
+harness = false
+name = "default"
+path = "benches/default.rs"
+required-features = ["std"]
 
 # ********* examples *********
 [[example]]

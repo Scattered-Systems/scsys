@@ -25,23 +25,51 @@ default = [ "std" ]
 full = [ "default", "rand", "serde", "time" ]
 
 # ******* [FF] Dependencies *******
-alloc = [ "num/alloc", "rand?/alloc", "serde?/alloc" ]
+anyhow = ["dep:anyhow"]
 
-chrono = [ "dep:chrono", "chrono?/clock" ]
+alloc = [ 
+    "num/alloc", 
+    "serde?/alloc"
+]
 
-json = [ "dep:serde_json", "serde" ]
+chrono = [ 
+    "dep:chrono", 
+    "chrono?/clock",
+]
 
-rand = [ "dep:rand", "dep:rand_distr", "num/rand", "rng" ]
+json = [ 
+    "dep:serde_json", 
+    "alloc", 
+    "serde"
+]
 
-rng = [ "dep:getrandom", "rand?/small_rng", "rand?/thread_rng" ]
+rand = [
+    "dep:rand",
+    "dep:rand_distr",
+    "num/rand",
+    "rng",
+]
 
-serde = [ "dep:serde", "dep:serde_derive", "num/serde", "rand?/serde", "serde?/derive" ]
+rng = [
+    "dep:getrandom",
+    "rand?/small_rng",
+    "rand?/thread_rng",
+]
 
-time = [ "chrono" ]
+serde = [ 
+    "dep:serde", 
+    "dep:serde_derive", 
+    "num/serde", 
+    "rand?/serde", 
+    "serde?/derive" 
+]
+
+time = [ "chrono", "dep:time" ]
 
 # ******* [FF] Environment *******
 std = [
     "alloc",
+    "anyhow?/std",
     "num/std",
     "rand?/std",
     "rand?/std_rng",
@@ -54,26 +82,32 @@ wasi = [  ]
 
 wasm = [ "getrandom?/wasm_js" ]
 
-[dev-dependencies]
-approx = { workspace = true }
-
 [dependencies]
-# optional
-chrono = { optional = true, workspace = true }
-getrandom = { optional = true, workspace = true }
-rand = { optional = true, workspace = true }
-rand_distr = { optional = true, workspace = true }
-serde = { optional = true, workspace = true }
-serde_derive = { optional = true, workspace = true }
-serde_json = { optional = true, workspace = true }
-
-# required
 glob = { workspace = true }
 num = { workspace = true }
 paste = { workspace = true }
+
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
 smart-default = { workspace = true }
 strum = { workspace = true }
+# errors
+anyhow = { optional = true, workspace = true }
 thiserror = { workspace = true }
+# randomization
+getrandom = { optional = true, workspace = true }
+rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
+# time
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
+
+
+
+
+[dev-dependencies]
+approx = { version = "0.5" }
 
 [package.metadata.docs.rs]
 rustc-args = [ "--cfg", "docsrs" ]

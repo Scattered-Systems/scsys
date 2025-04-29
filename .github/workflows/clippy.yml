@@ -1,12 +1,12 @@
 name: clippy
 
-concurrency:
+concurrency:   
   cancel-in-progress: false
   group: ${{ github.workflow }}-${{ github.ref }}
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
     types: [ opened, reopened, closed ]
   release:
     types: [ created ]
@@ -26,19 +26,23 @@ jobs:
       - 
         name: checkout
         uses: actions/checkout@v4
-      - 
-        name: setup (rust)
-        uses: actions-rs/toolchain@v1
+      -
+        name: setup rustup
+        uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          profile: minimal
-          toolchain: stable
-          components: clippy
-          override: true
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          cache-workspaces: true
+          components: clippy, rustfmt
       - 
-        name: setup (clippy)
+        name: cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          prefix-key: "${{ github.ref_name }}"
+      - 
+        name: setup cargo
         run: cargo install clippy-sarif sarif-fmt
       - 
-        name: analyze
+        name: clippy
         run:
           cargo clippy
           --all-features

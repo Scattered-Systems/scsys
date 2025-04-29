@@ -40,12 +40,6 @@ pub struct Generic<K, V> {
     pub weight: V,
 }
 
-#[derive(scsys::Getter, scsys::Params)]
-pub struct LinearParams<T> {
-    #[param]
-    pub weight: T,
-}
-
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::VariantConstructors)]
 pub enum Something {
     A,
@@ -70,14 +64,6 @@ fn test_gsw() {
 
     assert_eq!(*data.key(), "key");
     assert_eq!(*data.weight(), 1.00);
-}
-
-#[test]
-fn test_params() {
-    let params = LinearParams { weight: 1.0 };
-
-    assert_eq!(*params.weight(), 1.0);
-    assert_eq!(LinearParamsKey::weight(), LinearParamsKey::Weight);
 }
 
 #[test]

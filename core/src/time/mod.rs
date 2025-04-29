@@ -22,7 +22,7 @@ pub(crate) mod prelude {
     pub use super::utils::*;
 }
 
-///
+/// The [`Now`] trait provides a common creation routines for all datetime implementations.
 pub trait Now {
     type Output;
 
@@ -42,9 +42,6 @@ pub(crate) mod utils {
     #[cfg(feature = "std")]
     #[inline]
     pub fn std_time() -> u128 {
-        std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .unwrap()
-            .as_millis()
+        systime().as_millis()
     }
 }

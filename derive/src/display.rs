@@ -13,11 +13,7 @@ pub fn impl_display(ast: &DeriveInput) -> TokenStream {
         generics,
         ..
     } = ast;
-    if attrs
-        .iter()
-        .find(|attr| attr.path().is_ident("display"))
-        .is_some()
-    {
+    if attrs.iter().any(|attr| attr.path().is_ident("display")) {
         return handle_serde_display(name, generics);
     }
     quote! {

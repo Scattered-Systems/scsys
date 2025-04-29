@@ -33,7 +33,6 @@ macro_rules! impl_state_kind {
 
 impl_state_kind!(Unary(1), Binary(2), Ternary(3));
 
-
 /// [State] is an abstract object that allows a particular _kind_ of state to be associated
 /// with some data.
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]

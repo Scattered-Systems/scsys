@@ -11,7 +11,6 @@ pub(crate) mod attrs;
 pub(crate) mod display;
 pub(crate) mod enums;
 pub(crate) mod gsw;
-pub(crate) mod params;
 pub(crate) mod utils;
 
 use proc_macro::TokenStream;
@@ -27,19 +26,6 @@ pub fn display(input: TokenStream) -> TokenStream {
 
     res.into()
 }
-
-/// This macro generates a parameter struct and an enum of parameter keys.
-#[proc_macro_derive(Params, attributes(param))]
-pub fn params(input: TokenStream) -> TokenStream {
-    // Parse the input tokens into a syntax tree
-    let input = parse_macro_input!(input as DeriveInput);
-
-    let res = params::impl_params(&input);
-
-    // Return the generated code as a TokenStream
-    res.into()
-}
-
 /// This macro automatically generates functional constructors for all enclosed variants.
 #[proc_macro_derive(VariantConstructors, attributes(variant))]
 pub fn variant_constructors(input: TokenStream) -> TokenStream {
@@ -68,20 +54,4 @@ pub fn set_derive(input: TokenStream) -> TokenStream {
 pub fn with_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     gsw::impl_with(&input).into()
-}
-
-/*
- ******** DEPRECATED ********
-*/
-
-#[proc_macro_derive(Keyed, attributes(param))]
-#[deprecated(since = "0.2.2", note = "Use `Params` instead")]
-pub fn keyed(input: TokenStream) -> TokenStream {
-    // Parse the input tokens into a syntax tree
-    let input = parse_macro_input!(input as DeriveInput);
-
-    let res = params::impl_params(&input);
-
-    // Return the generated code as a TokenStream
-    res.into()
 }

@@ -152,7 +152,7 @@ impl<T, U> Functor<U> for Option<T> {
     where
         F: Fn(&T) -> U,
     {
-        if let &Some(ref value) = self {
+        if let Some(value) = self {
             return Some(f(value));
         }
         None
@@ -183,10 +183,7 @@ impl<T, U> Applicative<U> for core::option::Option<T> {
         F: Fn(&T) -> U,
     {
         match *self {
-            Some(ref value) => match fs {
-                Some(f) => Some(f(value)),
-                None => None,
-            },
+            Some(ref value) => fs.map(|f| f(value)),
             None => None,
         }
     }
@@ -207,7 +204,7 @@ impl<T, U> Applicative<U> for alloc::vec::Vec<T> {
             let v = (f)(&self[i]);
             result.push(v)
         }
-        return result;
+        result
     }
 }
 
