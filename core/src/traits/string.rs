@@ -17,6 +17,12 @@ impl StringExt for str {
     }
 }
 
+impl StringExt for String {
+    fn remove_fnl(&self) -> &str {
+        &self[1..self.len() - 1]
+    }
+}
+
 pub trait StringFmt {
     fn snake_case(&self) -> String;
 

@@ -2,10 +2,7 @@
     Appellation: scsys-core <library>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # Core
-//!
-//! This library provides a set of common utilities, types, and other primitives used 
-//! throughout the ecosystem.
+//! This crate works to provide a set of utilities for working with state, time, and synchronization in Rust.
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "alloc")]
@@ -16,7 +13,7 @@ pub use self::{state::State, traits::prelude::*, types::prelude::*, utils::*};
 
 #[cfg(feature = "alloc")]
 #[doc(inline)]
-pub use self::errors::{Error, Errors, Result};
+pub use self::error::*;
 
 #[macro_use]
 pub(crate) mod macros;
@@ -25,7 +22,7 @@ pub(crate) mod seal;
 pub(crate) mod utils;
 
 #[cfg(feature = "alloc")]
-pub mod errors;
+pub mod error;
 pub mod hkt;
 pub mod id;
 pub mod state;
@@ -33,13 +30,39 @@ pub mod state;
 pub mod stores;
 pub mod sync;
 pub mod time;
-pub mod traits;
+
+pub mod traits {
+    #[doc(inline)]
+    pub use self::prelude::*;
+
+    pub mod adjust;
+    pub mod appellation;
+    pub mod classify;
+    pub mod convert;
+    pub mod dtype;
+    #[cfg(feature = "alloc")]
+    pub mod string;
+    pub mod toggle;
+    pub mod wrapper;
+
+    pub(crate) mod prelude {
+        pub use super::adjust::*;
+        pub use super::appellation::*;
+        pub use super::classify::*;
+        pub use super::convert::*;
+        pub use super::dtype::*;
+        #[cfg(feature = "alloc")]
+        pub use super::string::*;
+        pub use super::toggle::*;
+        pub use super::wrapper::*;
+    }
+}
 pub mod types;
 
 pub mod prelude {
     pub use super::hkt::prelude::*;
     #[cfg(feature = "alloc")]
-    pub use crate::errors::prelude::*;
+    pub use crate::error::*;
     pub use crate::id::prelude::*;
     pub use crate::state::prelude::*;
     #[doc(hidden)]

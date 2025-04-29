@@ -2,7 +2,7 @@
     Appellation: casing <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use scsys_utils::casing::to_snakecase;
+use scsys_util::str::to_snakecase;
 
 #[test]
 fn test_snakecase() {

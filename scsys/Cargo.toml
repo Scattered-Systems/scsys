@@ -1,40 +1,44 @@
 [package]
+build = "build.rs"
+name = "scsys"
+
 authors.workspace = true
 categories.workspace = true
 description.workspace = true
 edition.workspace = true
 homepage.workspace = true
-license.workspace = true
 keywords.workspace = true
-name = "scsys"
+license.workspace = true
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
+[lib]
+bench = true
+crate-type = [ "cdylib", "rlib", "staticlib" ]
+doctest = true
+test = true
+
 [features]
 default = [
     "std",
+    "utils",
 ]
 
 full = [
     "default",
-    "actors",
     "derive",
+    "json",
+    "macros",
     "rand",
     "serde",
-    "tokio",
-    "utils",
+    "time",
 ]
 
-# ********* [FF] Packages *********
-
-actors = [
-    "dep:scsys-actors",
-]
+# ********* [FF] Features *********
 
 derive = [
-    "dep:scsys-derive", 
-    "macros",
+    "dep:scsys-derive",
 ]
 
 macros = [
@@ -42,18 +46,17 @@ macros = [
 ]
 
 utils = [
-    "dep:scsys-utils",
+    "dep:scsys-util",
 ]
 
-# *** [FF] Dependencies ***
+# ********* [FF] Dependencies *********
 alloc = [
     "scsys-core/alloc",
-    "scsys-actors?/alloc",
-    "scsys-utils?/alloc",
+    "scsys-util?/alloc",
 ]
 
-chrono = [
-    "scsys-core/chrono",
+json = [
+    "scsys-core/json",
 ]
 
 rand = [
@@ -62,92 +65,63 @@ rand = [
 
 serde = [
     "scsys-core/serde",
-    "scsys-actors?/serde",
-    "scsys-utils?/serde",
+    "scsys-util?/serde",
 ]
 
-tokio = [
-    "scsys-actors?/tokio",
+time = [
+    "scsys-core/time",
 ]
-# *** [FF] Environments ***
 
+# ********* [FF] Environments *********
 std = [
     "scsys-core/std",
-    "scsys-actors?/std",
-    "scsys-utils?/std",
+    "scsys-util?/std",
 ]
 
 wasi = [
-    "scsys-actors?/wasi",
     "scsys-core/wasi",
 ]
 
 wasm = [
-    "scsys-actors?/wasm",
     "scsys-core/wasm",
 ]
 
+[dependencies]
+scsys-core = { workspace = true }
 
-[lib]
-bench = true
-crate-type = ["cdylib", "rlib"]
-doctest = true
-test = true
-
-[[example]]
-name = "derive"
-required-features = ["derive", "serde"]
-
-[[example]]
-name = "messages"
-required-features = ["actors"]
-
-[[example]]
-name = "params"
-required-features = ["derive"]
-
-[build-dependencies]
-
-[dependencies.scsys-actors]
-default-features = false
-optional = true
-path = "../actors"
-version = "0.2.3"
-
-[dependencies.scsys-core]
-default-features = false
-path = "../core"
-version = "0.2.3"
-
-[dependencies.scsys-derive]
-optional = true
-path = "../derive"
-version = "0.2.3"
-
-[dependencies.scsys-macros]
-optional = true
-path = "../macros"
-version = "0.2.3"
-
-[dependencies.scsys-utils]
-default-features = false
-optional = true
-path = "../utils"
-version = "0.2.3"
+scsys-derive = { optional = true, workspace = true }
+scsys-macros = { optional = true, workspace = true }
+scsys-util = { optional = true, workspace = true }
 
 [dev-dependencies]
-serde = { features = ["derive"], version = "1" }
-serde_json = "1"
+anyhow = { features = ["std"], workspace = true }
+criterion = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
 
 [package.metadata.docs.rs]
-all-features = true
-rustc-args = ["--cfg", "docsrs"]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
 version = "v{{version}}"
 
 [package.metadata.release]
 no-dev-version = true
 tag-name = "{{version}}"
 
-[target.wasm32-unknown-unknown]
+# ********* benches *********
+[[bench]]
+harness = false
+name = "default"
+path = "benches/default.rs"
+required-features = ["std"]
 
-[target.wasm32-wasi]
+# ********* examples *********
+[[example]]
+name = "derive"
+required-features = [ "derive", "serde" ]
+
+# ********* test *********
+[[test]]
+name = "derive"
+required-features = [ "derive" ]

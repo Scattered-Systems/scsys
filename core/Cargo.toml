@@ -1,114 +1,126 @@
 [package]
-authors.workspace = true
 build = "build.rs"
+name = "scsys-core"
+
+authors.workspace = true
 categories.workspace = true
 description.workspace = true
 edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
 license.workspace = true
-name = "scsys-core"
 readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
+[lib]
+bench = false
+crate-type = [ "cdylib", "rlib", "staticlib" ]
+doctest = true
+test = true
 
 [features]
-default = [
-    "std"
-]
+default = [ "std" ]
 
-full = [
-    "default",
-    "chrono",
-    "rand",
-    "serde",
-]
+full = [ "default", "rand", "serde", "time" ]
 
 # ******* [FF] Dependencies *******
-alloc = [
-    "num/alloc",
-    "rand?/alloc",
-    "serde?/alloc",
+anyhow = ["dep:anyhow"]
+
+alloc = [ 
+    "num/alloc", 
+    "serde?/alloc"
 ]
 
-chrono = [
-    "dep:chrono"
+chrono = [ 
+    "dep:chrono", 
+    "chrono?/clock",
+]
+
+json = [ 
+    "dep:serde_json", 
+    "alloc", 
+    "serde"
 ]
 
 rand = [
     "dep:rand",
+    "dep:rand_distr",
     "num/rand",
+    "rng",
 ]
 
-serde = [
-    "dep:serde",
-    "serde-ext",
+rng = [
+    "dep:getrandom",
+    "rand?/small_rng",
+    "rand?/thread_rng",
 ]
 
-serde-ext = [
-    "num/serde",
-    "rand?/serde1",
+serde = [ 
+    "dep:serde", 
+    "dep:serde_derive", 
+    "num/serde", 
+    "rand?/serde", 
+    "serde?/derive" 
 ]
+
+time = [ "chrono", "dep:time" ]
 
 # ******* [FF] Environment *******
 std = [
     "alloc",
+    "anyhow?/std",
     "num/std",
     "rand?/std",
     "rand?/std_rng",
     "serde?/std",
     "strum/std",
+    "thiserror/std",
 ]
 
-wasi = []
+wasi = [  ]
 
-wasm = [
-    "getrandom/js",
-]
-
-[lib]
-bench = false
-crate-type = ["cdylib", "rlib"]
-doctest = true
-test = true
-
-[[test]]
-name = "errors"
-required-features = ["std"]
-
-[build-dependencies]
-
-[dev-dependencies]
-anyhow = "1"
-serde_json = "1"
+wasm = [ "getrandom?/wasm_js" ]
 
 [dependencies]
-glob = "0.3"
-num.workspace = true
-paste = "1"
-smart-default.workspace = true
-strum.workspace = true
+glob = { workspace = true }
+num = { workspace = true }
+paste = { workspace = true }
 
-[dependencies.chrono]
-optional = true
-version = "0.4"
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+smart-default = { workspace = true }
+strum = { workspace = true }
+# errors
+anyhow = { optional = true, workspace = true }
+thiserror = { workspace = true }
+# randomization
+getrandom = { optional = true, workspace = true }
+rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
+# time
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
 
-[dependencies.rand]
-default-features = false
-optional = true
-version = "0.8"
 
-[dependencies.serde]
-default-features = false
-features = ["derive"]
-optional = true
-version = "1"
+
+
+[dev-dependencies]
+approx = { version = "0.5" }
 
 [package.metadata.docs.rs]
-rustc-args = ["--cfg", "docsrs"]
+rustc-args = [ "--cfg", "docsrs" ]
 
-[target.wasm32-unknown-unknown.dependencies]
-getrandom = "0.2"
+# ********* tests *********
+[[test]]
+name = "default"
 
-[target.wasm32-wasi]
+[[test]]
+name = "state"
+required-features = [ "std" ]
+
+[[test]]
+name = "time"
+required-features = [ "std", "time" ]
+

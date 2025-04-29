@@ -15,14 +15,14 @@ pub mod epoch;
 pub mod timestamp;
 
 pub(crate) mod prelude {
+    pub use super::Now;
     pub use super::epoch::Epoch;
     pub use super::timestamp::Timestamp;
     #[allow(unused_imports)]
     pub use super::utils::*;
-    pub use super::Now;
 }
 
-///
+/// The [`Now`] trait provides a common creation routines for all datetime implementations.
 pub trait Now {
     type Output;
 
@@ -42,40 +42,6 @@ pub(crate) mod utils {
     #[cfg(feature = "std")]
     #[inline]
     pub fn std_time() -> u128 {
-        std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .unwrap()
-            .as_millis()
-    }
-}
-
-#[allow(unused)]
-#[cfg(test)]
-mod tests {
-
-    use super::*;
-    use core::time::Duration;
-
-    fn absdiff<A, B, C>(a: A, b: B) -> C
-    where
-        A: PartialOrd<B> + core::ops::Sub<B, Output = C>,
-        B: core::ops::Sub<A, Output = C>,
-    {
-        if a > b {
-            a - b
-        } else {
-            b - a
-        }
-    }
-
-    #[cfg(feature = "std")]
-    #[test]
-    fn test_timestamp() {
-        let now = systime();
-        let ts = Timestamp::<u128>::now();
-
-        let tsd = Duration::from_millis(ts.0 as u64);
-        let diff = absdiff(tsd, now).as_millis();
-        assert!(diff < 1);
+        systime().as_millis()
     }
 }

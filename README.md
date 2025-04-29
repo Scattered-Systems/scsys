@@ -4,18 +4,17 @@
 [![docs](https://docs.rs/scsys/badge.svg)](https://docs.rs/scsys)
 [![license](https://img.shields.io/crates/l/scsys.svg)](https://crates.io/crates/scsys)
 
-[![clippy](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/clippy.yml)
-[![rust](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml/badge.svg)](https://github.com/Scattered-Systems/scsys/actions/workflows/rust.yml)
-
 ***
 
-_**Warning: the library is currently in development so be prepared for major modifications to the API!**_
+_**Warning: the library is still in the early stages of development so make sure to use with caution!**_
 
 Welcome to `scsys`, a collection of useful utilities, types, and other primitives that are used in various projects developed by [Scattered Systems](https://github.com/scattered-systems). The library is designed to be a general-purpose utility library that can be used in any Rust project, aiming to provide a standardized set of tools that can be used to build robust and reliable software.
 
 ## Getting Started
 
-## Building from the source
+### Prerequisites
+
+#### _Rust Toolchain_
 
 Make sure you have the latest version of the Rust toolchain installed on your system.
 
@@ -23,25 +22,30 @@ Make sure you have the latest version of the Rust toolchain installed on your sy
 rustup update
 ```
 
-### _Clone the repository_
+If you don't have it installed, you can install it by following the instructions on the [official website](https://www.rust-lang.org/tools/install).
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+### Building from the source
+
+#### _Clone the repository_
+
+Start by cloning the repository locally to your machine.
 
 ```bash
 git clone https://github.com/scattered-systems/scsys.git
-```
-
-then, navigate to the project directory
-
-```bash
 cd scsys
 ```
 
-### _Building Locally_
+#### _Building Locally_
 
 ```bash
 cargo build --all-features -v --workspace
 ```
 
-### _Testing_
+#### _Testing_
 
 Automatically format and analyze the codebase before building then testing.
 
@@ -61,14 +65,22 @@ version = "0.2.*"
 
 #### Examples
 
-##### _Example: Using the `Message` type_
+##### _Example: Using the `Getter` derive macro_
+
+The `Getter` derive macro can be used to automatically generate functional accessors for named fields within a given structure. For example, given the following structure:
 
 ```rust
-use scsys::prelude::*;
-
-fn main() {
-  println!("{:?}", Message::<String>::default());
+#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::Getter)]
+pub struct Node<T> {
+    pub weight: T,
 }
+```
+
+we can automatically generate a getter method for the `weight` field:
+
+```rust
+let node = Node { weight: 42 };
+assert_eq!(node.weight(), 42);
 ```
 
 ## License

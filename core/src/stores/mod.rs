@@ -10,6 +10,6 @@ pub trait OrInsert<K, V> {
 }
 
 pub(crate) mod prelude {
-    pub use super::kv::Store as KeyValue;
     pub use super::OrInsert;
+    pub use super::kv::Store as KeyValue;
 }

@@ -1,39 +1,66 @@
 [workspace.package]
-authors = ["FL03 <jo3mccain@icloud.com>", "Scattered-Systems <jo3mccain@scattered-systems.com>"]
-categories = []
+authors = [ 
+    "FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", 
+    "Scattered-Systems <support@scsys.io> (https://github.com/scattered-systems)" 
+]
+categories = [  ]
 description = "scsys is a collection of primitives and utilities for use throughout the ecosystem."
-edition = "2021"
+edition = "2024"
 homepage = "https://github.com/scattered-systems/scsys/wiki"
-keywords = ["primitives", "scsys", "toolkit", "utilities"]
+keywords = [ "primitives", "scsys", "toolkit", "utilities" ]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys.git"
-version = "0.2.3"
+version = "0.2.4"
 
 [workspace]
 default-members = [
     "scsys",
 ]
 
-exclude = []
+exclude = [  ]
 
 members = [
-    "actors",
     "core",
     "derive",
     "macros",
-    "scsys", 
+    "scsys",
     "utils",
 ]
 
-resolver = "2"
+resolver = "3"
 
 [workspace.dependencies]
+# project
+scsys = { default-features = false, path = "scsys", version = "0.2.4" }
+scsys-core = { default-features = false, path = "core", version = "0.2.4" }
+scsys-derive = { default-features = false, path = "derive", version = "0.2.4" }
+scsys-macros = { default-features = false, path = "macros", version = "0.2.4" }
+scsys-util = { default-features = false, path = "utils", version = "0.2.4" }
+
+# shared
+getrandom = { default-features = false, version = "0.3" }
+glob = { default-features = false, version = "0.3" }
 lazy_static = "1"
 num = { default-features = false, version = "0.4" }
+num-complex = { default-features = false, version = "0.4" }
+num-traits = { default-features = false, version = "0.2" }
 paste = "1"
+rand = { default-features = false, version = "0.9" }
+rand_distr = { default-features = false, version = "0.5" }
+serde = { default-features = false, features = [ "derive" ], version = "1" }
+serde_derive = { version = "1" }
+serde_json = "1"
 smart-default = "0.7"
-strum = { default-features = false, features = ["derive"], version = "0.26" }
+strum = { default-features = false, features = [ "derive" ], version = "0.27" }
+# benches
+criterion = { version = "0.5" }
+# errors
+anyhow = "1"
+thiserror = { default-features = false, version = "2" }
+# time
+chrono = { default-features = false, version = "0.4" }
+time = { default-features = false, version = "0.3" }
 
 [profile.dev]
 codegen-units = 256
@@ -41,10 +68,10 @@ debug = true
 debug-assertions = true
 incremental = true
 lto = false
-panic = "unwind"
-rpath = false
 opt-level = 0
 overflow-checks = true
+panic = "abort"
+rpath = false
 
 [profile.release]
 codegen-units = 16
@@ -52,7 +79,7 @@ debug = false
 debug-assertions = false
 incremental = false
 lto = false
-panic = "abort"
-rpath = false
 opt-level = "z"
 overflow-checks = false
+panic = "abort"
+rpath = false

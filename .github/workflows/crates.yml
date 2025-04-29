@@ -1,7 +1,7 @@
-name: crates.io
+name: crates-io
 
 concurrency:
-  cancel-in-progress: true
+  cancel-in-progress: false
   group: ${{ github.workflow }}-${{ github.ref }}
 
 env:
@@ -9,51 +9,49 @@ env:
   CARGO_TERM_COLOR: always
 
 on:
-  release:
-    types: [ created ]
+  push:
+    tags: [ v*, "*-nightly" ]
   repository_dispatch:
     types: [ crates-io ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  deployments: read
+  packages: write
+
 jobs:
-  core:
-    env:
-      PACKAGE: ${{ github.event.repository.name }}-${{ matrix.package }}
-    runs-on: ubuntu-latest
+  deps:
     strategy:
+      max-parallel: 1
+      fail-fast: false
       matrix:
-        package: [ core ]
-    steps:
-      - 
-        name: checkout
-        uses: actions/checkout@v4
-      - 
-        name: publish (${{ matrix.package }})
-        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
-  features:
-    env:
-      PACKAGE: ${{ github.event.repository.name }}-${{ matrix.package }}
-    needs: core
+        feature: [ "util", "core", "derive", "macros" ]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package: [ actors, derive, macros, utils ]
     steps:
+      - uses: actions/checkout@v4
       - 
-        name: checkout
-        uses: actions/checkout@v4
+        name: rustup
+        uses: actions-rust-lang/setup-rust-toolchain@v1
       - 
-        name: publish (${{ matrix.package }})
-        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
-  sdk:
-    env:
-      PACKAGE: ${{ github.event.repository.name }}
-    needs: [ core, features ]
+        name: cache
+        uses: Swatinem/rust-cache@v2
+      - 
+        name: publish (${{ matrix.feature }})
+        run: cargo publish --all-features -v -p scsys-${{ matrix.feature }}
+  root:
+    needs: [deps]
     runs-on: ubuntu-latest
     steps:
       - 
         name: checkout
         uses: actions/checkout@v4
+      - 
+        name: rustup
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+      - 
+        name: cache
+        uses: Swatinem/rust-cache@v2
       - 
         name: publish
-        run: cargo publish --all-features -v -p ${{ env.PACKAGE }}
+        run: cargo publish --all-features -v -p scsys

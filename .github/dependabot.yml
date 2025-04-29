@@ -11,24 +11,24 @@ updates:
   - package-ecosystem: cargo
     directory: /scsys
     schedule:
-      interval: weekly
+      interval: monthly
   - package-ecosystem: cargo
     directory: /actors
     schedule:
-      interval: weekly
+      interval: monthly
   - package-ecosystem: cargo
     directory: /core
     schedule:
-      interval: weekly
+      interval: monthly
   - package-ecosystem: cargo
     directory: /derive
     schedule:
-      interval: weekly
+      interval: monthly
   - package-ecosystem: cargo
     directory: /macros
     schedule:
-      interval: weekly
+      interval: monthly
   - package-ecosystem: cargo
     directory: /utils
     schedule:
-      interval: weekly
+      interval: monthly

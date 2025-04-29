@@ -8,6 +8,8 @@
 pub(crate) mod builder;
 #[macro_use]
 pub(crate) mod get;
+#[macro_use]
+pub(crate) mod gsw;
 
 #[allow(unused_macros)]
 macro_rules! impl_fmt {

@@ -13,11 +13,7 @@ pub fn impl_display(ast: &DeriveInput) -> TokenStream {
         generics,
         ..
     } = ast;
-    if attrs
-        .iter()
-        .find(|attr| attr.path().is_ident("display"))
-        .is_some()
-    {
+    if attrs.iter().any(|attr| attr.path().is_ident("display")) {
         return handle_serde_display(name, generics);
     }
     quote! {
@@ -34,15 +30,15 @@ pub fn handle_serde_display(name: &Ident, generics: &Generics) -> TokenStream {
     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
     if let Some(where_clause) = where_clause {
         let mut where_clause = where_clause.clone();
-        for param in generics.type_params() {
+        generics.type_params().for_each(|param| {
             where_clause
                 .predicates
-                .push(syn::parse_quote!(#param: serde::Serialize));
-        }
+                .push(syn::parse_quote!(#param: serde::Serialize))
+        });
         return quote! {
             impl #impl_generics core::fmt::Display for #name #ty_generics #where_clause {
                 fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-                    write!(f, "{}", serde_json::to_string(&self).unwrap())
+                    f.write_str(serde_json::to_string(self).unwrap().as_str())
                 }
             }
         };
@@ -51,7 +47,7 @@ pub fn handle_serde_display(name: &Ident, generics: &Generics) -> TokenStream {
     quote! {
         impl #impl_generics core::fmt::Display for #name #ty_generics #where_clause {
             fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-                write!(f, "{}", serde_json::to_string(&self).unwrap())
+                f.write_str(serde_json::to_string(self).unwrap().as_str())
             }
         }
     }
