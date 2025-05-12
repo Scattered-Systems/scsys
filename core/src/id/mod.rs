@@ -8,7 +8,6 @@
 #[doc(inline)]
 pub use self::{id::*, kinds::prelude::*, traits::*};
 
-
 pub(crate) mod id;
 pub(crate) mod traits;
 

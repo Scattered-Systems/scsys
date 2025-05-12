@@ -4,7 +4,7 @@
 */
 
 #[macro_export]
-macro_rules! getter {
+macro_rules! get {
     ($($call:ident$(.$field:ident)?<$out:ty>),* $(,)?) => {
         $($crate::getter!(@impl $call$(.$field)?<$out>);)*
     };
@@ -50,10 +50,10 @@ macro_rules! getter {
 
 macro_rules! impl_getters {
     (@impl $call:ident<$out:ty>) => {
-        $crate::getter!(@impl $call.$call<$out>);
+        $crate::impl_getters!(@impl $call.$call<$out>);
     };
     (@impl $via:ident::$call:ident<$out:ty>) => {
-        $crate::getter!(@impl $via::$call.$call<$out>);
+        $crate::impl_getters!(@impl $via::$call.$call<$out>);
     };
     (@impl $call:ident.$field:ident<$out:ty>) => {
         pub const fn $call(&self) -> &$out {
