@@ -22,7 +22,12 @@ test = true
 [features]
 default = [ "std" ]
 
-full = [ "default", "rand", "serde", "time" ]
+full = [ 
+    "default", 
+    "rand", 
+    "serde", 
+    "time" 
+]
 
 # ******* [FF] Dependencies *******
 anyhow = ["dep:anyhow"]

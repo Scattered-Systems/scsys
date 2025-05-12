@@ -63,6 +63,10 @@ rand = [
     "scsys-core/rand",
 ]
 
+rng = [
+    "scsys-core/rng",
+]
+
 serde = [
     "scsys-core/serde",
     "scsys-util?/serde",
