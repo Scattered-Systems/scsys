@@ -1,63 +1,111 @@
-## Config
-*.env
-*.env.*
+# Artifacts
 
-!.env.example
+**/.artifacts/data/
+**/.docker/data/
 
-## Development
+## Caches
 
-### JetBrains
+**/.cache/
+
+# Configuration Files
+
+**/config.*
+**/*.config.*
+
+**/*.env
+**/*.env.*
+
+### Exceptions
+!**/default.config.*
+!**/*.config.cjs
+!**/*.config.js
+!**/*.config.mjs
+!**/config.py
+!**/config.rs
+
+!**/example.env.*
+!**/*.env.example
+!**/*.env.default
+
+# Dev
+
+### Idea
+
 **/.idea/
 
-**/*.iml
-### VisualStudio Code
+### vscode
+
 **/.vscode/
 
-## Languages
+# File Extensions
 
-### Node.js
-**/.DS_Store/
+**/*.lock
+**/*.lock.*
 
-**/build/
-**/node_modules/
+**/*-lock.*
 
-**/npm-debug.log
+**/*.log
+**/*.log.*
 
-**/package-lock.json
-**/pnpm-lock.*
+### Data Files
 
-**/yarn-error.log
-**/yarn-debug.log
-**/yarn.lock
+**/*.csv
+**/*.csv.*
 
-### Python
-**/__pycache__/
-**/.pytest_cache/
-**/env/
-**/venv/
+**/*.db
+**/*.db.*
 
-**/*.pyc
+**/*.db-*.*
 
-### Rust
+**/*.zip
+**/*.zip.*
+
+## Rust
+**/debug/
 **/target/
 
-**/Cargo.lock
+**/*.bk
+**/*.bk.*
 
-**/*.rs.bk
-**/*.rs.bk-*
+!**/Cargo.lock
 
-*.log
-*.log.*
+## Node
+**/build/
+**/debug/
+**/dist/
+**/node_modules/
 
-## Miscellaneous
+### SvelteKit
+**/__sapper__/
+**/.DS_STORE/
+**/.svelte-kit/
 
-### Extensions
+## Python
+**/__pycache__/
+**/.pytest_cache/
+**/venv/
 
-*.log
-*.log.*
+**/*.egg
+**/*.egg.*
+
+**/*.egg-info
+
+**/*.pyc
+**/*.pyc.*
+
+**/*.pyo
+**/*.pyo.*
+
+**/*.pyz
+**/*.pyz.*
+
+**/*.pyzw
+**/*.pyzw.*
+
+**/*.whl
+**/*.whl.*
 
 ## Operating Systems
 
-### NixOs
-
-!**/flake.lock
+### Windows (WSL2)
+**/*:Zone.Identifier

@@ -6,10 +6,14 @@ concurrency:
 
 env:
   CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+  RUST_LOG: scsys=debug,info
 
 on:
   pull_request:
     branches: [ main, master ]
+  push:
+    tags: [ v*.*.*, "*-nightly" ]
   release:
     types: [ created ]
   repository_dispatch:
@@ -23,9 +27,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:  [ ubuntu-latest ] # [ ubuntu-latest, macos-latest, windows-latest ]
-        target: [ x86_64-unknown-linux-gnu, ]
-        toolchain: [ stable, nightly, ]
+        os:  [ ubuntu-latest, macos-latest, windows-latest ]
     runs-on: ${{ matrix.os }}
     steps:
       - 
@@ -35,19 +37,18 @@ jobs:
         name: setup rustup
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
+          cache: true
           cache-workspaces: true
-          target: ${{ matrix.target }}
-          toolchain: ${{ matrix.toolchain }}
       - 
         name: cache
         uses: Swatinem/rust-cache@v2
       - 
-        name: build
-        run: cargo build -r -v --workspace --features full --target ${{ matrix.target }}
+        name: build (workspace)
+        run: cargo build --locked --release --workspace --all-features
       - 
-        name: test
-        run: cargo test -r -v --workspace --features full --target ${{ matrix.target }}
+        name: test (workspace)
+        run: cargo test --locked --release --workspace --all-features
       - 
-        name: bench
+        name: benchmark
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: cargo bench -v --workspace --features full

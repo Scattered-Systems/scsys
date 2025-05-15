@@ -11,7 +11,6 @@ extern crate alloc;
 #[doc(inline)]
 pub use self::{state::State, traits::prelude::*, types::prelude::*, utils::*};
 
-#[cfg(feature = "alloc")]
 #[doc(inline)]
 pub use self::error::*;
 
@@ -21,7 +20,6 @@ pub(crate) mod macros;
 pub(crate) mod seal;
 pub(crate) mod utils;
 
-#[cfg(feature = "alloc")]
 pub mod error;
 pub mod hkt;
 pub mod id;
@@ -39,8 +37,8 @@ pub mod traits {
     pub mod classify;
     pub mod convert;
     pub mod dtype;
-    #[cfg(feature = "alloc")]
     pub mod string;
+    pub mod symbolic;
     pub mod toggle;
     pub mod wrapper;
 
@@ -56,8 +54,9 @@ pub mod traits {
         #[doc(inline)]
         pub use super::dtype::*;
         #[doc(inline)]
-        #[cfg(feature = "alloc")]
         pub use super::string::*;
+        #[doc(inline)]
+        pub use super::symbolic::*;
         #[doc(inline)]
         pub use super::toggle::*;
         #[doc(inline)]

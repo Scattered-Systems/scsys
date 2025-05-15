@@ -1,8 +1,9 @@
 # scsys
 
-[![crates.io](https://img.shields.io/crates/v/scsys.svg)](https://crates.io/crates/scsys)
-[![docs](https://docs.rs/scsys/badge.svg)](https://docs.rs/scsys)
-[![license](https://img.shields.io/crates/l/scsys.svg)](https://crates.io/crates/scsys)
+[![crates.io](https://img.shields.io/crates/v/scsys?style=for-the-badge&logo=rust)](https://crates.io/crates/scsys)
+![docs.rs](https://img.shields.io/docsrs/scsys?style=for-the-badge&logo=rust)
+
+[![license](https://img.shields.io/crates/l/scsys?style=for-the-badge)](https://crates.io/crates/scsys)
 
 ***
 

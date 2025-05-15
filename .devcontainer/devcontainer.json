@@ -1,0 +1,10 @@
+{
+  "name": "rust",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "NODE_VERSION": "22"
+    }
+  }
+}
