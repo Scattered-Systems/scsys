@@ -24,7 +24,8 @@ members = [
     "core",
     "derive",
     "macros",
-    "scsys",
+    "scsys", 
+    "traits",
     "utils",
 ]
 
@@ -35,6 +36,7 @@ scsys = { default-features = false, path = "scsys", version = "0.2.5" }
 scsys-core = { default-features = false, path = "core", version = "0.2.5" }
 scsys-derive = { default-features = false, path = "derive", version = "0.2.5" }
 scsys-macros = { default-features = false, path = "macros", version = "0.2.5" }
+scsys-traits = { default-features = false, path = "traits", version = "0.2.5" }
 scsys-util = { default-features = false, path = "utils", version = "0.2.5" }
 
 # data & serialization

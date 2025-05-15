@@ -100,16 +100,16 @@ wasm = [
 
 [dependencies]
 scsys-core = { workspace = true }
-
 scsys-derive = { optional = true, workspace = true }
 scsys-macros = { optional = true, workspace = true }
+scsys-traits = { optional = true, workspace = true }
 scsys-util = { optional = true, workspace = true }
 
 [dev-dependencies]
 anyhow = { features = ["std"], workspace = true }
 criterion = { version = "0.5" }
-serde = { workspace = true }
-serde_json = { workspace = true }
+serde = { features = ["std"], workspace = true }
+serde_json = { features = ["std"], workspace = true }
 
 [package.metadata.docs.rs]
 all-features = false

@@ -28,7 +28,7 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        feature: [ "util", "core", "derive", "macros" ]
+        feature: [ traits, util, core, derive, macros ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

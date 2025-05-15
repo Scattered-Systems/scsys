@@ -14,15 +14,17 @@ pub use scsys_derive::*;
 #[cfg(feature = "macros")]
 #[doc(inline)]
 pub use scsys_macros::*;
+#[doc(inline)]
+pub use scsys_traits::*;
 #[cfg(feature = "utils")]
 #[doc(inline)]
 pub use scsys_util::*;
 
 pub mod prelude {
-    #[doc(inline)]
     pub use scsys_core::prelude::*;
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]
     pub use scsys_macros::*;
+    pub use scsys_traits::prelude::*;
 }

@@ -1,0 +1,36 @@
+[package]
+build = "build.rs"
+name = "scsys-traits"
+
+authors.workspace = true
+categories.workspace = true
+description.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[lib]
+bench = false
+crate-type = ["cdylib", "rlib"]
+doctest = true
+test = true
+
+[features]
+default = ["std"]
+
+full = [
+    "default"
+]
+
+# ************* [FF:Dependencies] *************
+alloc = []
+
+# ************* [FF:Environments] *************
+std = [
+    "alloc"
+]
+[dependencies]

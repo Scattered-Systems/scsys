@@ -724,6 +724,7 @@ dependencies = [
  "scsys-core",
  "scsys-derive",
  "scsys-macros",
+ "scsys-traits",
  "scsys-util",
  "serde",
  "serde_json",
@@ -769,6 +770,10 @@ dependencies = [
  "quote",
  "syn",
 ]
+
+[[package]]
+name = "scsys-traits"
+version = "0.2.5"
 
 [[package]]
 name = "scsys-util"

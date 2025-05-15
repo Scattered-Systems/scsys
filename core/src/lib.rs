@@ -38,7 +38,6 @@ pub mod traits {
     pub mod convert;
     pub mod dtype;
     pub mod string;
-    pub mod symbolic;
     pub mod toggle;
     pub mod wrapper;
 
@@ -55,8 +54,6 @@ pub mod traits {
         pub use super::dtype::*;
         #[doc(inline)]
         pub use super::string::*;
-        #[doc(inline)]
-        pub use super::symbolic::*;
         #[doc(inline)]
         pub use super::toggle::*;
         #[doc(inline)]
