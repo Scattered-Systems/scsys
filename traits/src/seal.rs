@@ -9,10 +9,8 @@
 
 /// If this type is pub but not publicly reachable, third parties
 /// can't name it and can't implement traits using it.
-#[allow(dead_code)]
 pub struct Seal;
 
-#[allow(unused_macros)]
 macro_rules! private {
     () => {
         /// This trait is private to implement; this method exists to make it
@@ -21,7 +19,7 @@ macro_rules! private {
         fn __private__(&self) -> $crate::seal::Seal;
     };
 }
-#[allow(unused_macros)]
+
 macro_rules! seal {
     () => {
         fn __private__(&self) -> $crate::seal::Seal {

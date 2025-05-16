@@ -2,8 +2,16 @@
     Appellation: dtype <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use crate::utils::type_of;
 use core::any::{Any, TypeId};
+
+/// Compare two types
+fn type_of<U, V>() -> bool
+where
+    U: core::any::Any + ?Sized,
+    V: core::any::Any + ?Sized,
+{
+    core::any::TypeId::of::<U>() == core::any::TypeId::of::<V>()
+}
 
 pub trait IsType: 'static {
     fn of<T: 'static>() -> bool {

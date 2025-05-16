@@ -3,7 +3,7 @@
    Contrib: FL03 <jo3mccain@icloud.com>
 */
 use core::ops::{Add, Sub};
-use num::traits::One;
+use num_traits::One;
 
 pub trait Adjust<T> {
     type Output;

@@ -7,10 +7,12 @@ concurrency:
 env:
   CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
   CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+  RUST_LOG: scsys=debug,info
 
 on:
-  push:
-    tags: [ v*, "*-nightly" ]
+  release:
+    types: [ published ]
   repository_dispatch:
     types: [ crates-io ]
   workflow_dispatch:
@@ -26,13 +28,16 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        feature: [ "util", "core", "derive", "macros" ]
+        feature: [ traits, util, core, cnf, derive, macros ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - 
         name: rustup
         uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache: true
+          cache-workspaces: true
       - 
         name: cache
         uses: Swatinem/rust-cache@v2
@@ -40,7 +45,8 @@ jobs:
         name: publish (${{ matrix.feature }})
         run: cargo publish --all-features -v -p scsys-${{ matrix.feature }}
   root:
-    needs: [deps]
+    needs:
+      - deps
     runs-on: ubuntu-latest
     steps:
       - 
@@ -49,6 +55,9 @@ jobs:
       - 
         name: rustup
         uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache: true
+          cache-workspaces: true
       - 
         name: cache
         uses: Swatinem/rust-cache@v2

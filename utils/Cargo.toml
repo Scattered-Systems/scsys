@@ -13,6 +13,12 @@ readme.workspace = true
 repository.workspace = true
 version.workspace = true
 
+[lib]
+bench = false
+crate-type = ["cdylib", "rlib"]
+doctest = true
+test = true
+
 [features]
 default = [
     "std"
@@ -72,12 +78,6 @@ wasi = []
 wasm = [
     "getrandom?/wasm_js",
 ]
-
-[lib]
-bench = false
-crate-type = ["cdylib", "rlib"]
-doctest = true
-test = true
 
 [dev-dependencies]
 anyhow = { workspace = true }

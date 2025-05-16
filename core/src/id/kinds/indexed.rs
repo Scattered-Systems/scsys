@@ -2,22 +2,22 @@
     Appellation: id <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use crate::id::AtomicId;
+use crate::id::Id;
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize,))]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct IndexId<Idx = usize> {
-    id: AtomicId,
+    id: Id,
     index: Idx,
 }
 
 impl<Idx> IndexId<Idx> {
-    pub fn new(id: AtomicId, index: Idx) -> Self {
+    pub fn new(id: Id, index: Idx) -> Self {
         Self { id, index }
     }
     pub fn from_index(index: Idx) -> Self {
         Self {
-            id: AtomicId::new(),
+            id: Id::atomic(),
             index,
         }
     }

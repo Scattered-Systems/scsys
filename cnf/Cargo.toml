@@ -1,0 +1,64 @@
+[package]
+build = "build.rs"
+name = "scsys-cnf"
+
+authors.workspace = true
+categories.workspace = true
+description.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[lib]
+bench = false
+crate-type = ["cdylib", "rlib"]
+doctest = true
+test = true
+
+[features]
+default = ["config"]
+
+full = [
+    "default",
+    "json",
+    "serde",
+    "tracing",
+]
+
+# ************* [FF:Dependencies] *************
+
+config = ["dep:config"]
+
+json = [
+    "dep:serde_json",
+    "serde"
+]
+
+serde = [
+    "dep:serde",
+    "dep:serde_derive",
+]
+
+tracing = ["dep:tracing"]
+
+[dependencies]
+config = { default-features = false, optional = true, version = "0.15" }
+# error handling
+anyhow = { features = ["std"], workspace = true }
+# data & serialization
+serde = { features = ["derive", "std"], optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { features = ["std"], optional = true, workspace = true }
+# macros
+smart-default = { workspace = true }
+strum = { features = ["derive", "std"], workspace = true }
+# logging
+tracing = { optional = true, workspace = true }
+
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"

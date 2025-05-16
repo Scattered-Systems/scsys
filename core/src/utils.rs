@@ -2,14 +2,10 @@
     Appellation: utils <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#[cfg(feature = "alloc")]
-pub use self::alloc::*;
-#[cfg(feature = "std")]
-pub use self::std::*;
+#[allow(unused_imports)]
+pub use self::{alloc::*, std::*};
 
-#[cfg(feature = "alloc")]
 mod alloc;
-#[cfg(feature = "std")]
 mod std;
 
 /// Compare two types

@@ -15,26 +15,36 @@ version.workspace = true
 
 [lib]
 bench = false
-crate-type = [ "cdylib", "rlib", "staticlib" ]
+crate-type = [ "cdylib", "rlib" ]
 doctest = true
 test = true
 
 [features]
 default = [ "std" ]
 
-full = [ "default", "rand", "serde", "time" ]
+full = [ 
+    "default",
+    "anyhow",
+    "chrono",
+    "json",
+    "rand", 
+    "serde", 
+    "time" 
+]
 
-# ******* [FF] Dependencies *******
-anyhow = ["dep:anyhow"]
+# ************* [FF:Dependencies] *************
+anyhow = [ "dep:anyhow" ]
 
 alloc = [ 
     "num/alloc", 
-    "serde?/alloc"
+    "serde?/alloc",
+    "serde_json?/alloc",
 ]
 
 chrono = [ 
     "dep:chrono", 
     "chrono?/clock",
+    "time",
 ]
 
 json = [ 
@@ -54,6 +64,8 @@ rng = [
     "dep:getrandom",
     "rand?/small_rng",
     "rand?/thread_rng",
+    "uuid?/rng",
+    "uuid?/v4"
 ]
 
 serde = [ 
@@ -61,12 +73,14 @@ serde = [
     "dep:serde_derive", 
     "num/serde", 
     "rand?/serde", 
-    "serde?/derive" 
+    "uuid?/serde" 
 ]
 
-time = [ "chrono", "dep:time" ]
+time = [ "dep:time" ]
 
-# ******* [FF] Environment *******
+uuid = [ "dep:uuid", "uuid?/v3" ]
+
+# ************* [FF:Environments] *************
 std = [
     "alloc",
     "anyhow?/std",
@@ -76,6 +90,8 @@ std = [
     "serde?/std",
     "strum/std",
     "thiserror/std",
+    "time?/std",
+    "uuid?/std",
 ]
 
 wasi = [  ]
@@ -85,13 +101,10 @@ wasm = [ "getrandom?/wasm_js" ]
 [dependencies]
 glob = { workspace = true }
 num = { workspace = true }
-paste = { workspace = true }
-
+# data & serialization
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
 serde_json = { optional = true, workspace = true }
-smart-default = { workspace = true }
-strum = { workspace = true }
 # errors
 anyhow = { optional = true, workspace = true }
 thiserror = { workspace = true }
@@ -99,20 +112,29 @@ thiserror = { workspace = true }
 getrandom = { optional = true, workspace = true }
 rand = { optional = true, workspace = true }
 rand_distr = { optional = true, workspace = true }
+uuid = { optional = true, workspace = true }
 # time
 chrono = { optional = true, workspace = true }
 time = { optional = true, workspace = true }
-
-
-
+# macros
+paste = { workspace = true }
+smart-default = { workspace = true }
+strum = { workspace = true }
 
 [dev-dependencies]
 approx = { version = "0.5" }
 
 [package.metadata.docs.rs]
+all-features = false
+features = ["full"]
 rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
 
-# ********* tests *********
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
+# ************* [Unit Tests] *************
 [[test]]
 name = "default"
 

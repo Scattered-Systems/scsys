@@ -9,9 +9,8 @@
 extern crate alloc;
 
 #[doc(inline)]
-pub use self::{state::State, traits::prelude::*, types::prelude::*, utils::*};
+pub use self::{state::State, types::prelude::*, utils::*};
 
-#[cfg(feature = "alloc")]
 #[doc(inline)]
 pub use self::error::*;
 
@@ -21,55 +20,23 @@ pub(crate) mod macros;
 pub(crate) mod seal;
 pub(crate) mod utils;
 
-#[cfg(feature = "alloc")]
 pub mod error;
-pub mod hkt;
 pub mod id;
 pub mod state;
-#[doc(hidden)]
-pub mod stores;
-pub mod sync;
 pub mod time;
-
-pub mod traits {
-    #[doc(inline)]
-    pub use self::prelude::*;
-
-    pub mod adjust;
-    pub mod appellation;
-    pub mod classify;
-    pub mod convert;
-    pub mod dtype;
-    #[cfg(feature = "alloc")]
-    pub mod string;
-    pub mod toggle;
-    pub mod wrapper;
-
-    pub(crate) mod prelude {
-        pub use super::adjust::*;
-        pub use super::appellation::*;
-        pub use super::classify::*;
-        pub use super::convert::*;
-        pub use super::dtype::*;
-        #[cfg(feature = "alloc")]
-        pub use super::string::*;
-        pub use super::toggle::*;
-        pub use super::wrapper::*;
-    }
-}
 pub mod types;
 
 pub mod prelude {
-    pub use super::hkt::prelude::*;
-    #[cfg(feature = "alloc")]
+    #[doc(no_inline)]
     pub use crate::error::*;
+    #[doc(no_inline)]
     pub use crate::id::prelude::*;
+    #[doc(no_inline)]
     pub use crate::state::prelude::*;
-    #[doc(hidden)]
-    pub use crate::stores::prelude::*;
-    pub use crate::sync::prelude::*;
+    #[doc(no_inline)]
     pub use crate::time::prelude::*;
-    pub use crate::traits::prelude::*;
+    #[doc(no_inline)]
     pub use crate::types::prelude::*;
+    #[doc(no_inline)]
     pub use crate::utils::*;
 }

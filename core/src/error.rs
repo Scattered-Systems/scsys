@@ -2,10 +2,25 @@
     Appellation: error <module>
     Contrib: @FL03
 */
-pub type Result<T = ()> = core::result::Result<T, Error>;
+#[doc(inline)]
+pub use self::{core_error::*, std_error::*, raw_error::*};
 
-#[derive(Clone, Debug, thiserror::Error)]
-pub enum Error {
-    #[error("Unknown error: {0}")]
-    Unknown(String),
-}
+/// this module implements an enumerated error type used throughout the sdk
+mod core_error;
+/// the this module implements a raw, generic error type wrapper
+mod raw_error;
+/// this module implements an alternative error type that uses some kind to distinguish
+/// between different error types.
+#[cfg(feature = "alloc")]
+mod std_error;
+
+
+//// this trait is used to generalize the definition of a valid error type;
+pub trait Err: core::fmt::Debug + core::error::Error {}
+
+pub trait ErrorKind: core::fmt::Debug {}
+
+impl ErrorKind for &str {}
+
+#[cfg(feature = "alloc")]
+impl ErrorKind for alloc::string::String {}
