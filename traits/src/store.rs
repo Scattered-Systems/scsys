@@ -2,7 +2,6 @@
     Appellation: store <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-#![allow(unused_macros)]
 
 pub trait Entry<'a> {
     type Key;
@@ -11,6 +10,10 @@ pub trait Entry<'a> {
     fn key(&self) -> &Self::Key;
 
     fn or_insert(self, default: Self::Value) -> &'a mut Self::Value;
+}
+
+pub trait OrInsert<K, V> {
+    fn or_insert(&mut self, key: K, value: V) -> &mut V;
 }
 
 pub trait Store<K, V> {
@@ -26,13 +29,14 @@ pub trait Store<K, V> {
 /*
  ********* Implementations *********
 */
+#[allow(unused_macros)]
 macro_rules! entry {
     ($($prefix:ident)::* -> $call:ident($($arg:tt),*)) => {
         $($prefix)::*::Entry::$call($($arg),*)
     };
 
 }
-
+#[allow(unused_macros)]
 macro_rules! impl_entry {
     ($($prefix:ident)::* where $($preds:tt)* ) => {
 
@@ -52,7 +56,7 @@ macro_rules! impl_entry {
     };
 
 }
-
+#[allow(unused_macros)]
 macro_rules! impl_store {
     ($t:ty, where $($preds:tt)* ) => {
 

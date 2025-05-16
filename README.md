@@ -56,12 +56,13 @@ cargo test --all-features -r -v --workspace
 
 ### Usage
 
-#### _Add the dependency to your project_
+Before you start using `scsys`, make sure to add it as a dependency in your `Cargo.toml` file. You can do this by adding the following lines:
 
 ```toml
 [dependencies.scsys]
-features = ["full"]
-version = "0.2.*"
+default-features = true
+features = []
+version = "0.2.x"
 ```
 
 #### Examples

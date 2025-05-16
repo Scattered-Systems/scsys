@@ -774,6 +774,9 @@ dependencies = [
 [[package]]
 name = "scsys-traits"
 version = "0.2.5"
+dependencies = [
+ "num-traits",
+]
 
 [[package]]
 name = "scsys-util"

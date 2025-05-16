@@ -31,6 +31,12 @@ alloc = []
 
 # ************* [FF:Environments] *************
 std = [
-    "alloc"
+    "alloc",
 ]
+
 [dependencies]
+num-traits = { workspace = true }
+
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"

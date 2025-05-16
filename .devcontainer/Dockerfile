@@ -11,23 +11,11 @@ RUN rustup update
 RUN cargo install cargo-binstall
 # install any extra required packages
 RUN apt-get install -y \
-    build-essential \
-    ca-certificates \
-    cmake \
-    clang \
-    curl \
-    file \
-    gcc \
-    g++ \
     libopenblas-dev \
-    libssl-dev \
-    libz-dev \
-    pkg-config \
-    python3 \
-    python3-pip
+    liblapack-dev \
+    libblas-dev
 # create a new group before adding a new user
 RUN groupadd -g 10001 agroup && \
     useradd -m -u 10001 -g agroup auser
 # switch to the new user
 USER auser
-

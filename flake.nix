@@ -14,8 +14,8 @@
       in
       {
         packages.default = rustPlatform.buildRustPackage {
-          pname = "proton-server";
-          version = "0.0.0";
+          pname = "scsys";
+          version = "0.2.5";
           src = "./.";
           # If Cargo.lock doesn't exist yet, remove or comment out this block:
           cargoLock = {

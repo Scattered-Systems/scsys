@@ -34,14 +34,14 @@ jobs:
         name: checkout
         uses: actions/checkout@v4
       - 
+        name: setup cache
+        uses: Swatinem/rust-cache@v2
+      - 
         name: setup rustup
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           cache: true
           cache-workspaces: true
-      - 
-        name: cache
-        uses: Swatinem/rust-cache@v2
       - 
         name: build (workspace)
         run: cargo build --locked --release --workspace --all-features
@@ -50,5 +50,4 @@ jobs:
         run: cargo test --locked --release --workspace --all-features
       - 
         name: benchmark
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: cargo bench -v --workspace --features full
