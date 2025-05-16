@@ -22,6 +22,7 @@ test = true
 [features]
 default = [
     "std",
+    "traits",
     "utils",
 ]
 
@@ -36,6 +37,10 @@ full = [
 ]
 
 # ********* [FF] Features *********
+config = [
+    "dep:scsys-cnf",
+    "std"
+]
 
 derive = [
     "dep:scsys-derive",
@@ -43,6 +48,10 @@ derive = [
 
 macros = [
     "dep:scsys-macros",
+]
+
+traits = [
+    "dep:scsys-traits",
 ]
 
 utils = [
@@ -87,6 +96,7 @@ time = [
 # ********* [FF] Environments *********
 std = [
     "scsys-core/std",
+    "scsys-traits?/std",
     "scsys-util?/std",
 ]
 
@@ -100,6 +110,7 @@ wasm = [
 
 [dependencies]
 scsys-core = { workspace = true }
+scsys-cnf = { optional = true, workspace = true }
 scsys-derive = { optional = true, workspace = true }
 scsys-macros = { optional = true, workspace = true }
 scsys-traits = { optional = true, workspace = true }
