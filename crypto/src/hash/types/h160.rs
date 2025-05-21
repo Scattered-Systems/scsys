@@ -83,7 +83,7 @@ impl core::fmt::Debug for H160 {
         write!(
             f,
             "{:>02x}{:>02x}..{:>02x}{:>02x}",
-            &self.0[0], &self.0[1], &self.0[30], &self.0[31]
+            &self.0[0], &self.0[1], &self.0[18], &self.0[19]
         )
     }
 }
