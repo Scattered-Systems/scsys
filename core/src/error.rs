@@ -2,9 +2,10 @@
     Appellation: error <module>
     Contrib: @FL03
 */
-#[allow(unused_imports)]
+#[cfg(feature = "alloc")]
+pub use self::std_error::StdError;
 #[doc(inline)]
-pub use self::{core_error::*, raw_error::*, std_error::*};
+pub use self::{core_error::*, raw_error::*};
 
 /// this module implements an enumerated error type used throughout the sdk
 mod core_error;
@@ -12,11 +13,14 @@ mod core_error;
 mod raw_error;
 /// this module implements an alternative error type that uses some kind to distinguish
 /// between different error types
+#[cfg(feature = "alloc")]
 mod std_error;
 
-pub trait ErrorKind: core::fmt::Debug {}
+/// this trait is used to denote various _error kinds_ for use throughout the sdk
+pub trait ErrorKind {
+    private!();
+}
 
-impl ErrorKind for &str {}
-
-#[cfg(feature = "alloc")]
-impl ErrorKind for alloc::string::String {}
+impl<T> ErrorKind for T where T: AsRef<str> {
+    seal!();
+}

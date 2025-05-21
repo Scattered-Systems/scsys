@@ -12,43 +12,43 @@ pub type BoxErr = ErrorBase<alloc::boxed::Box<dyn core::error::Error + Send + Sy
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize),
-    serde(transparent, rename_all = "snake_case")
+    serde(default, transparent, rename_all = "snake_case")
 )]
 #[repr(transparent)]
-pub struct ErrorBase<U: core::error::Error> {
-    inner: U,
+pub struct ErrorBase<E> where E: core::error::Error {
+    inner: E,
 }
 
-impl<U> ErrorBase<U>
+impl<E> ErrorBase<E>
 where
-    U: core::error::Error,
+    E: core::error::Error,
 {
     /// returns a new instance wrapping the given error.
-    pub fn from_err(inner: U) -> Self {
+    pub fn from_err(inner: E) -> Self {
         Self { inner }
     }
     /// consumes the wrapper to return the inner value.
-    pub fn into_inner(self) -> U {
+    pub fn into_inner(self) -> E {
         self.inner
     }
     /// returns an immutable reference to the underlying error.
-    pub const fn get(&self) -> &U {
+    pub const fn get(&self) -> &E {
         &self.inner
     }
     /// returns a mutable reference to the underlying error.
     #[inline]
-    pub fn get_mut(&mut self) -> &mut U {
+    pub fn get_mut(&mut self) -> &mut E {
         &mut self.inner
     }
     /// uses the [`replace`](core::mem::replace) method to replace and return the current error
     /// with another.
     #[inline]
-    pub fn replace(&mut self, new: U) -> U {
+    pub fn replace(&mut self, new: E) -> E {
         core::mem::replace(&mut self.inner, new)
     }
     /// update the inner value before returning a mutable reference to the wrapper;
     #[inline]
-    pub fn set(&mut self, new: U) -> &mut Self {
+    pub fn set(&mut self, new: E) -> &mut Self {
         self.inner = new;
         self
     }
@@ -59,7 +59,7 @@ where
     /// apply a function to the error and return a new instance with the result.
     pub fn map<V, F>(self, f: F) -> ErrorBase<V>
     where
-        F: FnOnce(U) -> V,
+        F: FnOnce(E) -> V,
         V: core::error::Error,
     {
         ErrorBase::from_err(f(self.inner))
@@ -67,7 +67,7 @@ where
     /// mutate the error using the given function
     pub fn map_mut<F>(&mut self, f: F)
     where
-        F: FnOnce(&mut U),
+        F: FnOnce(&mut E),
     {
         f(&mut self.inner)
     }
@@ -79,6 +79,15 @@ where
 {
     fn from(inner: E) -> Self {
         Self::from_err(inner)
+    }
+}
+
+impl<'a, E> From<&'a ErrorBase<E>> for ErrorBase<E>
+where
+    E: core::error::Error + Clone,
+{
+    fn from(inner: &'a ErrorBase<E>) -> Self {
+        Self::from_err(inner.inner.clone())
     }
 }
 
