@@ -2,8 +2,8 @@ use scsys_crypto::{H256, digest_to_hash};
 
 #[test]
 fn test_h256() {
-    let a = H256::generate();
-    assert_ne!(a, H256::generate());
+    let a = H256::random();
+    assert_ne!(a, H256::random());
     assert_eq!(a, digest_to_hash::<32>(a).into());
 }
 
@@ -17,15 +17,15 @@ fn test_h256() {
 
 #[test]
 fn test_addition() {
-    let a = H256::generate();
-    let b = H256::generate();
+    let a = H256::random();
+    let b = H256::random();
     assert_ne!(a, a + b);
     assert_eq!(a, a + 0f64);
 }
 
 #[test]
 fn test_division() {
-    let a = H256::generate();
+    let a = H256::random();
     assert_eq!(a, a / 1f64);
     assert_ne!(a, a / 0f64);
     assert_ne!(a, a / 10f64)
@@ -33,7 +33,7 @@ fn test_division() {
 
 #[test]
 fn test_multiplication() {
-    let a = H256::generate();
+    let a = H256::random();
     let mut b = a;
     assert_eq!(a, a * 1f64);
     b *= 0f64;

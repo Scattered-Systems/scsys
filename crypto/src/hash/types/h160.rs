@@ -2,6 +2,11 @@
     Appellation: h160 <module>
     Contrib: @FL03
 */
+#[cfg(feature = "blake3")]
+mod impl_blake3;
+mod impl_convert;
+mod impl_ops;
+
 /// The H160Hash type is a 20-byte hash.
 pub type H160Hash = [u8; 20];
 
@@ -13,7 +18,7 @@ pub type H160Hash = [u8; 20];
     serde(default, transparent)
 )]
 #[repr(transparent)]
-pub struct H160(pub [u8; 20]);
+pub struct H160(pub H160Hash);
 
 impl H160 {
     pub fn from_digest(digest: impl AsRef<[u8]>) -> Self {
@@ -32,13 +37,72 @@ impl H160 {
         raw_bytes.copy_from_slice(&data);
         (&raw_bytes).into()
     }
+    /// returns the hash as a slice
+    pub const fn as_slice(&self) -> &[u8] {
+        &self.0
+    }
+    /// returns a mutable reference to the hash as a slice
+    pub fn as_slice_mut(&mut self) -> &mut [u8] {
+        &mut self.0
+    }
+    /// copies the hash into the provided buffer
+    pub fn copy_from_slice(&mut self, value: &[u8]) -> &mut Self {
+        self.0.copy_from_slice(value);
+        self
+    }
     /// returns the hash as a byte array
-    pub const fn as_bytes(&self) -> &[u8; 20] {
+    pub const fn get(&self) -> &H160Hash {
         &self.0
     }
     /// returns a mutable reference to the hash as a byte array
-    pub fn as_mut_bytes(&mut self) -> &mut [u8; 20] {
+    pub const fn get_mut(&mut self) -> &mut H160Hash {
         &mut self.0
+    }
+    /// updates the hash with the provided value
+    pub fn set(&mut self, value: H160Hash) -> &mut Self {
+        *self.get_mut() = value;
+        self
+    }
+    /// [`replace`](core::mem::replace) and return the current value with another
+    pub fn replace(&mut self, value: &H160Hash) -> H160Hash {
+        core::mem::replace(&mut self.0, *value)
+    }
+    /// [`swap`](core::mem::swap) the current value with another
+    pub fn swap(&mut self, other: &mut Self) {
+        core::mem::swap(&mut self.0, &mut other.0)
+    }
+    #[cfg(feature = "alloc")]
+    /// returns a [`Vec<u8>`](alloc::vec::Vec) representation of the hash
+    pub fn to_vec(&self) -> alloc::vec::Vec<u8> {
+        self.get().to_vec()
+    }
+}
+
+impl core::fmt::Debug for H160 {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        write!(
+            f,
+            "{:>02x}{:>02x}..{:>02x}{:>02x}",
+            &self.0[0], &self.0[1], &self.0[30], &self.0[31]
+        )
+    }
+}
+
+impl core::fmt::Display for H160 {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        let start = if let Some(precision) = f.precision() {
+            if precision >= 64 {
+                0
+            } else {
+                20 - precision / 2
+            }
+        } else {
+            0
+        };
+        for byte_idx in start..20 {
+            write!(f, "{:>02x}", &self.0[byte_idx])?;
+        }
+        Ok(())
     }
 }
 
@@ -83,32 +147,5 @@ impl core::ops::DerefMut for H160 {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
-    }
-}
-
-impl From<[u8; 20]> for H160 {
-    #[inline]
-    fn from(value: [u8; 20]) -> Self {
-        Self(value)
-    }
-}
-
-impl<'a> From<&'a [u8; 20]> for H160 {
-    #[inline]
-    fn from(value: &'a [u8; 20]) -> Self {
-        Self(*value)
-    }
-}
-
-impl From<H160> for [u8; 20] {
-    #[inline]
-    fn from(value: H160) -> Self {
-        value.0
-    }
-}
-impl<'a> From<&'a H160> for &'a [u8; 20] {
-    #[inline]
-    fn from(value: &'a H160) -> Self {
-        &value.0
     }
 }

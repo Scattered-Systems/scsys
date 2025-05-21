@@ -30,13 +30,10 @@ pub mod traits {
     pub use self::prelude::*;
 
     pub mod concat;
-    pub mod hasher;
 
     pub(crate) mod prelude {
         #[doc(inline)]
         pub use super::concat::*;
-        #[doc(inline)]
-        pub use super::hasher::*;
     }
 }
 

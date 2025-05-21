@@ -3,7 +3,9 @@
     Contrib: @FL03
 */
 #[doc(inline)]
-pub use self::types::prelude::*;
+pub use self::{hasher::*, types::prelude::*};
+
+pub mod hasher;
 
 pub mod types {
     #[doc(inline)]

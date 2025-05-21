@@ -2,12 +2,16 @@
     Appellation: h256 <module>
     Contrib: @FL03
 */
-use super::H160;
-use crate::types::GenericHash;
+
+#[cfg(feature = "blake3")]
+mod impl_blake3;
+mod impl_convert;
+mod impl_ops;
+
 use crate::utils::digest_to_hash;
 
 /// The H256Hash type is a 32-byte hash.
-pub type H256Hash = [u8; 32];
+pub type H256Array = [u8; 32];
 
 /// A SHA256 hash.
 #[cfg_attr(
@@ -17,33 +21,66 @@ pub type H256Hash = [u8; 32];
 )]
 #[derive(Clone, Copy, Default, Eq, Hash, PartialEq)]
 #[repr(transparent)]
-pub struct H256(pub [u8; 32]);
+pub struct H256(pub H256Array);
 
 impl H256 {
+    /// hash some data using the [`blake3`] algorithm
     #[cfg(feature = "blake3")]
     pub fn b3(data: impl AsRef<[u8]>) -> Self {
         let hash = blake3::hash(data.as_ref());
         H256(digest_to_hash::<32>(hash.as_bytes()))
     }
+    /// generate a randome hash
     #[cfg(feature = "rand")]
-    pub fn generate() -> Self {
-        let data = rand::random::<[u8; 32]>();
+    pub fn random() -> Self {
+        let data = rand::random::<H256Array>();
         let mut raw_bytes = [0; 32];
         raw_bytes.copy_from_slice(&data);
         (&raw_bytes).into()
     }
     /// returns the hash as a byte array
-    pub const fn as_bytes(&self) -> &[u8; 32] {
+    pub const fn get(&self) -> &H256Array {
         &self.0
     }
     /// returns a mutable reference to the hash as a byte array
-    pub fn as_mut_bytes(&mut self) -> &mut [u8; 32] {
+    pub fn get_mut(&mut self) -> &mut H256Array {
         &mut self.0
+    }
+    /// copies the hash into the provided buffer
+    pub fn set(&mut self, value: H256Array) -> &mut Self {
+        self.0 = value;
+        self
+    }
+    /// [`replace`](core::mem::replace) and return the current value with another
+    pub fn replace(&mut self, value: &H256Array) -> H256Array {
+        core::mem::replace(&mut self.0, *value)
+    }
+    /// [`swap`](core::mem::swap) the current value with another
+    pub fn swap(&mut self, other: &mut Self) {
+        core::mem::swap(&mut self.0, &mut other.0)
+    }
+    /// returns the hash as a byte array
+    pub const fn as_slice(&self) -> &[u8] {
+        &self.0
+    }
+    /// returns a mutable reference to the hash as a byte array
+    pub fn as_slice_mut(&mut self) -> &mut [u8] {
+        &mut self.0
+    }
+    /// copies the hash into the provided buffer
+    pub fn copy_from_slice(&mut self, value: &[u8]) -> &mut Self {
+        self.0.copy_from_slice(value);
+        self
+    }
+    #[cfg(feature = "alloc")]
+    /// returns a [`Vec<u8>`](alloc::vec::Vec) representation of the hash
+    pub fn to_vec(&self) -> alloc::vec::Vec<u8> {
+        self.get().to_vec()
     }
 }
 
 impl core::ops::Deref for H256 {
-    type Target = [u8; 32];
+    type Target = H256Array;
 
     fn deref(&self) -> &Self::Target {
         &self.0
@@ -77,24 +114,6 @@ impl AsMut<[u8; 32]> for H256 {
 impl AsRef<[u8; 32]> for H256 {
     fn as_ref(&self) -> &[u8; 32] {
         &self.0
-    }
-}
-
-#[cfg(feature = "blake3")]
-mod impl_blake3 {
-    use super::H256;
-    use crate::Concat;
-
-    impl Concat for H256 {
-        type Output = H256;
-
-        fn concat(&self, other: H256) -> Self {
-            let mut res: Vec<u8> = (*self).into();
-            let mut rnode: Vec<u8> = (*other).into();
-            res.append(&mut rnode);
-
-            blake3::hash(&res).into()
-        }
     }
 }
 
@@ -143,273 +162,5 @@ impl core::fmt::Display for H256 {
             write!(f, "{:>02x}", &self.0[byte_idx])?;
         }
         Ok(())
-    }
-}
-
-impl FromIterator<u8> for H256 {
-    fn from_iter<T: IntoIterator<Item = u8>>(iter: T) -> Self {
-        let digest = iter.into_iter().collect::<Vec<u8>>();
-        digest_to_hash::<32>(&digest).into()
-    }
-}
-
-impl IntoIterator for H256 {
-    type Item = u8;
-    type IntoIter = std::array::IntoIter<u8, 32>;
-
-    fn into_iter(self) -> Self::IntoIter {
-        self.0.into_iter()
-    }
-}
-
-impl<T> From<&T> for H256
-where
-    T: AsRef<[u8]>,
-{
-    fn from(data: &T) -> H256 {
-        let mut buffer: [u8; 32] = [0; 32];
-        buffer[..].copy_from_slice(data.as_ref());
-        H256(buffer)
-    }
-}
-
-impl From<[u8; 32]> for H256 {
-    fn from(input: [u8; 32]) -> H256 {
-        H256(input)
-    }
-}
-
-impl From<H256> for [u8; 32] {
-    fn from(input: H256) -> [u8; 32] {
-        input.0
-    }
-}
-
-impl From<Vec<u8>> for H256 {
-    fn from(input: Vec<u8>) -> H256 {
-        digest_to_hash::<32>(&input).into()
-    }
-}
-
-impl From<H256> for Vec<u8> {
-    fn from(input: H256) -> Vec<u8> {
-        input.0.to_vec()
-    }
-}
-#[cfg(feature = "blake3")]
-impl From<blake3::Hash> for H256 {
-    fn from(input: blake3::Hash) -> H256 {
-        let mut raw_hash: [u8; 32] = [0; 32];
-        raw_hash[0..32].copy_from_slice(input.as_bytes());
-        H256(raw_hash)
-    }
-}
-
-#[cfg(feature = "blake3")]
-impl From<H256> for blake3::Hash {
-    fn from(input: H256) -> blake3::Hash {
-        blake3::Hash::from(input.0)
-    }
-}
-
-impl From<GenericHash> for H256 {
-    fn from(data: GenericHash) -> H256 {
-        data.as_slice().to_owned().into()
-    }
-}
-
-impl From<H256> for GenericHash {
-    fn from(input: H256) -> GenericHash {
-        GenericHash::from(input.0)
-    }
-}
-
-impl From<H160> for H256 {
-    fn from(input: H160) -> H256 {
-        let mut buffer: super::H256Hash = [0; 32];
-        buffer[..].copy_from_slice(&input.0[0..20]);
-        buffer.into()
-    }
-}
-
-impl From<H256> for H160 {
-    fn from(input: H256) -> H160 {
-        let mut buffer: super::H160Hash = [0; 20];
-        buffer[..].copy_from_slice(&input.0[0..20]);
-        buffer.into()
-    }
-}
-
-impl core::ops::Add<Self> for H256 {
-    type Output = Self;
-
-    fn add(self, rhs: Self) -> Self {
-        let mut result_bytes = [0; 32];
-        for n in 1..9 {
-            let results: [u8; 4] = {
-                let val = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let rhs = u32::from_be_bytes(rhs.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let tmp = ((val as u64) + (rhs as u64)) as u32;
-                tmp.to_be_bytes()
-            };
-            result_bytes[4 * (n - 1)] = results[0];
-            result_bytes[4 * (n - 1) + 1] = results[1];
-            result_bytes[4 * (n - 1) + 2] = results[2];
-            result_bytes[4 * (n - 1) + 3] = results[3];
-        }
-        Self(result_bytes)
-    }
-}
-
-impl core::ops::AddAssign<Self> for H256 {
-    fn add_assign(&mut self, rhs: Self) {
-        for n in 1..9 {
-            let results: [u8; 4] = {
-                let val = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let rhs = u32::from_be_bytes(rhs.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let tmp = ((val as u64) + (rhs as u64)) as u32;
-                tmp.to_be_bytes()
-            };
-            self[4 * (n - 1)] = results[0];
-            self[4 * (n - 1) + 1] = results[1];
-            self[4 * (n - 1) + 2] = results[2];
-            self[4 * (n - 1) + 3] = results[3];
-        }
-    }
-}
-
-impl core::ops::Add<f64> for H256 {
-    type Output = Self;
-
-    fn add(self, rhs: f64) -> Self {
-        let mut result_bytes = [0; 32];
-        for n in 1..9 {
-            let results: [u8; 4] = {
-                let v = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let tmp = ((v as f64) + rhs) as u32;
-                tmp.to_be_bytes()
-            };
-            result_bytes[4 * (n - 1)] = results[0];
-            result_bytes[4 * (n - 1) + 1] = results[1];
-            result_bytes[4 * (n - 1) + 2] = results[2];
-            result_bytes[4 * (n - 1) + 3] = results[3];
-        }
-        Self(result_bytes)
-    }
-}
-
-impl core::ops::AddAssign<f64> for H256 {
-    fn add_assign(&mut self, rhs: f64) {
-        for n in 1..9 {
-            let results: [u8; 4] = {
-                let v = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let tmp = ((v as f64) + rhs) as u32;
-                tmp.to_be_bytes()
-            };
-            self[4 * (n - 1)] = results[0];
-            self[4 * (n - 1) + 1] = results[1];
-            self[4 * (n - 1) + 2] = results[2];
-            self[4 * (n - 1) + 3] = results[3];
-        }
-    }
-}
-
-impl core::ops::Div<f64> for H256 {
-    type Output = Self;
-
-    fn div(self, rhs: f64) -> Self {
-        let mut result_bytes = [0; 32];
-        for n in 1..9 {
-            let results: [u8; 4] = {
-                let v = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let tmp = ((v as f64) / rhs) as u32;
-                tmp.to_be_bytes()
-            };
-            result_bytes[4 * (n - 1)] = results[0];
-            result_bytes[4 * (n - 1) + 1] = results[1];
-            result_bytes[4 * (n - 1) + 2] = results[2];
-            result_bytes[4 * (n - 1) + 3] = results[3];
-        }
-        Self(result_bytes)
-    }
-}
-
-impl core::ops::DivAssign<f64> for H256 {
-    fn div_assign(&mut self, rhs: f64) {
-        for n in 1..9 {
-            let results: [u8; 4] = {
-                let v = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let tmp = ((v as f64) / rhs) as u32;
-                tmp.to_be_bytes()
-            };
-            self[4 * (n - 1)] = results[0];
-            self[4 * (n - 1) + 1] = results[1];
-            self[4 * (n - 1) + 2] = results[2];
-            self[4 * (n - 1) + 3] = results[3];
-        }
-    }
-}
-
-impl core::ops::Mul<f64> for H256 {
-    type Output = Self;
-
-    fn mul(self, rhs: f64) -> Self {
-        let mut result_bytes = [0; 32];
-        for n in 1..9 {
-            let results: [u8; 4] = {
-                let v = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let tmp = ((v as f64) * rhs) as u32;
-                tmp.to_be_bytes()
-            };
-            result_bytes[4 * (n - 1)] = results[0];
-            result_bytes[4 * (n - 1) + 1] = results[1];
-            result_bytes[4 * (n - 1) + 2] = results[2];
-            result_bytes[4 * (n - 1) + 3] = results[3];
-        }
-        Self(result_bytes)
-    }
-}
-
-impl core::ops::MulAssign<f64> for H256 {
-    fn mul_assign(&mut self, rhs: f64) {
-        for n in 1..9 {
-            let results: [u8; 4] = {
-                let v = u32::from_be_bytes(self.0[4 * (n - 1)..4 * n].try_into().unwrap());
-                let tmp = ((v as f64) * rhs) as u32;
-                tmp.to_be_bytes()
-            };
-            self[4 * (n - 1)] = results[0];
-            self[4 * (n - 1) + 1] = results[1];
-            self[4 * (n - 1) + 2] = results[2];
-            self[4 * (n - 1) + 3] = results[3];
-        }
-    }
-}
-
-impl core::ops::Index<usize> for H256 {
-    type Output = u8;
-
-    fn index(&self, index: usize) -> &Self::Output {
-        &self.0[index]
-    }
-}
-
-impl core::ops::IndexMut<usize> for H256 {
-    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
-        &mut self.0[index]
-    }
-}
-
-impl core::ops::Index<core::ops::Range<usize>> for H256 {
-    type Output = [u8];
-
-    fn index(&self, index: core::ops::Range<usize>) -> &Self::Output {
-        &self.0[index]
-    }
-}
-
-impl core::ops::IndexMut<core::ops::Range<usize>> for H256 {
-    fn index_mut(&mut self, index: core::ops::Range<usize>) -> &mut Self::Output {
-        &mut self.0[index]
     }
 }
