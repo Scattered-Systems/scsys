@@ -12,9 +12,8 @@ This section is used to update intrested parties as to which versions are curren
 
 ## Reporting a Vulnerability
 
-If you discover a vulnerability feel free to email me at [support@scattered-systems.com] or visit the company [website](https://scsys.eth.limo) for more information.
+To report a vulnerability, choose one of the following methods:
 
-### GitHub
-
-- [FL03](https://github.com/FL03)
-- [Scattered-Systems](https://github.com/scattered-systems)
+- Email our [support team](mailto:support@scsys.io)
+- Open an issue on our [GitHub repository](https://github.com/Scattered-Systems/scsys/issues)
+- Visit our [website](https://scsys.io) for more information
