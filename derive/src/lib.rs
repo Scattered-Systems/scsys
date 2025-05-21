@@ -6,17 +6,18 @@ extern crate proc_macro;
 extern crate quote;
 extern crate syn;
 
-pub(crate) mod ast;
 pub(crate) mod attrs;
-pub(crate) mod display;
-pub(crate) mod enums;
-pub(crate) mod gsw;
 pub(crate) mod utils;
+
+pub(crate) mod display;
+pub(crate) mod getter;
+pub(crate) mod params;
+pub(crate) mod variants;
 
 use proc_macro::TokenStream;
 use syn::{Data, DeriveInput, parse_macro_input};
 
-#[proc_macro_derive(Display, attributes(display))]
+#[proc_macro_derive(Display, attributes(scsys))]
 pub fn display(input: TokenStream) -> TokenStream {
     // Parse the inputs into the proper struct
     let ast = parse_macro_input!(input as DeriveInput);
@@ -27,12 +28,12 @@ pub fn display(input: TokenStream) -> TokenStream {
     res.into()
 }
 /// This macro automatically generates functional constructors for all enclosed variants.
-#[proc_macro_derive(VariantConstructors, attributes(variant))]
+#[proc_macro_derive(VariantConstructors, attributes(scsys))]
 pub fn variant_constructors(input: TokenStream) -> TokenStream {
     let ast: DeriveInput = syn::parse(input).unwrap();
 
     match ast.data {
-        Data::Enum(inner) => enums::impl_functional_constructors(&ast.ident, &inner.variants),
+        Data::Enum(inner) => variants::impl_functional_constructors(&ast.ident, &inner.variants),
         _ => panic!("This derive macro only works with enums"),
     }
     .into()
@@ -41,17 +42,17 @@ pub fn variant_constructors(input: TokenStream) -> TokenStream {
 #[proc_macro_derive(Getter)]
 pub fn getter_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
-    gsw::impl_getter(&input).into()
+    getter::impl_getter(&input).into()
 }
 
 #[proc_macro_derive(Set)]
 pub fn set_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
-    gsw::impl_set(&input).into()
+    getter::impl_set(&input).into()
 }
 
 #[proc_macro_derive(With)]
 pub fn with_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
-    gsw::impl_with(&input).into()
+    getter::impl_with(&input).into()
 }

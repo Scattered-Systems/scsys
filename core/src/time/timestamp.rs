@@ -9,7 +9,12 @@ use core::time::Duration;
 ///
 /// The timestamp considers the standard timestamp to be the
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Deserialize, serde::Serialize),
+    serde(transparent)
+)]
+#[repr(transparent)]
 pub struct Timestamp<T = u64>(pub T);
 
 impl<T> Timestamp<T> {
@@ -151,7 +156,7 @@ impl From<Duration> for Timestamp<u128> {
     }
 }
 
-#[cfg(feature = "time")]
+#[cfg(feature = "chrono")]
 impl<Tz> From<chrono::DateTime<Tz>> for Timestamp<i64>
 where
     Tz: chrono::TimeZone,

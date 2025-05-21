@@ -1,0 +1,165 @@
+[package]
+build = "build.rs"
+description = "cryptographic primitives and utilities for the scsys ecosystem"
+name = "scsys-crypto"
+
+authors.workspace = true
+categories.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
+
+[lib]
+crate-type = [ "cdylib", "rlib" ]
+bench = false
+doc = true
+doctest = true
+test = true
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
+[dependencies]
+scsys-core = { workspace = true }
+
+# crate
+blake3 = { optional = true, version = "1" }
+generic-array = { workspace = true }
+typenum = { workspace = true }
+# data & serialization
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+# errors
+anyhow = { optional = true, workspace = true }
+thiserror = { workspace = true }
+# randomization
+getrandom = { optional = true, workspace = true }
+rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
+uuid = { optional = true, workspace = true }
+# time
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
+# macros
+paste = { workspace = true }
+smart-default = { workspace = true }
+strum = { workspace = true }
+
+[features]
+default = [ 
+    "hash",
+    "std",
+]
+
+full = [ 
+    "default",
+    "anyhow",
+    "blake3",
+    "chrono",
+    "json",
+    "rand", 
+    "serde", 
+    "time",
+    "uuid",
+]
+
+# ************* [FF:Features] *************
+hash = []
+
+# ************* [FF:Environments] *************
+std = [
+    "alloc",
+    "anyhow?/std",
+    "rand?/std",
+    "rand?/std_rng",
+    "serde?/std",
+    "strum/std",
+    "thiserror/std",
+    "time?/std",
+    "uuid?/std",
+]
+
+wasi = [  ]
+
+wasm = [ 
+    "chrono?/wasmbind",
+    "getrandom?/wasm_js",
+    "time?/wasm-bindgen",
+    "uuid?/js",
+]
+
+# ************* [FF:Dependencies] *************
+anyhow = [ "dep:anyhow" ]
+
+alloc = [ 
+    "chrono?/alloc",
+    "serde?/alloc",
+    "serde_json?/alloc",
+    "time?/alloc",
+]
+
+blake3 = [ 
+    "dep:blake3"
+]
+
+chrono = [ 
+    "dep:chrono", 
+    "chrono?/clock",
+    "time",
+]
+
+json = [ 
+    "dep:serde_json", 
+    "alloc", 
+    "serde",
+]
+
+rand = [
+    "dep:rand",
+    "dep:rand_distr",
+    "rng",
+]
+
+rng = [
+    "dep:getrandom",
+    "rand?/small_rng",
+    "rand?/thread_rng",
+    "uuid?/v4",
+]
+
+serde = [ 
+    "dep:serde", 
+    "dep:serde_derive", 
+    "chrono?/serde",
+    "rand?/serde", 
+    "uuid?/serde",
+    "time?/serde",
+]
+
+time = [ "dep:time" ]
+
+uuid = [
+    "dep:uuid",
+    "uuid?/v3",
+]
+
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"
+
+[[test]]
+name = "h256"
+required-features = [ "rand", "std" ]

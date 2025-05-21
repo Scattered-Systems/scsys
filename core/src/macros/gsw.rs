@@ -2,79 +2,83 @@
     Appellation: gsw <module>
     Contrib: @FL03
 */
-/// generates methods for some type or type reference
+
+/// The `gsw` macro generates getter and setter methods for the fields of a struct.
 ///
-/// # Examples
+/// ### Usage
 ///
-/// ```rust
-/// use scsys_core::gsw;
+/// ```no_run
 ///
-/// #[derive(Debug, Clone)]
-///
-/// struct MyStruct<T> {
-///    a: u32,
-///    b: u32,
-///    c: T,
+/// #[derive(Clone, Debug, Default)]
+/// pub struct Sample {
+///     pub(crate) a: usize,
+///     pub(crate) b: std::collections::HashMap<String, usize>,
 /// }
 ///
-/// impl<T> MyStruct<T> {
-///     gsw! {
-///         a: u32,
-///         b: u32,
+/// impl Sample {
+///     scsys_core::gsw! {
+///         a: usize,
 ///     }
-///
-///    gsw! {
-///        c: &T,
-///    }
+///     scsys_core::gsw! {
+///         b: &std::collections::HashMap<String, usize>,
+///     }
+/// }
+/// #[test]
+/// fn _sampler() {
+///     let mut sample = Sample::default().with_a(10);
+///     assert_eq!(sample.a(), 10);
+///     assert_eq!(sample.a_mut(), &mut 10);
+///     assert_eq!(sample.set_a(20).a(), 20);
 /// }
 /// ```
 #[macro_export]
 macro_rules! gsw {
     ($($name:ident: &$T:ty),* $(,)?) => {
-        gsw!(@set $($name: $T),*);
-        $(gsw!(@get $name: &$T);)*
-    };
-    ($($name:ident: $T:ty),* $(,)?) => {
-        gsw!(@set $($name: $T),*);
-        $(gsw!(@get $name: $T);)*
-    };
-    (@get $name:ident: &$T:ty) => {
-
-        paste::paste! {
-            pub const fn $name(&self) -> &$T {
-                &self.$name
-            }
-
-            #[doc(inline)]
-            pub fn [<$name _mut>] (&mut self) -> &mut $T {
-                &mut self.$name
-            }
-        }
-    };
-    (@get $name:ident: $(&)?$T:ty) => {
-        paste::paste! {
-            pub const fn $name(&self) -> $T {
-                self.$name
-            }
-
-            #[doc(inline)]
-            pub fn [<$name _mut>] (&mut self) -> &mut $T {
-                &mut self.$name
-            }
-        }
-    };
-    (@set $($name:ident: $T:ty),*) => {
         $(
-            gsw!(@set_impl $name: $T);
+            $crate::gsw!(@get $name: &$T);
+            $crate::gsw!(@get_mut $name: $T);
+            $crate::gsw!(@setter $name: $T);
         )*
     };
-    (@set_impl $name:ident: $T:ty) => {
+    ($($name:ident: $T:ty),* $(,)?) => {
+        $(
+            $crate::gsw!(@get $name: $T);
+            $crate::gsw!(@get_mut $name: $T);
+            $crate::gsw!(@setter $name: $T);
+        )*
+    };
+    (@setter $name:ident: $T:ty) => {
+        $crate::gsw!(@set $name: $T);
+        $crate::gsw!(@with $name: $T);
+    };
+    (@get $name:ident: &$T:ty) => {
+        pub const fn $name(&self) -> &$T {
+            &self.$name
+        }
+    };
+    (@get $name:ident: $T:ty) => {
+        pub const fn $name(&self) -> $T {
+            self.$name
+        }
+    };
+    (@get_mut $name:ident: $T:ty) => {
+        paste::paste! {
+
+            pub fn [<$name _mut>] (&mut self) -> &mut $T {
+                &mut self.$name
+            }
+        }
+    };
+    (@set $name:ident: $T:ty) => {
         paste::item! {
             pub fn [<set_ $name>](&mut self, $name: $T) -> &mut Self {
-                *self.[<$name _mut>]() = $name;
+                self.$name = $name;
                 self
             }
-
+        }
+    };
+    (@with $name:ident: $T:ty) => {
+        paste::item! {
             pub fn [<with_ $name>] (self, $name: $T) -> Self {
                 Self {
                     $name,

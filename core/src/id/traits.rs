@@ -14,7 +14,7 @@ pub trait Identifier {
 /// The `Id` trait describes the behavior of a type that can be used as an id.
 /// An `Id` is almost identical to an `Identifier`, but it is a trait that can be implemented for any type.
 ///
-pub trait Id<K>
+pub trait Identity<K>
 where
     K: Identifier,
 {
@@ -49,7 +49,7 @@ pub trait IdentifyMut: Identify {
 /*
  ************* Implementations *************
 */
-impl<K, S> Id<K> for S
+impl<K, S> Identity<K> for S
 where
     S: Borrow<K>,
     K: Identifier,

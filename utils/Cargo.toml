@@ -11,7 +11,35 @@ keywords.workspace = true
 license.workspace = true
 readme.workspace = true
 repository.workspace = true
+rust-version.workspace = true
 version.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+bench = false
+doc = true
+doctest = true
+test = true
+
+[dev-dependencies]
+anyhow = { workspace = true }
+serde_json = { workspace = true }
+
+[dependencies]
+# shared
+num = { workspace = true }
+getrandom = { optional = true, workspace = true }
+rand = { optional = true, workspace = true }
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+strum = { workspace = true }
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = ["--cfg", "docsrs"]
+
 
 [features]
 default = [
@@ -73,28 +101,6 @@ wasm = [
     "getrandom?/wasm_js",
 ]
 
-[lib]
-bench = false
-crate-type = ["cdylib", "rlib"]
-doctest = true
-test = true
-
-[dev-dependencies]
-anyhow = { workspace = true }
-serde_json = { workspace = true }
-
-[dependencies]
-# shared
-num = { workspace = true }
-getrandom = { optional = true, workspace = true }
-rand = { optional = true, workspace = true }
-serde = { optional = true, workspace = true }
-serde_derive = { optional = true, workspace = true }
-serde_json = { optional = true, workspace = true }
-strum = { workspace = true }
-
-[package.metadata.docs.rs]
-rustc-args = ["--cfg", "docsrs"]
 
 # ******* tests *******
 [[test]]

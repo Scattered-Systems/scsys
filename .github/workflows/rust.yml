@@ -6,48 +6,56 @@ concurrency:
 
 env:
   CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
 
 on:
   pull_request:
     branches: [ main, master ]
-  release:
-    types: [ created ]
+    types: [ opened, synchronize, reopened ]
+  push:
+    branches: [ main, master ]
+    tags: [ latest, v*, "*-nightly" ]
   repository_dispatch:
     types: [ rust ]
   workflow_dispatch:
 
-permissions: write-all
+permissions: 
+  contents: read
+  deployments: read
 
 jobs:
   workspace:
     strategy:
       fail-fast: false
       matrix:
-        os:  [ ubuntu-latest ] # [ ubuntu-latest, macos-latest, windows-latest ]
-        target: [ x86_64-unknown-linux-gnu, ]
-        toolchain: [ stable, nightly, ]
+        os:  [ ubuntu-latest, macos-latest, windows-latest ]
+        toolchain: [ stable, nightly ]
     runs-on: ${{ matrix.os }}
     steps:
       - 
-        name: checkout
+        name: Checkout
         uses: actions/checkout@v4
       - 
-        name: setup rustup
+        name: Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           cache-workspaces: true
-          target: ${{ matrix.target }}
           toolchain: ${{ matrix.toolchain }}
+          override: true
       - 
-        name: cache
-        uses: Swatinem/rust-cache@v2
+        name: Build
+        run: cargo build --locked --release --workspace --all-features
       - 
-        name: build
-        run: cargo build -r -v --workspace --features full --target ${{ matrix.target }}
+        name: Test (all-features)
+        run: cargo test --locked --release --workspace --all-features
       - 
-        name: test
-        run: cargo test -r -v --workspace --features full --target ${{ matrix.target }}
+        continue-on-error: true
+        if: matrix.toolchain == 'nightly'
+        env:
+          RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
+        name: Test (no_std)
+        run: cargo test --locked --release --workspace --no-default-features
       - 
-        name: bench
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        run: cargo bench -v --workspace --features full
+        name: Benchmark
+        run: cargo bench --verbose --workspace --features full

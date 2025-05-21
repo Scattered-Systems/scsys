@@ -11,30 +11,106 @@ keywords.workspace = true
 license.workspace = true
 readme.workspace = true
 repository.workspace = true
+rust-version.workspace = true
 version.workspace = true
 
 [lib]
-bench = false
 crate-type = [ "cdylib", "rlib", "staticlib" ]
+bench = false
+doc = true
 doctest = true
 test = true
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
+[dependencies]
+glob = { workspace = true }
+num = { workspace = true }
+num-traits = { workspace = true }
+# data & serialization
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+# errors
+anyhow = { optional = true, workspace = true }
+thiserror = { workspace = true }
+# randomization
+getrandom = { optional = true, workspace = true }
+rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
+uuid = { optional = true, workspace = true }
+# time
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
+# macros
+paste = { workspace = true }
+smart-default = { workspace = true }
+strum = { workspace = true }
+
+[dev-dependencies]
+anyhow = { workspace = true }
+approx = { workspace = true }
 
 [features]
 default = [ "std" ]
 
-full = [ "default", "rand", "serde", "time" ]
+full = [ 
+    "default",
+    "anyhow",
+    "chrono",
+    "json",
+    "rand", 
+    "serde", 
+    "time" 
+]
 
-# ******* [FF] Dependencies *******
-anyhow = ["dep:anyhow"]
+# ************* [FF:Environments] *************
+std = [
+    "alloc",
+    "anyhow?/std",
+    "num/std",
+    "num-traits/std",
+    "rand?/std",
+    "rand?/std_rng",
+    "serde?/std",
+    "strum/std",
+    "thiserror/std",
+    "time?/std",
+    "uuid?/std",
+]
+
+wasi = [  ]
+
+wasm = [ 
+    "chrono?/wasmbind",
+    "getrandom?/wasm_js",
+    "time?/wasm-bindgen",
+    "uuid?/js",
+]
+
+# ************* [FF:Dependencies] *************
+anyhow = [ "dep:anyhow" ]
 
 alloc = [ 
-    "num/alloc", 
-    "serde?/alloc"
+    "chrono?/alloc",
+    "num/alloc",
+    "serde?/alloc",
+    "serde_json?/alloc",
+    "time?/alloc",
 ]
 
 chrono = [ 
     "dep:chrono", 
     "chrono?/clock",
+    "time",
 ]
 
 json = [ 
@@ -54,65 +130,29 @@ rng = [
     "dep:getrandom",
     "rand?/small_rng",
     "rand?/thread_rng",
+    "uuid?/rng",
+    "uuid?/v4"
 ]
 
 serde = [ 
     "dep:serde", 
     "dep:serde_derive", 
-    "num/serde", 
+    "chrono?/serde",
+    "num/serde",
     "rand?/serde", 
-    "serde?/derive" 
+    "uuid?/serde",
+    "time?/serde",
 ]
 
-time = [ "chrono", "dep:time" ]
 
-# ******* [FF] Environment *******
-std = [
-    "alloc",
-    "anyhow?/std",
-    "num/std",
-    "rand?/std",
-    "rand?/std_rng",
-    "serde?/std",
-    "strum/std",
-    "thiserror/std",
+time = [ "dep:time" ]
+
+uuid = [ 
+    "dep:uuid", 
+    "uuid?/v3" 
 ]
 
-wasi = [  ]
-
-wasm = [ "getrandom?/wasm_js" ]
-
-[dependencies]
-glob = { workspace = true }
-num = { workspace = true }
-paste = { workspace = true }
-
-serde = { optional = true, workspace = true }
-serde_derive = { optional = true, workspace = true }
-serde_json = { optional = true, workspace = true }
-smart-default = { workspace = true }
-strum = { workspace = true }
-# errors
-anyhow = { optional = true, workspace = true }
-thiserror = { workspace = true }
-# randomization
-getrandom = { optional = true, workspace = true }
-rand = { optional = true, workspace = true }
-rand_distr = { optional = true, workspace = true }
-# time
-chrono = { optional = true, workspace = true }
-time = { optional = true, workspace = true }
-
-
-
-
-[dev-dependencies]
-approx = { version = "0.5" }
-
-[package.metadata.docs.rs]
-rustc-args = [ "--cfg", "docsrs" ]
-
-# ********* tests *********
+# ************* [Unit Tests] *************
 [[test]]
 name = "default"
 
@@ -123,4 +163,3 @@ required-features = [ "std" ]
 [[test]]
 name = "time"
 required-features = [ "std", "time" ]
-
