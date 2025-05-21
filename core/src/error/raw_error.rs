@@ -2,9 +2,11 @@
     Appellation: raw_error <module>
     Contrib: @FL03
 */
+
+#[cfg(feature = "alloc")]
 /// A type alias for a [`Err`] whose generic type is a [`Box`] of a trait object
 /// implementing [`core::error::Error`].
-pub type BoxErr = RawError<Box<dyn core::error::Error + Send + Sync + 'static>>;
+pub type BoxErr = ErrorBase<alloc::boxed::Box<dyn core::error::Error + Send + Sync + 'static>>;
 
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(
@@ -13,11 +15,11 @@ pub type BoxErr = RawError<Box<dyn core::error::Error + Send + Sync + 'static>>;
     serde(transparent, rename_all = "snake_case")
 )]
 #[repr(transparent)]
-pub struct RawError<U: core::error::Error> {
+pub struct ErrorBase<U: core::error::Error> {
     inner: U,
 }
 
-impl<U> RawError<U>
+impl<U> ErrorBase<U>
 where
     U: core::error::Error,
 {
@@ -55,12 +57,12 @@ where
         core::mem::swap(&mut self.inner, &mut other.inner)
     }
     /// apply a function to the error and return a new instance with the result.
-    pub fn map<V, F>(self, f: F) -> RawError<V>
+    pub fn map<V, F>(self, f: F) -> ErrorBase<V>
     where
         F: FnOnce(U) -> V,
         V: core::error::Error,
     {
-        RawError::from_err(f(self.inner))
+        ErrorBase::from_err(f(self.inner))
     }
     /// mutate the error using the given function
     pub fn map_mut<F>(&mut self, f: F)
@@ -71,7 +73,7 @@ where
     }
 }
 
-impl<E> From<E> for RawError<E>
+impl<E> From<E> for ErrorBase<E>
 where
     E: core::error::Error,
 {
@@ -80,9 +82,9 @@ where
     }
 }
 
-impl<E: core::error::Error> core::error::Error for RawError<E> {}
+impl<E: core::error::Error> core::error::Error for ErrorBase<E> {}
 
-impl<E> core::fmt::Display for RawError<E>
+impl<E> core::fmt::Display for ErrorBase<E>
 where
     E: core::error::Error,
 {

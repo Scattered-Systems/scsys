@@ -6,7 +6,7 @@
 use crate::error::ErrorKind;
 use alloc::string::{String, ToString};
 
-/// The [`StdError`] type is a generic error type that is generic over the error kind; this 
+/// The [`StdError`] type is a generic error type that is generic over the error kind; this
 /// enables us to distinguish between distinctly different error types.
 pub struct StdError<K: ErrorKind = String> {
     pub(crate) kind: K,

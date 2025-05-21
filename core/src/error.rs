@@ -3,7 +3,7 @@
     Contrib: @FL03
 */
 #[doc(inline)]
-pub use self::{core_error::*, std_error::*, raw_error::*};
+pub use self::{core_error::*, raw_error::*, std_error::*};
 
 /// this module implements an enumerated error type used throughout the sdk
 mod core_error;
@@ -13,10 +13,6 @@ mod raw_error;
 /// between different error types.
 #[cfg(feature = "alloc")]
 mod std_error;
-
-
-//// this trait is used to generalize the definition of a valid error type;
-pub trait Err: core::fmt::Debug + core::error::Error {}
 
 pub trait ErrorKind: core::fmt::Debug {}
 

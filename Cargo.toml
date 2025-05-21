@@ -49,6 +49,7 @@ serde_json = { default-features = false, version = "1" }
 anyhow = { default-features = false, version = "1" }
 thiserror = { default-features = false, version = "2" }
 # math
+approx = { version = "0.5" }
 num = { default-features = false, version = "0.4" }
 num-complex = { default-features = false, version = "0.4" }
 num-traits = { default-features = false, version = "0.2" }

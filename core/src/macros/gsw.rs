@@ -7,7 +7,7 @@
 ///
 /// ### Usage
 ///
-/// ```rust
+/// ```no_run
 ///
 /// #[derive(Clone, Debug, Default)]
 /// pub struct Sample {

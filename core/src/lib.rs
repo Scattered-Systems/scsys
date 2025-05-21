@@ -8,16 +8,28 @@
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
+#[macro_use]
+pub(crate) mod macros {
+    #[macro_use]
+    pub mod builder;
+    #[macro_use]
+    pub mod fmt;
+    #[macro_use]
+    pub mod get;
+    #[macro_use]
+    pub mod gsw;
+    #[macro_use]
+    pub mod seal;
+    #[macro_use]
+    pub mod wrapper;
+}
+
 #[doc(inline)]
 pub use self::{state::State, types::prelude::*, utils::*};
 
 #[doc(inline)]
 pub use self::error::*;
 
-#[macro_use]
-pub(crate) mod macros;
-#[macro_use]
-pub(crate) mod seal;
 pub(crate) mod utils;
 
 pub mod error;

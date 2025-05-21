@@ -61,6 +61,13 @@ impl<T> Id<T> {
     pub fn with<U>(self, id: U) -> Id<U> {
         Id(id)
     }
+    /// apply a function onto the inner value and return a new instance with the result
+    pub fn map<U, F>(self, f: F) -> Id<U>
+    where
+        F: FnOnce(T) -> U,
+    {
+        Id(f(self.0))
+    }
 }
 
 impl Id<usize> {
@@ -77,9 +84,18 @@ impl Id<usize> {
 
 #[cfg(feature = "uuid")]
 impl Id<uuid::Uuid> {
+    pub fn v3(namespace: &uuid::Uuid, name: &[u8]) -> Self {
+        let id = uuid::Uuid::new_v3(
+            &namespace,
+            name
+        );
+        Self(id)
+    }
+
     #[cfg(all(feature = "rng", feature = "uuid"))]
     pub fn v4() -> Self {
-        Self::from_value(uuid::Uuid::new_v4())
+        let id = uuid::Uuid::new_v4();
+        Self(id)
     }
 }
 

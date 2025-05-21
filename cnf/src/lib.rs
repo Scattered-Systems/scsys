@@ -2,7 +2,7 @@
     Appellation: scsys-cnf <library>
     Contrib: @FL03
 */
-//! A collection of common configuration primitives and utilities used throughout the 
+//! A collection of common configuration primitives and utilities used throughout the
 //! [scsys-io](https://scsys.io) ecosystem.
 //!
 

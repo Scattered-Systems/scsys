@@ -21,14 +21,14 @@ pub use scsys_traits::*;
 #[cfg(feature = "utils")]
 pub use scsys_util::*;
 
-#[doc(inline)]    
+#[doc(inline)]
 #[cfg(feature = "config")]
 pub use scsys_cnf as cnf;
 
 pub mod prelude {
-    pub use scsys_core::prelude::*;
     #[cfg(feature = "config")]
     pub use scsys_cnf::prelude::*;
+    pub use scsys_core::prelude::*;
     #[cfg(feature = "derive")]
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]
