@@ -49,6 +49,7 @@ thiserror = { workspace = true }
 getrandom = { optional = true, workspace = true }
 rand = { optional = true, workspace = true }
 rand_distr = { optional = true, workspace = true }
+uuid = { optional = true, workspace = true }
 # time
 chrono = { optional = true, workspace = true }
 time = { optional = true, workspace = true }
@@ -59,19 +60,24 @@ strum = { workspace = true }
 
 [features]
 default = [ 
+    "hash",
     "std",
-    "blake3",
 ]
 
 full = [ 
     "default",
     "anyhow",
+    "blake3",
     "chrono",
     "json",
     "rand", 
     "serde", 
-    "time" 
+    "time",
+    "uuid",
 ]
+
+# ************* [FF:Features] *************
+hash = []
 
 # ************* [FF:Environments] *************
 std = [
@@ -83,6 +89,7 @@ std = [
     "strum/std",
     "thiserror/std",
     "time?/std",
+    "uuid?/std",
 ]
 
 wasi = [  ]
@@ -91,6 +98,7 @@ wasm = [
     "chrono?/wasmbind",
     "getrandom?/wasm_js",
     "time?/wasm-bindgen",
+    "uuid?/js",
 ]
 
 # ************* [FF:Dependencies] *************
@@ -116,7 +124,7 @@ chrono = [
 json = [ 
     "dep:serde_json", 
     "alloc", 
-    "serde"
+    "serde",
 ]
 
 rand = [
@@ -129,15 +137,24 @@ rng = [
     "dep:getrandom",
     "rand?/small_rng",
     "rand?/thread_rng",
+    "uuid?/v4",
 ]
 
 serde = [ 
     "dep:serde", 
     "dep:serde_derive", 
+    "chrono?/serde",
     "rand?/serde", 
+    "uuid?/serde",
+    "time?/serde",
 ]
 
 time = [ "dep:time" ]
+
+uuid = [
+    "dep:uuid",
+    "uuid?/v3",
+]
 
 # ************* [Unit Tests] *************
 [[test]]

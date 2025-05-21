@@ -137,10 +137,13 @@ rng = [
 serde = [ 
     "dep:serde", 
     "dep:serde_derive", 
-    "num/serde", 
+    "chrono?/serde",
+    "num/serde",
     "rand?/serde", 
-    "uuid?/serde" 
+    "uuid?/serde",
+    "time?/serde",
 ]
+
 
 time = [ "dep:time" ]
 

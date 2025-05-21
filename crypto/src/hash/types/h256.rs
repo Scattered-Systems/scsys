@@ -24,6 +24,18 @@ pub type H256Array = [u8; 32];
 pub struct H256(pub H256Array);
 
 impl H256 {
+    /// returns a new instance of the hash without any adjustments
+    pub fn new(raw: H256Array) -> Self {
+        Self(raw)
+    }
+    /// returns a new instance of the hash from a digest
+    pub fn from_digest<D>(digest: D) -> Self
+    where
+        D: AsRef<[u8]>,
+    {
+        let hash = digest_to_hash::<32>(digest);
+        Self::new(hash)
+    }
     /// hash some data using the [`blake3`] algorithm
     #[cfg(feature = "blake3")]
     pub fn b3(data: impl AsRef<[u8]>) -> Self {
@@ -37,7 +49,7 @@ impl H256 {
         let mut raw_bytes = [0; 32];
         raw_bytes.copy_from_slice(&data);
         (&raw_bytes).into()
-    }
+    }    
     /// returns the hash as a byte array
     pub const fn get(&self) -> &H256Array {
         &self.0
@@ -119,10 +131,10 @@ impl AsRef<[u8; 32]> for H256 {
 
 impl Ord for H256 {
     fn cmp(&self, other: &H256) -> core::cmp::Ordering {
-        let self_higher = u128::from_be_bytes(self.0[0..16].try_into().unwrap());
-        let self_lower = u128::from_be_bytes(self.0[16..32].try_into().unwrap());
-        let other_higher = u128::from_be_bytes(other.0[0..16].try_into().unwrap());
-        let other_lower = u128::from_be_bytes(other.0[16..32].try_into().unwrap());
+        let self_higher = u128::from_be_bytes(self[0..16].try_into().unwrap());
+        let self_lower = u128::from_be_bytes(self[16..32].try_into().unwrap());
+        let other_higher = u128::from_be_bytes(other[0..16].try_into().unwrap());
+        let other_lower = u128::from_be_bytes(other[16..32].try_into().unwrap());
         let higher = self_higher.cmp(&other_higher);
         match higher {
             core::cmp::Ordering::Equal => self_lower.cmp(&other_lower),
@@ -142,7 +154,7 @@ impl core::fmt::Debug for H256 {
         write!(
             f,
             "{:>02x}{:>02x}..{:>02x}{:>02x}",
-            &self.0[0], &self.0[1], &self.0[30], &self.0[31]
+            &self[0], &self[1], &self[30], &self[31]
         )
     }
 }

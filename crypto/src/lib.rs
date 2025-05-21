@@ -19,10 +19,13 @@ pub(crate) use scsys_core::gsw;
 
 #[doc(inline)]
 pub use self::{
-    error::*, hash::prelude::*, traits::prelude::*, types::prelude::*, utils::prelude::*,
+    error::*, traits::prelude::*, types::prelude::*, utils::prelude::*,
 };
+#[cfg(feature = "hash")]
+pub use self::hash::prelude::*;
 
 pub mod error;
+#[cfg(feature = "hash")]
 pub mod hash;
 
 pub mod traits {
@@ -73,6 +76,7 @@ pub mod prelude {
     #[doc(inline)]
     pub use crate::error::*;
 
+    #[cfg(feature = "hash")]
     #[doc(no_inline)]
     pub use crate::hash::prelude::*;
     #[doc(no_inline)]
