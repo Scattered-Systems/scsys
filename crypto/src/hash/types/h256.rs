@@ -167,9 +167,8 @@ where
     T: AsRef<[u8]>,
 {
     fn from(data: &T) -> H256 {
-        let hash = blake3::hash(data.as_ref());
         let mut buffer: [u8; 32] = [0; 32];
-        buffer[..].copy_from_slice(hash.as_bytes());
+        buffer[..].copy_from_slice(data.as_ref());
         H256(buffer)
     }
 }

@@ -9,16 +9,32 @@ use syn::{DeriveInput, Generics, Ident};
 pub fn impl_display(ast: &DeriveInput) -> TokenStream {
     let DeriveInput {
         attrs,
-        ident: name,
         generics,
+        ident: name,
         ..
-    } = ast;
-    if attrs.iter().any(|attr| attr.path().is_ident("display")) {
-        // handle serde
-        return handle_serde_display(name, generics);
+    } = &ast;
+    // check if the display attribute is present
+    let display_attr = attrs
+        .iter()
+        .find(|attr| attr.path().is_ident("scsys"))
+        .and_then(|attr| attr.parse_args::<crate::attrs::ScsysAttr>().ok())
+        .and_then(|attr| attr.display);
+
+    if let Some(display_attr) = display_attr {
+        // check if the serde attribute is present
+        if let Some(_) = display_attr.serde {
+            // handle the serde implementation
+            return handle_serde_display(name, generics);
+        }
+        // check if the kind attribute is present
+        if let Some(_) = display_attr.kind {
+            // handle the kind implementation
+            return handle_serde_display(name, generics);
+        }
     }
 
-    _handle_display(name, generics)
+    // handle the standard implementation
+    _handle_display(&name, &generics)
 }
 
 pub fn _handle_display(name: &Ident, generics: &Generics) -> TokenStream {
@@ -63,23 +79,3 @@ pub fn handle_serde_display(name: &Ident, generics: &Generics) -> TokenStream {
         }
     }
 }
-
-// fn handle_attrs(attrs: &Vec<syn::Attribute>) -> TokenStream {
-//     if let Some(attr) = attrs
-//         .iter()
-//         .find(|attr| attr.path().is_ident("display")) {
-//         if let Ok(meta) = attr.parse_nested_meta() {
-//             if let syn::Meta::List(list) = meta {
-//                 for nested in list.nested {
-//                     if let syn::NestedMeta::Meta(meta) = nested {
-//                         if let syn::Meta::Path(path) = meta {
-//                             if path.is_ident("serde") {
-//                                 // handle serde
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
