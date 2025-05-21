@@ -36,7 +36,36 @@ pub mod error;
 pub mod id;
 pub mod state;
 pub mod time;
-pub mod types;
+
+pub mod types {
+    #[doc(inline)]
+    pub use self::prelude::*;
+
+    pub mod direction;
+
+    pub(crate) mod prelude {
+        #[doc(inline)]
+        pub use super::direction::*;
+        #[allow(unused_imports)]
+        #[doc(inline)]
+        pub use super::aliases::*;
+    }
+
+    pub(crate) mod aliases {
+        #[cfg(feature = "alloc")]
+        /// Type alias for a boxed error with send, sync, and static flags enabled
+        pub type BoxError = alloc::boxed::Box<dyn core::error::Error + Send + Sync + 'static>;
+        #[cfg(feature = "alloc")]
+        /// Type alias for the standard result used
+        pub type BoxResult<T = ()> = core::result::Result<T, BoxError>;
+        #[cfg(feature = "std")]
+        /// Type alias wrapping a locked, thread-safe structure with a [Mutex] in an [Arc]
+        pub type Arcm<T> = std::sync::Arc<std::sync::Mutex<T>>;
+        #[cfg(feature = "std")]
+        /// Type alias for [std::io::Result]
+        pub type IOResult<T = ()> = std::io::Result<T>;
+    }
+}
 
 pub mod prelude {
     #[doc(no_inline)]

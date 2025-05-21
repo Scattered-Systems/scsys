@@ -2,68 +2,86 @@
     Appellation: direction <module>
     Creator: FL03 <jo3mccain@icloud.com>
 */
-use strum::{AsRefStr, Display, EnumCount, EnumIs, EnumIter, EnumString, VariantNames};
 
 #[derive(
-    AsRefStr,
     Clone,
     Copy,
     Debug,
     Default,
-    Display,
-    EnumCount,
-    EnumIs,
-    EnumIter,
-    EnumString,
     Eq,
     Hash,
     Ord,
     PartialEq,
     PartialOrd,
-    VariantNames,
+    strum::AsRefStr,
+    strum::Display,
+    strum::EnumCount,
+    strum::EnumIs,
+    strum::EnumIter,
+    strum::EnumString,
+    strum::VariantNames,
 )]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Deserialize, serde::Serialize),
     serde(rename_all = "lowercase", untagged)
 )]
-#[repr(i64)]
 #[strum(serialize_all = "lowercase")]
 pub enum Direction {
     #[default]
-    Forward,
-    Backward,
+    Forward = 1,
+    Backward = -1,
+    Stay = 0,
 }
 
 impl Direction {
+    pub fn from_isize(value: isize) -> Self {
+        match value % 2 {
+            1 => Self::Forward,
+            -1 => Self::Backward,
+            0 => Self::Stay,
+            _ => panic!("modulo arithmetic error; resulted in a value outside of the range"),
+        }
+    }
+    /// a functional method for initializing a new backward variant
     pub fn backward() -> Self {
         Self::Backward
     }
-
+    /// a functional method for initializing a new stay variant
+    pub fn stay() -> Self {
+        Self::Stay
+    }
+    /// a functional method for initializing a new forward variant
     pub fn forward() -> Self {
         Self::Forward
     }
-
-    pub fn invert(mut self) -> Self {
-        self = match self {
-            Self::Forward => Self::Backward,
-            Self::Backward => Self::Forward,
-        };
-        self
+    /// invert the current direction;
+    /// 
+    /// - [`Forward`](Direction::Forward) becomes [`Backward`](Direction::Backward)
+    /// - [`Backward`](Direction::Backward) becomes [`Forward`](Direction::Forward)
+    /// - [`Stay`](Direction::Stay) remains as is
+    pub fn invert(self) -> Self {
+        use Direction::*;
+        match self {
+            Forward => Backward,
+            Backward => Forward,
+            Stay => Stay,
+        }
     }
 }
+
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use core::str::FromStr;
 
     #[test]
     fn test_direction() {
-        assert_eq!(Direction::default().as_ref(), "forward");
-        assert_eq!(
-            Direction::from_str("backward").unwrap(),
-            Direction::Backward
-        );
+        use core::str::FromStr;
+        
+        let dir = Direction::from_str("forward").ok();
+        assert_eq!(dir, Some(Direction::Forward));
+        let inv = dir.expect("failed to parse the direction").invert();
+        assert_eq!(inv, Direction::Backward);
     }
 }
