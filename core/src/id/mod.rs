@@ -6,9 +6,9 @@
 //!
 //! The identity module provides a set of traits and types for generating unique identifiers.
 #[doc(inline)]
-pub use self::{id::*, kinds::prelude::*, traits::*};
+pub use self::{identifier::*, kinds::prelude::*, traits::*};
 
-pub(crate) mod id;
+pub(crate) mod identifier;
 pub(crate) mod traits;
 
 pub mod kinds {
@@ -24,7 +24,7 @@ pub mod kinds {
 }
 
 pub(crate) mod prelude {
-    pub use super::id::Id;
+    pub use super::identifier::Id;
     pub use super::kinds::prelude::*;
     pub use super::traits::*;
 }

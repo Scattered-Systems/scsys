@@ -1,19 +1,9 @@
 /*
-    Appellation: state <module>
+    Appellation: impl_state <module>
     Contrib: @FL03
 */
-use super::RawState;
-
-/// [`State`] is a generic type wrapper materializing the [`RawState`] trait.
-#[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Deserialize, serde::Serialize),
-    serde(default, transparent)
-)]
-#[repr(transparent)]
-pub struct State<Q = usize>(pub Q);
-
+use crate::state::{RawState, State};
+/// generic implementation of the [`State`] type available for all types `Q`
 impl<Q> State<Q> {
     /// Create a new identifier with the default value
     pub fn new() -> Self
