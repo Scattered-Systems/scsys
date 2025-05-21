@@ -7,7 +7,7 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
-  RUSTFLAGS: "-C panic=abort"
+  RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
 
 on:
   pull_request:
