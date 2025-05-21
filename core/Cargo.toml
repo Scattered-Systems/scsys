@@ -14,6 +14,13 @@ repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
+[lib]
+crate-type = [ "cdylib", "rlib", "staticlib" ]
+bench = false
+doc = true
+doctest = true
+test = true
+
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
@@ -23,12 +30,6 @@ version = "v{{version}}"
 [package.metadata.release]
 no-dev-version = true
 tag-name = "{{version}}"
-
-[lib]
-bench = false
-crate-type = [ "cdylib", "rlib" ]
-doctest = true
-test = true
 
 [dependencies]
 glob = { workspace = true }

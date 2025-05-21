@@ -15,8 +15,6 @@ pub(crate) mod macros {
     #[macro_use]
     pub mod fmt;
     #[macro_use]
-    pub mod get;
-    #[macro_use]
     pub mod gsw;
     #[macro_use]
     pub mod seal;

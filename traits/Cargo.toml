@@ -15,10 +15,25 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
-bench = false
 crate-type = ["cdylib", "rlib"]
+bench = false
+doc = true
 doctest = true
 test = true
+
+[dependencies]
+num-traits = { workspace = true }
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
 
 [features]
 default = ["std"]
@@ -34,9 +49,6 @@ alloc = []
 std = [
     "alloc",
 ]
-
-[dependencies]
-num-traits = { workspace = true }
 
 # ************* [Unit Tests] *************
 [[test]]

@@ -1,10 +1,10 @@
 [package]
 build = "build.rs"
+description = "cryptographic primitives and utilities for the scsys ecosystem"
 name = "scsys-crypto"
 
 authors.workspace = true
 categories.workspace = true
-description.workspace = true
 edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
@@ -13,6 +13,13 @@ readme.workspace = true
 repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
+
+[lib]
+crate-type = [ "cdylib", "rlib" ]
+bench = false
+doc = true
+doctest = true
+test = true
 
 [package.metadata.docs.rs]
 all-features = false
@@ -23,13 +30,6 @@ version = "v{{version}}"
 [package.metadata.release]
 no-dev-version = true
 tag-name = "{{version}}"
-
-[lib]
-crate-type = [ "cdylib", "rlib" ]
-bench = false
-doc = true
-doctest = true
-test = true
 
 [dependencies]
 scsys-core = { workspace = true }

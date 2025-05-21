@@ -1,7 +1,10 @@
-/*
-    Appellation: impl_gsw <module>
-    Contrib: @FL03
-*/
+#[allow(unused_imports)]
+#[doc(inline)]
+pub use self::{ast::*, attr::*};
+
+pub mod ast;
+pub mod attr;
+
 use quote::quote;
 use syn::{DeriveInput, spanned::Spanned};
 

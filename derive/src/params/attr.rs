@@ -2,6 +2,7 @@
     Appellation: params <module>
     Contrib: @FL03
 */
+#![allow(dead_code)]
 use syn::Ident;
 
 #[derive(Default)]

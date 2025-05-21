@@ -1,7 +1,10 @@
-/*
-    Appellation: impl_variants <module>
-    Contrib: @FL03
-*/
+#[allow(unused_imports)]
+#[doc(inline)]
+pub use self::{ast::*, attr::*};
+
+pub mod ast;
+pub mod attr;
+
 use crate::utils::snakecase;
 use proc_macro2::{Span, TokenStream};
 use quote::quote;

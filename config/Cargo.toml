@@ -1,10 +1,10 @@
 [package]
 build = "build.rs"
+description = "common configuration routines and schemas used throughout the ecosystem"
 name = "scsys-config"
 
 authors.workspace = true
 categories.workspace = true
-description.workspace = true
 edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
@@ -15,43 +15,11 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
-bench = false
 crate-type = ["cdylib", "rlib"]
+bench = false
+doc = true
 doctest = true
 test = true
-
-[features]
-default = ["config"]
-
-full = [
-    "default",
-    "json",
-    "serde",
-    "tracing",
-    "tracing-subscriber",
-]
-
-# ************* [FF:Dependencies] *************
-
-config = ["dep:config"]
-
-json = [
-    "dep:serde_json",
-    "serde"
-]
-
-serde = [
-    "dep:serde",
-    "dep:serde_derive",
-    "tracing-subscriber?/serde",
-]
-
-tracing = ["dep:tracing"]
-
-tracing-subscriber = [
-    "dep:tracing-subscriber",
-    "tracing",
-]
 
 [dependencies]
 config = { default-features = false, optional = true, version = "0.15" }
@@ -67,6 +35,78 @@ strum = { features = ["derive", "std"], workspace = true }
 # logging
 tracing = { optional = true, workspace = true }
 tracing-subscriber = { optional = true, workspace = true }
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
+[features]
+default = [
+    "config",
+    "async",
+    "convert-case",
+    "ini",
+    "json",
+    "json5",
+    "ron",
+    "toml",
+    "yaml",
+]
+
+full = [
+    "default",
+    "tracing",
+    "tracing-subscriber",
+]
+
+# ************* [FF:Dependencies] *************
+async = [
+    "config?/async",
+]
+
+config = ["dep:config"]
+
+serde = [
+    "dep:serde",
+    "dep:serde_derive",
+    "tracing-subscriber?/serde",
+]
+
+serde_json = [
+    "dep:serde_json", 
+    "config?/serde_json",
+    "serde",
+]
+
+tracing = ["dep:tracing"]
+
+tracing-subscriber = [
+    "dep:tracing-subscriber",
+    "tracing",
+]
+# ************* [FF:config] *************
+convert-case = ["config?/convert-case"]
+
+ini = ["config?/ini"]
+
+json = [
+    "serde_json",
+    "config?/json",
+]
+
+json5 = [ "config?/json5" ]
+
+ron = ["config?/ron"]
+
+toml = ["config?/toml"]
+
+yaml = ["config?/yaml"]
 
 # ************* [Unit Tests] *************
 [[test]]

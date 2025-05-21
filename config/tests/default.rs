@@ -4,7 +4,7 @@
 */
 
 #[test]
-fn compiles() {
+fn lib_compiles() {
     fn adder<A, B, C>(a: A, b: B) -> C
     where
         A: core::ops::Add<B, Output = C>,

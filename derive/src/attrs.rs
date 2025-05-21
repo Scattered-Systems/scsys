@@ -4,11 +4,7 @@
 */
 #![allow(dead_code)]
 
-#[doc(inline)]
-pub use self::{display::DisplayAttr, params::ParamsAttr};
-
-mod display;
-mod params;
+use crate::{display::DisplayAttr, params::ParamsAttr};
 
 #[derive(Default)]
 pub struct ScsysAttr {
