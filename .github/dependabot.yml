@@ -1,5 +1,18 @@
 version: 2
 updates:
+  - package-ecosystem: cargo
+    schedule:
+      interval: monthly
+    directories: 
+      - /
+      - /scsys
+      - /config
+      - /crypto
+      - /core
+      - /derive
+      - /macros
+      - /traits
+      - /utils
   - package-ecosystem: devcontainers
     directory: /
     schedule:
@@ -8,16 +21,3 @@ updates:
     directory: /
     schedule:
       interval: monthly
-  - package-ecosystem: cargo
-    schedule:
-      interval: monthly
-    directories: 
-      - /
-      - /scsys
-      - /cnf
-      - /crypto
-      - /core
-      - /derive
-      - /macros
-      - /traits
-      - /utils
