@@ -40,12 +40,12 @@ pub trait RawState {
 /*
  ************* Implementations *************
 */
-impl<Q, T> RawState for KState<Q, T> {
+impl<Q, T> RawState for NState<Q, T> {
     type Item = T;
 
     seal!();
 }
 
-impl<Q, T> Stateful for KState<Q, T> {
-    type State = KState<Q, T>;
+impl<Q, T> Stateful for NState<Q, T> {
+    type State = NState<Q, T>;
 }

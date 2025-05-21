@@ -1,8 +1,10 @@
 /*
-    Appellation: atomic <mod>
-    Contrib: FL03 <jo3mccain@icloud.com>
+    Appellation: state <module>
+    Contrib: @FL03
 */
-/// A generic identifier
+use super::RawState;
+
+/// [`State`] is a generic type wrapper materializing the [`RawState`] trait.
 #[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(
     feature = "serde",
@@ -89,7 +91,7 @@ impl<Q> State<Q> {
     }
 }
 
-impl<Q> super::RawState for State<Q> {
+impl<Q> RawState for State<Q> {
     type Item = Q;
 
     seal!();

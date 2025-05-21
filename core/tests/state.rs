@@ -6,7 +6,7 @@ use scsys_core::state::*;
 
 #[test]
 fn test_nary_state() {
-    let state = NState::<usize, 4>::new(0);
+    let state = NaryState::<usize, 4>::new(0);
     assert!(state.is_state::<Nary<4>>());
 
     assert!(!state.is_state::<Nary<2>>());

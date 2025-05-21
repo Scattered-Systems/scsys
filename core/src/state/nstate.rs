@@ -5,7 +5,7 @@
 use core::marker::PhantomData;
 
 /// A type alias for a [Nary] state with a default value of 4.
-pub type NState<T, const N: usize = 4> = KState<Nary<N>, T>;
+pub type NaryState<T, const N: usize = 4> = NState<Nary<N>, T>;
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum Nary<const N: usize> {}
@@ -20,7 +20,7 @@ macro_rules! impl_state_kind {
     };
     (@state $name:ident($n:literal)) => {
         paste::paste! {
-            pub type [<$name State>]<T> = KState<[<State $n>], T>;
+            pub type [<$name State>]<T> = NState<[<State $n>], T>;
         }
     };
     ($($name:ident($n:literal)),* $(,)?) => {
@@ -41,12 +41,12 @@ impl_state_kind!(Unary(1), Binary(2), Ternary(3));
     derive(serde::Deserialize, serde::Serialize),
     serde(default)
 )]
-pub struct KState<K, V> {
+pub struct NState<K, V> {
     pub(crate) data: V,
     pub(crate) _state: PhantomData<K>,
 }
 
-impl<K, V> KState<K, V> {
+impl<K, V> NState<K, V> {
     pub fn new(data: V) -> Self {
         Self {
             data,
