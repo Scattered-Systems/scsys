@@ -28,17 +28,17 @@ license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys.git"
 rust-version = "1.85.0"
-version = "0.2.5"
+version = "0.2.6"
 
 [workspace.dependencies]
-scsys = { default-features = false, path = "scsys", version = "0.2.5" }
-scsys-core = { default-features = false, path = "core", version = "0.2.5" }
-scsys-config = { default-features = false, path = "config", version = "0.2.5" }
-scsys-crypto = { default-features = false, path = "crypto", version = "0.2.5" }
-scsys-derive = { default-features = false, path = "derive", version = "0.2.5" }
-scsys-macros = { default-features = false, path = "macros", version = "0.2.5" }
-scsys-traits = { default-features = false, path = "traits", version = "0.2.5" }
-scsys-util = { default-features = false, path = "utils", version = "0.2.5" }
+scsys = { default-features = false, path = "scsys", version = "0.2.6" }
+scsys-core = { default-features = false, path = "core", version = "0.2.6" }
+scsys-config = { default-features = false, path = "config", version = "0.2.6" }
+scsys-crypto = { default-features = false, path = "crypto", version = "0.2.6" }
+scsys-derive = { default-features = false, path = "derive", version = "0.2.6" }
+scsys-macros = { default-features = false, path = "macros", version = "0.2.6" }
+scsys-traits = { default-features = false, path = "traits", version = "0.2.6" }
+scsys-util = { default-features = false, path = "utils", version = "0.2.6" }
 
 # data & serialization
 serde = { default-features = false, features = [ "derive" ], version = "1" }
