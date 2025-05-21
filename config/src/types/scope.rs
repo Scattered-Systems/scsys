@@ -10,30 +10,27 @@ fn _default_context() -> Option<String> {
     Some(env!("CARGO_MANIFEST_DIR").to_string())
 }
 
-fn _default_workdir() -> String {
-    DEFAULT_WORKDIR.to_string()
-}
-
 /// [Scope] stores critical information regarding the applications current position within
 /// the filesystem. The context is considered to be the current working directory of the
 /// application while the workdir is used to point to the directory where all of the assets
 /// are stored.
-#[derive(
-    Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Deserialize, serde::Serialize,
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Deserialize, serde::Serialize),
+    serde(default, rename_all = "snake_case")
 )]
-#[serde(default)]
 pub struct Scope {
     // The root directory of the service
     pub(crate) context: Option<String>,
     // The directory where all of the assets
-    #[serde(default = "_default_workdir")]
     pub(crate) workdir: String,
 }
 
 impl Scope {
-    pub fn from_workdir(workdir: impl ToString) -> Self {
+    pub fn from_workdir<T: ToString>(workdir: T) -> Self {
         Self {
-            context: None,
+            context: _default_context(),
             workdir: workdir.to_string(),
         }
     }

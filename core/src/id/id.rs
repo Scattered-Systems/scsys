@@ -85,10 +85,7 @@ impl Id<usize> {
 #[cfg(feature = "uuid")]
 impl Id<uuid::Uuid> {
     pub fn v3(namespace: &uuid::Uuid, name: &[u8]) -> Self {
-        let id = uuid::Uuid::new_v3(
-            &namespace,
-            name
-        );
+        let id = uuid::Uuid::new_v3(&namespace, name);
         Self(id)
     }
 

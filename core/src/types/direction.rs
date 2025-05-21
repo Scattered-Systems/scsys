@@ -56,7 +56,7 @@ impl Direction {
         Self::Forward
     }
     /// invert the current direction;
-    /// 
+    ///
     /// - [`Forward`](Direction::Forward) becomes [`Backward`](Direction::Backward)
     /// - [`Backward`](Direction::Backward) becomes [`Forward`](Direction::Forward)
     /// - [`Stay`](Direction::Stay) remains as is
@@ -70,7 +70,6 @@ impl Direction {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -78,7 +77,7 @@ mod tests {
     #[test]
     fn test_direction() {
         use core::str::FromStr;
-        
+
         let dir = Direction::from_str("forward").ok();
         assert_eq!(dir, Some(Direction::Forward));
         let inv = dir.expect("failed to parse the direction").invert();

@@ -44,11 +44,11 @@ pub mod types {
     pub mod direction;
 
     pub(crate) mod prelude {
-        #[doc(inline)]
-        pub use super::direction::*;
         #[allow(unused_imports)]
         #[doc(inline)]
         pub use super::aliases::*;
+        #[doc(inline)]
+        pub use super::direction::*;
     }
 
     pub(crate) mod aliases {

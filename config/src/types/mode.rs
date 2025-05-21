@@ -29,11 +29,17 @@
 #[strum(serialize_all = "lowercase")]
 pub enum Mode {
     #[default]
-    #[serde(alias = "debug", alias = "dev", alias = "d")]
+    #[cfg_attr(feature = "serde", serde(alias = "debug", alias = "dev", alias = "d"))]
     Development = 0,
-    #[serde(alias = "stag", alias = "staging", alias = "test", alias = "t")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "stag", alias = "staging", alias = "test", alias = "t")
+    )]
     Staging = -1,
-    #[serde(alias = "prod", alias = "release", alias = "p", alias = "r")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "prod", alias = "release", alias = "p", alias = "r")
+    )]
     Production = 1,
 }
 
@@ -49,7 +55,7 @@ impl Mode {
     pub fn staging() -> Self {
         Self::Staging
     }
-
+    #[cfg(feature = "tracing")]
     pub fn as_tracing(&self) -> tracing::Level {
         use tracing::Level;
         match self {
@@ -73,6 +79,7 @@ impl From<isize> for Mode {
     }
 }
 
+#[cfg(feature = "config")]
 impl From<Mode> for config::Value {
     fn from(mode: Mode) -> Self {
         mode.to_string().into()

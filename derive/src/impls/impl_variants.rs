@@ -1,6 +1,6 @@
 /*
-    Appellation: enum <module>
-    Contrib: FL03 <jo3mccain@icloud.com>
+    Appellation: impl_variants <module>
+    Contrib: @FL03
 */
 use crate::utils::snakecase;
 use proc_macro2::{Span, TokenStream};

@@ -1,6 +1,6 @@
 [package]
 build = "build.rs"
-name = "scsys-core"
+name = "scsys-crypto"
 
 authors.workspace = true
 categories.workspace = true
@@ -25,15 +25,19 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [lib]
-bench = false
 crate-type = [ "cdylib", "rlib" ]
+bench = false
+doc = true
 doctest = true
 test = true
 
 [dependencies]
-glob = { workspace = true }
-num = { workspace = true }
-num-traits = { workspace = true }
+scsys-core = { workspace = true }
+
+# crate
+blake3 = { optional = true, version = "1" }
+generic-array = { workspace = true }
+typenum = { workspace = true }
 # data & serialization
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
@@ -45,7 +49,6 @@ thiserror = { workspace = true }
 getrandom = { optional = true, workspace = true }
 rand = { optional = true, workspace = true }
 rand_distr = { optional = true, workspace = true }
-uuid = { optional = true, workspace = true }
 # time
 chrono = { optional = true, workspace = true }
 time = { optional = true, workspace = true }
@@ -54,12 +57,11 @@ paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { workspace = true }
 
-[dev-dependencies]
-anyhow = { workspace = true }
-approx = { workspace = true }
-
 [features]
-default = [ "std" ]
+default = [ 
+    "std",
+    "blake3",
+]
 
 full = [ 
     "default",
@@ -75,15 +77,12 @@ full = [
 std = [
     "alloc",
     "anyhow?/std",
-    "num/std",
-    "num-traits/std",
     "rand?/std",
     "rand?/std_rng",
     "serde?/std",
     "strum/std",
     "thiserror/std",
     "time?/std",
-    "uuid?/std",
 ]
 
 wasi = [  ]
@@ -92,7 +91,6 @@ wasm = [
     "chrono?/wasmbind",
     "getrandom?/wasm_js",
     "time?/wasm-bindgen",
-    "uuid?/js",
 ]
 
 # ************* [FF:Dependencies] *************
@@ -100,10 +98,13 @@ anyhow = [ "dep:anyhow" ]
 
 alloc = [ 
     "chrono?/alloc",
-    "num/alloc",
     "serde?/alloc",
     "serde_json?/alloc",
     "time?/alloc",
+]
+
+blake3 = [ 
+    "dep:blake3"
 ]
 
 chrono = [ 
@@ -121,7 +122,6 @@ json = [
 rand = [
     "dep:rand",
     "dep:rand_distr",
-    "num/rand",
     "rng",
 ]
 
@@ -129,33 +129,20 @@ rng = [
     "dep:getrandom",
     "rand?/small_rng",
     "rand?/thread_rng",
-    "uuid?/rng",
-    "uuid?/v4"
 ]
 
 serde = [ 
     "dep:serde", 
     "dep:serde_derive", 
-    "num/serde", 
     "rand?/serde", 
-    "uuid?/serde" 
 ]
 
 time = [ "dep:time" ]
-
-uuid = [ 
-    "dep:uuid", 
-    "uuid?/v3" 
-]
 
 # ************* [Unit Tests] *************
 [[test]]
 name = "default"
 
 [[test]]
-name = "state"
-required-features = [ "std" ]
-
-[[test]]
-name = "time"
-required-features = [ "std", "time" ]
+name = "h256"
+required-features = [ "rand", "std" ]

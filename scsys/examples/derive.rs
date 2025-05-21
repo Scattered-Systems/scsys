@@ -5,6 +5,8 @@
 use scsys::prelude::Result;
 
 fn main() -> Result<()> {
+    let params = LinearParams { weight: 0.5 };
+    println!("Params: {}", params);
     let variant = Something::a();
     println!("Variant: {:?}", variant);
     let variant = Something::b(42);
@@ -14,7 +16,10 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::Getter)]
+#[derive(
+    Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::Getter, scsys::Display,
+)]
+#[scsys(display(json))]
 pub struct LinearParams<T> {
     pub weight: T,
 }

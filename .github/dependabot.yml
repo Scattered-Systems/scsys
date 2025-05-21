@@ -15,6 +15,7 @@ updates:
       - /
       - /scsys
       - /cnf
+      - /crypto
       - /core
       - /derive
       - /macros

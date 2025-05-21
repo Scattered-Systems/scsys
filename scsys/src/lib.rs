@@ -23,16 +23,28 @@ pub use scsys_util::*;
 
 #[doc(inline)]
 #[cfg(feature = "config")]
-pub use scsys_cnf as cnf;
+pub use scsys_config as config;
+#[doc(inline)]
+#[cfg(feature = "crypto")]
+pub use scsys_crypto as crypto;
 
 pub mod prelude {
-    #[cfg(feature = "config")]
-    pub use scsys_cnf::prelude::*;
+    #[doc(no_inline)]
     pub use scsys_core::prelude::*;
+
+    #[cfg(feature = "config")]
+    #[doc(no_inline)]
+    pub use scsys_config::prelude::*;
+    #[cfg(feature = "crypto")]
+    #[doc(no_inline)]
+    pub use scsys_crypto::prelude::*;
     #[cfg(feature = "derive")]
+    #[doc(no_inline)]
     pub use scsys_derive::*;
     #[cfg(feature = "macros")]
+    #[doc(no_inline)]
     pub use scsys_macros::*;
     #[cfg(feature = "traits")]
+    #[doc(no_inline)]
     pub use scsys_traits::prelude::*;
 }

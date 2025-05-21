@@ -2,56 +2,33 @@
     Appellation: workspace <config>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use super::Scope;
 use std::path::PathBuf;
 
-const _WORKDIR: &str = "dist";
-const _APP_NAME: &str = env!("CARGO_PKG_NAME");
-const _ARTIFACTS_DIR: &str = "artifacts";
-const _BUILD_DIR: &str = "build";
+const APP_NAME: &str = env!("CARGO_PKG_NAME");
+const ARTIFACTS: &str = "artifacts";
+const DEFAULT_WORKDIR: &str = "dist";
 
 fn _application() -> String {
     std::env::current_exe()
         .map(|path| path.display().to_string())
-        .unwrap_or(_APP_NAME.to_string())
-}
-
-fn _application_option() -> Option<String> {
-    Some(_application())
-}
-
-fn _artifacts() -> String {
-    _ARTIFACTS_DIR.to_string()
-}
-
-fn _default_scope() -> Scope {
-    Scope::from_workdir(_WORKDIR)
-}
-
-fn _default_context() -> Option<String> {
-    Some(".".to_string())
-}
-
-fn _default_workdir() -> PathBuf {
-    std::env::current_dir().unwrap_or(_WORKDIR.into())
+        .unwrap_or(APP_NAME.to_string())
 }
 
 /// [Scope] is a structure containing all of the information required for the service to operate.
-#[derive(
-    Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, serde::Deserialize, serde::Serialize,
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Deserialize, serde::Serialize),
+    serde(default, rename_all = "snake_case")
 )]
-#[serde(default)]
 pub struct WorkspaceConfig {
     /// the path to the executable
-    #[serde(default = "_application")]
     pub(crate) application: String,
     /// the path to the directory used to store any artifacts
-    #[serde(default = "_artifacts")]
     pub(crate) artifacts: String,
     /// a path to another build-script
     pub(crate) build: Option<String>,
     // The root directory of the service
-    #[serde(default = "_default_workdir")]
     pub(crate) workdir: PathBuf,
 }
 
@@ -62,7 +39,7 @@ impl WorkspaceConfig {
     {
         Self {
             application: _application(),
-            artifacts: _artifacts(),
+            artifacts: ARTIFACTS.to_string(),
             build: None,
             workdir: workdir.into(),
         }
@@ -130,6 +107,6 @@ impl WorkspaceConfig {
 
 impl Default for WorkspaceConfig {
     fn default() -> Self {
-        Self::new(_WORKDIR)
+        Self::new(DEFAULT_WORKDIR)
     }
 }

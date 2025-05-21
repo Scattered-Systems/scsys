@@ -1,6 +1,6 @@
 /*
-    Appellation: display <module>
-    Contrib: FL03 <jo3mccain@icloud.com>
+    Appellation: impl_display <module>
+    Contrib: @FL03
 */
 use proc_macro2::TokenStream;
 use quote::quote;
@@ -14,10 +14,27 @@ pub fn impl_display(ast: &DeriveInput) -> TokenStream {
         ..
     } = ast;
     if attrs.iter().any(|attr| attr.path().is_ident("display")) {
+        // handle serde
         return handle_serde_display(name, generics);
     }
+
+    _handle_display(name, generics)
+}
+
+pub fn _handle_display(name: &Ident, generics: &Generics) -> TokenStream {
+    let (impl_generics, ty_generics, _where) = generics.split_for_impl();
+    let mut where_clause = _where.cloned();
+    // ensure that every generic implements serde::Serialize
+    if let Some(where_clause) = where_clause.as_mut() {
+        generics.type_params().for_each(|param| {
+            where_clause
+                .predicates
+                .push(syn::parse_quote!(#param: core::fmt::Display))
+        });
+    }
+
     quote! {
-        impl core::fmt::Display for #name {
+        impl #impl_generics core::fmt::Display for #name #ty_generics #where_clause {
             fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
                 let mut s = String::new();
                 write!(f, "{}", s)
@@ -28,20 +45,14 @@ pub fn impl_display(ast: &DeriveInput) -> TokenStream {
 
 pub fn handle_serde_display(name: &Ident, generics: &Generics) -> TokenStream {
     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
-    if let Some(where_clause) = where_clause {
-        let mut where_clause = where_clause.clone();
+    let mut where_clause = where_clause.cloned();
+    // ensure that every generic implements serde::Serialize
+    if let Some(where_clause) = where_clause.as_mut() {
         generics.type_params().for_each(|param| {
             where_clause
                 .predicates
                 .push(syn::parse_quote!(#param: serde::Serialize))
         });
-        return quote! {
-            impl #impl_generics core::fmt::Display for #name #ty_generics #where_clause {
-                fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-                    f.write_str(serde_json::to_string(self).unwrap().as_str())
-                }
-            }
-        };
     }
 
     quote! {

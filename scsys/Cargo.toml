@@ -11,6 +11,7 @@ keywords.workspace = true
 license.workspace = true
 readme.workspace = true
 repository.workspace = true
+rust-version.workspace = true
 version.workspace = true
 
 [lib]
@@ -28,6 +29,8 @@ default = [
 
 full = [
     "default",
+    "config",
+    "crypto",
     "derive",
     "json",
     "macros",
@@ -38,79 +41,87 @@ full = [
 
 # ********* [FF] Features *********
 config = [
-    "dep:scsys-cnf",
+    "dep:scsys-config",
     "std"
 ]
 
-derive = [
-    "dep:scsys-derive",
-]
+crypto = [ "dep:scsys-crypto" ]
 
-macros = [
-    "dep:scsys-macros",
-]
+derive = [ "dep:scsys-derive" ]
 
-traits = [
-    "dep:scsys-traits",
-]
+macros = [ "dep:scsys-macros" ]
 
-utils = [
-    "dep:scsys-util",
-]
+traits = [ "dep:scsys-traits" ]
+
+utils = [ "dep:scsys-util" ]
 
 # ********* [FF] Dependencies *********
 alloc = [
     "scsys-core/alloc",
+    "scsys-crypto?/alloc",
+    "scsys-traits?/alloc",
     "scsys-util?/alloc",
 ]
 
 anyhow = [
     "scsys-core/anyhow",
+    "scsys-crypto?/anyhow",
+
 ]
 
 chrono = [
     "scsys-core/chrono",
+    "scsys-crypto?/chrono",
 ]
 
 json = [
     "scsys-core/json",
+    "scsys-crypto?/json",
 ]
 
 rand = [
     "scsys-core/rand",
+    "scsys-crypto?/rand",
 ]
 
 rng = [
     "scsys-core/rng",
+    "scsys-crypto?/rng",
 ]
 
 serde = [
     "scsys-core/serde",
+    "scsys-crypto?/serde",
     "scsys-util?/serde",
 ]
 
 time = [
     "scsys-core/time",
+    "scsys-crypto?/time",
 ]
 
 # ********* [FF] Environments *********
 std = [
     "scsys-core/std",
+    "scsys-crypto?/std",
     "scsys-traits?/std",
     "scsys-util?/std",
 ]
 
 wasi = [
     "scsys-core/wasi",
+    "scsys-crypto?/wasi",
 ]
 
 wasm = [
     "scsys-core/wasm",
+    "scsys-crypto?/wasm",
 ]
 
 [dependencies]
 scsys-core = { workspace = true }
-scsys-cnf = { optional = true, workspace = true }
+scsys-config = { optional = true, workspace = true }
+scsys-crypto = { optional = true, workspace = true }
 scsys-derive = { optional = true, workspace = true }
 scsys-macros = { optional = true, workspace = true }
 scsys-traits = { optional = true, workspace = true }
@@ -118,7 +129,7 @@ scsys-util = { optional = true, workspace = true }
 
 [dev-dependencies]
 anyhow = { features = ["std"], workspace = true }
-criterion = { version = "0.5" }
+criterion = { version = "0.6" }
 serde = { features = ["std"], workspace = true }
 serde_json = { features = ["std"], workspace = true }
 
@@ -132,19 +143,20 @@ version = "v{{version}}"
 no-dev-version = true
 tag-name = "{{version}}"
 
-# ********* benches *********
+# ************* [Benchmarks] *************
 [[bench]]
 harness = false
 name = "default"
 path = "benches/default.rs"
 required-features = ["std"]
 
-# ********* examples *********
+# ************* [Examples] *************
 [[example]]
 name = "derive"
 required-features = [ "derive", "serde" ]
 
-# ********* test *********
+
+# ************* [Unit Tests] *************
 [[test]]
 name = "derive"
 required-features = [ "derive" ]

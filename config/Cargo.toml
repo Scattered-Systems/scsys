@@ -1,6 +1,6 @@
 [package]
 build = "build.rs"
-name = "scsys-cnf"
+name = "scsys-config"
 
 authors.workspace = true
 categories.workspace = true
@@ -11,6 +11,7 @@ keywords.workspace = true
 license.workspace = true
 readme.workspace = true
 repository.workspace = true
+rust-version.workspace = true
 version.workspace = true
 
 [lib]
@@ -27,6 +28,7 @@ full = [
     "json",
     "serde",
     "tracing",
+    "tracing-subscriber",
 ]
 
 # ************* [FF:Dependencies] *************
@@ -41,9 +43,15 @@ json = [
 serde = [
     "dep:serde",
     "dep:serde_derive",
+    "tracing-subscriber?/serde",
 ]
 
 tracing = ["dep:tracing"]
+
+tracing-subscriber = [
+    "dep:tracing-subscriber",
+    "tracing",
+]
 
 [dependencies]
 config = { default-features = false, optional = true, version = "0.15" }
@@ -58,6 +66,7 @@ smart-default = { workspace = true }
 strum = { features = ["derive", "std"], workspace = true }
 # logging
 tracing = { optional = true, workspace = true }
+tracing-subscriber = { optional = true, workspace = true }
 
 # ************* [Unit Tests] *************
 [[test]]

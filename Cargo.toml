@@ -1,3 +1,19 @@
+[workspace]
+default-members = [
+    "scsys",
+]
+resolver = "3"
+members = [
+    "core",
+    "scsys",
+    "config",
+    "crypto",
+    "derive",
+    "macros",
+    "traits",
+    "utils", 
+]
+
 [workspace.package]
 authors = [ 
     "FL03 <jo3mccain@icloud.com> (https://github.com/FL03)", 
@@ -11,31 +27,14 @@ keywords = [ "primitives", "scsys", "toolkit", "utilities" ]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys.git"
+rust-version = "1.85.0"
 version = "0.2.5"
-
-[workspace]
-default-members = [
-    "scsys",
-]
-
-exclude = [  ]
-
-members = [
-    "core",
-    "cnf",
-    "derive",
-    "macros",
-    "scsys", 
-    "traits",
-    "utils",
-]
-
-resolver = "3"
 
 [workspace.dependencies]
 scsys = { default-features = false, path = "scsys", version = "0.2.5" }
 scsys-core = { default-features = false, path = "core", version = "0.2.5" }
-scsys-cnf = { default-features = false, path = "cnf", version = "0.2.5" }
+scsys-config = { default-features = false, path = "config", version = "0.2.5" }
+scsys-crypto = { default-features = false, path = "crypto", version = "0.2.5" }
 scsys-derive = { default-features = false, path = "derive", version = "0.2.5" }
 scsys-macros = { default-features = false, path = "macros", version = "0.2.5" }
 scsys-traits = { default-features = false, path = "traits", version = "0.2.5" }
@@ -68,6 +67,8 @@ smart-default = { version = "0.7" }
 strum = { default-features = false, features = [ "derive" ], version = "0.27" }
 # misc
 glob = { default-features = false, version = "0.3" }
+generic-array = { default-features = false, version = "1" }
+typenum = { default-features = false, version = "1" }
 # logging
 tracing = { default-features = false, features = ["attributes"], version = "0.1" }
 tracing-subscriber = { default-features = false, version = "0.3" }

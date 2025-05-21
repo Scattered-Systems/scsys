@@ -1,3 +1,7 @@
+/*
+    Appellation: impl_gsw <module>
+    Contrib: @FL03
+*/
 use quote::quote;
 use syn::{DeriveInput, spanned::Spanned};
 
