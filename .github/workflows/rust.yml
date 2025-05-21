@@ -41,6 +41,8 @@ jobs:
         with:
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           cache-workspaces: true
+          toolchain: nightly
+          override: true
       - 
         name: Build
         run: cargo build --locked --release --workspace --all-features
