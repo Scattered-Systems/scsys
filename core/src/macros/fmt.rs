@@ -4,9 +4,9 @@
 */
 
 #[allow(unused_macros)]
-macro_rules! impl_fmt {
+macro_rules! impl_format {
     ($name:ty: $($t:ident($($rest:tt)*)),*) => {
-        $(impl_fmt!($name: $t($($rest)*));)*
+        $(impl_format!($name: $t($($rest)*));)*
     };
     (@impl $name:ty: $t:ident($($rest:tt)*)) => {
         impl core::fmt::$t for $name {

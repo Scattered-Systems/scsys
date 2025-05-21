@@ -6,12 +6,22 @@
 //!
 //! This module contains the stateful types and traits for the library.
 #[doc(inline)]
-pub use self::nstate::*;
+pub use self::{nstate::*, state::*};
 
 pub mod nstate;
+pub mod state;
+
+mod impls {
+    pub mod impl_ops;
+    pub mod impl_repr;
+}
 
 pub(crate) mod prelude {
+    #[doc(inline)]
     pub use super::nstate::*;
+    #[doc(inline)]
+    pub use super::state::*;
+    #[doc(inline)]
     pub use super::{RawState, Stateful};
 }
 
@@ -22,16 +32,20 @@ pub trait Stateful {
 
 /// [RawState]
 pub trait RawState {
-    type Inner;
+    type Item;
+
+    private!();
 }
 
 /*
  ************* Implementations *************
 */
-impl<Q, T> RawState for State<Q, T> {
-    type Inner = T;
+impl<Q, T> RawState for KState<Q, T> {
+    type Item = T;
+
+    seal!();
 }
 
-impl<Q, T> Stateful for State<Q, T> {
-    type State = State<Q, T>;
+impl<Q, T> Stateful for KState<Q, T> {
+    type State = KState<Q, T>;
 }

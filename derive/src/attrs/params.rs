@@ -9,7 +9,6 @@ pub struct ParamsAttr {
     pub name: Option<Ident>,
 }
 
-
 impl syn::parse::Parse for ParamsAttr {
     fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
         let mut name = None;

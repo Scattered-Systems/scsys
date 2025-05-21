@@ -25,7 +25,7 @@ pub(crate) mod macros {
 }
 
 #[doc(inline)]
-pub use self::{state::State, types::prelude::*, utils::*};
+pub use self::{state::KState, types::prelude::*, utils::*};
 
 #[doc(inline)]
 pub use self::error::*;

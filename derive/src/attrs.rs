@@ -10,7 +10,6 @@ pub use self::{display::DisplayAttr, params::ParamsAttr};
 mod display;
 mod params;
 
-
 #[derive(Default)]
 pub struct ScsysAttr {
     pub display: Option<DisplayAttr>,
@@ -24,7 +23,6 @@ impl ScsysAttr {
             params: None,
         }
     }
-
 
     pub fn from_display(display: DisplayAttr) -> Self {
         Self {
@@ -71,7 +69,7 @@ impl syn::parse::Parse for ScsysAttr {
         let mut _attr = ScsysAttr::new();
         if let Ok(arg) = input.parse::<DisplayAttr>() {
             _attr.set_display(arg);
-        } 
+        }
         if let Ok(arg) = input.parse::<ParamsAttr>() {
             _attr.set_params(arg);
         }
@@ -96,12 +94,12 @@ pub fn _handle_display_attr(attrs: &Vec<syn::Attribute>) -> syn::Result<ScsysAtt
                     let opt: Ident = content.parse()?;
                     _attr.set_display(DisplayAttr::from_kind(lit).with_serde(opt));
                 }
-    
+
                 // #[scsys(params(...))]
                 if meta.path.is_ident("params") {
                     return Ok(());
                 }
-    
+
                 Err(meta.error("unrecognized repr"))
             })?;
         }
