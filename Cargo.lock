@@ -1271,7 +1271,9 @@ dependencies = [
  "strum",
  "thiserror",
  "time",
+ "tracing",
  "uuid",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -1294,6 +1296,7 @@ dependencies = [
  "strum",
  "thiserror",
  "time",
+ "tracing",
  "typenum",
  "uuid",
 ]

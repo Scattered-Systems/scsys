@@ -13,6 +13,11 @@
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
+
+#[doc(inline)]
+#[cfg(feature = "traits")]
+pub use scsys_traits::prelude::*;
+
 #[doc(inline)]
 pub use scsys_core::*;
 #[doc(inline)]
@@ -21,7 +26,6 @@ pub use scsys_derive::*;
 #[doc(inline)]
 #[cfg(feature = "macros")]
 pub use scsys_macros::*;
-
 #[doc(inline)]
 #[cfg(feature = "config")]
 pub use scsys_config as config;

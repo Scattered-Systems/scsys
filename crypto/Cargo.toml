@@ -57,6 +57,8 @@ time = { optional = true, workspace = true }
 paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { workspace = true }
+# logging
+tracing = { optional = true, workspace = true }
 
 [features]
 default = [ 
@@ -73,6 +75,7 @@ full = [
     "rand", 
     "serde", 
     "time",
+    "tracing",
     "uuid",
 ]
 
@@ -89,6 +92,7 @@ std = [
     "strum/std",
     "thiserror/std",
     "time?/std",
+    "tracing?/std",
     "uuid?/std",
 ]
 
@@ -102,34 +106,39 @@ wasm = [
 ]
 
 # ************* [FF:Dependencies] *************
-anyhow = [ "dep:anyhow" ]
+anyhow = [ 
+    "dep:anyhow",
+    "scsys-core/anyhow",
+]
 
 alloc = [ 
     "chrono?/alloc",
+    "scsys-core/alloc",
     "serde?/alloc",
     "serde_json?/alloc",
     "time?/alloc",
 ]
 
-blake3 = [ 
-    "dep:blake3"
-]
+blake3 = [ "dep:blake3"]
 
 chrono = [ 
     "dep:chrono", 
     "chrono?/clock",
+    "scsys-core/chrono",
     "time",
 ]
 
 json = [ 
     "dep:serde_json", 
-    "alloc", 
+    "alloc",
+    "scsys-core/json",
     "serde",
 ]
 
 rand = [
     "dep:rand",
     "dep:rand_distr",
+    "scsys-core/rand",
     "rng",
 ]
 
@@ -137,6 +146,7 @@ rng = [
     "dep:getrandom",
     "rand?/small_rng",
     "rand?/thread_rng",
+    "scsys-core/rng",
     "uuid?/v4",
 ]
 
@@ -145,14 +155,24 @@ serde = [
     "dep:serde_derive", 
     "chrono?/serde",
     "rand?/serde", 
+    "scsys-core/serde",
     "uuid?/serde",
     "time?/serde",
 ]
 
-time = [ "dep:time" ]
+time = [ 
+    "dep:time",
+    "scsys-core/time",
+]
+
+tracing = [
+    "dep:tracing",
+    "scsys-core/tracing",
+]
 
 uuid = [
     "dep:uuid",
+    "scsys-core/uuid",
     "uuid?/v3",
 ]
 

@@ -90,6 +90,7 @@ glob = ["dep:glob"]
 serde = [
     "dep:serde",
     "dep:serde_derive",
+    "scsys-core/serde",
     "tracing-subscriber?/serde",
     "url/serde",
 ]
@@ -97,10 +98,14 @@ serde = [
 serde_json = [
     "dep:serde_json", 
     "config?/serde_json",
+    "scsys-core/json",
     "serde",
 ]
 
-tracing = ["dep:tracing"]
+tracing = [
+    "dep:tracing",
+    "scsys-core/tracing",
+]
 
 tracing-subscriber = [
     "dep:tracing-subscriber",

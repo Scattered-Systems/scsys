@@ -145,6 +145,16 @@ time = [
     "scsys-crypto?/time",
 ]
 
+tracing = [
+    "scsys-core/tracing",
+    "scsys-config?/tracing",
+    "scsys-crypto?/tracing",
+]
+
+wasm-bindgen = [
+    "scsys-core/wasm-bindgen",
+]
+
 # ************* [Benchmarks] *************
 [[bench]]
 harness = false

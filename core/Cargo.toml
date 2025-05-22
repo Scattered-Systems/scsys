@@ -53,6 +53,10 @@ time = { optional = true, workspace = true }
 paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { workspace = true }
+# logging
+tracing = { optional = true, workspace = true }
+# wasm
+wasm-bindgen = { optional = true, workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
@@ -68,7 +72,8 @@ full = [
     "json",
     "rand", 
     "serde", 
-    "time" 
+    "time",
+    "tracing",
 ]
 
 # ************* [FF:Environments] *************
@@ -83,20 +88,20 @@ std = [
     "strum/std",
     "thiserror/std",
     "time?/std",
+    "tracing?/std",
     "uuid?/std",
 ]
 
 wasi = [  ]
 
 wasm = [ 
-    "chrono?/wasmbind",
     "getrandom?/wasm_js",
-    "time?/wasm-bindgen",
     "uuid?/js",
+    "wasm-bindgen",
 ]
 
 # ************* [FF:Dependencies] *************
-anyhow = [ "dep:anyhow" ]
+anyhow = ["dep:anyhow"]
 
 alloc = [ 
     "chrono?/alloc",
@@ -143,12 +148,19 @@ serde = [
     "time?/serde",
 ]
 
-
 time = [ "dep:time" ]
+
+tracing = ["dep:tracing"]
 
 uuid = [ 
     "dep:uuid", 
     "uuid?/v3" 
+]
+
+wasm-bindgen = [
+    "dep:wasm-bindgen",
+    "chrono?/wasmbind",
+    "time?/wasm-bindgen",
 ]
 
 # ************* [Unit Tests] *************

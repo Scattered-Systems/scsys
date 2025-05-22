@@ -73,6 +73,8 @@ url = { default-features = false, version = "2" }
 # logging
 tracing = { default-features = false, features = ["attributes"], version = "0.1" }
 tracing-subscriber = { default-features = false, version = "0.3" }
+# wasm
+wasm-bindgen = { default-features = false, version = "0.2" }
 
 [profile.dev]
 codegen-units = 256
