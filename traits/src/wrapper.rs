@@ -70,9 +70,4 @@ pub trait Mapper<U> {
 /*
  ************* Implementations *************
 */
-impl<T, U> WrapperExt for T
-where
-    T: Wrapper<Item = U>,
-{
-
-}
+impl<T, U> WrapperExt for T where T: Wrapper<Item = U> {}

@@ -3,6 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 
+/// [Mode] enumerates the possible runtime modes of the application.
 #[derive(
     Clone,
     Copy,
@@ -18,9 +19,10 @@
     strum::EnumCount,
     strum::EnumIs,
     strum::EnumIter,
-    strum::EnumString,
+    strum::VariantArray,
     strum::VariantNames,
 )]
+#[cfg_attr(feature = "clap", derive(clap::ValueEnum))]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Deserialize, serde::Serialize),
@@ -29,59 +31,27 @@
 #[strum(serialize_all = "lowercase")]
 pub enum Mode {
     #[default]
-    #[cfg_attr(feature = "serde", serde(alias = "debug", alias = "dev", alias = "d"))]
-    Development = 0,
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "stag", alias = "staging", alias = "test", alias = "t")
-    )]
-    Staging = -1,
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "prod", alias = "release", alias = "p", alias = "r")
-    )]
-    Production = 1,
+    #[cfg_attr(feature = "clap", clap(name = "debug"))]
+    #[cfg_attr(feature = "serde", serde(alias = "dev", alias = "development"))]
+    Debug,
+    #[cfg_attr(feature = "clap", clap(name = "release"))]
+    #[cfg_attr(feature = "serde", serde(alias = "prod", alias = "production"))]
+    Release,
 }
 
 impl Mode {
-    pub fn development() -> Self {
-        Self::Development
+    // pub fn from_env() -> Self {
+    //     std::env::var("APP_MODE")
+    //         .map(|m| Self::from_str(&m))
+    //         .flatten()
+    //         .unwrap_or_default()
+    // }
+
+    pub fn debug() -> Self {
+        Self::Debug
     }
 
-    pub fn production() -> Self {
-        Self::Production
-    }
-
-    pub fn staging() -> Self {
-        Self::Staging
-    }
-    #[cfg(feature = "tracing")]
-    pub fn as_tracing(&self) -> tracing::Level {
-        use tracing::Level;
-        match self {
-            Self::Development => Level::DEBUG,
-            Self::Staging => Level::TRACE,
-            Self::Production => Level::INFO,
-        }
-    }
-}
-
-impl From<isize> for Mode {
-    fn from(value: isize) -> Self {
-        match value % 2 {
-            -1 => Self::Staging,
-            0 => Self::Development,
-            1 => Self::Production,
-            _ => unreachable!(
-                "Modular arithmetic should not yield a value outside of the range: [+/-1]"
-            ),
-        }
-    }
-}
-
-#[cfg(feature = "config")]
-impl From<Mode> for config::Value {
-    fn from(mode: Mode) -> Self {
-        mode.to_string().into()
+    pub fn release() -> Self {
+        Self::Release
     }
 }

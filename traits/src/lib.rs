@@ -24,7 +24,6 @@ pub mod symbolic;
 pub mod toggle;
 pub mod wrapper;
 
-
 #[doc(hidden)]
 pub mod prelude {
     #[doc(inline)]

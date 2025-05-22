@@ -32,7 +32,6 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [dependencies]
-glob = { workspace = true }
 num = { workspace = true }
 num-traits = { workspace = true }
 # data & serialization

@@ -69,6 +69,7 @@ strum = { default-features = false, features = [ "derive" ], version = "0.27" }
 glob = { default-features = false, version = "0.3" }
 generic-array = { default-features = false, version = "1" }
 typenum = { default-features = false, version = "1" }
+url = { default-features = false, version = "2" }
 # logging
 tracing = { default-features = false, features = ["attributes"], version = "0.1" }
 tracing-subscriber = { default-features = false, version = "0.3" }

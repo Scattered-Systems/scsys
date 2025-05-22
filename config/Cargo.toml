@@ -22,9 +22,16 @@ doctest = true
 test = true
 
 [dependencies]
+# sdk
+scsys-core = { features = ["std"], workspace = true }
+# crate-specific
+clap = { default-features = false, features = ["derive"], optional = true, version = "4" }
 config = { default-features = false, optional = true, version = "0.15" }
+glob = { optional = true, workspace = true }
+url = { features = ["std"], workspace = true }
 # error handling
 anyhow = { features = ["std"], workspace = true }
+thiserror = { features = ["std"], workspace = true }
 # data & serialization
 serde = { features = ["derive", "std"], optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
@@ -35,6 +42,7 @@ strum = { features = ["derive", "std"], workspace = true }
 # logging
 tracing = { optional = true, workspace = true }
 tracing-subscriber = { optional = true, workspace = true }
+# files
 
 [package.metadata.docs.rs]
 all-features = false
@@ -61,21 +69,29 @@ default = [
 
 full = [
     "default",
+    "clap",
+    "glob",
     "tracing",
     "tracing-subscriber",
 ]
 
 # ************* [FF:Dependencies] *************
-async = [
-    "config?/async",
+async = ["config?/async"]
+
+clap = [
+    "dep:clap",
+    "clap?/derive",
 ]
 
 config = ["dep:config"]
+
+glob = ["dep:glob"]
 
 serde = [
     "dep:serde",
     "dep:serde_derive",
     "tracing-subscriber?/serde",
+    "url/serde",
 ]
 
 serde_json = [
@@ -89,7 +105,11 @@ tracing = ["dep:tracing"]
 tracing-subscriber = [
     "dep:tracing-subscriber",
     "tracing",
+    "tracing-subscriber?/ansi",
+    "tracing-subscriber?/env-filter",
+    "tracing-subscriber?/fmt",
 ]
+
 # ************* [FF:config] *************
 convert-case = ["config?/convert-case"]
 

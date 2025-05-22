@@ -13,6 +13,8 @@ extern crate alloc;
 #[doc(inline)]
 pub use self::str::*;
 
+#[cfg(feature = "fs")]
+pub mod fs;
 pub mod str;
 
 #[allow(unused_imports)]

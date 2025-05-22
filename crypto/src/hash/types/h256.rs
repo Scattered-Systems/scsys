@@ -49,7 +49,7 @@ impl H256 {
         let mut raw_bytes = [0; 32];
         raw_bytes.copy_from_slice(&data);
         (&raw_bytes).into()
-    }    
+    }
     /// returns the hash as a byte array
     pub const fn get(&self) -> &H256Array {
         &self.0

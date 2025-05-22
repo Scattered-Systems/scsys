@@ -2,7 +2,7 @@
     Appellation: container <module>
     Contrib: @FL03
 */
-/// [`RawContainer`] defines a standard interface for all _containers_ that are used to store 
+/// [`RawContainer`] defines a standard interface for all _containers_ that are used to store
 /// other entities.
 pub unsafe trait RawContainer<T> {
     type Cont<V>;
