@@ -31,6 +31,7 @@ rust-version = "1.85.0"
 version = "0.2.6"
 
 [workspace.dependencies]
+# sdk
 scsys = { default-features = false, path = "scsys", version = "0.2.6" }
 scsys-core = { default-features = false, path = "core", version = "0.2.6" }
 scsys-config = { default-features = false, path = "config", version = "0.2.6" }
@@ -40,13 +41,25 @@ scsys-macros = { default-features = false, path = "macros", version = "0.2.6" }
 scsys-traits = { default-features = false, path = "traits", version = "0.2.6" }
 scsys-util = { default-features = false, path = "utils", version = "0.2.6" }
 
+# async
+futures = { default-features = false, version = "0.3" }
+tokio = { default-features = false, version = "1" }
+# concurrency & parallelism
+crossbeam = { default-features = false, version = "0.8" }
+rayon = { default-features = false, version = "1" }
 # data & serialization
+bincode = { default-features = false, features = [ "derive" ], version = "2" }
+bincode_derive = { version = "2" }
+bytes = { default-features = false, version = "1" }
 serde = { default-features = false, features = [ "derive" ], version = "1" }
 serde_derive = { version = "1" }
 serde_json = { default-features = false, version = "1" }
 # error handling
 anyhow = { default-features = false, version = "1" }
 thiserror = { default-features = false, version = "2" }
+# hashing
+blake3 = { default-features = false, version = "1" }
+digest = { default-features = false, version = "0.10" }
 # math
 approx = { version = "0.5" }
 num = { default-features = false, version = "0.4" }
@@ -86,6 +99,7 @@ opt-level = 0
 overflow-checks = true
 panic = "abort"
 rpath = false
+strip = "debuginfo"
 
 [profile.release]
 codegen-units = 16
@@ -97,3 +111,4 @@ opt-level = "z"
 overflow-checks = false
 panic = "abort"
 rpath = false
+strip = true

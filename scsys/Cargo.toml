@@ -48,6 +48,8 @@ tag-name = "{{version}}"
 
 [features]
 default = [
+    "derive",
+    "macros",
     "std",
     "traits",
     "utils",
@@ -57,9 +59,7 @@ full = [
     "default",
     "config",
     "crypto",
-    "derive",
     "json",
-    "macros",
     "rand",
     "serde",
     "time",

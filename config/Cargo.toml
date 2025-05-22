@@ -25,7 +25,7 @@ test = true
 # sdk
 scsys-core = { features = ["std"], workspace = true }
 # crate-specific
-clap = { default-features = false, features = ["derive"], optional = true, version = "4" }
+clap = { default-features = false, features = ["derive", "std"], optional = true, version = "4" }
 config = { default-features = false, optional = true, version = "0.15" }
 glob = { optional = true, workspace = true }
 url = { features = ["std"], workspace = true }

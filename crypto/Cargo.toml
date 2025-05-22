@@ -32,13 +32,19 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [dependencies]
+# sdk
 scsys-core = { workspace = true }
 
-# crate
-blake3 = { optional = true, version = "1" }
+# crate-specific
+blake3 = { optional = true, workspace = true }
+digest = { optional = true, workspace = true }
 generic-array = { workspace = true }
 typenum = { workspace = true }
+# concurrency & parallelism
+rayon = { optional = true, workspace = true }
 # data & serialization
+bincode = { optional = true, workspace = true }
+bincode_derive = { optional = true, workspace = true }
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
 serde_json = { optional = true, workspace = true }
@@ -62,6 +68,7 @@ tracing = { optional = true, workspace = true }
 
 [features]
 default = [ 
+    "blake3",
     "hash",
     "std",
 ]
@@ -69,8 +76,9 @@ default = [
 full = [ 
     "default",
     "anyhow",
-    "blake3",
+    "bincode",
     "chrono",
+    "rayon",
     "json",
     "rand", 
     "serde", 
@@ -80,12 +88,17 @@ full = [
 ]
 
 # ************* [FF:Features] *************
-hash = []
+hash = [
+    "digest",
+]
 
 # ************* [FF:Environments] *************
 std = [
     "alloc",
     "anyhow?/std",
+    "bincode?/std",
+    "blake3?/std",
+    "digest?/std",
     "rand?/std",
     "rand?/std_rng",
     "serde?/std",
@@ -112,20 +125,33 @@ anyhow = [
 ]
 
 alloc = [ 
+    "bincode?/alloc",
     "chrono?/alloc",
+    "digest?/alloc",
+    "generic-array/alloc",
     "scsys-core/alloc",
     "serde?/alloc",
     "serde_json?/alloc",
     "time?/alloc",
 ]
 
-blake3 = [ "dep:blake3"]
+blake3 = [ "dep:blake3" ]
+
+bincode = [ 
+    "dep:bincode", 
+    "dep:bincode_derive",
+]
 
 chrono = [ 
     "dep:chrono", 
     "chrono?/clock",
     "scsys-core/chrono",
     "time",
+]
+
+digest = [
+    "dep:digest",
+    "blake3?/digest",
 ]
 
 json = [ 
@@ -142,6 +168,11 @@ rand = [
     "rng",
 ]
 
+rayon = [
+    "dep:rayon",
+    "blake3?/rayon",
+]
+
 rng = [
     "dep:getrandom",
     "rand?/small_rng",
@@ -153,7 +184,9 @@ rng = [
 serde = [ 
     "dep:serde", 
     "dep:serde_derive", 
+    "bincode?/serde",
     "chrono?/serde",
+    "generic-array/serde",
     "rand?/serde", 
     "scsys-core/serde",
     "uuid?/serde",
