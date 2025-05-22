@@ -1240,7 +1240,7 @@ dependencies = [
 
 [[package]]
 name = "scsys"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "anyhow",
  "criterion",
@@ -1257,7 +1257,7 @@ dependencies = [
 
 [[package]]
 name = "scsys-config"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "anyhow",
  "clap",
@@ -1277,7 +1277,7 @@ dependencies = [
 
 [[package]]
 name = "scsys-core"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "anyhow",
  "approx",
@@ -1302,7 +1302,7 @@ dependencies = [
 
 [[package]]
 name = "scsys-crypto"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "anyhow",
  "bincode",
@@ -1331,7 +1331,7 @@ dependencies = [
 
 [[package]]
 name = "scsys-derive"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1340,7 +1340,7 @@ dependencies = [
 
 [[package]]
 name = "scsys-macros"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1349,14 +1349,14 @@ dependencies = [
 
 [[package]]
 name = "scsys-traits"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "num-traits",
 ]
 
 [[package]]
 name = "scsys-util"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "anyhow",
  "getrandom 0.3.3",
