@@ -13,18 +13,25 @@ where
     core::any::TypeId::of::<U>() == core::any::TypeId::of::<V>()
 }
 
-pub trait IsType: 'static {
-    fn of<T: 'static>() -> bool {
-        type_of::<Self, T>()
-    }
+pub trait TypeOf {
+    fn of<T: 'static>() -> bool;
+}
 
-    fn is<T: 'static>(&self) -> bool {
+pub trait IsType {
+    fn is<T>(&self) -> bool
+    where
+        T: 'static,
+        Self: 'static,
+    {
         type_of::<Self, T>()
     }
 }
 
-/// [DType] provides additional information regarding the current type
+/// [`DType`] is a trait designed to provide additional information regarding the type of a
+/// particular value.
 pub trait DType: Any {
+    private!();
+
     fn type_id(&self) -> TypeId {
         Any::type_id(self)
     }
@@ -34,30 +41,18 @@ pub trait DType: Any {
     }
 }
 
-pub trait DTypeExt: DType {
-    fn of<T: 'static>() -> bool {
-        type_of::<Self, T>()
-    }
-
-    fn is<T: 'static>(&self) -> bool {
-        type_of::<Self, T>()
-    }
-
-    fn type_id(&self) -> TypeId {
-        Any::type_id(self)
-    }
-
-    fn type_name<T>() -> &'static str
-    where
-        T: ?Sized,
-    {
-        core::any::type_name::<T>()
-    }
-}
-
 /*
  ************* Implementations *************
 */
+impl<T> TypeOf for T
+where
+    T: Any,
+{
+    fn of<U: 'static>() -> bool {
+        type_of::<T, U>()
+    }
+}
+
 impl<T: 'static> IsType for T {}
 
 impl dyn DType {}
