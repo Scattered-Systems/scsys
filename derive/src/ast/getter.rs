@@ -1,5 +1,8 @@
 #![allow(dead_code)]
 
+use syn::parse::{Parse, ParseStream};
+use syn::{Ident, Token, Visibility, WhereClause};
+
 /// the abstract syntax tree (ast) for the `getter` macro
 ///
 /// #[getter!(pub struct Foo { pub bar: u32 })]
@@ -9,18 +12,18 @@
 ///
 #[derive(Clone)]
 pub struct GetterAst {
-    pub vis: syn::Visibility,
+    pub vis: Visibility,
     ///
-    pub name: syn::Ident,
-    pub field: syn::Ident,
-    pub where_clause: Option<syn::WhereClause>,
+    pub name: Ident,
+    pub field: Ident,
+    pub where_clause: Option<WhereClause>,
     pub ty: syn::Type,
 }
 
-impl syn::parse::Parse for GetterAst {
-    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+impl Parse for GetterAst {
+    fn parse(input: ParseStream) -> syn::Result<Self> {
         // parse the visibility
-        let vis = input.parse().unwrap_or(syn::Visibility::Inherited);
+        let vis = input.parse().unwrap_or(Visibility::Inherited);
         // parse the struct name
         let name = input.parse()?;
         // parse the field name
@@ -31,7 +34,7 @@ impl syn::parse::Parse for GetterAst {
         } else {
             None
         };
-        let _: syn::Token![->] = input.parse()?;
+        let _: Token![->] = input.parse()?;
         let ty = input.parse()?;
 
         let tree = GetterAst {

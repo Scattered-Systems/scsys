@@ -122,6 +122,7 @@ chrono = [
 json = [
     "scsys-core/json",
     "scsys-crypto?/json",
+    "serde",
 ]
 
 rand = [
@@ -151,6 +152,11 @@ tracing = [
     "scsys-crypto?/tracing",
 ]
 
+tracing-subscriber = [
+    "scsys-config?/tracing-subscriber",
+    "tracing",
+]
+
 wasm-bindgen = [
     "scsys-core/wasm-bindgen",
 ]
@@ -165,7 +171,7 @@ required-features = ["std"]
 # ************* [Examples] *************
 [[example]]
 name = "derive"
-required-features = [ "derive", "serde" ]
+required-features = [ "derive", "json" ]
 
 
 # ************* [Unit Tests] *************

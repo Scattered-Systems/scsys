@@ -30,7 +30,10 @@ impl NetworkAddr {
     #[cfg(feature = "url")]
     pub fn try_from_url(url: url::Url) -> Result<Self, crate::ConfigError> {
         let addr = Self {
-            host: url.host_str().ok_or(url::ParseError::EmptyHost)?.to_string(),
+            host: url
+                .host_str()
+                .ok_or(url::ParseError::EmptyHost)?
+                .to_string(),
             port: url.port().ok_or(url::ParseError::InvalidPort)?,
         };
         Ok(addr)
@@ -91,7 +94,6 @@ impl NetworkAddr {
             ..self
         }
     }
-    
 }
 
 impl Default for NetworkAddr {
