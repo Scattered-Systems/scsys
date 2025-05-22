@@ -12,7 +12,7 @@ pub enum CryptoError {
     AnyError(#[from] anyhow::Error),
     #[cfg(feature = "alloc")]
     #[error(transparent)]
-    BoxError(#[from] alloc::boxed::Box<dyn std::error::Error + Send + Sync + 'static>),
+    BoxError(#[from] alloc::boxed::Box<dyn core::error::Error + Send + Sync + 'static>),
     #[cfg(feature = "std")]
     #[error(transparent)]
     IoError(#[from] std::io::Error),
