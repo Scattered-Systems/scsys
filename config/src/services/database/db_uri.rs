@@ -200,6 +200,7 @@ impl core::fmt::Display for DatabaseUriSchema {
     }
 }
 
+#[cfg(feature = "url")]
 impl core::str::FromStr for DatabaseUriSchema {
     type Err = crate::ConfigError;
 

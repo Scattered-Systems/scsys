@@ -19,6 +19,7 @@
     strum::EnumCount,
     strum::EnumIs,
     strum::EnumIter,
+    strum::EnumString,
     strum::VariantArray,
     strum::VariantNames,
 )]
@@ -40,12 +41,19 @@ pub enum Mode {
 }
 
 impl Mode {
-    // pub fn from_env() -> Self {
-    //     std::env::var("APP_MODE")
-    //         .map(|m| Self::from_str(&m))
-    //         .flatten()
-    //         .unwrap_or_default()
-    // }
+    #[cfg(feature = "std")]
+    pub fn from_env() -> Self {
+        Self::from_env_with_varname("APP_MODE")
+    }
+    #[cfg(feature = "std")]
+    pub fn from_env_with_varname(var: &str) -> Self {
+        use core::str::FromStr;
+        std::env::var(var)
+            .map(|m| Self::from_str(&m).ok())
+            .ok()
+            .flatten()
+            .unwrap_or_default()
+    }
 
     pub fn debug() -> Self {
         Self::Debug

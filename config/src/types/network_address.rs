@@ -26,6 +26,22 @@ impl NetworkAddr {
             port,
         }
     }
+    /// tries returning a new instance from the given [`url`](url::Url)
+    #[cfg(feature = "url")]
+    pub fn try_from_url(url: url::Url) -> Result<Self, crate::ConfigError> {
+        let addr = Self {
+            host: url.host_str().ok_or(url::ParseError::EmptyHost)?.to_string(),
+            port: url.port().ok_or(url::ParseError::InvalidPort)?,
+        };
+        Ok(addr)
+    }
+    #[cfg(feature = "url")]
+    pub fn parse_url(url: &str) -> Result<Self, crate::ConfigError> {
+        // parse the string into a URL
+        let url = url::Url::parse(url)?;
+        // try returning a new instance from the parsed URL
+        Self::try_from_url(url)
+    }
     /// returns a new instance with the given port and the localhost address
     pub fn localhost(port: u16) -> Self {
         Self::new(Self::LOCALHOST, port)
@@ -75,6 +91,7 @@ impl NetworkAddr {
             ..self
         }
     }
+    
 }
 
 impl Default for NetworkAddr {
@@ -90,13 +107,21 @@ impl core::fmt::Display for NetworkAddr {
 }
 
 impl core::str::FromStr for NetworkAddr {
-    type Err = Box<dyn core::error::Error>;
+    type Err = crate::ConfigError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let mut parts = s.split(':');
-        let host: core::net::IpAddr = parts.next().unwrap().parse()?;
-        let port = parts.next().unwrap().parse()?;
-        Ok(Self::new(host, port))
+        #[cfg(feature = "url")]
+        {
+            let url = url::Url::parse(s)?;
+            Ok(url.try_into()?)
+        }
+        #[cfg(not(feature = "url"))]
+        {
+            let mut parts = s.split(':');
+            let host: core::net::IpAddr = parts.next().unwrap().parse()?;
+            let port = parts.next().unwrap().parse()?;
+            Ok(Self::new(host, port))
+        }
     }
 }
 
@@ -109,5 +134,16 @@ impl From<core::net::SocketAddr> for NetworkAddr {
 impl From<NetworkAddr> for core::net::SocketAddr {
     fn from(addr: NetworkAddr) -> Self {
         addr.as_socket_addr()
+    }
+}
+
+#[cfg(feature = "url")]
+impl TryFrom<url::Url> for NetworkAddr {
+    type Error = crate::ConfigError;
+
+    fn try_from(url: url::Url) -> Result<Self, Self::Error> {
+        let host = url.host_str().ok_or(url::ParseError::EmptyHost)?;
+        let port = url.port().ok_or(url::ParseError::InvalidPort)?;
+        Ok(Self::new(host, port))
     }
 }

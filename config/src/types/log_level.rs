@@ -89,6 +89,7 @@ impl From<LogLevel> for isize {
     }
 }
 
+#[cfg(feature = "config")]
 impl From<LogLevel> for config::Value {
     fn from(level: LogLevel) -> Self {
         level.to_string().into()
