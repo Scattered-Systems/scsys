@@ -13,6 +13,7 @@ pub use self::prelude::*;
 pub(crate) mod seal;
 
 pub mod adjust;
+pub mod container;
 pub mod convert;
 pub mod dtype;
 pub mod hkt;
@@ -28,6 +29,8 @@ pub mod wrapper;
 pub mod prelude {
     #[doc(inline)]
     pub use crate::adjust::*;
+    #[doc(inline)]
+    pub use crate::container::*;
     #[doc(inline)]
     pub use crate::convert::*;
     #[doc(inline)]
