@@ -1,9 +1,11 @@
 /// create a macro to streamline the process of adding sources
 ///
 /// ```rust
-/// use scsys_config::config_sources;
+/// use scsys_config::{config, config_sources};
 ///
-/// let mut builder = config::ConfigBuilder::new();
+/// use config::builder::{ConfigBuilder, DefaultState};
+///
+/// let mut builder: ConfigBuilder<DefaultState> = ConfigBuilder::default();
 ///
 /// builder = config_sources! {
 ///     builder {
