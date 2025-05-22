@@ -22,17 +22,6 @@ on:
   repository_dispatch:
     types: [ rust ]
   workflow_dispatch:
-    inputs:
-      benchmark:
-        default: true
-        description: 'Run benchmarks'
-        required: true
-        type: boolean
-      test:
-        default: true
-        description: 'Run tests'
-        required: true
-        type: boolean
 
 permissions: 
   contents: read
@@ -61,7 +50,6 @@ jobs:
         name: Build
         run: cargo build -r -v --workspace --locked --features full --target ${{ matrix.target }}
   test:
-    if: inputs.test == 'true'
     needs: build
     strategy:
       fail-fast: false
@@ -98,7 +86,6 @@ jobs:
           RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
         run: cargo test -r -v --workspace --locked --no-default-features
   benchmark:
-    if: inputs.benchmark == 'true'
     needs: build
     strategy:
       fail-fast: false
