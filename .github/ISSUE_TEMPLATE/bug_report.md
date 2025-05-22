@@ -4,6 +4,7 @@ assignees: [ FL03 ]
 labels: [ bug ]
 name: Bug report
 title: ''
+type: bug
 ---
 
 **Describe the bug**

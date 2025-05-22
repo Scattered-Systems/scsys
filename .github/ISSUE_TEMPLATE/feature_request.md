@@ -4,7 +4,7 @@ assignees: [ FL03 ]
 labels: [ enhancement ]
 name: Feature request
 title: 'Feature Request: '
-
+type: Feature
 ---
 
 **Is your feature request related to a problem? Please describe.**

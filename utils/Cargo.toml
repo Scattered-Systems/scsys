@@ -27,7 +27,7 @@ serde_json = { workspace = true }
 
 [dependencies]
 # shared
-num = { workspace = true }
+num-traits = { workspace = true }
 getrandom = { optional = true, workspace = true }
 rand = { optional = true, workspace = true }
 serde = { optional = true, workspace = true }
@@ -43,7 +43,8 @@ rustc-args = ["--cfg", "docsrs"]
 
 [features]
 default = [
-    "std"
+    "std",
+    "fs",
 ]
 
 full = [
@@ -53,42 +54,13 @@ full = [
     "serde",
 ]
 
-# ******* [FF] Dependencies *******
-alloc = [
-    "num/alloc",
-    "serde?/alloc",
-]
+# ************* [FF:Features] *************
+fs = []
 
-json = [
-    "dep:serde_json",
-    "alloc",
-    "serde"
-]
-
-rand = [
-    "dep:rand",
-    "num/rand",
-    "rng",
-]
-
-rng = [
-    "dep:getrandom",
-    "rand?/small_rng",
-    "rand?/thread_rng",
-]
-
-serde = [
-    "dep:serde",
-    "dep:serde_derive",
-    "num/serde",
-    "serde?/derive",
-    "rand?/serde",
-]
-
-# ******* [FF] Environment *******
+# ************* [FF:Environments] *************
 std = [
     "alloc",
-    "num/std",
+    "num-traits/std",
     "rand?/std",
     "rand?/std_rng",
     "serde?/std",
@@ -101,8 +73,37 @@ wasm = [
     "getrandom?/wasm_js",
 ]
 
+# ************* [FF:Dependencies] *************
+alloc = [
+    "serde?/alloc",
+    "serde_json?/alloc",
+]
 
-# ******* tests *******
+json = [
+    "dep:serde_json",
+    "alloc",
+    "serde"
+]
+
+rand = [
+    "dep:rand",
+    "rng",
+]
+
+rng = [
+    "dep:getrandom",
+    "rand?/small_rng",
+    "rand?/thread_rng",
+]
+
+serde = [
+    "dep:serde",
+    "dep:serde_derive",
+    "serde?/derive",
+    "rand?/serde",
+]
+
+# ************* [Unit Tests] *************
 [[test]]
 name = "casing"
 required-features = ["alloc"]

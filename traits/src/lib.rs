@@ -13,6 +13,7 @@ pub use self::prelude::*;
 pub(crate) mod seal;
 
 pub mod adjust;
+pub mod container;
 pub mod convert;
 pub mod dtype;
 pub mod hkt;
@@ -23,25 +24,28 @@ pub mod symbolic;
 pub mod toggle;
 pub mod wrapper;
 
+#[doc(hidden)]
 pub mod prelude {
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::adjust::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
+    pub use crate::container::*;
+    #[doc(inline)]
     pub use crate::convert::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::dtype::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::hkt::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::named::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::store::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::string::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::symbolic::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::toggle::*;
-    #[doc(no_inline)]
+    #[doc(inline)]
     pub use crate::wrapper::*;
 }

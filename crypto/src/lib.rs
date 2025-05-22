@@ -17,12 +17,10 @@ pub(crate) mod macros {
 #[allow(unused_imports)]
 pub(crate) use scsys_core::gsw;
 
-#[doc(inline)]
-pub use self::{
-    error::*, traits::prelude::*, types::prelude::*, utils::prelude::*,
-};
 #[cfg(feature = "hash")]
 pub use self::hash::prelude::*;
+#[doc(inline)]
+pub use self::{error::*, traits::prelude::*, types::prelude::*, utils::prelude::*};
 
 pub mod error;
 #[cfg(feature = "hash")]

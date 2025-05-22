@@ -1,9 +1,8 @@
 /*
-    Appellation: mode <module>
+    Appellation: environment <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 
-/// [Mode] enumerates the possible runtime modes of the application.
 #[derive(
     Clone,
     Copy,
@@ -30,17 +29,29 @@
     serde(rename_all = "lowercase")
 )]
 #[strum(serialize_all = "lowercase")]
-pub enum Mode {
+pub enum Environment {
     #[default]
-    #[cfg_attr(feature = "clap", clap(name = "debug"))]
-    #[cfg_attr(feature = "serde", serde(alias = "dev", alias = "development"))]
-    Debug,
-    #[cfg_attr(feature = "clap", clap(name = "release"))]
-    #[cfg_attr(feature = "serde", serde(alias = "prod", alias = "production"))]
-    Release,
+    #[cfg_attr(feature = "serde", serde(alias = "d", alias = "dev"))]
+    Development,
+    #[cfg_attr(feature = "serde", serde(alias = "s", alias = "stag"))]
+    Staging,
+    #[cfg_attr(feature = "serde", serde(alias = "p", alias = "prod"))]
+    Production,
 }
 
-impl Mode {
+impl Environment {
+    /// returns a new instance of [`Development`](Environment::Development) variant
+    pub const fn development() -> Self {
+        Self::Development
+    }
+    /// returns a new instance of [`Staging`](Environment::Staging) variant
+    pub const fn staging() -> Self {
+        Self::Staging
+    }
+    /// returns a new instance of [`Production`](Environment::Production) variant
+    pub const fn production() -> Self {
+        Self::Production
+    }
     #[cfg(feature = "std")]
     pub fn from_env() -> Self {
         Self::from_env_with_varname("APP_MODE")
@@ -53,13 +64,5 @@ impl Mode {
             .ok()
             .flatten()
             .unwrap_or_default()
-    }
-
-    pub fn debug() -> Self {
-        Self::Debug
-    }
-
-    pub fn release() -> Self {
-        Self::Release
     }
 }

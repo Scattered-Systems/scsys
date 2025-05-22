@@ -21,6 +21,9 @@ pub trait ErrorKind {
     private!();
 }
 
-impl<T> ErrorKind for T where T: AsRef<str> {
+impl<T> ErrorKind for T
+where
+    T: AsRef<str>,
+{
     seal!();
 }

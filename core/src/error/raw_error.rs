@@ -15,7 +15,10 @@ pub type BoxErr = ErrorBase<alloc::boxed::Box<dyn core::error::Error + Send + Sy
     serde(default, transparent, rename_all = "snake_case")
 )]
 #[repr(transparent)]
-pub struct ErrorBase<E> where E: core::error::Error {
+pub struct ErrorBase<E>
+where
+    E: core::error::Error,
+{
     inner: E,
 }
 

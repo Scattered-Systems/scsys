@@ -7,16 +7,8 @@ fn test_h256() {
     assert_eq!(a, digest_to_hash::<32>(a).into());
 }
 
-// #[test]
-// fn test_concat() {
-//     let mut a = H256::generate();
-//     let b = H256::generate();
-//     let expected: H256 = concat_b3(a.into(), Some(b.into())).into();
-//     assert_eq!(a.concat(&b), expected);
-// }
-
 #[test]
-fn test_addition() {
+fn test_h256_add() {
     let a = H256::random();
     let b = H256::random();
     assert_ne!(a, a + b);
@@ -24,7 +16,7 @@ fn test_addition() {
 }
 
 #[test]
-fn test_division() {
+fn test_h256_div() {
     let a = H256::random();
     assert_eq!(a, a / 1f64);
     assert_ne!(a, a / 0f64);
@@ -32,7 +24,7 @@ fn test_division() {
 }
 
 #[test]
-fn test_multiplication() {
+fn test_h256_mul() {
     let a = H256::random();
     let mut b = a;
     assert_eq!(a, a * 1f64);

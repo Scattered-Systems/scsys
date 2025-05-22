@@ -31,4 +31,9 @@ pub(crate) mod prelude {
 
 pub trait RawHash {}
 
+pub trait Hash {
+    type Hasher: Hasher;
+    type Output;
+}
+
 pub trait Hashable: AsRef<[u8]> + AsMut<[u8]> {}

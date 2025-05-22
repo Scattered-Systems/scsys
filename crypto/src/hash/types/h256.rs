@@ -10,7 +10,7 @@ mod impl_ops;
 
 use crate::utils::digest_to_hash;
 
-/// The H256Hash type is a 32-byte hash.
+/// The [`H256Hash`] type is a 32-byte hash.
 pub type H256Array = [u8; 32];
 
 /// A SHA256 hash.
@@ -49,7 +49,7 @@ impl H256 {
         let mut raw_bytes = [0; 32];
         raw_bytes.copy_from_slice(&data);
         (&raw_bytes).into()
-    }    
+    }
     /// returns the hash as a byte array
     pub const fn get(&self) -> &H256Array {
         &self.0
@@ -84,10 +84,20 @@ impl H256 {
         self.0.copy_from_slice(value);
         self
     }
-    #[cfg(feature = "alloc")]
     /// returns a [`Vec<u8>`](alloc::vec::Vec) representation of the hash
+    #[cfg(feature = "alloc")]
+    #[inline]
     pub fn to_vec(&self) -> alloc::vec::Vec<u8> {
         self.get().to_vec()
+    }
+    /// this method generically concatenates two hashes based upon the given type and its
+    /// corresponding implementations(s)
+    #[inline]
+    pub fn concat<Rhs>(&self, other: Rhs) -> Self
+    where
+        Self: crate::Concat<Rhs, Output = Self>,
+    {
+        crate::Concat::concat(self, other)
     }
 }
 

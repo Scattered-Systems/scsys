@@ -3,9 +3,6 @@
     Contrib: @FL03
 */
 use super::H256;
-use crate::hash::H160;
-use crate::types::GenericHash;
-use crate::utils::digest_to_hash;
 
 impl FromIterator<u8> for H256 {
     fn from_iter<T: IntoIterator<Item = u8>>(iter: T) -> Self {
@@ -16,7 +13,7 @@ impl FromIterator<u8> for H256 {
 
 impl IntoIterator for H256 {
     type Item = u8;
-    type IntoIter = std::array::IntoIter<u8, 32>;
+    type IntoIter = core::array::IntoIter<u8, 32>;
 
     fn into_iter(self) -> Self::IntoIter {
         self.0.into_iter()
@@ -48,7 +45,7 @@ impl From<H256> for [u8; 32] {
 
 impl From<Vec<u8>> for H256 {
     fn from(input: Vec<u8>) -> H256 {
-        digest_to_hash::<32>(&input).into()
+        crate::digest_to_hash::<32>(&input).into()
     }
 }
 
@@ -58,28 +55,28 @@ impl From<H256> for Vec<u8> {
     }
 }
 
-impl From<GenericHash> for H256 {
-    fn from(data: GenericHash) -> H256 {
+impl From<crate::GenericHash> for H256 {
+    fn from(data: crate::GenericHash) -> H256 {
         data.as_slice().to_owned().into()
     }
 }
 
-impl From<H256> for GenericHash {
-    fn from(input: H256) -> GenericHash {
-        GenericHash::from(input.0)
+impl From<H256> for crate::GenericHash {
+    fn from(input: H256) -> crate::GenericHash {
+        crate::GenericHash::from(input.0)
     }
 }
 
-impl From<H160> for H256 {
-    fn from(input: H160) -> H256 {
+impl From<crate::hash::H160> for H256 {
+    fn from(input: crate::hash::H160) -> H256 {
         let mut buffer = [0; 32];
         buffer[..].copy_from_slice(&input.0[0..20]);
         buffer.into()
     }
 }
 
-impl From<H256> for H160 {
-    fn from(input: H256) -> H160 {
+impl From<H256> for crate::hash::H160 {
+    fn from(input: H256) -> crate::hash::H160 {
         let mut buffer = [0; 20];
         buffer[..].copy_from_slice(&input.0[0..20]);
         buffer.into()

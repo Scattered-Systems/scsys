@@ -22,19 +22,27 @@ doctest = true
 test = true
 
 [dependencies]
+# sdk
+scsys-core = { workspace = true }
+# crate-specific
+clap = { default-features = false, optional = true, version = "4" }
 config = { default-features = false, optional = true, version = "0.15" }
+glob = { optional = true, workspace = true }
+url = { optional = true, workspace = true }
 # error handling
-anyhow = { features = ["std"], workspace = true }
+anyhow = { optional = true, workspace = true }
+thiserror = {workspace = true }
 # data & serialization
-serde = { features = ["derive", "std"], optional = true, workspace = true }
+serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
-serde_json = { features = ["std"], optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
 # macros
 smart-default = { workspace = true }
-strum = { features = ["derive", "std"], workspace = true }
+strum = { workspace = true }
 # logging
 tracing = { optional = true, workspace = true }
 tracing-subscriber = { optional = true, workspace = true }
+# files
 
 [package.metadata.docs.rs]
 all-features = false
@@ -48,6 +56,7 @@ tag-name = "{{version}}"
 
 [features]
 default = [
+    "std",
     "config",
     "async",
     "convert-case",
@@ -56,40 +65,83 @@ default = [
     "json5",
     "ron",
     "toml",
+    "url",
     "yaml",
 ]
 
 full = [
     "default",
+    "anyhow",
+    "clap",
+    "glob",
     "tracing",
     "tracing-subscriber",
 ]
 
-# ************* [FF:Dependencies] *************
-async = [
-    "config?/async",
+std = [
+    "anyhow?/std",
+    "clap?/std",
+    "scsys-core/std",
+    "serde?/std",
+    "serde_json?/std",
+    "strum/std",
+    "thiserror/std",
+    "tracing?/std",
+    "tracing-subscriber?/std",
+    "url?/std",
 ]
 
-config = ["dep:config"]
+# ************* [FF:Dependencies] *************
+anyhow = [
+    "dep:anyhow",
+    "scsys-core/anyhow",
+]
+
+async = ["config?/async"]
+
+clap = [
+    "dep:clap",
+    "clap?/derive",
+    "std",
+]
+
+config = [
+    "dep:config",
+    "std",
+]
+
+glob = ["dep:glob"]
 
 serde = [
     "dep:serde",
     "dep:serde_derive",
+    "scsys-core/serde",
     "tracing-subscriber?/serde",
+    "url?/serde",
 ]
 
 serde_json = [
     "dep:serde_json", 
     "config?/serde_json",
+    "scsys-core/json",
     "serde",
 ]
 
-tracing = ["dep:tracing"]
+tracing = [
+    "dep:tracing",
+    "scsys-core/tracing",
+]
 
 tracing-subscriber = [
     "dep:tracing-subscriber",
     "tracing",
+    "tracing-subscriber?/ansi",
+    "tracing-subscriber?/env-filter",
+    "tracing-subscriber?/fmt",
 ]
+
+url = ["dep:url"]
+
 # ************* [FF:config] *************
 convert-case = ["config?/convert-case"]
 
@@ -100,7 +152,7 @@ json = [
     "config?/json",
 ]
 
-json5 = [ "config?/json5" ]
+json5 = ["config?/json5"]
 
 ron = ["config?/ron"]
 
