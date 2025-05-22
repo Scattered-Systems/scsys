@@ -215,4 +215,4 @@ name = "default"
 
 [[test]]
 name = "h256"
-required-features = [ "rand", "std" ]
+required-features = [ "hash", "rand", "std" ]
