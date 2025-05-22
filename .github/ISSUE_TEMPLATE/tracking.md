@@ -1,19 +1,23 @@
 ---
 about: A template for creating issues dedicated to tracking other issues and pull requests
-assignees: [FL03]
+assignees: [ FL03 ]
 labels: [ 'tracking' ]
-projects: [ '@scattered-systems/scsys:features' ]
 name: Tracking Issue
-title: 'Tracking Issue: '
+title: 'Tracking issue for '
+type: Feature
 ---
 
-_Describe the issue(s) or feature being tracked..._
+_A concise explanation of the issue (or feature) being tracked._
+
+## Overview
+
+Detail the issue or feature being tracked. Include any relevant context, such as the problem it solves or the motivation behind it.
 
 ## Issues
 
 - []
 
-## Pull Requests
+## Roadmap
 
 - []
 
