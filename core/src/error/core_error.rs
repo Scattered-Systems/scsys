@@ -36,6 +36,6 @@ impl From<String> for CoreError {
 #[cfg(feature = "alloc")]
 impl From<&str> for CoreError {
     fn from(value: &str) -> Self {
-        Self::Unknown(value.to_string())
+        Self::Unknown(String::from(value))
     }
 }
