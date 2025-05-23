@@ -55,6 +55,7 @@ impl CaseType {
 #[cfg(feature = "alloc")]
 mod utils {
     use alloc::string::String;
+    use core::str::Chars;
 
     /// Converts a string to snake_case.
     pub fn to_snakecase(s: &str) -> String {
@@ -82,7 +83,7 @@ mod utils {
     }
 
     /// Converts a string to snake_case.
-    fn _snakecase<'a>(chars: core::str::Chars<'a>) -> String {
+    fn _snakecase<'a>(chars: Chars<'a>) -> String {
         chars.fold(String::new(), |mut acc, c| {
                 if c.is_uppercase() {
                     if !acc.is_empty() {
@@ -98,7 +99,7 @@ mod utils {
     }
 
     /// Converts a string to camelCase.
-    fn _camelcase<'a>(mut chars: core::str::Chars<'a>) -> String {
+    fn _camelcase<'a>(mut chars: Chars<'a>) -> String {
         // let first = chars.next().unwrap();
         // let rest = chars.collect::<String>();
         // format!("{}{}", first.to_lowercase(), rest)
@@ -121,7 +122,7 @@ mod utils {
     }
 
     /// Converts a string to PascalCase.
-    fn _pascalcase<'a>(chars: core::str::Chars<'a>) -> String {
+    fn _pascalcase<'a>(chars: Chars<'a>) -> String {
         chars.enumerate().fold(String::new(), |mut acc, (i, c)| {
             match i {
                 0 => acc.push(c.to_uppercase().next().unwrap()),
@@ -138,7 +139,7 @@ mod utils {
     }
 
     /// Converts a string to kebab-case.
-    fn _kebabcase<'a>(chars: core::str::Chars<'a>) -> String {
+    fn _kebabcase<'a>(chars: Chars<'a>) -> String {
         chars.fold(String::new(), |mut acc, c| {
                 if c.is_uppercase() {
                     if !acc.is_empty() {
@@ -154,7 +155,7 @@ mod utils {
     }
 
     /// Converts a string to SCREAMING_SNAKE_CASE.
-    fn _screaming_snakecase<'a>(chars: core::str::Chars<'a>) -> String {
+    fn _screaming_snakecase<'a>(chars: Chars<'a>) -> String {
         chars.fold(String::new(), |mut acc, c| {
             if c.is_uppercase() {
                 if !acc.is_empty() {
