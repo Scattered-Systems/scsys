@@ -101,7 +101,14 @@ async = ["config?/async"]
 
 clap = [
     "dep:clap",
+    "clap?/color",
     "clap?/derive",
+    "clap?/error-context",
+    "clap?/env",
+    "clap?/help",
+    "clap?/string",
+    "clap?/suggestions",
+    "clap?/usage",
     "std",
 ]
 
