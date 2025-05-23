@@ -2,11 +2,11 @@
     Appellation: derive <example>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use scsys::prelude::Result;
+use scsys::time::Timestamp;
 
-fn main() -> Result<()> {
-    let params = LinearParams { weight: 0.5 };
-    println!("Params: {}", params);
+fn main() -> scsys::Result<()> {
+    let params = Sample::from_value(0.5);
+    println!("Params: {params}");
     let variant = Something::a();
     println!("Variant: {:?}", variant);
     let variant = Something::b(42);
@@ -19,9 +19,22 @@ fn main() -> Result<()> {
 #[derive(
     Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::Getter, scsys::Display,
 )]
-#[scsys(display(serde))]
-pub struct LinearParams<T> {
-    pub weight: T,
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Deserialize, serde::Serialize),
+    serde(default, rename_all = "snake_case"),
+    scsys(display(json))
+)]
+pub struct Sample<T> {
+    pub timestamp: Timestamp,
+    pub value: T,
+}
+
+impl<T> Sample<T> {
+    pub fn from_value(value: T) -> Self {
+        let timestamp = Timestamp::now();
+        Self { timestamp, value }
+    }
 }
 
 #[derive(Clone, Copy, Debug, scsys::VariantConstructors)]

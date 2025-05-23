@@ -1,10 +1,3 @@
-#[allow(unused_imports)]
-#[doc(inline)]
-pub use self::{ast::*, attr::*};
-
-pub mod ast;
-pub mod attr;
-
 use crate::utils::snakecase;
 use proc_macro2::{Span, TokenStream};
 use quote::quote;
