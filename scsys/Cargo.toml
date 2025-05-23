@@ -32,7 +32,8 @@ scsys-util = { optional = true, workspace = true }
 
 [dev-dependencies]
 anyhow = { features = ["std"], workspace = true }
-criterion = { version = "0.6" }
+criterion = { workspace = true }
+lazy_static = { workspace = true }
 serde = { features = ["std"], workspace = true }
 serde_json = { features = ["std"], workspace = true }
 
