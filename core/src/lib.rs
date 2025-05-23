@@ -27,10 +27,7 @@ pub use self::{
     error::*,
     state::{NState, RawState, State, Stateful},
     types::prelude::*,
-    utils::*,
 };
-
-pub(crate) mod utils;
 
 pub mod error;
 pub mod id;
@@ -78,6 +75,4 @@ pub mod prelude {
     pub use crate::time::prelude::*;
     #[doc(no_inline)]
     pub use crate::types::prelude::*;
-    #[doc(no_inline)]
-    pub use crate::utils::*;
 }

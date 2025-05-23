@@ -14,17 +14,7 @@
 extern crate alloc;
 
 #[doc(inline)]
-#[cfg(feature = "traits")]
-pub use scsys_traits::prelude::*;
-
-#[doc(inline)]
-#[cfg(feature = "config")]
-pub use scsys_config as config;
-#[doc(inline)]
 pub use scsys_core::*;
-#[doc(inline)]
-#[cfg(feature = "crypto")]
-pub use scsys_crypto as crypto;
 #[doc(inline)]
 #[cfg(feature = "derive")]
 pub use scsys_derive::*;
@@ -33,7 +23,20 @@ pub use scsys_derive::*;
 pub use scsys_macros::*;
 #[doc(inline)]
 #[cfg(feature = "traits")]
+pub use scsys_traits::prelude::*;
+/// the `config` module implements a set of standardized configuration schemas
+#[doc(inline)]
+#[cfg(feature = "config")]
+pub use scsys_config as config;
+/// cryptographic primitives and utilities implemented for the ecosystem
+#[doc(inline)]
+#[cfg(feature = "crypto")]
+pub use scsys_crypto as crypto;
+/// this module contains various traits commonly used throughout the scsys ecosystem
+#[doc(inline)]
+#[cfg(feature = "traits")]
 pub use scsys_traits as traits;
+/// utilities for working with the scsys ecosystem
 #[doc(inline)]
 #[cfg(feature = "utils")]
 pub use scsys_util as utils;
