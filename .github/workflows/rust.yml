@@ -77,6 +77,9 @@ jobs:
         run: cargo test -r -v --workspace --locked --features full
       - 
         name: Test (alloc)
+        if: matrix.toolchain == 'nightly'
+        env:
+          RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
         run: cargo test -r -v --workspace --locked --no-default-features --features alloc
       - 
         name: Test (no_std)
