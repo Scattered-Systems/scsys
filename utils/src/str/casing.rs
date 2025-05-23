@@ -58,8 +58,32 @@ mod utils {
 
     /// Converts a string to snake_case.
     pub fn to_snakecase(s: &str) -> String {
-        s.chars()
-            .fold(String::new(), |mut acc, c| {
+        _snakecase(s.chars())
+    }
+
+    /// Converts a string to camelCase.
+    pub fn to_camelcase(s: &str) -> String {
+        _camelcase(s.chars())
+    }
+
+    /// Converts a string to PascalCase.
+    pub fn to_pascalcase(s: &str) -> String {
+        _pascalcase(s.chars())
+    }
+
+    /// Converts a string to kebab-case.
+    pub fn to_kebabcase(s: &str) -> String {
+        _kebabcase(s.chars())
+    }
+
+    /// Converts a string to SCREAMING_SNAKE_CASE.
+    pub fn to_screaming_snakecase(s: &str) -> String {
+        _screaming_snakecase(s.chars())
+    }
+
+    /// Converts a string to snake_case.
+    fn _snakecase<'a>(chars: core::str::Chars<'a>) -> String {
+        chars.fold(String::new(), |mut acc, c| {
                 if c.is_uppercase() {
                     if !acc.is_empty() {
                         acc.push('_');
@@ -74,25 +98,48 @@ mod utils {
     }
 
     /// Converts a string to camelCase.
-    pub fn to_camelcase(s: &str) -> String {
-        let mut chars = s.chars();
-        let first = chars.next().unwrap();
-        let rest = chars.collect::<String>();
-        format!("{}{}", first.to_lowercase(), rest)
+    fn _camelcase<'a>(mut chars: core::str::Chars<'a>) -> String {
+        // let first = chars.next().unwrap();
+        // let rest = chars.collect::<String>();
+        // format!("{}{}", first.to_lowercase(), rest)
+        chars.clone().enumerate().fold(String::new(), |mut acc, (i, c)| {
+            match i {
+                0 => acc.push(c.to_lowercase().next().unwrap()),
+                _ => {
+                    if c == '_' {
+                        // Skip the underscore and convert the next character to uppercase
+                        if let Some(next) = chars.next() {
+                            acc.push(next.to_uppercase().next().unwrap());
+                        }
+                    } else {
+                        acc.push(c);
+                    }
+                }
+            }
+            acc
+        })
     }
 
     /// Converts a string to PascalCase.
-    pub fn to_pascalcase(s: &str) -> String {
-        let mut chars = s.chars();
-        let first = chars.next().unwrap();
-        let rest = chars.collect::<String>();
-        format!("{}{}", first.to_uppercase(), rest)
+    fn _pascalcase<'a>(chars: core::str::Chars<'a>) -> String {
+        chars.enumerate().fold(String::new(), |mut acc, (i, c)| {
+            match i {
+                0 => acc.push(c.to_uppercase().next().unwrap()),
+                _ => {
+                    if c.is_uppercase() {
+                        acc.push(c.to_lowercase().next().unwrap());
+                    } else {
+                        acc.push(c);
+                    }
+                }
+            }
+            acc
+        })
     }
 
     /// Converts a string to kebab-case.
-    pub fn to_kebabcase(s: &str) -> String {
-        s.chars()
-            .fold(String::new(), |mut acc, c| {
+    fn _kebabcase<'a>(chars: core::str::Chars<'a>) -> String {
+        chars.fold(String::new(), |mut acc, c| {
                 if c.is_uppercase() {
                     if !acc.is_empty() {
                         acc.push('-');
@@ -107,8 +154,8 @@ mod utils {
     }
 
     /// Converts a string to SCREAMING_SNAKE_CASE.
-    pub fn to_screaming_snakecase(s: &str) -> String {
-        s.chars().fold(String::new(), |mut acc, c| {
+    fn _screaming_snakecase<'a>(chars: core::str::Chars<'a>) -> String {
+        chars.fold(String::new(), |mut acc, c| {
             if c.is_uppercase() {
                 if !acc.is_empty() {
                     acc.push('_');
