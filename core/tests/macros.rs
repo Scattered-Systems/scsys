@@ -1,37 +1,47 @@
 use scsys_core::gsw;
 
-#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct Something<T> {
-    a: usize,
-    b: u16,
-    c: T,
+#[derive(Clone, Debug, Default)]
+pub struct Sample<T = &str> {
+    pub(crate) apple: usize,
+    pub(crate) block: f32,
+    pub(crate) store: Vec<u8>,
+    pub(crate) cont: T,
 }
 
-impl<T> Something<T> {
-    pub fn new(a: usize, b: u16, c: T) -> Self {
-        Self { a, b, c }
-    }
-    gsw! {
-        a: usize,
-        b: u16,
+impl<T> Sample<T> {
+    pub fn new(cont: T) -> Self {
+        Self {
+            apple: 0,
+            block: 0.0,
+            store: Vec::new(),
+            cont,
+        }
     }
 
     gsw! {
-        c: &T,
+        apple: usize,
+        block: f32,
+    }
+    gsw! {
+        cont: &T,
+        store: &Vec<u8>,
     }
 }
 
 #[test]
-fn test_gsw() {
-    let mut data = Something::new(0, 10, "Hello")
-        .with_a(1)
-        .with_b(2)
-        .with_c("Hi");
-    assert_eq!(data.a(), 1);
-    assert_eq!(data.b(), 2);
-    assert_eq!(*data.c(), "Hi");
-    let next = data.set_a(0).set_b(0).set_c("Hello");
-    assert_eq!(next.a(), 0);
-    assert_eq!(next.b(), 0);
-    assert_eq!(*next.c(), "Hello");
+fn test_sample_gsw_impls() {
+    // validate builders
+    let mut sample = Sample::new("world")
+        .with_apple(10)
+        .with_block(3.14);
+    // verify setters
+    sample = sample.set_store(vec![1, 2, 3]);
+    // verify the getters
+    assert_eq!(sample.apple(), 10);
+    assert_eq!(sample.block(), 3.14);
+    assert_eq!(sample.cont(), "hello");
+    assert_eq!(sample.store(), &vec![1, 2, 3]);
+    // verify the mutable getters
+    sample.c_mut().push(u8::MAX);
+    assert!(sample.store().last() == Some(&u8::MAX));
 }
