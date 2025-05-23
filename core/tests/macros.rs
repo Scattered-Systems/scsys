@@ -1,7 +1,7 @@
 use scsys_core::gsw;
 
 #[derive(Clone, Debug, Default)]
-pub struct Sample<T = &str> {
+pub struct Sample<T = String> {
     pub(crate) apple: usize,
     pub(crate) block: f32,
     pub(crate) store: Vec<u8>,
@@ -31,17 +31,17 @@ impl<T> Sample<T> {
 #[test]
 fn test_sample_gsw_impls() {
     // validate builders
-    let mut sample = Sample::new("world")
+    let mut sample = Sample::new("world".to_string())
         .with_apple(10)
         .with_block(3.14);
     // verify setters
-    sample = sample.set_store(vec![1, 2, 3]);
+    sample.set_store(vec![1, 2, 3]);
     // verify the getters
     assert_eq!(sample.apple(), 10);
     assert_eq!(sample.block(), 3.14);
     assert_eq!(sample.cont(), "hello");
     assert_eq!(sample.store(), &vec![1, 2, 3]);
     // verify the mutable getters
-    sample.c_mut().push(u8::MAX);
+    sample.store_mut().push(u8::MAX);
     assert!(sample.store().last() == Some(&u8::MAX));
 }
