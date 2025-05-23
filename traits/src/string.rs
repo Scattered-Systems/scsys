@@ -4,7 +4,7 @@
 */
 
 #[cfg(feature = "alloc")]
-pub use impl_alloc::*;
+use alloc::string::{String, ToString};
 
 /// This trait defines a method for removing the first and last entries within an entity.
 ///
@@ -15,6 +15,23 @@ pub trait RemoveFnl {
 
     fn remove_fnl(&self) -> Self::Output;
 }
+/// [`StringFmt`] is a trait that provides methods for formatting strings.
+/// **Note** This crate requires the `alloc` feature
+#[cfg(feature = "alloc")]
+pub trait StringFmt {
+    /// Converts the string to a `kebab-case` format.
+    fn kebab_case(&self) -> String;
+    /// Converts the string to a `dot.case` format.
+    fn dot_case(&self) -> String;
+    /// converts into a `snake_case` format.
+    fn snake_case(&self) -> String;
+    /// Converts the string to a `Title case` format.
+    fn title_case(&self) -> String;
+}
+
+/*
+ ************* Implementations *************
+*/
 
 impl<'a> RemoveFnl for &'a str {
     type Output = &'a str;
@@ -25,22 +42,11 @@ impl<'a> RemoveFnl for &'a str {
 }
 
 #[cfg(feature = "alloc")]
-impl RemoveFnl for alloc::string::String {
-    type Output = alloc::string::String;
+impl RemoveFnl for String {
+    type Output = String;
 
     fn remove_fnl(&self) -> Self::Output {
         self[1..self.len() - 1].to_string()
-    }
-}
-
-#[cfg(feature = "alloc")]
-mod impl_alloc {
-    use alloc::string::String;
-
-    pub trait StringFmt {
-        fn snake_case(&self) -> String;
-
-        fn title_case(&self) -> String;
     }
 }
 
