@@ -18,7 +18,9 @@ lazy_static! {
 }
 
 fn bench_fib_func(c: &mut Criterion) {
-    c.bench_function("fib::fibonacci_at", |b| b.iter(|| fib::fibonacci_at(black_box(N))));
+    c.bench_function("fib::fibonacci_at", |b| {
+        b.iter(|| fib::fibonacci_at(black_box(N)))
+    });
 }
 
 fn bench_fib_recursive(c: &mut Criterion) {
@@ -49,9 +51,9 @@ fn bench_fib_iter(c: &mut Criterion) {
 }
 // initialize the benchmark group
 criterion_group! {
-    benches, 
-    bench_fib_func, 
-    bench_fib_iter, 
+    benches,
+    bench_fib_func,
+    bench_fib_iter,
     bench_fib_recursive,
 }
 // This macro expands to a function named `benches`, which uses the given config
@@ -59,11 +61,10 @@ criterion_main!(benches);
 
 pub mod fib {
     //! various implementations of the fibonacci sequence
-    //! 
+    //!
     //! ##_Definition_:
-    //! 
+    //!
     //! $F(0) = F(1) = 1 \text{ and } F(n+1) = F(n) + F(n-1) | \forall: n > 0$
-
 
     /// a simple implementation of the fibonacci sequence for benchmarking purposes
     /// **Warning:** This will overflow the 128-bit unsigned integer at n=186
@@ -93,7 +94,7 @@ pub mod fib {
         // arguments set up.
         _inner(n, 0, 1)
     }
-    /// A structural implementation of the fibonacci sequence that leverages the 
+    /// A structural implementation of the fibonacci sequence that leverages the
     /// [`iter`](core::iter) as its backend
     #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
     pub struct Fibonacci {
@@ -105,7 +106,7 @@ pub mod fib {
         pub fn new() -> Fibonacci {
             Fibonacci { curr: 0, next: 1 }
         }
-        
+
         pub fn compute(&mut self, n: usize) -> u32 {
             if let Some(res) = self.nth(n + 1) {
                 return res;

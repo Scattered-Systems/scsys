@@ -36,7 +36,6 @@ pub enum CaseType {
     SnakeCase,
 }
 
-
 impl CaseType {
     #[cfg(feature = "alloc")]
     /// converts a string to the specified case.

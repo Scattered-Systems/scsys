@@ -3,11 +3,11 @@
     Contrib: @FL03
 */
 
-/// The `gsw` macro generates getter and setter methods for the fields of a struct. At the 
-/// moment, the macro can handle any type; for types that implement the [`Copy`] trait, simply 
-/// drop the `&` to the left of each type. 
-/// 
-/// **Note**: make sure that 
+/// The `gsw` macro generates getter and setter methods for the fields of a struct. At the
+/// moment, the macro can handle any type; for types that implement the [`Copy`] trait, simply
+/// drop the `&` to the left of each type.
+///
+/// **Note**: make sure that
 ///
 /// ### Usage
 ///
@@ -20,7 +20,7 @@
 ///     pub(crate) b: f32,
 ///     pub(crate) store: Vec<u8>,
 ///     pub(crate) c:T,
-/// 
+///
 /// }
 ///
 /// impl<T> Sample<T> {
@@ -33,7 +33,7 @@
 ///         store: &Vec<u8>,
 ///     }
 /// }
-/// 
+///
 /// #[test]
 /// fn test_sample_gsw_impls() {
 ///     let mut sample = Sample::<&str>::default().with_a(10).with_store(vec![1, 2, 3]);

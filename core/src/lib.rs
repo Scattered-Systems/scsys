@@ -7,6 +7,13 @@
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
+// re-import the `rand` & `rand_distr` crates if the `rand` feature is enabled
+#[cfg(feature = "rand")]
+#[doc(no_inline)]
+pub use rand;
+#[cfg(feature = "rand")]
+#[doc(no_inline)]
+pub use rand_distr;
 
 #[macro_use]
 pub(crate) mod macros {
@@ -25,7 +32,9 @@ pub(crate) mod macros {
 #[doc(inline)]
 pub use self::{
     error::*,
+    id::Id,
     state::{NState, RawState, State, Stateful},
+    time::{Now, RawTimestamp, Timestamp},
     types::prelude::*,
 };
 

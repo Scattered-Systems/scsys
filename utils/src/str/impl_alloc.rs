@@ -55,7 +55,7 @@ pub fn to_pascalcase<T: AsRef<str>>(s: T) -> String {
             acc
         })
     }
-    
+
     _pascalcase(s.as_ref().chars())
 }
 /// converts a string to kebab-case.

@@ -3,7 +3,7 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 //! # `scsys-utils`
-//! 
+//!
 //! utilities for the `scsys` ecosystem
 #![cfg_attr(not(feature = "std"), no_std)]
 
