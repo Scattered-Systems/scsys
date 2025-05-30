@@ -14,10 +14,8 @@ use core::time::Duration;
 /// #### _Example #1_ Using the [`now`](Timestamp::now) method to get the current timestamp
 ///
 /// ```rust
-/// use scsys_core::time::Timestamp;
-///
 /// #[cfg(feature = "std")]
-/// let ts = Timestamp::<u64>::now();
+/// let ts = scsys_core::Timestamp::<u64>::now();
 /// ```
 ///
 /// ## Features
@@ -64,12 +62,12 @@ where
         &mut self.0
     }
     /// Get the current timestamp.
-    pub fn get(self) -> T {
+    pub fn into_inner(self) -> T {
         self.0
     }
     /// [`replace`](core::mem::replace) the current value with a new one and return the old one
     pub fn replace(&mut self, value: T) -> T {
-        core::mem::replace(&mut self.0, value)
+        core::mem::replace(self.as_mut(), value)
     }
     /// set the current state and return a mutable reference to sel
     pub fn set(&mut self, ts: T) -> &mut Self {
@@ -82,7 +80,7 @@ where
     where
         T: Default,
     {
-        core::mem::take(&mut self.0)
+        core::mem::take(self.as_mut())
     }
     /// consumes the current instance to create another with the given value
     pub fn with<U: RawTimestamp>(self, ts: U) -> Timestamp<U> {
@@ -94,6 +92,10 @@ impl<T> Timestamp<T>
 where
     T: RawTimestamp,
 {
+    #[deprecated(since = "0.2.8", note = "use `Timestamp::into_inner` instead")]
+    pub fn get(self) -> T {
+        self.into_inner()
+    }
     #[doc(hidden)]
     #[deprecated(since = "0.2.8", note = "use `Timestamp::set` instead")]
     pub fn update(&mut self, ts: T) {

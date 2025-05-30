@@ -90,7 +90,7 @@ impl_raw_timestamp! {
     i64,
 }
 
-impl<'a> RawTimestamp for &'a str {
+impl RawTimestamp for str {
     seal!();
 }
 

@@ -1,3 +1,7 @@
+/*
+    appellation: macros <test>
+    authors: @FL03
+*/
 use scsys_core::gsw;
 
 #[derive(Clone, Debug, Default)]
