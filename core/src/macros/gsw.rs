@@ -3,32 +3,47 @@
     Contrib: @FL03
 */
 
-/// The `gsw` macro generates getter and setter methods for the fields of a struct.
+/// The `gsw` macro generates getter and setter methods for the fields of a struct. At the
+/// moment, the macro can handle any type; for types that implement the [`Copy`] trait, simply
+/// drop the `&` to the left of each type.
+///
+/// **Note**: make sure that
 ///
 /// ### Usage
 ///
-/// ```no_run
+/// ```rust
+/// use scsys_core::gsw;
 ///
 /// #[derive(Clone, Debug, Default)]
-/// pub struct Sample {
+/// pub struct Sample<T> {
 ///     pub(crate) a: usize,
-///     pub(crate) b: std::collections::HashMap<String, usize>,
+///     pub(crate) b: f32,
+///     pub(crate) store: Vec<u8>,
+///     pub(crate) c:T,
+///
 /// }
 ///
-/// impl Sample {
-///     scsys_core::gsw! {
+/// impl<T> Sample<T> {
+///     gsw! {
 ///         a: usize,
+///         b: f32,
 ///     }
-///     scsys_core::gsw! {
-///         b: &std::collections::HashMap<String, usize>,
+///     gsw! {
+///         c: &T,
+///         store: &Vec<u8>,
 ///     }
 /// }
+///
 /// #[test]
-/// fn _sampler() {
-///     let mut sample = Sample::default().with_a(10);
+/// fn test_sample_gsw_impls() {
+///     let mut sample = Sample::<&str>::default().with_a(10).with_store(vec![1, 2, 3]);
+///     sample.set_b(3.14).set_c("hello");
 ///     assert_eq!(sample.a(), 10);
-///     assert_eq!(sample.a_mut(), &mut 10);
-///     assert_eq!(sample.set_a(20).a(), 20);
+///     assert_eq!(sample.b(), 3.14);
+///     assert_eq!(sample.c(), "hello");
+///     assert_eq!(sample.store(), &vec![1, 2, 3]);
+///     sample.c_mut().push(u8::MAX);
+///     assert!(sample.store().last() == Some(&u8::MAX));
 /// }
 /// ```
 #[macro_export]
@@ -63,8 +78,7 @@ macro_rules! gsw {
     };
     (@get_mut $name:ident: $T:ty) => {
         paste::paste! {
-
-            pub fn [<$name _mut>] (&mut self) -> &mut $T {
+            pub const fn [<$name _mut>] (&mut self) -> &mut $T {
                 &mut self.$name
             }
         }

@@ -2,17 +2,23 @@
     Appellation: epoch <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-use super::Timestamp;
+use crate::time::{RawTimestamp, Timestamp};
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
-pub struct Epoch<T = u128> {
+pub struct Epoch<Ts = u128>
+where
+    Ts: RawTimestamp,
+{
     size: u128,
-    timestamp: Timestamp<T>,
+    timestamp: Timestamp<Ts>,
 }
 
-impl<T> Epoch<T> {
-    pub fn new(size: u128, timestamp: Timestamp<T>) -> Self {
+impl<Ts> Epoch<Ts>
+where
+    Ts: RawTimestamp,
+{
+    pub fn new(size: u128, timestamp: Timestamp<Ts>) -> Self {
         Self { size, timestamp }
     }
     /// The size of the epoch; epochs generally consider the number of steps, or size,
@@ -22,7 +28,7 @@ impl<T> Epoch<T> {
         self.size
     }
 
-    pub fn timestamp(&self) -> &T {
+    pub fn timestamp(&self) -> &Ts {
         &self.timestamp
     }
 

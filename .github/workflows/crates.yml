@@ -5,6 +5,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
 env:
+  CARGO_PACKAGE_NAME: ${{ github.event.repository.name }}
   CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
@@ -22,12 +23,20 @@ permissions:
   packages: write
 
 jobs:
-  deps:
+  crates-io:
     strategy:
       max-parallel: 1
       fail-fast: false
       matrix:
-        feature: [ traits, util, core, config, crypto, derive, macros ]
+        package: 
+          - scsys-traits
+          - scsys-util
+          - scsys-core
+          - scsys-config
+          - scsys-crypto
+          - scsys-derive
+          - scsys-macros
+          - scsys
     runs-on: ubuntu-latest
     steps:
       - 
@@ -40,20 +49,13 @@ jobs:
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           cache-workspaces: true
       - 
-        name: Publish (${{ matrix.feature }})
-        run: cargo publish --locked --package ${{ github.event.repository.name }}-${{ matrix.feature }}
-  sdk:
-    needs: deps
+        name: Publish (${{ matrix.package }})
+        run: cargo publish --locked --package ${{ matrix.package }}
+  release:
+    needs: crates-io
     runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
     steps:
       - 
         uses: actions/checkout@v4
         name: Checkout
-      - 
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        name: Setup Rust
-        with:
-          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          cache-workspaces: true
-      - name: Publish (${{ github.event.repository.name }})
-        run: cargo publish --locked --package ${{ github.event.repository.name }}

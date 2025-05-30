@@ -4,9 +4,20 @@
 */
 //! This crate works to provide a set of utilities for working with state, time, and synchronization in Rust.
 #![cfg_attr(not(feature = "std"), no_std)]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
+    html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
+)]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
+// re-import the `rand` & `rand_distr` crates if the `rand` feature is enabled
+#[cfg(feature = "rand")]
+#[doc(no_inline)]
+pub use rand;
+#[cfg(feature = "rand")]
+#[doc(no_inline)]
+pub use rand_distr;
 
 #[macro_use]
 pub(crate) mod macros {
@@ -25,7 +36,9 @@ pub(crate) mod macros {
 #[doc(inline)]
 pub use self::{
     error::*,
+    id::Id,
     state::{NState, RawState, State, Stateful},
+    time::{Now, RawTimestamp, Timestamp},
     types::prelude::*,
 };
 

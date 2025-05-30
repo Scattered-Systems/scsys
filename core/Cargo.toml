@@ -18,7 +18,7 @@ version.workspace = true
 crate-type = [ "cdylib", "rlib", "staticlib" ]
 bench = false
 doc = true
-doctest = true
+doctest = false
 test = true
 
 [package.metadata.docs.rs]

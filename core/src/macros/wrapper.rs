@@ -2,20 +2,44 @@
     Appellation: wrapper <module>
     Contrib: @FL03
 */
+
+/// 
+/// 
+/// ### Example
+/// 
+/// ```rust
+/// use scsys_core::fmt_wrapper;
+/// 
+/// pub struct Sample<T>(pub T);
+/// 
+/// fmt_wrapper!(Sample<Q>(Binary, Debug, Display, LowerHex, UpperHex, LowerExp, UpperExp, Pointer));
+/// ```
 #[macro_export]
 macro_rules! fmt_wrapper {
-    ($s:ident<$T:ident> {$($trait:ident($($fmt:tt)*)),* $(,)?}) => {
+    ($s:ident<$T:ident> ($($trait:ident),* $(,)?)) => {
         $(
-            $crate::fmt_wrapper!(@impl $s::<$T>::$trait($($fmt)*));
+            $crate::fmt_wrapper!(@impl $s::<$T>::$trait);
         )*
     };
-    (@impl $s:ident::<$T:ident>::$trait:ident($($fmt:tt)*)) => {
+    ($s:ident<$T:ident>.$field:ident {$($trait:ident),* $(,)?}) => {
+        $(
+            $crate::fmt_wrapper!(@impl $s::<$T>::$trait.$field);
+        )*
+    };
+    
+    (@impl $s:ident::<$T:ident>::$trait:ident) => {
+        $crate::fmt_wrapper!(@impl #[field(0)] $s::<$T>::$trait);
+    };
+    (@impl #[field($field:tt)] $s:ident::<$T:ident>::$trait:ident) => {
         impl<$T> ::core::fmt::$trait for $s<$T>
         where
         $T: ::core::fmt::$trait
         {
-            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-                write!(f, $($fmt)*, self.0)
+            fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+                ::core::fmt::$trait::fmt(
+                    &self.$field,
+                    f,
+                )
             }
         }
     };
