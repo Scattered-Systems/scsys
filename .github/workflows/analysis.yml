@@ -1,4 +1,4 @@
-name: clippy
+name: code analysis
 
 concurrency:   
   cancel-in-progress: false
@@ -8,8 +8,9 @@ on:
   pull_request:
     branches: [ main, master ]
     types: [ opened, reopened, closed ]
-  release:
-    types: [ created ]
+  push:
+    branches: [ main, master ]
+    tags: [ latest, v*, "*-nightly" ]
   repository_dispatch:
     types: [ clippy ]
   workflow_dispatch:

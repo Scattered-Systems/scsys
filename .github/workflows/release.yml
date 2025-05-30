@@ -1,4 +1,4 @@
-name: crates-io
+name: release
 
 concurrency:
   cancel-in-progress: false
