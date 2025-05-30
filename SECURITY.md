@@ -6,6 +6,7 @@ This section is used to update intrested parties as to which versions are curren
 
 | Version | Supported          |
 | :------ | :----------------- |
+| 0.2.9   | :white_check_mark: |
 | 0.2.x   | :white_check_mark: |
 | 0.1.x   | :x:                |
 | < 0.1   | :x:                |
