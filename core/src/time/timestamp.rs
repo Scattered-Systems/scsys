@@ -3,7 +3,6 @@
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 use crate::time::{Now, RawTimestamp};
-use core::time::Duration;
 
 /// [`Timestamp`] is a generic implementation of a type that represents some point in time.
 ///
@@ -30,7 +29,7 @@ use core::time::Duration;
 ///   - `Timestamp<u64>`: for seconds
 ///   - `Timestamp<u128>`: for milliseconds
 ///
-#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Deserialize, serde::Serialize),
@@ -43,6 +42,7 @@ impl<T> Timestamp<T>
 where
     T: RawTimestamp,
 {
+    /// create a new instance of [`Timestamp`] with the given value.
     pub fn new(ts: T) -> Self {
         Self(ts)
     }
@@ -54,35 +54,43 @@ where
         <Self as Now>::now()
     }
     /// Get an immutable reference to the current timestamp.
-    pub fn as_ref(&self) -> &T {
+    pub const fn get(&self) -> &T {
         &self.0
     }
     /// Get a mutable reference to the current timestamp.
-    pub fn as_mut(&mut self) -> &mut T {
+    pub const fn get_mut(&mut self) -> &mut T {
         &mut self.0
     }
-    /// Get the current timestamp.
+    /// consumes the current instance and returns the inner value.
+    #[inline]
     pub fn into_inner(self) -> T {
         self.0
     }
     /// [`replace`](core::mem::replace) the current value with a new one and return the old one
-    pub fn replace(&mut self, value: T) -> T {
-        core::mem::replace(self.as_mut(), value)
+    pub const fn replace(&mut self, value: T) -> T {
+        core::mem::replace(self.get_mut(), value)
     }
-    /// set the current state and return a mutable reference to sel
+    /// update the current value and return a mutable reference to the current instance.
+    #[inline]
     pub fn set(&mut self, ts: T) -> &mut Self {
-        self.0 = ts;
+        *self.get_mut() = ts;
         self
+    }
+    /// [`swap`](core::mem::swap) the current value with another and return a mutable reference to self
+    pub const fn swap(&mut self, ts: &mut T) {
+        core::mem::swap(self.get_mut(), ts)
     }
     /// [`take`](core::mem::take) the current value and return it, leaving the logical
     /// [`default`](Default::default) in its place.
+    #[inline]
     pub fn take(&mut self) -> T
     where
         T: Default,
     {
-        core::mem::take(self.as_mut())
+        core::mem::take(self.get_mut())
     }
     /// consumes the current instance to create another with the given value
+    #[inline]
     pub fn with<U: RawTimestamp>(self, ts: U) -> Timestamp<U> {
         Timestamp(ts)
     }
@@ -92,9 +100,13 @@ impl<T> Timestamp<T>
 where
     T: RawTimestamp,
 {
-    #[deprecated(since = "0.2.8", note = "use `Timestamp::into_inner` instead")]
-    pub fn get(self) -> T {
-        self.into_inner()
+    #[deprecated(since = "0.2.8", note = "use `Timestamp::get` instead")]
+    pub fn as_ref(&self) -> &T {
+        self.get()
+    }
+    #[deprecated(since = "0.2.8", note = "use `Timestamp::get_mut` instead")]
+    pub fn as_mut(&mut self) -> &mut T {
+        self.get_mut()
     }
     #[doc(hidden)]
     #[deprecated(since = "0.2.8", note = "use `Timestamp::set` instead")]
@@ -142,25 +154,25 @@ impl Now for Timestamp<i64> {
 
 impl<T: RawTimestamp> AsRef<T> for Timestamp<T> {
     fn as_ref(&self) -> &T {
-        &self.0
+        self.get()
     }
 }
 
 impl<T: RawTimestamp> AsMut<T> for Timestamp<T> {
     fn as_mut(&mut self) -> &mut T {
-        &mut self.0
+        self.get_mut()
     }
 }
 
 impl<T: RawTimestamp> core::borrow::Borrow<T> for Timestamp<T> {
     fn borrow(&self) -> &T {
-        &self.0
+        self.get()
     }
 }
 
 impl<T: RawTimestamp> core::borrow::BorrowMut<T> for Timestamp<T> {
     fn borrow_mut(&mut self) -> &mut T {
-        &mut self.0
+        self.get_mut()
     }
 }
 
@@ -168,34 +180,51 @@ impl<T: RawTimestamp> core::ops::Deref for Timestamp<T> {
     type Target = T;
 
     fn deref(&self) -> &Self::Target {
-        &self.0
+        self.get()
     }
 }
 
 impl<T: RawTimestamp> core::ops::DerefMut for Timestamp<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
+        self.get_mut()
     }
 }
 
-impl<T> core::fmt::Display for Timestamp<T>
-where
-    T: RawTimestamp + core::fmt::Display,
-{
-    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-        write!(f, "{}", self.0)
-    }
+crate::fmt_wrapper! {
+    Timestamp<T>(
+        Binary,
+        Octal,
+        LowerHex,
+        UpperHex,
+        Display,
+        Debug,
+        LowerExp,
+        UpperExp,
+        Pointer,
+    )
 }
 
-impl From<Duration> for Timestamp<u64> {
-    fn from(dur: Duration) -> Self {
+impl From<core::time::Duration> for Timestamp<u64> {
+    fn from(dur: core::time::Duration) -> Self {
         Self(dur.as_secs())
     }
 }
 
-impl From<Duration> for Timestamp<u128> {
-    fn from(dur: Duration) -> Self {
+impl From<core::time::Duration> for Timestamp<u128> {
+    fn from(dur: core::time::Duration) -> Self {
         Self(dur.as_millis())
+    }
+}
+
+impl From<Timestamp<u64>> for core::time::Duration {
+    fn from(ts: Timestamp<u64>) -> Self {
+        Self::from_secs(*ts)
+    }
+}
+
+impl From<Timestamp<u128>> for core::time::Duration {
+    fn from(ts: Timestamp<u128>) -> Self {
+        Self::from_millis(*ts as u64)
     }
 }
 
@@ -206,17 +235,5 @@ where
 {
     fn from(ts: chrono::DateTime<Tz>) -> Self {
         Self(ts.timestamp())
-    }
-}
-
-impl From<Timestamp<u64>> for Duration {
-    fn from(ts: Timestamp<u64>) -> Self {
-        Self::from_secs(*ts)
-    }
-}
-
-impl From<Timestamp<u128>> for Duration {
-    fn from(ts: Timestamp<u128>) -> Self {
-        Self::from_millis(*ts as u64)
     }
 }

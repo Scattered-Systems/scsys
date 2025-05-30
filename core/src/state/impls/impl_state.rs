@@ -126,14 +126,5 @@ impl<Q> core::ops::DerefMut for State<Q> {
 }
 
 fmt_wrapper! {
-    State<Q> {
-        Binary("{:b}"),
-        Debug("{:?}"),
-        Display("{}"),
-        LowerExp("{:e}"),
-        LowerHex("{:x}"),
-        Octal("{:o}"),
-        UpperExp("{:E}"),
-        UpperHex("{:X}")
-    }
+    State<Q>(Binary, Debug, Display, LowerHex, UpperHex, LowerExp, UpperExp, Pointer)
 }
