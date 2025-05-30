@@ -4,6 +4,10 @@
 */
 //! This crate works to provide a set of utilities for working with state, time, and synchronization in Rust.
 #![cfg_attr(not(feature = "std"), no_std)]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
+    html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
+)]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;

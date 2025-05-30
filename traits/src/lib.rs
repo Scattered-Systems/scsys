@@ -1,6 +1,13 @@
+/*
+    appellation: scsys-traits <library>
+    authors: @FL03
+*/
 //! A collection of useful traits designed to be used throughout the ecosystem.
 //!
-
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
+    html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
+)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[cfg(feature = "alloc")]

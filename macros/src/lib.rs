@@ -3,6 +3,11 @@
     Contributors: FL03 <jo3mccain@icloud.com>
 */
 //! procedural macros for the `scsys` ecosystem
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
+    html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
+)]
+
 extern crate proc_macro;
 
 use proc_macro::TokenStream;

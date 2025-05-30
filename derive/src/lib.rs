@@ -2,6 +2,10 @@
     Appellation: scsys-derive <library>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
+    html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
+)]
 extern crate proc_macro;
 extern crate quote;
 extern crate syn;
