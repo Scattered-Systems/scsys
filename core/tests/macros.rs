@@ -31,7 +31,7 @@ impl<T> Sample<T> {
 #[test]
 fn test_sample_gsw_impls() {
     // validate builders
-    let mut sample = Sample::new("world".to_string())
+    let mut sample = Sample::new("hello world".to_string())
         .with_apple(10)
         .with_block(3.14);
     // verify setters
@@ -39,7 +39,7 @@ fn test_sample_gsw_impls() {
     // verify the getters
     assert_eq!(sample.apple(), 10);
     assert_eq!(sample.block(), 3.14);
-    assert_eq!(sample.cont(), "hello");
+    assert_eq!(sample.cont(), "hello world");
     assert_eq!(sample.store(), &vec![1, 2, 3]);
     // verify the mutable getters
     sample.store_mut().push(u8::MAX);
