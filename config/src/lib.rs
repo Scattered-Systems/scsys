@@ -6,6 +6,10 @@
 //! [scsys-io](https://scsys.io) ecosystem.
 //!
 #![crate_type = "lib"]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
+    html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
+)]
 
 #[doc(no_inline)]
 #[cfg(feature = "config")]
