@@ -33,7 +33,7 @@ pub(crate) mod macros {
 pub use self::{
     error::*,
     id::Id,
-    state::{NState, RawState, State, Stateful},
+    state::{NState, StateBase, State, Stateful},
     time::{Now, RawTimestamp, Timestamp},
     types::prelude::*,
 };

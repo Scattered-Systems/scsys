@@ -5,40 +5,16 @@
 use crate::state::State;
 
 impl<'a, T> State<&'a T> {
-    /// returns a new instance containing a clone of the inner value
-    pub fn cloned(&self) -> State<T>
-    where
-        T: Clone,
-    {
-        State(self.0.clone())
-    }
-    /// returns a new instance containing a copy of the inner value
-    pub fn copied(&self) -> State<T>
-    where
-        T: Copy,
-    {
-        State(*self.0)
-    }
+
 }
 
 impl<'a, T> State<&'a mut T> {
-    /// returns a new instance containing a clone of the inner value
-    pub fn cloned(&self) -> State<T>
-    where
-        T: Clone,
-    {
-        State(self.0.clone())
-    }
-    /// returns a new instance containing a copy of the inner value
-    pub fn copied(&self) -> State<T>
-    where
-        T: Copy,
-    {
-        State(*self.0)
-    }
+
 }
 
 impl<T> State<*const T> {}
+
+impl<T> State<*mut T> {}
 
 impl<T> State<core::mem::MaybeUninit<T>> {
     /// returns a new instance containing a reference to the inner value

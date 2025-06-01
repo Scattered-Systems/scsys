@@ -6,10 +6,11 @@
 //!
 //! This module contains the stateful types and traits for the library.
 #[doc(inline)]
-pub use self::nstate::{NState, NStateKind};
+pub use self::{nstate::{NState, NStateKind}, wrapper::State};
 /// this module implements an alternative stateful representation that enables one to provide
 /// a data type as well as specify the state _kind_
 pub mod nstate;
+pub mod wrapper;
 
 mod impls {
     pub mod impl_ops;
@@ -21,26 +22,29 @@ pub(crate) mod prelude {
     #[doc(inline)]
     pub use super::nstate::*;
     #[doc(inline)]
-    pub use super::{RawState, Stateful};
+    pub use super::wrapper::*;
+    #[doc(inline)]
+    pub use super::{RawState, StateBase, Stateful};
 }
 
-/// [`State`] is a generic type wrapper materializing the [`RawState`] trait.
-#[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Deserialize, serde::Serialize),
-    serde(default, transparent)
-)]
-#[repr(transparent)]
-pub struct State<Q = usize>(pub Q);
 
-/// a trait for denoting stateful entities
-pub trait Stateful {
-    type State: RawState;
+
+/// [`Stateful`] is a trait establishing a common interface for all types that are state-aware.
+pub trait Stateful<Q> {
+    type State<Q2>: StateBase<Item = Q2>;
+
+    fn state(&self) -> &Self::State<Q>;
 }
 
-/// [RawState]
+/// [RawState] is a trait that defines the types of states 
 pub trait RawState {
+
+    private!();
+}
+
+/// The [`StateBase`] trait defines the base type for stateful items, allowing for a generic
+/// item type to be associated with the state.
+pub trait StateBase {
     type Item;
 
     private!();
@@ -49,12 +53,14 @@ pub trait RawState {
 /*
  ************* Implementations *************
 */
-impl<Q, T> RawState for NState<Q, T> {
-    type Item = T;
+impl<Q> StateBase for State<Q> {
+    type Item = Q;
 
     seal!();
 }
 
-impl<Q, T> Stateful for NState<Q, T> {
-    type State = NState<Q, T>;
+impl<Q, T> StateBase for NState<Q, T> {
+    type Item = T;
+
+    seal!();
 }

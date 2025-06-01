@@ -2,7 +2,7 @@
     Appellation: atomic <mod>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-/// A generic identifier
+/// [`Id`] is a generic identifier type that wraps a value of type `T`.
 #[derive(Clone, Copy, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 #[repr(transparent)]
@@ -34,15 +34,16 @@ impl<T> Id<T> {
         &self.0
     }
     /// returns a mutable reference to the inner value
-    pub fn get_mut(&mut self) -> &mut T {
+    pub const fn get_mut(&mut self) -> &mut T {
         &mut self.0
     }
     /// consumes the current instance to return the inner value
-    pub fn into_inner(self) -> T {
+    #[inline]
+    pub fn value(self) -> T {
         self.0
     }
     /// use the [`replace`](core::mem::replace) method to update and return the inner value
-    pub fn replace(&mut self, id: T) -> T {
+    pub const fn replace(&mut self, id: T) -> T {
         core::mem::replace(self.get_mut(), id)
     }
     /// mutate the inner value and return a mutable reference to the wrapper for chaining
@@ -50,7 +51,13 @@ impl<T> Id<T> {
         *self.get_mut() = id;
         self
     }
-    /// takes the inner value and replaces it with the default value
+    /// [`swap`](core::mem::swap) the inner value with that of another identifier instance of 
+    /// the same type `T`
+    pub const fn swap(&mut self, id: &mut Id<T>) {
+        core::mem::swap(self.get_mut(), id.get_mut())
+    }
+    /// [`take`](core::mem::take) the inner value, leaving the logical [`default`](Default::default) 
+    /// value in its place.
     pub fn take(&mut self) -> T
     where
         T: Default,
@@ -66,7 +73,7 @@ impl<T> Id<T> {
     where
         F: FnOnce(T) -> U,
     {
-        Id(f(self.0))
+        Id(f(self.value()))
     }
 }
 
@@ -108,25 +115,25 @@ impl<T: Default> Default for Id<T> {
 
 impl<T> AsRef<T> for Id<T> {
     fn as_ref(&self) -> &T {
-        &self.0
+        self.get()
     }
 }
 
 impl<T> AsMut<T> for Id<T> {
     fn as_mut(&mut self) -> &mut T {
-        &mut self.0
+        self.get_mut()
     }
 }
 
 impl<T> core::borrow::Borrow<T> for Id<T> {
     fn borrow(&self) -> &T {
-        &self.0
+        self.get()
     }
 }
 
 impl<T> core::borrow::BorrowMut<T> for Id<T> {
     fn borrow_mut(&mut self) -> &mut T {
-        &mut self.0
+        self.get_mut()
     }
 }
 
@@ -134,52 +141,44 @@ impl<T> core::ops::Deref for Id<T> {
     type Target = T;
 
     fn deref(&self) -> &Self::Target {
-        &self.0
+        self.get()
     }
 }
 
 impl<T> core::ops::DerefMut for Id<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
+        self.get_mut()
     }
 }
 
-macro_rules! fmt_atomic {
-    ($s:ident {$($trait:ident($($fmt:tt)*)),* $(,)?}) => {
-        $(
-            fmt_atomic!(@impl $s::$trait($($fmt)*));
-        )*
-    };
-    (@impl $s:ident::$trait:ident($($fmt:tt)*)) => {
-        impl<T> ::core::fmt::$trait for Id<T>
-        where
-            T: ::core::fmt::$trait
-        {
-            fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-                write!(f, $($fmt)*, self.0)
-            }
-        }
-    };
-}
-
-fmt_atomic! {
-    Id {
-        Binary("{:b}"),
-        Debug("{:?}"),
-        Display("{}"),
-        LowerExp("{:e}"),
-        LowerHex("{:x}"),
-        Octal("{:o}"),
-        UpperExp("{:E}"),
-        UpperHex("{:X}")
-    }
-}
-
-impl<S> PartialEq<S> for Id
+impl<Q> PartialEq<Q> for Id<Q>
 where
-    usize: PartialEq<S>,
+    Q: PartialEq,
 {
-    fn eq(&self, other: &S) -> bool {
-        self.0.eq(other)
+    fn eq(&self, other: &Q) -> bool {
+        self.get() == other
     }
+}
+
+impl<Q> PartialOrd<Q> for Id<Q>
+where
+    Q: PartialOrd,
+{
+    fn partial_cmp(&self, other: &Q) -> Option<core::cmp::Ordering> {
+        self.get().partial_cmp(other)
+    }
+}
+
+crate::fmt_wrapper! {
+    Id<T>(
+        Binary,
+        Debug,
+        Display,
+        LowerExp,
+        LowerHex,
+        Octal,
+        Pointer,
+        UpperExp,
+        UpperHex
+    )
 }
