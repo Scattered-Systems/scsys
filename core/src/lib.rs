@@ -22,10 +22,6 @@ pub use rand_distr;
 #[macro_use]
 pub(crate) mod macros {
     #[macro_use]
-    pub mod builder;
-    #[macro_use]
-    pub mod fmt;
-    #[macro_use]
     pub mod gsw;
     #[macro_use]
     pub mod seal;

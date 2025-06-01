@@ -81,7 +81,6 @@ paste = { version = "1" }
 smart-default = { version = "0.7" }
 strum = { default-features = false, features = [ "derive" ], version = "0.27" }
 # misc
-glob = { default-features = false, version = "0.3" }
 generic-array = { default-features = false, version = "1" }
 typenum = { default-features = false, version = "1" }
 url = { default-features = false, version = "2" }
@@ -96,12 +95,12 @@ codegen-units = 256
 debug = true
 debug-assertions = true
 incremental = true
-lto = false
-opt-level = 0
+lto = 'thin'
+opt-level = 2
 overflow-checks = true
 panic = "abort"
 rpath = false
-strip = "debuginfo"
+strip = false
 
 [profile.release]
 codegen-units = 16

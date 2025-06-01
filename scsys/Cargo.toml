@@ -15,13 +15,18 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
-crate-type = [ "cdylib", "rlib", "staticlib" ]
+crate-type = [ 
+    "cdylib", 
+    "rlib", 
+    "staticlib" 
+]
 bench = true
 doc = true
 doctest = true
 test = true
 
 [dependencies]
+# sdk
 scsys-core = { workspace = true }
 scsys-config = { optional = true, workspace = true }
 scsys-crypto = { optional = true, workspace = true }
@@ -45,7 +50,7 @@ version = "v{{version}}"
 
 [package.metadata.release]
 no-dev-version = true
-tag-name = "{{version}}"
+tag-name = "v{{version}}"
 
 [features]
 default = [

@@ -1,4 +1,4 @@
-name: release
+name: crates-io
 
 concurrency:
   cancel-in-progress: false
@@ -8,7 +8,7 @@ env:
   CARGO_PACKAGE_NAME: ${{ github.event.repository.name }}
   CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
   CARGO_TERM_COLOR: always
-  RUST_BACKTRACE: 1
+  RUST_BACKTRACE: 1full
 
 on:
   release:
@@ -51,11 +51,3 @@ jobs:
       - 
         name: Publish (${{ matrix.package }})
         run: cargo publish --locked --package ${{ matrix.package }}
-  release:
-    needs: crates-io
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.action == 'published'
-    steps:
-      - 
-        uses: actions/checkout@v4
-        name: Checkout

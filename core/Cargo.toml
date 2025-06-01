@@ -15,7 +15,11 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
-crate-type = [ "cdylib", "rlib", "staticlib" ]
+crate-type = [ 
+    "cdylib", 
+    "rlib", 
+    "staticlib" 
+]
 bench = false
 doc = true
 doctest = false
