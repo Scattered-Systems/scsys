@@ -36,9 +36,9 @@ pub mod types {
 
 pub(crate) mod prelude {
     #[doc(inline)]
-    pub use super::types::prelude::*;
-    #[doc(inline)]
     pub use super::RawHash;
+    #[doc(inline)]
+    pub use super::types::prelude::*;
 }
 
 pub trait RawHash {
@@ -75,7 +75,6 @@ macro_rules! impl_raw_hash {
         }
     };
 }
-
 
 impl_raw_hash! {
     GenericHash,
