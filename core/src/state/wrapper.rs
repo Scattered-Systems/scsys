@@ -2,6 +2,10 @@
     appellation: wrapper <module>
     authors: @FL03
 */
+
+mod impl_ops;
+mod impl_state;
+
 /// [`State`] is a generic type wrapper materializing the [`RawState`] trait.
 #[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(
@@ -12,20 +16,20 @@
 #[repr(transparent)]
 pub struct State<Q = usize>(pub Q);
 
-
 /// generic implementation of the [`State`] type available for all types `Q`
 impl<Q> State<Q> {
-    /// Create a new identifier with the default value
+    /// returns a new instance of [`State`] with the default value
     pub fn new() -> Self
     where
         Q: Default,
     {
-        Self(Q::default())
+        State(Q::default())
     }
-    /// create a new identifier from the given value
-    pub fn from_value(id: Q) -> Self {
-        Self(id)
+    /// returns a new instance of [`State`] with the given value
+    pub fn from_value(state: Q) -> Self {
+        State(state)
     }
+    /// generate a new instance of the state with a random value
     #[cfg(feature = "rand")]
     pub fn random() -> Self
     where
@@ -34,6 +38,18 @@ impl<Q> State<Q> {
         use rand::Rng;
         let mut rng = rand::rng();
         Self::from_value(rng.random())
+    }
+    #[cfg(feature = "rand")]
+    pub fn random_with<R, Dist>(rng: &mut R, distr: Dist) -> Self
+    where
+        Dist: rand_distr::Distribution<Q>,
+        R: rand::RngCore,
+    {
+        use rand::Rng;
+        // sample a value using the given rng configured with the given distribution
+        let value = rng.sample(distr);
+        // return a new instance of the state with the sampled value
+        State(value)
     }
     /// returns an immutable reference to the inner value
     pub const fn get(&self) -> &Q {
@@ -45,12 +61,20 @@ impl<Q> State<Q> {
     }
     /// consumes the current instance to return the inner value
     #[inline]
+    pub fn value(self) -> Q {
+        self.0
+    }
+    #[deprecated(
+        since = "0.2.9",
+        note = "use `value` instead, this will be removed in the next major release"
+    )]
     pub fn into_inner(self) -> Q {
         self.0
     }
-    /// use the [`replace`](core::mem::replace) method to update and return the inner value
-    pub const fn replace(&mut self, id: Q) -> Q {
-        core::mem::replace(self.get_mut(), id)
+    /// [`replace`](core::mem::replace) the inner state with the given value and return the 
+    /// previous
+    pub const fn replace(&mut self, state: Q) -> Q {
+        core::mem::replace(self.get_mut(), state)
     }
     /// mutate the inner value and return a mutable reference to the wrapper for chaining
     pub fn set(&mut self, state: Q) -> &mut Self {

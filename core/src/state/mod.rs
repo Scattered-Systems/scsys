@@ -12,12 +12,6 @@ pub use self::{nstate::{NState, NStateKind}, wrapper::State};
 pub mod nstate;
 pub mod wrapper;
 
-mod impls {
-    pub mod impl_ops;
-    pub mod impl_repr;
-    pub mod impl_state;
-}
-
 pub(crate) mod prelude {
     #[doc(inline)]
     pub use super::nstate::*;
