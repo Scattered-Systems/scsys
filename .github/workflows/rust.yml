@@ -107,11 +107,7 @@ jobs:
   benchmark:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') || github.event.action == 'repository_dispatch' && github.event.action == 'rust'
     needs: build
-    strategy:
-      fail-fast: false
-      matrix:
-        os:  [ ubuntu-latest ]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       -
         name: Checkout
@@ -123,4 +119,4 @@ jobs:
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       -
         name: Benchmark
-        run: cargo bench --verbose --workspace --features full
+        run: cargo bench -v --workspace --features full

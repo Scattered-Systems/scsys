@@ -99,8 +99,8 @@ lto = 'thin'
 opt-level = 2
 overflow-checks = true
 panic = "abort"
-rpath = false
-strip = false
+rpath = true
+strip = "symbols"
 
 [profile.release]
 codegen-units = 16
@@ -112,4 +112,4 @@ opt-level = "z"
 overflow-checks = false
 panic = "abort"
 rpath = false
-strip = true
+strip = "debuginfo"
