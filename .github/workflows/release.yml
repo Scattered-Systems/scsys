@@ -1,14 +1,12 @@
-name: crates-io
+name: release
 
 concurrency:
   cancel-in-progress: false
   group: ${{ github.workflow }}-${{ github.ref }}
 
 env:
-  CARGO_PACKAGE_NAME: ${{ github.event.repository.name }}
-  CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
   CARGO_TERM_COLOR: always
-  RUST_BACKTRACE: 1full
+  RUST_BACKTRACE: full
 
 on:
   release:
@@ -18,12 +16,17 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  deployments: read
+  contents: write
+  discussions: write
   packages: write
 
 jobs:
   crates-io:
+    env:
+      CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+    environment:
+      name: crates-io
+      url: https://crates.io/crates/scsys
     strategy:
       max-parallel: 1
       fail-fast: false
@@ -47,7 +50,6 @@ jobs:
         name: Setup Rust
         with:
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          cache-workspaces: true
       - 
         name: Publish (${{ matrix.package }})
         run: cargo publish --locked --package ${{ matrix.package }}

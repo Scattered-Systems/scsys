@@ -1,21 +1,24 @@
 ---
+name: Tracking Issue
+
 about: A template for creating issues dedicated to tracking other issues and pull requests
 assignees: [ FL03 ]
 labels: [ 'tracking' ]
-name: Tracking Issue
 title: 'Tracking issue for '
 type: Feature
 ---
 
-_A concise explanation of the issue (or feature) being tracked._
+<!-- A concise explanation of the issue (or feature) being tracked. -->
 
 ## Overview
 
-Detail the issue or feature being tracked. Include any relevant context, such as the problem it solves or the motivation behind it.
+<!-- 
+Detail the issue or feature being tracked. Include any relevant context, such as the problem it solves or the motivation behind it. 
+-->
 
-## Issues
+## Related Issues and Pull Requests
 
-- []
+- [#issue-number](link-to-issue) - Brief description of the issue or PR
 
 ## Roadmap
 
