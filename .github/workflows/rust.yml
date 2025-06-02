@@ -52,19 +52,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        features:  [ all, default, full, ] # [ all, default, full, alloc, no_std ]
+        features:  [ all, default, full, alloc, no_std ]
         target: [ x86_64-unknown-linux-gnu ] # [ x86_64-unknown-linux-gnu, x86_64-apple-darwin, x86_64-pc-windows-msvc, wasm32-unknown-unknown, wasm32-wasip1, wasm32-wasip2 ]
-        toolchain: [ stable ]
+        toolchain: [ stable, nightly ]
         include:
           - features: all
-            target: x86_64-unknown-linux-gnu
             toolchain: stable
           - features: default
-            target: x86_64-unknown-linux-gnu
             toolchain: stable
           - features: full
-            target: x86_64-unknown-linux-gnu
             toolchain: stable
+          - features: alloc
+            toolchain: nightly
+          - features: no_std
+            toolchain: nightly
     runs-on: ubuntu-latest
     steps:
       -
