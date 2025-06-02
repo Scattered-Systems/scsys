@@ -17,36 +17,65 @@ extern crate alloc;
 pub use self::prelude::*;
 
 #[macro_use]
-pub(crate) mod seal;
+pub(crate) mod macros {
+    #[macro_use]
+    pub mod seal;
+}
 
-pub mod adjust;
-pub mod container;
 pub mod convert;
 pub mod dtype;
-pub mod hkt;
 pub mod named;
-pub mod store;
 pub mod string;
 pub mod symbolic;
 pub mod toggle;
 pub mod wrapper;
 
+pub mod cont {
+    #[doc(inline)]
+    pub use self::prelude::*;
+
+    pub mod container;
+    pub mod hkt;
+    pub mod store;
+
+    pub(crate) mod prelude {
+        #[doc(inline)]
+        pub use super::container::*;
+        #[doc(inline)]
+        pub use super::hkt::*;
+        #[doc(inline)]
+        pub use super::store::*;
+    }
+}
+
+pub mod ops {
+    #[doc(inline)]
+    pub use self::prelude::*;
+
+    pub mod adjust;
+    pub mod map;
+
+    pub(crate) mod prelude {
+        #[doc(inline)]
+        pub use super::adjust::*;
+        #[doc(inline)]
+        pub use super::map::*;
+    }
+}
+
 #[doc(hidden)]
 pub mod prelude {
     #[doc(inline)]
-    pub use crate::adjust::*;
+    pub use crate::cont::prelude::*;
     #[doc(inline)]
-    pub use crate::container::*;
+    pub use crate::ops::prelude::*;
+
     #[doc(inline)]
     pub use crate::convert::*;
     #[doc(inline)]
     pub use crate::dtype::*;
     #[doc(inline)]
-    pub use crate::hkt::*;
-    #[doc(inline)]
     pub use crate::named::*;
-    #[doc(inline)]
-    pub use crate::store::*;
     #[doc(inline)]
     pub use crate::string::*;
     #[doc(inline)]

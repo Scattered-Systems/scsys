@@ -3,15 +3,15 @@
     Contrib: @FL03
 */
 
-/// 
-/// 
+///
+///
 /// ### Example
-/// 
+///
 /// ```rust
 /// use scsys_core::fmt_wrapper;
-/// 
+///
 /// pub struct Sample<T>(pub T);
-/// 
+///
 /// fmt_wrapper!(Sample<Q>(Binary, Debug, Display, LowerHex, UpperHex, LowerExp, UpperExp, Pointer));
 /// ```
 #[macro_export]
@@ -26,7 +26,7 @@ macro_rules! fmt_wrapper {
             $crate::fmt_wrapper!(@impl $s::<$T>::$trait.$field);
         )*
     };
-    
+
     (@impl $s:ident::<$T:ident>::$trait:ident) => {
         $crate::fmt_wrapper!(@impl #[field(0)] $s::<$T>::$trait);
     };
@@ -47,12 +47,15 @@ macro_rules! fmt_wrapper {
 
 #[macro_export]
 macro_rules! wrapper {
-    ($($S:ident($vis:vis $T:ident)),* $(,)?) => {
+    ($($S:ident($vis:vis $T:ident) $(where $($rest:tt)*)?;),* $(,)?) => {
         $(
-            $crate::wrapper!(@impl $S<$vis $T>);
+            $crate::wrapper!(@impl $S($vis $T) $(where $($rest)*)?;);
         )*
     };
-    (@impl #[derive($($derive:ident),*)] $S:ident<$vis:vis $T:ident $($rest:tt)*>) => {
+    (@impl
+        #[derive($($derive:ident),*)]
+        $S:ident($vis:vis $T:ident) $(where $($rest:tt)*)?;
+    ) => {
         #[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd, $($derive),*)]
         #[cfg_attr(
             feature = "serde",
@@ -60,7 +63,7 @@ macro_rules! wrapper {
             serde(default, transparent),
         )]
         #[repr(transparent)]
-        pub struct $S<$T $($rest)*>($vis $T);
+        pub struct $S<$T>($vis $T) $(where $($rest)*)?;
 
         impl<$T> $S<$T> {
             /// returns a new instance initialized with the default value

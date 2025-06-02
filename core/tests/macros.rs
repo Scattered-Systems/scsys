@@ -2,7 +2,7 @@
     appellation: macros <test>
     authors: @FL03
 */
-use scsys_core::gsw;
+extern crate scsys_core as scsys;
 
 #[derive(Clone, Debug, Default)]
 pub struct Sample<T = String> {
@@ -22,11 +22,12 @@ impl<T> Sample<T> {
         }
     }
 
-    gsw! {
+    scsys::gsw! {
         apple: usize,
         block: f32,
     }
-    gsw! {
+
+    scsys::gsw! {
         cont: &T,
         store: &Vec<u8>,
     }

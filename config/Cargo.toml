@@ -27,7 +27,7 @@ scsys-core = { workspace = true }
 # crate-specific
 clap = { default-features = false, optional = true, version = "4" }
 config = { default-features = false, optional = true, version = "0.15" }
-glob = { optional = true, workspace = true }
+glob = { optional = true, version = "0.3" }
 url = { optional = true, workspace = true }
 # error handling
 anyhow = { optional = true, workspace = true }

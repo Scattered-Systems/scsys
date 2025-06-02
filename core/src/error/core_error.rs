@@ -16,6 +16,8 @@ pub enum CoreError {
     #[cfg(feature = "alloc")]
     #[error(transparent)]
     BoxError(#[from] Box<dyn core::error::Error + Send + Sync + 'static>),
+    #[error(transparent)]
+    FmtError(#[from] core::fmt::Error),
     #[cfg(feature = "std")]
     #[error(transparent)]
     IoError(#[from] std::io::Error),
