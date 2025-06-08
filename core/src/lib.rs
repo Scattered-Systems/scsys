@@ -18,6 +18,9 @@
 //! - [`Timestamp`] (requires the `time` feature): a generic _timestamp_ type implementing 
 //!   [`Now`]
 //!
+#![allow(
+    clippy::module_inception
+)]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",

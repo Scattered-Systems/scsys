@@ -2,7 +2,7 @@
 
 [![crates.io](https://img.shields.io/crates/v/scsys?style=for-the-badge&logo=rust)](https://crates.io/crates/scsys)
 [![docs.rs](https://img.shields.io/docsrs/scsys?style=for-the-badge&logo=docs.rs)](https://docs.rs/scsys)
-![GitHub License](https://img.shields.io/github/license/scattered-systems/scsys?style=for-the-badge&logo=github&link=https%3A%2F%2Fgithub.com%2Fscattered-systems%2Fscsys%2Fblob%2Fmain%2FLICENSE)
+[![GitHub License](https://img.shields.io/github/license/scattered-systems/scsys?style=for-the-badge&logo=github)](https://github.com/scattered-systems/scsys/blob/main/LICENSE)
 
 ***
 
