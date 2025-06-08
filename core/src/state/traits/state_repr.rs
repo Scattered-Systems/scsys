@@ -34,3 +34,52 @@ where
 
     seal!();
 }
+
+macro_rules! impl_state_repr {
+    (@impl $($t:ident)::*<$T:ident>) => {        
+        impl<$T> $crate::state::RawState for $($t)::*<$T>
+        where
+            $T: $crate::state::RawState,
+        {
+            seal!();
+        }
+
+        impl<$T> $crate::state::StateRepr for $($t)::*<$T>
+        where
+            $T: $crate::state::RawState,
+        {
+            type Item = $T;
+
+            seal!();
+        }
+    };
+    (
+        $(
+            $($t:ident)::*<$T:ident>
+        ),* $(,)?
+    ) => {
+        $(
+            impl_state_repr!(@impl $($t)::*<$T>);
+        )*
+    };
+}
+
+impl_state_repr! {
+    Option<Q>,
+    core::mem::MaybeUninit<Q>,
+    core::marker::PhantomData<Q>,
+}
+
+#[cfg(feature = "alloc")]
+impl_state_repr! {
+    alloc::sync::Arc<Q>,
+    alloc::boxed::Box<Q>,
+    alloc::rc::Rc<Q>,
+    alloc::vec::Vec<Q>,
+}
+
+#[cfg(feature = "std")]
+impl_state_repr! {
+    std::cell::Cell<Q>,
+    std::sync::Mutex<Q>,
+}

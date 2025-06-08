@@ -48,35 +48,16 @@ where
 }
 
 macro_rules! impl_raw_state {
-    (@impl $($t:ident)::*<$T:ident>) => {
-        impl<$T> $crate::state::RawState for $($t)::*<$T>
-        where
-            $T: $crate::state::RawState,
-        {
-            seal!();
-        }
-    };
-    (@prim $t:ty) => {
+    (@impl $t:ty) => {
         impl $crate::state::RawState for $t {
             seal!();
         }
     };
-    ($($($t:ident)::*<$T:ident> ),* $(,)?) => {
-        $(
-            impl_raw_state!(@impl $($t)::*<$T>);
-        )*
-    };
     ($($t:ty),* $(,)?) => {
         $(
-            impl_raw_state!(@prim $t);
+            impl_raw_state!(@impl $t);
         )*
     };
-}
-
-impl_raw_state! {
-    Option<Q>,
-    core::mem::MaybeUninit<Q>,
-    core::marker::PhantomData<Q>,
 }
 
 impl_raw_state! {
@@ -85,21 +66,3 @@ impl_raw_state! {
     f32, f64, bool, char, str,
 }
 
-#[cfg(feature = "alloc")]
-impl_raw_state! {
-    alloc::string::String
-}
-
-#[cfg(feature = "alloc")]
-impl_raw_state! {
-    alloc::sync::Arc<Q>,
-    alloc::boxed::Box<Q>,
-    alloc::rc::Rc<Q>,
-    alloc::vec::Vec<Q>,
-}
-
-#[cfg(feature = "std")]
-impl_raw_state! {
-    std::cell::Cell<Q>,
-    std::sync::Mutex<Q>,
-}

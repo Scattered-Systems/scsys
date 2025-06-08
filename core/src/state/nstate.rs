@@ -21,27 +21,34 @@ pub type NaryState<T, const N: usize = 4> = NState<T, Nary<N>>;
     serde(default)
 )]
 pub struct NState<Q, K> {
-    pub(crate) data: Q,
+    pub(crate) state: Q,
     pub(crate) _kind: PhantomData<K>,
 }
 
-impl<K, Q> NState<Q, K> {
-    pub fn new(data: Q) -> Self {
+impl<K, Q> NState<Q, K>
+where
+    K: RawStateKind,
+{
+    pub fn new(state: Q) -> Self {
         Self {
-            data,
+            state,
             _kind: PhantomData::<K>,
         }
     }
-
-    pub const fn data(&self) -> &Q {
-        &self.data
+    /// returns a reference to the state
+    pub const fn get(&self) -> &Q {
+        &self.state
     }
-
-    pub fn is_state<R: 'static>(&self) -> bool
+    /// returns a mutable reference to the state
+    pub const fn get_mut(&mut self) -> &mut Q {
+        &mut self.state
+    }
+    /// returns true if the state is of the specified kind
+    pub fn is_kind<R>(&self) -> bool
     where
-        K: 'static,
+        R: 'static,
     {
         use core::any::TypeId;
-        TypeId::of::<PhantomData<K>>() == TypeId::of::<PhantomData<R>>()
+        TypeId::of::<K>() == TypeId::of::<R>()
     }
 }

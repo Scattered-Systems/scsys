@@ -18,8 +18,8 @@ fn test_option_state() {
 #[test]
 fn test_nary_state() {
     let state = NaryState::<usize, 4>::new(0);
-    assert!(state.is_state::<Nary<4>>());
+    assert!(state.is_kind::<Nary<4>>());
 
-    assert!(!state.is_state::<Nary<2>>());
-    assert!(!state.is_state::<Nary<{ usize::MAX }>>());
+    assert!(!state.is_kind::<Nary<2>>());
+    assert!(!state.is_kind::<Nary<{ usize::MAX }>>());
 }
