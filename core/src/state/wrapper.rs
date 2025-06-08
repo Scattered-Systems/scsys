@@ -4,7 +4,7 @@
 */
 use super::RawState;
 
-/// [`State`] is a generic type wrapper materializing the [`RawState`] trait.
+/// [`State`] is generic over some type `Q` that implements the [`RawState`] trait.
 #[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(
     feature = "serde",
@@ -23,6 +23,14 @@ where
     pub const fn new(state: Q) -> Self {
         State(state)
     }
+    /// returns a new instance of [`State`] using the output of the given function `F`
+    pub fn new_with<F>(f: F) -> Self 
+    where 
+        F: FnOnce() -> Q,
+    {
+        Self::new(f())
+    }   
+    #[allow(clippy::should_implement_trait)]
     /// returns a new instance of [`State`] using the logical default for the type `Q`
     pub fn default() -> Self
     where

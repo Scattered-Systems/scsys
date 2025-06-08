@@ -22,11 +22,27 @@ impl<K, Q> StateBase<Q, K>
 where
     K: RawStateKind,
 {
-    pub fn new(state: Q) -> Self {
+    /// returns a new instance of [`StateBase`] with the given value
+    pub const fn new(state: Q) -> Self {
         Self {
             state,
             _kind: PhantomData::<K>,
         }
+    }   
+    /// returns a new instance of [`StateBase`] using the output of the given function `F`
+    pub fn new_with<F>(f: F) -> Self 
+    where 
+        F: FnOnce() -> Q,
+    {
+        Self::new(f())
+    }     
+    #[allow(clippy::should_implement_trait)]
+    /// returns a new instance of [`StateBase`] using the logical default for the type `Q`
+    pub fn default() -> Self
+    where
+        Q: Default,
+    {
+        Self::new(Default::default())
     }
     /// returns a reference to the state
     pub const fn get(&self) -> &Q {

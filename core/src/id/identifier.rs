@@ -15,6 +15,7 @@ impl<T> Id<T> {
     pub const fn new(id: T) -> Self {
         Self(id)
     }
+    #[allow(clippy::should_implement_trait)]
     /// Create a new identifier with the default value
     pub fn default() -> Self
     where
