@@ -62,7 +62,7 @@ macro_rules! impl_state_kind {
     };
     (@state $name:ident($n:literal)) => {
         paste::paste! {
-            pub type [<$name State>]<T> = NState<[<State $n>], T>;
+            pub type [<$name State>]<Q> = NState<Q, [<State $n>]>;
         }
     };
     ($($name:ident($n:literal)),* $(,)?) => {

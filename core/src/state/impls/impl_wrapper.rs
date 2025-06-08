@@ -2,65 +2,77 @@
     Appellation: impl_state <module>
     Contrib: @FL03
 */
-use crate::state::State;
+use crate::state::{RawState, State};
 use core::mem::MaybeUninit;
 
-impl<'a, T> State<&'a T> {
+impl<'a, Q> State<&'a Q>
+where
+    Q: RawState,
+{
     /// returns a new state with a cloned inner value
-    pub fn cloned(&self) -> State<T>
+    pub fn cloned(&self) -> State<Q>
     where
-        T: Clone,
+        Q: Clone,
     {
         State(self.0.clone())
     }
     /// returns a new state with the inner value copied
-    pub fn copied(&self) -> State<T>
+    pub fn copied(&self) -> State<Q>
     where
-        T: Copy,
+        Q: Copy,
     {
         State(*self.0)
     }
 }
 
-impl<'a, T> State<&'a mut T> {
+impl<'a, Q> State<&'a mut Q>
+where
+    Q: RawState,
+{
     /// returns a new state with a cloned inner value
-    pub fn cloned(&self) -> State<T>
+    pub fn cloned(&self) -> State<Q>
     where
-        T: Clone,
+        Q: Clone,
     {
         State(self.0.clone())
     }
     /// returns a new state with the inner value copied
-    pub fn copied(&self) -> State<T>
+    pub fn copied(&self) -> State<Q>
     where
-        T: Copy,
+        Q: Copy,
     {
         State(*self.0)
     }
 }
 
-impl<T> State<*const T> {}
+impl<Q> State<*const Q> where Q: RawState {}
 
-impl<T> State<*mut T> {}
+impl<Q> State<*mut Q> where Q: RawState {}
 
-impl<T> State<MaybeUninit<T>> {
+impl<Q> State<MaybeUninit<Q>>
+where
+    Q: RawState,
+{
     /// returns a new state with an [`uninitialized`](MaybeUninit::uninit) inner state
-    pub fn uninit() -> State<MaybeUninit<T>> {
+    pub fn uninit() -> State<MaybeUninit<Q>> {
         State(MaybeUninit::uninit())
     }
     /// returns a new state with an [`initialized`](MaybeUninit::new) inner state
-    pub fn init(value: T) -> State<MaybeUninit<T>> {
+    pub fn init(value: Q) -> State<MaybeUninit<Q>> {
         State(MaybeUninit::new(value))
     }
 }
 
-impl<T> State<Option<T>> {
+impl<Q> State<Option<Q>>
+where
+    Q: RawState,
+{
     /// returns a new state with a [`None`](Option::None) inner state
-    pub fn none() -> State<Option<T>> {
+    pub fn none() -> State<Option<Q>> {
         State(None)
     }
     /// returns a new instance with some inner state
-    pub fn some(value: T) -> State<Option<T>> {
+    pub fn some(value: Q) -> State<Option<Q>> {
         State(Some(value))
     }
     /// returns true if the inner state is [`None`](Option::None)
@@ -73,45 +85,66 @@ impl<T> State<Option<T>> {
     }
 }
 
-impl<Q> AsRef<Q> for State<Q> {
+impl<Q> AsRef<Q> for State<Q>
+where
+    Q: RawState,
+{
     fn as_ref(&self) -> &Q {
-        &self.0
+        self.get()
     }
 }
 
-impl<Q> AsMut<Q> for State<Q> {
+impl<Q> AsMut<Q> for State<Q>
+where
+    Q: RawState,
+{
     fn as_mut(&mut self) -> &mut Q {
-        &mut self.0
+        self.get_mut()
     }
 }
 
-impl<Q> core::borrow::Borrow<Q> for State<Q> {
+impl<Q> core::borrow::Borrow<Q> for State<Q>
+where
+    Q: RawState,
+{
     fn borrow(&self) -> &Q {
-        &self.0
+        self.get()
     }
 }
 
-impl<Q> core::borrow::BorrowMut<Q> for State<Q> {
+impl<Q> core::borrow::BorrowMut<Q> for State<Q>
+where
+    Q: RawState,
+{
     fn borrow_mut(&mut self) -> &mut Q {
-        &mut self.0
+        self.get_mut()
     }
 }
 
-impl<Q> core::ops::Deref for State<Q> {
+impl<Q> core::ops::Deref for State<Q>
+where
+    Q: RawState,
+{
     type Target = Q;
 
     fn deref(&self) -> &Self::Target {
-        &self.0
+        self.get()
     }
 }
 
-impl<Q> core::ops::DerefMut for State<Q> {
+impl<Q> core::ops::DerefMut for State<Q>
+where
+    Q: RawState,
+{
     fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
+        self.get_mut()
     }
 }
 
-impl<Q> From<Q> for State<Q> {
+impl<Q> From<Q> for State<Q>
+where
+    Q: RawState,
+{
     fn from(from: Q) -> Self {
         State(from)
     }
@@ -119,16 +152,34 @@ impl<Q> From<Q> for State<Q> {
 
 impl<Q> PartialEq<Q> for State<Q>
 where
-    Q: PartialEq,
+    Q: RawState + PartialEq,
 {
     fn eq(&self, other: &Q) -> bool {
         self.get() == other
     }
 }
 
+impl<'a, Q> PartialEq<&'a Q> for State<Q>
+where
+    Q: RawState + PartialEq,
+{
+    fn eq(&self, other: &&'a Q) -> bool {
+        self.get() == *other
+    }
+}
+
+impl<'a, Q> PartialEq<&'a mut Q> for State<Q>
+where
+    Q: RawState + PartialEq,
+{
+    fn eq(&self, other: &&'a mut Q) -> bool {
+        *self.get() == **other
+    }
+}
+
 impl<Q> PartialOrd<Q> for State<Q>
 where
-    Q: PartialOrd,
+    Q: RawState + PartialOrd,
 {
     fn partial_cmp(&self, other: &Q) -> Option<core::cmp::Ordering> {
         self.get().partial_cmp(other)

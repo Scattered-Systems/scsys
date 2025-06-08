@@ -25,71 +25,67 @@ macro_rules! impl_binary_op {
 
         impl<'a, A, B, C> ::core::ops::$op<$s<B>> for &'a $s<A>
         where
-            A: Copy + ::core::ops::$op<B, Output = C>,
+            &'a A: ::core::ops::$op<B, Output = C>,
         {
             type Output = $s<C>;
 
             fn $call(self, rhs: $s<B>) -> Self::Output {
-                $s(::core::ops::$op::$call(self.0, rhs.0))
+                $s(::core::ops::$op::$call(&self.0, rhs.0))
             }
         }
 
         impl<'a, A, B, C> ::core::ops::$op<&'a $s<B>> for &'a $s<A>
         where
-            A: Copy + ::core::ops::$op<B, Output = C>,
-            B: Copy
+            &'a A: ::core::ops::$op<&'a B, Output = C>,
         {
             type Output = $s<C>;
 
             fn $call(self, rhs: &'a $s<B>) -> Self::Output {
-                $s(::core::ops::$op::$call(self.0, rhs.0))
+                $s(::core::ops::$op::$call(&self.0, &rhs.0))
             }
         }
 
         impl<'a, A, B, C> ::core::ops::$op<&'a $s<B>> for $s<A>
         where
-            A: ::core::ops::$op<B, Output = C>,
-            B: Copy
+            A: ::core::ops::$op<&'a B, Output = C>,
         {
             type Output = $s<C>;
 
             fn $call(self, rhs: &'a $s<B>) -> Self::Output {
-                $s(::core::ops::$op::$call(self.0, rhs.0))
+                $s(::core::ops::$op::$call(self.0, &rhs.0))
             }
         }
 
         impl<'a, A, B, C> ::core::ops::$op<$s<B>> for &'a mut $s<A>
         where
-            A: Copy + ::core::ops::$op<B, Output = C>,
+            &'a A: ::core::ops::$op<B, Output = C>,
         {
             type Output = $s<C>;
 
             fn $call(self, rhs: $s<B>) -> Self::Output {
-                $s(::core::ops::$op::$call(self.0, rhs.0))
+                $s(::core::ops::$op::$call(&self.0, rhs.0))
             }
         }
 
         impl<'a, A, B, C> ::core::ops::$op<&'a mut $s<B>> for $s<A>
         where
-            A: ::core::ops::$op<B, Output = C>,
-            B: Copy
+            A: ::core::ops::$op<&'a B, Output = C>,
         {
             type Output = $s<C>;
 
             fn $call(self, rhs: &'a mut $s<B>) -> Self::Output {
-                $s(::core::ops::$op::$call(self.0, rhs.0))
+                $s(::core::ops::$op::$call(self.0, &rhs.0))
             }
         }
 
         impl<'a, A, B, C> ::core::ops::$op<&'a mut $s<B>> for &'a mut $s<A>
         where
-            A: Copy + ::core::ops::$op<B, Output = C>,
-            B: Copy
+            &'a A: ::core::ops::$op<&'a B, Output = C>,
         {
             type Output = $s<C>;
 
             fn $call(self, rhs: &'a mut $s<B>) -> Self::Output {
-                $s(::core::ops::$op::$call(self.0, rhs.0))
+                $s(::core::ops::$op::$call(&self.0, &rhs.0))
             }
         }
     };

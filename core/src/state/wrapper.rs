@@ -2,9 +2,7 @@
     appellation: wrapper <module>
     authors: @FL03
 */
-
-mod impl_ops;
-mod impl_state;
+use super::RawState;
 
 /// [`State`] is a generic type wrapper materializing the [`RawState`] trait.
 #[derive(Clone, Copy, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -17,17 +15,34 @@ mod impl_state;
 pub struct State<Q = usize>(pub Q);
 
 /// generic implementation of the [`State`] type available for all types `Q`
-impl<Q> State<Q> {
-    /// returns a new instance of [`State`] with the default value
-    pub fn new() -> Self
+impl<Q> State<Q>
+where
+    Q: RawState,
+{
+    /// returns a new instance of [`State`] with the given value
+    pub const fn new(state: Q) -> Self {
+        State(state)
+    }
+    /// returns a new instance of [`State`] using the logical default for the type `Q`
+    pub fn default() -> Self
     where
         Q: Default,
     {
         State(Q::default())
     }
-    /// returns a new instance of [`State`] with the given value
-    pub fn from_value(state: Q) -> Self {
-        State(state)
+    /// returns a new instance of [`State`] with an inner value of `1`
+    pub fn one() -> Self
+    where
+        Q: num_traits::One,
+    {
+        State(Q::one())
+    }
+    /// returns a new instance of [`State`] with an inner value of `0`
+    pub fn zero() -> Self
+    where
+        Q: num_traits::Zero,
+    {
+        State(Q::zero())
     }
     /// generate a new instance of the state with a random value
     #[cfg(feature = "rand")]
@@ -37,7 +52,7 @@ impl<Q> State<Q> {
     {
         use rand::Rng;
         let mut rng = rand::rng();
-        Self::from_value(rng.random())
+        Self::new(rng.random())
     }
     #[cfg(feature = "rand")]
     pub fn random_with<R, Dist>(rng: &mut R, distr: Dist) -> Self
@@ -62,13 +77,6 @@ impl<Q> State<Q> {
     /// consumes the current instance to return the inner value
     #[inline]
     pub fn value(self) -> Q {
-        self.0
-    }
-    #[deprecated(
-        since = "0.2.9",
-        note = "use `value` instead, this will be removed in the next major release"
-    )]
-    pub fn into_inner(self) -> Q {
         self.0
     }
     /// [`replace`](core::mem::replace) the inner state with the given value and return the
@@ -120,5 +128,19 @@ impl<Q> State<Q> {
     /// returns a new instance containing a mutable reference to the inner value
     pub const fn view_mut(&mut self) -> State<&mut Q> {
         State(self.get_mut())
+    }
+}
+
+#[allow(deprecated)]
+impl<Q> State<Q>
+where
+    Q: RawState,
+{
+    #[deprecated(
+        since = "0.2.9",
+        note = "use `value` instead, this will be removed in the next major release"
+    )]
+    pub fn into_inner(self) -> Q {
+        self.0
     }
 }
