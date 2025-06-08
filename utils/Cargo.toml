@@ -26,20 +26,23 @@ anyhow = { workspace = true }
 serde_json = { workspace = true }
 
 [dependencies]
-# shared
+# math
 num-traits = { workspace = true }
-getrandom = { optional = true, workspace = true }
+# random
 rand = { optional = true, workspace = true }
+# serialization
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
 serde_json = { optional = true, workspace = true }
+# macros & utilities
 strum = { workspace = true }
+# tracing
+tracing = { optional = true, workspace = true }
 
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
 rustc-args = ["--cfg", "docsrs"]
-
 
 [features]
 default = [
@@ -52,10 +55,13 @@ full = [
     "json",
     "rand",
     "serde",
+    "tracing",
 ]
 
 # ************* [FF:Features] *************
-fs = []
+fs = [
+    "std",
+]
 
 # ************* [FF:Environments] *************
 std = [
@@ -65,13 +71,12 @@ std = [
     "rand?/std_rng",
     "serde?/std",
     "strum/std",
+    "tracing?/std",
 ]
 
 wasi = []
 
-wasm = [
-    "getrandom?/wasm_js",
-]
+wasm = []
 
 # ************* [FF:Dependencies] *************
 alloc = [
@@ -80,9 +85,9 @@ alloc = [
 ]
 
 json = [
-    "dep:serde_json",
     "alloc",
-    "serde"
+    "serde",
+    "serde_json",
 ]
 
 rand = [
@@ -91,7 +96,6 @@ rand = [
 ]
 
 rng = [
-    "dep:getrandom",
     "rand?/small_rng",
     "rand?/thread_rng",
 ]
@@ -102,6 +106,10 @@ serde = [
     "serde?/derive",
     "rand?/serde",
 ]
+
+serde_json = ["dep:serde_json"]
+
+tracing = ["dep:tracing"]
 
 # ************* [Unit Tests] *************
 [[test]]

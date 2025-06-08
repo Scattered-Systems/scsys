@@ -52,7 +52,7 @@ where
     seal!();
 }
 
-impl<'a> Symbolic for &'a str {
+impl Symbolic for &str {
     type Item = Self;
 }
 

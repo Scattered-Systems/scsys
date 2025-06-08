@@ -41,7 +41,9 @@ impl Scope {
         // initialize a new path
         let mut path = PathBuf::new();
         // include the context, if it exists
-        self.context().clone().map(|context| path.push(context));
+        if let Some(context) = self.context() {
+            path.push(context)
+        }
         // add the workdir
         path.push(self.workdir());
         // ensure the path is a directory

@@ -2,6 +2,15 @@
     Appellation: scsys-derive <library>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+//! # scsys-derive
+//!
+//! This crate implements the derive macros for the `scsys` ecosystem.
+//!
+//! ## Macros
+//!
+//! - [`Display`]: automatically implements the `Display` trait for a struct or enum, using the
+//!   `scsys` attributes to customize the output.
+//! - [`VariantConstructors`]: generate functional constructors for all variants of an enum
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
     html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
@@ -9,8 +18,6 @@
 extern crate proc_macro;
 extern crate quote;
 extern crate syn;
-
-pub(crate) use self::impls::*;
 
 pub(crate) mod impls;
 pub(crate) mod utils;
@@ -48,7 +55,7 @@ pub fn display(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
 
     // Build the impl
-    let res = impl_display(&ast);
+    let res = impls::impl_display(&ast);
 
     res.into()
 }
@@ -58,7 +65,7 @@ pub fn variant_constructors(input: TokenStream) -> TokenStream {
     let ast: DeriveInput = syn::parse(input).unwrap();
 
     match ast.data {
-        Data::Enum(inner) => impl_functional_constructors(&ast.ident, &inner.variants),
+        Data::Enum(inner) => impls::impl_functional_constructors(&ast.ident, &inner.variants),
         _ => panic!("This derive macro only works with enums"),
     }
     .into()
@@ -67,17 +74,17 @@ pub fn variant_constructors(input: TokenStream) -> TokenStream {
 #[proc_macro_derive(Getter)]
 pub fn getter_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
-    impl_getter(&input).into()
+    impls::impl_getter(&input).into()
 }
 
 #[proc_macro_derive(Set)]
 pub fn set_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
-    impl_set(&input).into()
+    impls::impl_set(&input).into()
 }
 
 #[proc_macro_derive(With)]
 pub fn with_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
-    impl_with(&input).into()
+    impls::impl_with(&input).into()
 }

@@ -2,7 +2,6 @@
     Appellation: gsw <module>
     Contrib: @FL03
 */
-
 /// The `gsw` macro generates getter and setter methods for the fields of a struct. At the
 /// moment, the macro can handle any type; for types that implement the [`Copy`] trait, simply
 /// drop the `&` to the left of each type.
@@ -62,10 +61,6 @@ macro_rules! gsw {
             $crate::gsw!(@setter $name: $T);
         )*
     };
-    (@setter $name:ident: $T:ty) => {
-        $crate::gsw!(@set $name: $T);
-        $crate::gsw!(@with $name: $T);
-    };
     (@get $name:ident: &$T:ty) => {
         pub const fn $name(&self) -> &$T {
             &self.$name
@@ -83,22 +78,65 @@ macro_rules! gsw {
             }
         }
     };
-    (@set $name:ident: $T:ty) => {
-        paste::item! {
+    (@setter $name:ident: $T:ty) => {
+        paste::paste! {
             pub fn [<set_ $name>](&mut self, $name: $T) -> &mut Self {
                 self.$name = $name;
                 self
             }
-        }
-    };
-    (@with $name:ident: $T:ty) => {
-        paste::item! {
+
             pub fn [<with_ $name>] (self, $name: $T) -> Self {
                 Self {
                     $name,
                     ..self
                 }
             }
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! get_field {
+    ($($name:ident: &$T:ty),* $(,)?) => {
+        $(
+            $crate::gsw!(@get $name: &$T);
+            $crate::gsw!(@get_mut $name: $T);
+            $crate::gsw!(@setter $name: $T);
+        )*
+    };
+    ($($name:ident: $T:ty),* $(,)?) => {
+        $(
+            $crate::gsw!(@get $name: $T);
+            $crate::gsw!(@get_mut $name: $T);
+            $crate::gsw!(@setter $name: $T);
+        )*
+    };
+
+    (@getter $name:ident: &$T:ty) => {
+        pub const fn $name(&self) -> &$T {
+            &self.$name
+        }
+    };
+    (@getter $name:ident: $T:ty) => {
+        pub const fn $name(&self) -> $T {
+            self.$name
+        }
+    };
+    (@get_mut $name:ident: $T:ty) => {
+        paste::paste! {
+            pub const fn [<$name _mut>] (&mut self) -> &mut $T {
+                &mut self.$name
+            }
+        }
+    };
+    (@get $name:ident: &$T:ty) => {
+        pub const fn $name(&self) -> &$T {
+            &self.$name
+        }
+    };
+    (@get $name:ident: $T:ty) => {
+        pub const fn $name(&self) -> $T {
+            self.$name
         }
     };
 }

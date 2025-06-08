@@ -126,7 +126,7 @@ impl Now for i64 {
     }
 }
 
-#[cfg(feature = "chrono")]
+#[cfg(all(feature = "alloc", feature = "chrono"))]
 impl Now for alloc::string::String {
     type Output = Timestamp<Self>;
 

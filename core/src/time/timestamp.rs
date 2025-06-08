@@ -63,7 +63,7 @@ where
     }
     /// consumes the current instance and returns the inner value.
     #[inline]
-    pub fn into_inner(self) -> T {
+    pub fn value(self) -> T {
         self.0
     }
     /// [`replace`](core::mem::replace) the current value with a new one and return the old one
@@ -94,8 +94,43 @@ where
     pub fn with<U: RawTimestamp>(self, ts: U) -> Timestamp<U> {
         Timestamp(ts)
     }
+    /// applies a function onto the current value and returns a new instance with the result
+    pub fn map<U, F>(self, f: F) -> Timestamp<U>
+    where
+        F: FnOnce(T) -> U,
+        U: RawTimestamp,
+    {
+        Timestamp(f(self.value()))
+    }
+    /// returns a new instance of the [`Timestamp`] with the current value updated using the given function
+    pub fn map_inplace<F>(&mut self, f: F) -> &mut Self
+    where
+        F: FnOnce(&mut T),
+    {
+        f(self.get_mut());
+        self
+    }
+    /// updates the timestamp to reflect _now_ and return the previous timestamp
+    pub fn update(&mut self) -> T
+    where
+        T: Now<Output = T>,
+    {
+        let now = T::now();
+        // replace the current value with the new one
+        self.replace(now)
+    }
+    /// returns a new instance of the [`Timestamp`] containing an immutable reference to the
+    /// inner value.
+    pub const fn view(&self) -> Timestamp<&T> {
+        Timestamp(self.get())
+    }
+    /// returns a new instance of the [`Timestamp`] containing a mutable reference to the inner
+    /// value.
+    pub const fn view_mut(&mut self) -> Timestamp<&mut T> {
+        Timestamp(self.get_mut())
+    }
 }
-
+#[allow(deprecated)]
 impl<T> Timestamp<T>
 where
     T: RawTimestamp,
@@ -108,10 +143,9 @@ where
     pub fn as_mut(&mut self) -> &mut T {
         self.get_mut()
     }
-    #[doc(hidden)]
-    #[deprecated(since = "0.2.8", note = "use `Timestamp::set` instead")]
-    pub fn update(&mut self, ts: T) {
-        self.0 = ts;
+    #[deprecated(since = "0.2.8", note = "use `Timestamp::value` instead")]
+    pub fn into_inner(self) -> T {
+        self.0
     }
 }
 

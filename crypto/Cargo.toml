@@ -92,6 +92,12 @@ hash = [
     "digest",
 ]
 
+json = [
+    "alloc",
+    "serde",
+    "serde_json",
+]
+
 # ************* [FF:Environments] *************
 std = [
     "alloc",
@@ -109,9 +115,12 @@ std = [
     "uuid?/std",
 ]
 
-wasi = [  ]
+wasi = [ 
+    "scsys-core/wasi",
+ ]
 
 wasm = [ 
+    "scsys-core/wasm",
     "chrono?/wasmbind",
     "getrandom?/wasm_js",
     "time?/wasm-bindgen",
@@ -135,7 +144,7 @@ alloc = [
     "time?/alloc",
 ]
 
-blake3 = [ "dep:blake3" ]
+blake3 = ["dep:blake3"]
 
 bincode = [ 
     "dep:bincode", 
@@ -152,13 +161,6 @@ chrono = [
 digest = [
     "dep:digest",
     "blake3?/digest",
-]
-
-json = [ 
-    "dep:serde_json", 
-    "alloc",
-    "scsys-core/json",
-    "serde",
 ]
 
 rand = [
@@ -192,6 +194,8 @@ serde = [
     "uuid?/serde",
     "time?/serde",
 ]
+
+serde_json = ["dep:serde_json"]
 
 time = [ 
     "dep:time",

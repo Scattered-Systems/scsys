@@ -24,7 +24,7 @@ pub(crate) use scsys_core::gsw;
 #[cfg(feature = "hash")]
 pub use self::hash::prelude::*;
 #[doc(inline)]
-pub use self::{error::*, traits::prelude::*, types::prelude::*, utils::prelude::*};
+pub use self::{error::*, traits::prelude::*, utils::prelude::*};
 
 pub mod error;
 #[cfg(feature = "hash")]
@@ -42,25 +42,14 @@ pub mod traits {
     }
 }
 
-pub mod types {
-    #[doc(inline)]
-    pub use self::prelude::*;
+// pub mod types {
+//     #[doc(inline)]
+//     pub use self::prelude::*;
 
-    pub(crate) mod prelude {
-        #[doc(inline)]
-        pub use super::aliases::*;
-    }
+//     pub(crate) mod prelude {
+//     }
 
-    pub(crate) mod aliases {
-        use generic_array::GenericArray;
-        use typenum::{B0, B1, UInt, UTerm};
-        /// a type alias for a generic hash output
-        pub type GenericHashOutput =
-            UInt<UInt<UInt<UInt<UInt<UInt<UTerm, B1>, B0>, B0>, B0>, B0>, B0>;
-        /// the [GenericHash] type alias defines a standard hash format for the crate
-        pub type GenericHash<T = u8, Output = GenericHashOutput> = GenericArray<T, Output>;
-    }
-}
+// }
 
 pub mod utils {
     #[doc(inline)]
@@ -83,8 +72,6 @@ pub mod prelude {
     pub use crate::hash::prelude::*;
     #[doc(no_inline)]
     pub use crate::traits::prelude::*;
-    #[doc(no_inline)]
-    pub use crate::types::prelude::*;
     #[doc(no_inline)]
     pub use crate::utils::prelude::*;
 }

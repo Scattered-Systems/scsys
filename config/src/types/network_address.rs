@@ -49,7 +49,7 @@ impl NetworkAddr {
     pub fn localhost(port: u16) -> Self {
         Self::new(Self::LOCALHOST, port)
     }
-    ///
+    /// returns a new [`NetworkAddr`] instance from the given [`SocketAddr`](core::net::SocketAddr)
     pub fn from_socket_addr(addr: core::net::SocketAddr) -> Self {
         Self {
             host: addr.ip().to_string(),
@@ -115,7 +115,7 @@ impl core::str::FromStr for NetworkAddr {
         #[cfg(feature = "url")]
         {
             let url = url::Url::parse(s)?;
-            Ok(url.try_into()?)
+            url.try_into()
         }
         #[cfg(not(feature = "url"))]
         {

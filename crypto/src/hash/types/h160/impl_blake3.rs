@@ -16,7 +16,7 @@ impl Concat for H160 {
 impl From<blake3::Hash> for H160 {
     fn from(input: blake3::Hash) -> H160 {
         let mut raw_hash: [u8; 20] = [0; 20];
-        raw_hash[0..32].copy_from_slice(input.as_bytes());
+        raw_hash[0..20].copy_from_slice(input.as_bytes());
         H160(raw_hash)
     }
 }

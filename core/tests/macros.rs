@@ -2,7 +2,7 @@
     appellation: macros <test>
     authors: @FL03
 */
-use scsys_core::gsw;
+extern crate scsys_core as scsys;
 
 #[derive(Clone, Debug, Default)]
 pub struct Sample<T = String> {
@@ -22,11 +22,12 @@ impl<T> Sample<T> {
         }
     }
 
-    gsw! {
+    scsys::gsw! {
         apple: usize,
         block: f32,
     }
-    gsw! {
+
+    scsys::gsw! {
         cont: &T,
         store: &Vec<u8>,
     }
@@ -37,12 +38,12 @@ fn test_sample_gsw_impls() {
     // validate builders
     let mut sample = Sample::new("hello world".to_string())
         .with_apple(10)
-        .with_block(3.14);
+        .with_block(core::f32::consts::PI);
     // verify setters
     sample.set_store(vec![1, 2, 3]);
     // verify the getters
     assert_eq!(sample.apple(), 10);
-    assert_eq!(sample.block(), 3.14);
+    assert_eq!(sample.block(), core::f32::consts::PI);
     assert_eq!(sample.cont(), "hello world");
     assert_eq!(sample.store(), &vec![1, 2, 3]);
     // verify the mutable getters

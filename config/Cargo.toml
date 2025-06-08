@@ -14,8 +14,21 @@ repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
 [lib]
-crate-type = ["cdylib", "rlib"]
+crate-type = [
+    "cdylib", 
+    "rlib"
+]
 bench = false
 doc = true
 doctest = true
@@ -27,7 +40,7 @@ scsys-core = { workspace = true }
 # crate-specific
 clap = { default-features = false, optional = true, version = "4" }
 config = { default-features = false, optional = true, version = "0.15" }
-glob = { optional = true, workspace = true }
+glob = { optional = true, version = "0.3" }
 url = { optional = true, workspace = true }
 # error handling
 anyhow = { optional = true, workspace = true }
@@ -42,17 +55,6 @@ strum = { workspace = true }
 # logging
 tracing = { optional = true, workspace = true }
 tracing-subscriber = { optional = true, workspace = true }
-# files
-
-[package.metadata.docs.rs]
-all-features = false
-features = ["full"]
-rustc-args = [ "--cfg", "docsrs" ]
-version = "v{{version}}"
-
-[package.metadata.release]
-no-dev-version = true
-tag-name = "{{version}}"
 
 [features]
 default = [
@@ -78,6 +80,27 @@ full = [
     "tracing-subscriber",
 ]
 
+# ************* [FF:Features] *************
+convert-case = ["config?/convert-case"]
+
+ini = ["config?/ini"]
+
+json = [
+    "config?/json",
+    "scsys-core/json",
+    "serde",
+    "serde_json",
+]
+
+json5 = ["config?/json5"]
+
+ron = ["config?/ron"]
+
+toml = ["config?/toml"]
+
+yaml = ["config?/yaml"]
+
+# ************* [FF:Environments] *************
 std = [
     "anyhow?/std",
     "clap?/std",
@@ -89,6 +112,14 @@ std = [
     "tracing?/std",
     "tracing-subscriber?/std",
     "url?/std",
+]
+
+wasi = [
+    "scsys-core/wasi",
+]
+
+wasm = [
+    "scsys-core/wasm",
 ]
 
 # ************* [FF:Dependencies] *************
@@ -127,12 +158,7 @@ serde = [
     "url?/serde",
 ]
 
-serde_json = [
-    "dep:serde_json", 
-    "config?/serde_json",
-    "scsys-core/json",
-    "serde",
-]
+serde_json = ["dep:serde_json"]
 
 tracing = [
     "dep:tracing",
@@ -148,24 +174,6 @@ tracing-subscriber = [
 ]
 
 url = ["dep:url"]
-
-# ************* [FF:config] *************
-convert-case = ["config?/convert-case"]
-
-ini = ["config?/ini"]
-
-json = [
-    "serde_json",
-    "config?/json",
-]
-
-json5 = ["config?/json5"]
-
-ron = ["config?/ron"]
-
-toml = ["config?/toml"]
-
-yaml = ["config?/yaml"]
 
 # ************* [Unit Tests] *************
 [[test]]

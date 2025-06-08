@@ -14,16 +14,6 @@ repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
-[lib]
-crate-type = ["cdylib", "rlib"]
-bench = false
-doc = true
-doctest = true
-test = true
-
-[dependencies]
-num-traits = { workspace = true }
-
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
@@ -34,21 +24,41 @@ version = "v{{version}}"
 no-dev-version = true
 tag-name = "{{version}}"
 
+[lib]
+crate-type = [
+    "cdylib", 
+    "rlib",
+]
+bench = false
+doc = true
+doctest = true
+test = true
+
+[dependencies]
+num-traits = { workspace = true }
+
 
 [features]
-default = ["std"]
+default = [
+    "std",
+]
 
 full = [
     "default"
 ]
 
-# ************* [FF:Dependencies] *************
-alloc = []
-
 # ************* [FF:Environments] *************
 std = [
     "alloc",
 ]
+
+wasi = []
+
+wasm = []
+
+# ************* [FF:Dependencies] *************
+alloc = []
+
 
 # ************* [Unit Tests] *************
 [[test]]

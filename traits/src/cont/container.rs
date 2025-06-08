@@ -2,35 +2,12 @@
     Appellation: container <module>
     Contrib: @FL03
 */
+use super::GetMut;
+
 /// [`RawContainer`] defines a standard interface for all _containers_ that are used to store
 /// other entities.
-///
-/// ## **Safety**
-///
-/// This trait is marked as `unsafe` because it is expected that the implementer will
-/// ensure that the `Item` type is valid for the container type. For example, if the container
-/// is a `Vec<T>`, then the `Item` type must be `T`. If the implementer does not ensure this,
-/// then it is possible to create a container that is not valid for the `Item` type.
-pub unsafe trait RawContainer {
+pub trait RawContainer {
     type Item;
-}
-/// [`Get`] defines an interface for entities that can be accessed by a key; the design is
-/// similar to the [`Index`](core::ops::Index) trait in the standard library, however, uses the
-/// [`Borrow`](core::borrow::Borrow) trait to allow for more flexible key types.
-pub trait Get<T> {
-    type Key;
-    /// returns a reference to the element at the specified index.
-    fn get<Q>(&self, index: Q) -> Option<&T>
-    where
-        Q: core::borrow::Borrow<Self::Key>;
-}
-/// [`GetMut`] defines an interface for entities that can be accessed by a key; the design
-/// is similar to the [`IndexMut`](core::ops::IndexMut) trait in the standard library
-pub trait GetMut<T>: Get<T> {
-    /// returns a mutable reference to the element at the specified index.
-    fn get_mut<Q>(&mut self, index: Q) -> Option<&mut T>
-    where
-        Q: core::borrow::Borrow<Self::Key>;
 }
 
 pub trait KeyedContainer<T>: Container<T>
@@ -48,15 +25,15 @@ pub trait Container<T> {
 /*
  ************* Implementations *************
 */
-unsafe impl<T> RawContainer for [T] {
+impl<T> RawContainer for [T] {
     type Item = T;
 }
 
-unsafe impl<'a, T> RawContainer for &'a [T] {
+impl<T> RawContainer for &[T] {
     type Item = T;
 }
 
-unsafe impl<'a, T> RawContainer for &'a mut [T] {
+impl<T> RawContainer for &mut [T] {
     type Item = T;
 }
 
@@ -75,12 +52,12 @@ macro_rules! impl_container {
         impl_container!(@cont $($t)::*<$T>);
     };
     (@raw $($t:ident)::*<$lt:lifetime, $T:ident>) => {
-        unsafe impl<$T> RawContainer for $($t)::*<$lt, $T> {
+        impl<$T> RawContainer for $($t)::*<$lt, $T> {
             type Item = $T;
         }
     };
     (@raw $($t:ident)::*<$T:ident>) => {
-        unsafe impl<$T> RawContainer for $($t)::*<$T> {
+        impl<$T> RawContainer for $($t)::*<$T> {
             type Item = $T;
         }
     };
@@ -91,17 +68,30 @@ macro_rules! impl_container {
     };
 }
 
+impl_container! {
+    Option<T>
+}
+
 #[cfg(feature = "alloc")]
 impl_container! {
     alloc::vec::Vec<T>,
     alloc::boxed::Box<T>,
     alloc::rc::Rc<T>,
+    alloc::rc::Weak<T>,
     alloc::sync::Arc<T>,
+    alloc::collections::BinaryHeap<T>,
     alloc::collections::BTreeSet<T>,
     alloc::collections::LinkedList<T>,
+    alloc::collections::VecDeque<T>,
 }
 
 #[cfg(feature = "std")]
 impl_container! {
+    std::cell::Cell<T>,
+    std::cell::OnceCell<T>,
+    std::cell::RefCell<T>,
+    std::sync::Mutex<T>,
+    std::sync::RwLock<T>,
+    std::sync::LazyLock<T>,
     std::collections::HashSet<V>,
 }

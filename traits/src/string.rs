@@ -57,7 +57,7 @@ mod tests {
     #[test]
     fn test_remove_fnl() {
         let s = "\"Hello, World!\"";
-        assert_eq!(s.chars().nth(0), Some('"'));
+        assert_eq!(s.chars().next(), Some('"'));
         assert_eq!(s.remove_fnl(), "Hello, World!");
     }
 

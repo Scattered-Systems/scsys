@@ -5,6 +5,7 @@
 //! A collection of common configuration primitives and utilities used throughout the
 //! [scsys-io](https://scsys.io) ecosystem.
 //!
+#![cfg_attr(not(feature = "std"), no_std)]
 #![crate_type = "lib"]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",

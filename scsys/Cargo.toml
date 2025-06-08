@@ -15,7 +15,11 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
-crate-type = [ "cdylib", "rlib", "staticlib" ]
+crate-type = [ 
+    "cdylib", 
+    "rlib", 
+    "staticlib" 
+]
 bench = true
 doc = true
 doctest = true
@@ -45,7 +49,7 @@ version = "v{{version}}"
 
 [package.metadata.release]
 no-dev-version = true
-tag-name = "{{version}}"
+tag-name = "v{{version}}"
 
 [features]
 default = [
@@ -66,7 +70,7 @@ full = [
     "time",
 ]
 
-# ********* [FF] Features *********
+# ************* [FF:Features] *************
 config = [
     "dep:scsys-config",
     "scsys-config?/default",
@@ -83,7 +87,7 @@ traits = [ "dep:scsys-traits" ]
 
 utils = [ "dep:scsys-util" ]
 
-# ********* [FF] Environments *********
+# ************* [FF:Environments] *************
 std = [
     "scsys-core/std",
     "scsys-crypto?/std",
@@ -93,15 +97,21 @@ std = [
 
 wasi = [
     "scsys-core/wasi",
+    "scsys-config?/wasi",
     "scsys-crypto?/wasi",
+    "scsys-traits?/wasi",
+    "scsys-util?/wasi",
 ]
 
 wasm = [
     "scsys-core/wasm",
+    "scsys-config?/wasm",
     "scsys-crypto?/wasm",
+    "scsys-traits?/wasm",
+    "scsys-util?/wasm",
 ]
 
-# ********* [FF] Dependencies *********
+# ************* [FF:Dependencies] *************
 alloc = [
     "scsys-core/alloc",
     "scsys-crypto?/alloc",
@@ -111,6 +121,7 @@ alloc = [
 
 anyhow = [
     "scsys-core/anyhow",
+    "scsys-config?/anyhow",
     "scsys-crypto?/anyhow",
 
 ]
@@ -121,9 +132,13 @@ chrono = [
 ]
 
 json = [
+    "alloc",
     "scsys-core/json",
+    "scsys-config?/json",
     "scsys-crypto?/json",
+    "scsys-util?/json",
     "serde",
+    "serde_json",
 ]
 
 rand = [
@@ -142,6 +157,13 @@ serde = [
     "scsys-util?/serde",
 ]
 
+serde_json = [
+    "scsys-core/serde_json",
+    "scsys-config?/serde_json",
+    "scsys-crypto?/serde_json",
+    "scsys-util?/serde_json",
+]
+
 time = [
     "scsys-core/time",
     "scsys-crypto?/time",
@@ -151,6 +173,7 @@ tracing = [
     "scsys-core/tracing",
     "scsys-config?/tracing",
     "scsys-crypto?/tracing",
+    "scsys-util?/tracing",
 ]
 
 tracing-subscriber = [

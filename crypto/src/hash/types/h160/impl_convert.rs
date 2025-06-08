@@ -3,7 +3,7 @@
     Contrib: @FL03
 */
 use super::H160;
-use crate::types::GenericHash;
+use crate::GenericHash;
 
 impl FromIterator<u8> for H160 {
     fn from_iter<T: IntoIterator<Item = u8>>(iter: T) -> Self {
