@@ -35,8 +35,7 @@ on:
         type: boolean
 
 permissions:
-  contents: read
-  id-token: write
+  contents: write
 
 jobs:
   build:
@@ -135,6 +134,7 @@ jobs:
       fail-fast: false
       matrix:
         features:  [ alloc, no_std ]
+        package: [ core ]
     steps:
       -
         name: Checkout
@@ -150,9 +150,9 @@ jobs:
         if: matrix.features != 'no_std'
         continue-on-error: true
         name: Test (${{ matrix.features }})
-        run: cargo test -r --locked --workspace  --no-default-features --features ${{ matrix.features }}
+        run: cargo test -r --locked --workspace  --no-default-features --package ${{ matrix.package }} --features ${{ matrix.features }}
       -
         if: matrix.features == 'no_std'
         continue-on-error: true
         name: Test (no_std)
-        run: cargo test -r --locked --workspace --no-default-features
+        run: cargo test -r --locked --workspace --no-default-features --package ${{ matrix.package }}
