@@ -4,8 +4,7 @@
 */
 extern crate scsys_core as scsys;
 
-use scsys::state::State;
-use scsys::state::nstate::{Nary, NaryState};
+use scsys::state::{NState, Nary, State};
 
 #[test]
 fn test_option_state() {
@@ -17,7 +16,7 @@ fn test_option_state() {
 
 #[test]
 fn test_nary_state() {
-    let state = NaryState::<usize, 4>::new(0);
+    let state = NState::<usize, 4>::new(0);
     assert!(state.is_kind::<Nary<4>>());
 
     assert!(!state.is_kind::<Nary<2>>());

@@ -15,7 +15,7 @@ pub trait StateRepr {
 /*
  ************* Implementations *************
 */
-use crate::state::{NState, State};
+use crate::state::{State, StateBase};
 
 impl<Q> StateRepr for State<Q>
 where
@@ -26,7 +26,7 @@ where
     seal!();
 }
 
-impl<Q, K> StateRepr for NState<Q, K>
+impl<Q, K> StateRepr for StateBase<Q, K>
 where
     Q: RawState,
 {
@@ -36,13 +36,13 @@ where
 }
 
 macro_rules! impl_state_repr {
-    (@impl $($t:ident)::*<$T:ident>) => {        
-        impl<$T> $crate::state::RawState for $($t)::*<$T>
-        where
-            $T: $crate::state::RawState,
-        {
-            seal!();
-        }
+    (@impl $($t:ident)::*<$T:ident>) => {
+        // impl<$T> $crate::state::RawState for $($t)::*<$T>
+        // where
+        //     $T: $crate::state::RawState,
+        // {
+        //     seal!();
+        // }
 
         impl<$T> $crate::state::StateRepr for $($t)::*<$T>
         where

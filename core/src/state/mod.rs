@@ -6,11 +6,7 @@
 //! state management and other stateful workloads.
 //!
 #[doc(inline)]
-pub use self::{
-    nstate::{NState, NStateKind},
-    traits::prelude::*,
-    wrapper::State,
-};
+pub use self::{nstate::StateBase, traits::prelude::*, types::prelude::*, wrapper::State};
 /// this module implements an alternative stateful representation that enables one to provide
 /// a data type as well as specify the state _kind_
 pub mod nstate;
@@ -22,15 +18,18 @@ mod impls {
 }
 
 pub mod traits {
-    //! this module implements various traits supporting the [`Id`](super::Id) type
+    //! this module implements various traits supporting the [`State`](super::State) type
     #[doc(inline)]
     pub use self::prelude::*;
 
+    pub mod kind;
     pub mod state;
     pub mod state_repr;
     pub mod stateful;
 
     pub(crate) mod prelude {
+        #[doc(inline)]
+        pub use super::kind::*;
         #[doc(inline)]
         pub use super::state::*;
         #[doc(inline)]
@@ -40,13 +39,41 @@ pub mod traits {
     }
 }
 
+pub mod types {
+    //! additional types for the [`state`](crate::state) module
+    #[doc(inline)]
+    pub use self::prelude::*;
+
+    pub mod kinds;
+    pub mod nary;
+
+    pub(crate) mod prelude {
+        #[doc(inline)]
+        pub use super::aliases::*;
+        #[doc(inline)]
+        pub use super::kinds::*;
+        #[doc(inline)]
+        pub use super::nary::*;
+    }
+
+    pub(crate) mod aliases {
+        use crate::state::{Nary, StateBase};
+
+        /// A type alias for a [`StateBase`] equipped with a [`Nary`] kind of state
+        pub type NState<T, const N: usize = 4> = StateBase<T, Nary<N>>;
+    }
+}
+
 pub(crate) mod prelude {
     #[doc(inline)]
     pub use super::nstate::*;
     #[doc(inline)]
+    pub use super::wrapper::*;
+
+    #[doc(inline)]
     pub use super::traits::prelude::*;
     #[doc(inline)]
-    pub use super::wrapper::*;
+    pub use super::types::prelude::*;
 }
 
 #[cfg(test)]
@@ -88,7 +115,7 @@ mod tests {
 
     #[cfg(feature = "rand")]
     #[test]
-    fn test_state_rand() {
+    fn test_random_state() {
         // generate some random state `a`
         let a = State::<f32>::random();
         // generate another random state `b`
