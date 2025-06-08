@@ -6,14 +6,15 @@
 #[allow(dead_code)]
 mod old;
 
-/// The [`Hkt`] trait defines an interface for higher-kinded types (HKT).
-pub trait Hkt<T> {
-    type Cont<A>;
+#[allow(clippy::upper_case_acronyms)]
+/// The [`HKT`] trait defines an interface for higher-kinded types (HKT).
+pub trait HKT<T> {
+    type Cont<_T>;
 }
 
-/// The [`Functor`] trait extends the [`Hkt`] trait to provide a way to map over its content(s)
+/// The [`Functor`] trait extends the [`HKT`] trait to provide a way to map over its content(s)
 /// using a function `f` that transforms values of type `T` into values of type `U`.
-pub trait Functor<T>: Hkt<T> {
+pub trait Functor<T>: HKT<T> {
     fn fmap<F, U>(&self, f: F) -> Self::Cont<U>
     where
         F: Fn(&T) -> U;
@@ -23,28 +24,58 @@ pub trait Functor<T>: Hkt<T> {
  *************  Implementations  *************
 */
 macro_rules! hkt {
-    ($($($t:ident)::*),*) => {
-        $(
-            hkt!(@impl $($t)::*<T>);
-        )*
-    };
     (@impl $($t:ident)::*<$T:ident>) => {
-        impl<$T> Hkt<$T> for $($t)::*<$T> {
-            type Cont<_A> = $($t)::*<_A>;
+        impl<$T> HKT<$T> for $($t)::*<$T> {
+            type Cont<_T> = $($t)::*<_T>;
         }
+    };
+    (
+        $(
+            $($t:ident)::*<$T:ident>
+        ),* $(,)?
+    ) => {
+        $(
+            hkt!(@impl $($t)::*<$T>);
+        )*
     };
 }
 
-hkt!(core::option::Option);
+hkt! {
+    core::option::Option<T>
+}
 
 #[cfg(feature = "alloc")]
 hkt! {
-    alloc::collections::VecDeque,
-    alloc::collections::LinkedList,
-    alloc::boxed::Box,
-    alloc::rc::Rc,
-    alloc::sync::Arc,
-    alloc::vec::Vec
+    alloc::vec::Vec<T>,
+    alloc::boxed::Box<T>,
+    alloc::rc::Rc<T>,
+    alloc::rc::Weak<T>,
+    alloc::sync::Arc<T>,
+    alloc::collections::BinaryHeap<T>,
+    alloc::collections::BTreeSet<T>,
+    alloc::collections::LinkedList<T>,
+    alloc::collections::VecDeque<T>,
+}
+
+#[cfg(feature = "std")]
+hkt! {
+    std::cell::Cell<T>,
+    std::cell::OnceCell<T>,
+    std::cell::RefCell<T>,
+    std::sync::Mutex<T>,
+    std::sync::RwLock<T>,
+    std::sync::LazyLock<T>,
+    std::collections::HashSet<V>,
+}
+
+#[cfg(feature = "alloc")]
+impl<K, V> HKT<V> for alloc::collections::BTreeMap<K, V> {
+    type Cont<U> = alloc::collections::BTreeMap<K, U>;
+}
+
+#[cfg(feature = "std")]
+impl<K, V> HKT<V> for std::collections::HashMap<K, V> {
+    type Cont<U> = std::collections::HashMap<K, U>;
 }
 
 impl<T> Functor<T> for Option<T> {

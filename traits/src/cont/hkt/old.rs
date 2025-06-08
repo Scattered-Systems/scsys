@@ -1,3 +1,8 @@
+/*
+    appellation: old <module>
+    authors: @FL03
+*/
+
 #[allow(clippy::upper_case_acronyms)]
 pub trait HKT<U> {
     type C; // Current Type

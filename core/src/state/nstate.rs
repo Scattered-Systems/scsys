@@ -28,14 +28,14 @@ where
             state,
             _kind: PhantomData::<K>,
         }
-    }   
+    }
     /// returns a new instance of [`StateBase`] using the output of the given function `F`
-    pub fn new_with<F>(f: F) -> Self 
-    where 
+    pub fn new_with<F>(f: F) -> Self
+    where
         F: FnOnce() -> Q,
     {
         Self::new(f())
-    }     
+    }
     #[allow(clippy::should_implement_trait)]
     /// returns a new instance of [`StateBase`] using the logical default for the type `Q`
     pub fn default() -> Self
