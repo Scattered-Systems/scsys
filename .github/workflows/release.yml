@@ -27,6 +27,8 @@ jobs:
     environment:
       name: crates-io
       url: https://crates.io/crates/scsys
+    outputs:
+      url: https://crates.io/crates/${{ matrix.package }}
     strategy:
       max-parallel: 1
       fail-fast: false
@@ -53,3 +55,4 @@ jobs:
       - 
         name: Publish (${{ matrix.package }})
         run: cargo publish --locked --package ${{ matrix.package }}
+        id: publish
