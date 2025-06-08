@@ -15,8 +15,7 @@
 //!
 //! - [`Id`](id::Id) - a generic identifier type
 //! - [`State`] and [`StateBase`]: dual approaches w.r.t. state management
-//! - [`Timestamp`] (requires the `time` feature): a generic _timestamp_ type implementing
-//!     [`Now`]
+//! - [`Timestamp`] (requires the `time` feature): a generic _timestamp_ type implementing [`Now`]
 //!
 #![cfg_attr(not(feature = "std"), no_std)]
 #![doc(
