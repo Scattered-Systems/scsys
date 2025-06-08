@@ -5,9 +5,39 @@
 use crate::state::State;
 use core::mem::MaybeUninit;
 
-impl<'a, T> State<&'a T> {}
+impl<'a, T> State<&'a T> {
+    /// returns a new state with a cloned inner value
+    pub fn cloned(&self) -> State<T>
+    where
+        T: Clone,
+    {
+        State(self.0.clone())
+    }
+    /// returns a new state with the inner value copied
+    pub fn copied(&self) -> State<T>
+    where
+        T: Copy,
+    {
+        State(*self.0)
+    }
+}
 
-impl<'a, T> State<&'a mut T> {}
+impl<'a, T> State<&'a mut T> {
+    /// returns a new state with a cloned inner value
+    pub fn cloned(&self) -> State<T>
+    where
+        T: Clone,
+    {
+        State(self.0.clone())
+    }
+    /// returns a new state with the inner value copied
+    pub fn copied(&self) -> State<T>
+    where
+        T: Copy,
+    {
+        State(*self.0)
+    }
+}
 
 impl<T> State<*const T> {}
 

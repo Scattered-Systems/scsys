@@ -6,7 +6,10 @@
 //!
 //! This module contains the stateful types and traits for the library.
 #[doc(inline)]
-pub use self::{nstate::{NState, NStateKind}, wrapper::State};
+pub use self::{
+    nstate::{NState, NStateKind},
+    wrapper::State,
+};
 /// this module implements an alternative stateful representation that enables one to provide
 /// a data type as well as specify the state _kind_
 pub mod nstate;
@@ -21,8 +24,6 @@ pub(crate) mod prelude {
     pub use super::{RawState, StateBase, Stateful};
 }
 
-
-
 /// [`Stateful`] is a trait establishing a common interface for all types that are state-aware.
 pub trait Stateful<Q> {
     type State<Q2>: StateBase<Item = Q2>;
@@ -30,9 +31,8 @@ pub trait Stateful<Q> {
     fn state(&self) -> &Self::State<Q>;
 }
 
-/// [RawState] is a trait that defines the types of states 
+/// [RawState] is a trait that defines the types of states
 pub trait RawState {
-
     private!();
 }
 

@@ -1,7 +1,9 @@
 /*
-    Appellation: atomic <mod>
+    Appellation: id <mod>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+use super::Identifier;
+
 /// [`Id`] is a generic identifier type that wraps a value of type `T`.
 #[derive(Clone, Copy, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
@@ -51,12 +53,12 @@ impl<T> Id<T> {
         *self.get_mut() = id;
         self
     }
-    /// [`swap`](core::mem::swap) the inner value with that of another identifier instance of 
+    /// [`swap`](core::mem::swap) the inner value with that of another identifier instance of
     /// the same type `T`
     pub const fn swap(&mut self, id: &mut Id<T>) {
         core::mem::swap(self.get_mut(), id.get_mut())
     }
-    /// [`take`](core::mem::take) the inner value, leaving the logical [`default`](Default::default) 
+    /// [`take`](core::mem::take) the inner value, leaving the logical [`default`](Default::default)
     /// value in its place.
     pub fn take(&mut self) -> T
     where
@@ -103,82 +105,6 @@ impl Id<uuid::Uuid> {
     }
 }
 
-impl<T> crate::id::Identifier for Id<T> {
+impl<T> Identifier for Id<T> {
     seal!();
-}
-
-impl<T: Default> Default for Id<T> {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<T> AsRef<T> for Id<T> {
-    fn as_ref(&self) -> &T {
-        self.get()
-    }
-}
-
-impl<T> AsMut<T> for Id<T> {
-    fn as_mut(&mut self) -> &mut T {
-        self.get_mut()
-    }
-}
-
-impl<T> core::borrow::Borrow<T> for Id<T> {
-    fn borrow(&self) -> &T {
-        self.get()
-    }
-}
-
-impl<T> core::borrow::BorrowMut<T> for Id<T> {
-    fn borrow_mut(&mut self) -> &mut T {
-        self.get_mut()
-    }
-}
-
-impl<T> core::ops::Deref for Id<T> {
-    type Target = T;
-
-    fn deref(&self) -> &Self::Target {
-        self.get()
-    }
-}
-
-impl<T> core::ops::DerefMut for Id<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        self.get_mut()
-    }
-}
-
-impl<Q> PartialEq<Q> for Id<Q>
-where
-    Q: PartialEq,
-{
-    fn eq(&self, other: &Q) -> bool {
-        self.get() == other
-    }
-}
-
-impl<Q> PartialOrd<Q> for Id<Q>
-where
-    Q: PartialOrd,
-{
-    fn partial_cmp(&self, other: &Q) -> Option<core::cmp::Ordering> {
-        self.get().partial_cmp(other)
-    }
-}
-
-crate::fmt_wrapper! {
-    Id<T>(
-        Binary,
-        Debug,
-        Display,
-        LowerExp,
-        LowerHex,
-        Octal,
-        Pointer,
-        UpperExp,
-        UpperHex
-    )
 }

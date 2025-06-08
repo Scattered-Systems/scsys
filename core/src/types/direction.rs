@@ -2,7 +2,12 @@
     Appellation: direction <module>
     Creator: FL03 <jo3mccain@icloud.com>
 */
-
+/// The [`LinearDirection`] implementation enumerates the three pssoible movements in
+/// one-dimensional space, namely:
+///
+/// - [`Forward`](LinearDirection::Forward) - the positive direction
+/// - [`Backward`](LinearDirection::Backward) - the negative direction
+/// - [`Stay`](LinearDirection::Stay) - no movement
 #[derive(
     Clone,
     Copy,
@@ -27,14 +32,16 @@
     serde(rename_all = "lowercase", untagged)
 )]
 #[strum(serialize_all = "lowercase")]
-pub enum Direction {
+pub enum LinearDirection {
     #[default]
+    #[cfg_attr(feature = "serde", serde(alias = "fwd", alias = "f", alias = "right"))]
     Forward = 1,
+    #[cfg_attr(feature = "serde", serde(alias = "back", alias = "left"))]
     Backward = -1,
     Stay = 0,
 }
 
-impl Direction {
+impl LinearDirection {
     pub fn from_isize(value: isize) -> Self {
         match value % 2 {
             1 => Self::Forward,
@@ -44,15 +51,15 @@ impl Direction {
         }
     }
     /// a functional method for initializing a new backward variant
-    pub fn backward() -> Self {
+    pub const fn backward() -> Self {
         Self::Backward
     }
     /// a functional method for initializing a new stay variant
-    pub fn stay() -> Self {
+    pub const fn stay() -> Self {
         Self::Stay
     }
     /// a functional method for initializing a new forward variant
-    pub fn forward() -> Self {
+    pub const fn forward() -> Self {
         Self::Forward
     }
     /// invert the current direction;
@@ -61,7 +68,7 @@ impl Direction {
     /// - [`Backward`](Direction::Backward) becomes [`Forward`](Direction::Forward)
     /// - [`Stay`](Direction::Stay) remains as is
     pub fn invert(self) -> Self {
-        use Direction::*;
+        use LinearDirection::*;
         match self {
             Forward => Backward,
             Backward => Forward,
@@ -78,9 +85,9 @@ mod tests {
     fn test_direction() {
         use core::str::FromStr;
 
-        let dir = Direction::from_str("forward").ok();
-        assert_eq!(dir, Some(Direction::Forward));
+        let dir = LinearDirection::from_str("forward").ok();
+        assert_eq!(dir, Some(LinearDirection::Forward));
         let inv = dir.expect("failed to parse the direction").invert();
-        assert_eq!(inv, Direction::Backward);
+        assert_eq!(inv, LinearDirection::Backward);
     }
 }

@@ -6,27 +6,21 @@ use crate::id::Id;
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
-pub struct IndexId<Idx = usize> {
-    id: Id,
+pub struct IndexId<T, Idx = usize> {
+    id: Id<T>,
     index: Idx,
 }
 
-impl<Idx> IndexId<Idx> {
-    pub fn new(id: Id, index: Idx) -> Self {
+impl<T, Idx> IndexId<T, Idx> {
+    pub fn new(id: Id<T>, index: Idx) -> Self {
         Self { id, index }
     }
-    pub fn from_index(index: Idx) -> Self {
-        Self {
-            id: Id::atomic(),
-            index,
-        }
+    /// returns an immutable reference to the id
+    pub const fn id(&self) -> &Id<T> {
+        &self.id
     }
-
-    pub fn id(&self) -> usize {
-        *self.id
-    }
-
-    pub fn index(&self) -> &Idx {
+    /// returns an immutable reference to the index
+    pub const fn index(&self) -> &Idx {
         &self.index
     }
 }

@@ -71,7 +71,7 @@ impl<Q> State<Q> {
     pub fn into_inner(self) -> Q {
         self.0
     }
-    /// [`replace`](core::mem::replace) the inner state with the given value and return the 
+    /// [`replace`](core::mem::replace) the inner state with the given value and return the
     /// previous
     pub const fn replace(&mut self, state: Q) -> Q {
         core::mem::replace(self.get_mut(), state)
@@ -112,20 +112,6 @@ impl<Q> State<Q> {
     {
         f(self.get_mut());
         self
-    }
-    /// returns a new instance containing a clone of the inner value
-    pub fn cloned(self) -> State<Q>
-    where
-        Q: Clone,
-    {
-        State(self.get().clone())
-    }
-    /// returns a new instance containing a copy of the inner value
-    pub fn copied(self) -> State<Q>
-    where
-        Q: Copy,
-    {
-        State(*self.get())
     }
     /// returns a new instance containing a reference to the inner value
     pub const fn view(&self) -> State<&Q> {
