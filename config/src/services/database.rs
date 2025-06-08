@@ -7,7 +7,8 @@ pub use self::db_uri::*;
 
 pub(crate) mod db_uri;
 
-///
+/// The [`StandardDatabaseConfig`] type is a configuration structure for a standard database
+/// connection.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(
     feature = "serde",

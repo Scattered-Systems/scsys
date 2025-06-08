@@ -52,11 +52,11 @@ unsafe impl<T> RawContainer for [T] {
     type Item = T;
 }
 
-unsafe impl<'a, T> RawContainer for &'a [T] {
+unsafe impl<T> RawContainer for &[T] {
     type Item = T;
 }
 
-unsafe impl<'a, T> RawContainer for &'a mut [T] {
+unsafe impl<T> RawContainer for &mut [T] {
     type Item = T;
 }
 

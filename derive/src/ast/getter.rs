@@ -5,11 +5,22 @@ use syn::{Ident, Token, Visibility, WhereClause};
 
 /// the abstract syntax tree (ast) for the `getter` macro
 ///
-/// #[getter!(pub struct Foo { pub bar: u32 })]
-/// generates:
 /// ```no_run
+/// #[derive(Get)]
 /// pub struct Foo {
+///    pub bar: u32,
+/// }
 ///
+/// impl Foo {
+///    pub const fn bar(&self) -> &u32 {
+///       &self.bar
+///     }
+///
+///     pub const fn bar_mut(&mut self) -> &mut u32 {
+///         &mut self.bar
+///     }
+/// }
+/// ```
 #[derive(Clone)]
 pub struct GetterAst {
     pub vis: Visibility,

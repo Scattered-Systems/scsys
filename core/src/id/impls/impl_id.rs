@@ -4,7 +4,7 @@
 */
 use crate::id::Id;
 
-impl<'a, T> Id<&'a T> {
+impl<T> Id<&T> {
     /// returns a new identifier with a cloned inner value
     pub fn cloned(&self) -> Id<T>
     where
@@ -21,7 +21,7 @@ impl<'a, T> Id<&'a T> {
     }
 }
 
-impl<'a, T> Id<&'a mut T> {
+impl<T> Id<&mut T> {
     /// returns a new identifier with a cloned inner value
     pub fn cloned(&self) -> Id<T>
     where
@@ -82,6 +82,24 @@ where
 {
     fn eq(&self, other: &Q) -> bool {
         self.get() == other
+    }
+}
+
+impl<'a, Q> PartialEq<&'a Q> for Id<Q>
+where
+    Q: PartialEq,
+{
+    fn eq(&self, other: &&'a Q) -> bool {
+        self.get() == *other
+    }
+}
+
+impl<'a, Q> PartialEq<&'a mut Q> for Id<Q>
+where
+    Q: PartialEq,
+{
+    fn eq(&self, other: &&'a mut Q) -> bool {
+        self.get() == *other
     }
 }
 

@@ -1,6 +1,6 @@
 /*
-    Appellation: str <module>
-    Contrib: FL03 <jo3mccain@icloud.com>
+    appellation: str <module>
+    authors: @FL03
 */
 //! string related utilities
 //!

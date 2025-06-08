@@ -19,15 +19,16 @@ pub use self::prelude::*;
 
 #[cfg(feature = "fs")]
 pub mod fs;
+#[cfg(feature = "std")]
 pub mod project;
 pub mod str;
 
-#[allow(unused_imports)]
 pub mod prelude {
-    #[cfg(feature = "fs")]
     #[doc(inline)]
+    #[cfg(feature = "fs")]
     pub use crate::fs::*;
     #[doc(inline)]
+    #[cfg(feature = "std")]
     pub use crate::project::*;
     #[doc(inline)]
     pub use crate::str::prelude::*;

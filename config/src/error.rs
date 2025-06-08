@@ -17,11 +17,13 @@ pub enum ConfigError {
     ConfigError(#[from] config::ConfigError),
     #[error(transparent)]
     BoxError(#[from] Box<dyn core::error::Error + Send + Sync + 'static>),
+    #[cfg(feature = "std")]
     #[error(transparent)]
     IOError(#[from] std::io::Error),
     #[cfg(feature = "json")]
     #[error(transparent)]
     JsonError(#[from] serde_json::Error),
+    #[cfg(feature = "url")]
     #[error(transparent)]
     UrlError(#[from] url::ParseError),
 }

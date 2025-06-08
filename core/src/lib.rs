@@ -2,7 +2,22 @@
     Appellation: scsys-core <library>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! This crate works to provide a set of utilities for working with state, time, and synchronization in Rust.
+//! # scsys-core
+//!
+//! Welcome the the scsys-core` crate, the foundational library for the [scsys.io](https://scsys.io)
+//! ecosystem. This crate is primarily focused on establish a set of fundamental types, traits,
+//! and utilities that are used throughout the ecosystem. Doing so allows for a natural
+//! consistency to emerge across the ecosystem, while further streamlining the development
+//! process.
+//!
+//! That being said, the general focus of the crate and its feature-gating make it ideally
+//! suited for use outside of the ecosystem as well providing useful primitives such as:
+//!
+//! - [`Id`](id::Id) - a generic identifier type
+//! - [`State`] and [`StateBase`]: dual approaches w.r.t. state management
+//! - [`Timestamp`] (requires the `time` feature): a generic _timestamp_ type implementing
+//!     [`Now`]
+//!
 #![cfg_attr(not(feature = "std"), no_std)]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
@@ -33,7 +48,7 @@ pub(crate) mod macros {
 pub use self::{
     error::*,
     id::Id,
-    state::{State, StateBase, StateRepr, Stateful},
+    state::{NState, State, StateBase, StateRepr, Stateful},
     time::{Now, RawTimestamp, Timestamp},
     types::prelude::*,
 };

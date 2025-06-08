@@ -5,7 +5,7 @@
 use crate::state::{RawState, State};
 use core::mem::MaybeUninit;
 
-impl<'a, Q> State<&'a Q>
+impl<Q> State<&Q>
 where
     Q: RawState,
 {
@@ -25,7 +25,7 @@ where
     }
 }
 
-impl<'a, Q> State<&'a mut Q>
+impl<Q> State<&mut Q>
 where
     Q: RawState,
 {

@@ -11,16 +11,30 @@ use super::Identifier;
 pub struct Id<T = usize>(pub T);
 
 impl<T> Id<T> {
+    /// create a new identifier from the given value
+    pub const fn new(id: T) -> Self {
+        Self(id)
+    }
     /// Create a new identifier with the default value
-    pub fn new() -> Self
+    pub fn default() -> Self
     where
         T: Default,
     {
-        Self(T::default())
+        Self::new(T::default())
     }
-    /// create a new identifier from the given value
-    pub fn from_value(id: T) -> Self {
-        Self(id)
+    /// returns a new id with a value of `1`
+    pub fn one() -> Self
+    where
+        T: num_traits::One,
+    {
+        Self::new(T::one())
+    }
+    /// returns a new id with a value of `0`
+    pub fn zero() -> Self
+    where
+        T: num_traits::Zero,
+    {
+        Self::new(T::zero())
     }
     #[cfg(feature = "rand")]
     pub fn random() -> Self
@@ -29,7 +43,7 @@ impl<T> Id<T> {
     {
         use rand::Rng;
         let mut rng = rand::rng();
-        Self::from_value(rng.random())
+        Self::new(rng.random())
     }
     /// returns an immutable reference to the inner value
     pub const fn get(&self) -> &T {
@@ -68,14 +82,39 @@ impl<T> Id<T> {
     }
     /// consumes the current instance to replace it with another.
     pub fn with<U>(self, id: U) -> Id<U> {
-        Id(id)
+        Id::new(id)
     }
     /// apply a function onto the inner value and return a new instance with the result
     pub fn map<U, F>(self, f: F) -> Id<U>
     where
         F: FnOnce(T) -> U,
     {
-        Id(f(self.value()))
+        Id::new(f(self.value()))
+    }
+    /// replaces the current id with the next logical value of type `T`
+    ///
+    /// ```rust
+    /// use scsys::Id;
+    ///
+    /// let mut id = Id::zero();
+    /// assert_eq!(id.step(), 0);
+    /// assert_eq!(id.step(), 1);
+    ///
+    /// ```
+    pub fn step(&mut self) -> T
+    where
+        T: num_traits::One,
+        for<'a> &'a T: core::ops::Add<T, Output = T>,
+    {
+        self.replace(self.get() + T::one())
+    }
+    /// returns a new identifier with a reference to the inner value
+    pub const fn view(&self) -> Id<&T> {
+        Id::new(self.get())
+    }
+    /// returns a new identifier with a mutable reference to the inner value
+    pub const fn view_mut(&mut self) -> Id<&mut T> {
+        Id::new(self.get_mut())
     }
 }
 
@@ -83,25 +122,37 @@ impl Id<usize> {
     pub fn atomic() -> Self {
         use core::sync::atomic::{AtomicUsize, Ordering::Relaxed};
         static COUNTER: AtomicUsize = AtomicUsize::new(1);
-        Self(COUNTER.fetch_add(1, Relaxed))
+        Self::new(COUNTER.fetch_add(1, Relaxed))
     }
-
-    pub fn next(&self) -> Self {
-        Self::atomic()
+    /// replaces the current id with the atomic-ally next value and returns the previous value.
+    /// see [`step`](Id::step) for more information
+    pub fn atomic_step(&mut self) -> usize {
+        use core::sync::atomic::{AtomicUsize, Ordering::Relaxed};
+        static COUNTER: AtomicUsize = AtomicUsize::new(1);
+        self.replace(COUNTER.fetch_add(1, Relaxed))
     }
 }
 
 #[cfg(feature = "uuid")]
 impl Id<uuid::Uuid> {
     pub fn v3(namespace: &uuid::Uuid, name: &[u8]) -> Self {
-        let id = uuid::Uuid::new_v3(&namespace, name);
-        Self(id)
+        let id = uuid::Uuid::new_v3(namespace, name);
+        Self::new(id)
     }
 
     #[cfg(all(feature = "rng", feature = "uuid"))]
     pub fn v4() -> Self {
         let id = uuid::Uuid::new_v4();
-        Self(id)
+        Self::new(id)
+    }
+}
+
+impl<T> Default for Id<T>
+where
+    T: Default,
+{
+    fn default() -> Self {
+        Self::new(T::default())
     }
 }
 

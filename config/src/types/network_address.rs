@@ -115,7 +115,7 @@ impl core::str::FromStr for NetworkAddr {
         #[cfg(feature = "url")]
         {
             let url = url::Url::parse(s)?;
-            Ok(url.try_into()?)
+            url.try_into()
         }
         #[cfg(not(feature = "url"))]
         {

@@ -2,7 +2,6 @@
     Appellation: std_error <module>
     Contrib: @FL03
 */
-#![cfg(feature = "alloc")]
 use crate::error::ErrorKind;
 use alloc::string::{String, ToString};
 

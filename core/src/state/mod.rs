@@ -106,7 +106,8 @@ mod tests {
 
         let view = state.view();
         // verify that the "view" contains a reference to the original value
-        assert_eq!(state.get(), view.value());
+        assert_eq!(view.get(), &&0);
+        assert_eq!(view.copied(), 0);
         // set the state to a new value
         state.set(5);
         // verify that the "view_mut" contains a mutable reference to the original value

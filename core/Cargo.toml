@@ -80,7 +80,16 @@ full = [
     "tracing",
 ]
 
+# ************* [FF:Features] *************
+
+json = [ 
+    "alloc", 
+    "serde",
+    "serde_json", 
+]
+
 # ************* [FF:Environments] *************
+
 std = [
     "alloc",
     "anyhow?/std",
@@ -96,7 +105,7 @@ std = [
     "uuid?/std",
 ]
 
-wasi = [  ]
+wasi = []
 
 wasm = [ 
     "getrandom?/wasm_js",
@@ -105,6 +114,7 @@ wasm = [
 ]
 
 # ************* [FF:Dependencies] *************
+
 anyhow = ["dep:anyhow"]
 
 alloc = [ 
@@ -119,12 +129,6 @@ chrono = [
     "dep:chrono", 
     "chrono?/clock",
     "time",
-]
-
-json = [ 
-    "dep:serde_json", 
-    "alloc", 
-    "serde"
 ]
 
 rand = [
@@ -152,7 +156,9 @@ serde = [
     "time?/serde",
 ]
 
-time = [ "dep:time" ]
+serde_json = ["dep:serde_json"]
+
+time = ["dep:time"]
 
 tracing = ["dep:tracing"]
 
@@ -173,8 +179,7 @@ name = "default"
 
 [[test]]
 name = "state"
-required-features = [ "std" ]
 
 [[test]]
 name = "time"
-required-features = [ "std", "time" ]
+required-features = ["std", "time"]

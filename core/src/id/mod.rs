@@ -54,14 +54,32 @@ pub(crate) mod prelude {
 #[cfg(test)]
 mod tests {
     use super::Id;
-    use super::traits::Identity;
 
     #[test]
     fn test_id() {
-        let id = 0_usize.get();
-        assert_eq!(id, &0);
-        let atomic = Id::atomic();
-        let aid = Id::<usize>::get(&atomic);
-        assert_ne!(*aid, *id);
+        let mut id = Id::<usize>::default();
+        assert_eq!(id.get(), &0);
+        assert_eq!(id.get_mut(), &mut 0);
+        let view = id.view();
+        assert_eq!(view.get(), &&0);
+        assert_eq!(view.copied(), id);
+    }
+
+    #[test]
+    fn test_atomic_id() {
+        let v1 = Id::atomic();
+        let v2 = Id::atomic();
+        assert_ne!(v1, v2);
+    }
+
+    #[test]
+    fn test_id_stepper() {
+        let mut id: Id<usize> = Id::zero();
+        assert_eq!(id.step(), 0);
+        assert_eq!(id.step(), 1);
+        assert_eq!(id.step(), 2);
+        assert_eq!(id.step(), 3);
+        assert_eq!(id.step(), 4);
+        assert_eq!(id, 5);
     }
 }
