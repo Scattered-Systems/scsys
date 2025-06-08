@@ -19,7 +19,7 @@ pub trait Entry<'a> {
     where
         F: FnOnce() -> Self::Value;
 }
-//// The [`OrInsert`] trait is a convenience trait that allows for the insertion of some value
+/// The [`OrInsert`] trait is a convenience trait that allows for the insertion of some value
 /// whenever the entry does not already exist within the container.
 pub trait OrInsert<K, V> {
     fn or_insert(&mut self, key: K, value: V) -> V;
