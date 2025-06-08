@@ -134,7 +134,7 @@ jobs:
       fail-fast: false
       matrix:
         features:  [ alloc, no_std ]
-        package: [ core ]
+        package: [ scsys-core ]
     steps:
       -
         name: Checkout
