@@ -24,7 +24,6 @@ use syn::{Ident, Token, Visibility, WhereClause};
 #[derive(Clone)]
 pub struct GetterAst {
     pub vis: Visibility,
-    ///
     pub name: Ident,
     pub field: Ident,
     pub where_clause: Option<WhereClause>,

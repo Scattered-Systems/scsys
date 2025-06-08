@@ -1,4 +1,9 @@
-/// An enumeration of supported database drivers and the formats that we expect them to be in.
+/*
+    appellation: drivers <module>
+    authors: @FL03
+*/
+/// The [`DatabaseDrivers`] implementation is an enumeration of supported databases and their 
+/// connection formats.
 #[derive(
     Clone,
     Copy,

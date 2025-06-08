@@ -22,6 +22,8 @@ pub(crate) mod macros {
     pub mod seal;
 }
 
+pub mod cont;
+
 pub mod convert;
 pub mod dtype;
 pub mod named;
@@ -29,24 +31,6 @@ pub mod string;
 pub mod symbolic;
 pub mod toggle;
 pub mod wrapper;
-
-pub mod cont {
-    #[doc(inline)]
-    pub use self::prelude::*;
-
-    pub mod container;
-    pub mod hkt;
-    pub mod store;
-
-    pub(crate) mod prelude {
-        #[doc(inline)]
-        pub use super::container::*;
-        #[doc(inline)]
-        pub use super::hkt::*;
-        #[doc(inline)]
-        pub use super::store::*;
-    }
-}
 
 pub mod ops {
     #[doc(inline)]

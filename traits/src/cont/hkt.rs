@@ -3,60 +3,20 @@
     Contrib: @FL03
 */
 
-pub trait Hkt {
-    type C<A>;
+#[allow(dead_code)]
+mod old;
+
+/// The [`Hkt`] trait defines an interface for higher-kinded types (HKT).
+pub trait Hkt<T> {
+    type Cont<A>;
 }
 
-pub trait Functor<T>: Hkt {
-    fn fmap<F, U>(&self, f: F) -> Self::C<U>
+/// The [`Functor`] trait extends the [`Hkt`] trait to provide a way to map over its content(s)
+/// using a function `f` that transforms values of type `T` into values of type `U`.
+pub trait Functor<T>: Hkt<T> {
+    fn fmap<F, U>(&self, f: F) -> Self::Cont<U>
     where
         F: Fn(&T) -> U;
-}
-#[doc(hidden)]
-#[allow(unused)]
-mod old {
-
-    pub trait HKT<U> {
-        type C; // Current Type
-        type T; // Type C swapped with U
-    }
-
-    pub trait Functor<U>: HKT<U> {
-        fn fmap<F>(self, f: F) -> Self::T
-        where
-            F: Fn(Self::C) -> U;
-    }
-
-    pub trait Applicative<U>: Functor<U> {
-        fn pure_(value: U) -> Self::T
-        where
-            Self: HKT<U, C = U>;
-        fn seq<F>(&self, fs: <Self as HKT<F>>::T) -> <Self as HKT<U>>::T
-        where
-            F: Fn(&<Self as HKT<U>>::C) -> U,
-            Self: HKT<F>;
-    }
-
-    pub trait Monad<U>: Applicative<U> {
-        fn return_(x: U) -> Self::T
-        where
-            Self: HKT<U, C = U>,
-        {
-            Self::pure_(x)
-        }
-
-        fn bind<F>(&self, fs: F) -> Self::T
-        where
-            F: FnMut(&Self::C) -> Self::T;
-
-        fn join<T>(&self) -> T
-        where
-            Self: HKT<U, T = T, C = T>,
-            T: Clone,
-        {
-            self.bind(|x| x.clone())
-        }
-    }
 }
 
 /*
@@ -65,12 +25,12 @@ mod old {
 macro_rules! hkt {
     ($($($t:ident)::*),*) => {
         $(
-            hkt!(@impl $($t)::*);
+            hkt!(@impl $($t)::*<T>);
         )*
     };
-    (@impl $($t:ident)::*) => {
-        impl<T> Hkt for $($t)::*<T> {
-            type C<A> = $($t)::*<A>;
+    (@impl $($t:ident)::*<$T:ident>) => {
+        impl<$T> Hkt<$T> for $($t)::*<$T> {
+            type Cont<_A> = $($t)::*<_A>;
         }
     };
 }
@@ -88,7 +48,7 @@ hkt! {
 }
 
 impl<T> Functor<T> for Option<T> {
-    fn fmap<F, U>(&self, f: F) -> Self::C<U>
+    fn fmap<F, U>(&self, f: F) -> Self::Cont<U>
     where
         F: Fn(&T) -> U,
     {

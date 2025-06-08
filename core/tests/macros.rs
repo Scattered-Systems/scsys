@@ -38,12 +38,12 @@ fn test_sample_gsw_impls() {
     // validate builders
     let mut sample = Sample::new("hello world".to_string())
         .with_apple(10)
-        .with_block(3.14);
+        .with_block(core::f32::consts::PI);
     // verify setters
     sample.set_store(vec![1, 2, 3]);
     // verify the getters
     assert_eq!(sample.apple(), 10);
-    assert_eq!(sample.block(), 3.14);
+    assert_eq!(sample.block(), core::f32::consts::PI);
     assert_eq!(sample.cont(), "hello world");
     assert_eq!(sample.store(), &vec![1, 2, 3]);
     // verify the mutable getters

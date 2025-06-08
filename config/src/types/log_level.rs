@@ -59,10 +59,7 @@ impl LogLevel {
     }
     /// returns true if the log-level is not [`Off`](LogLevel::Off)
     pub fn is_enabled(&self) -> bool {
-        match self {
-            Self::Off => false,
-            _ => true,
-        }
+        !matches!(self, Self::Off)
     }
 
     pub fn as_log_string<T>(&self, name: T) -> String

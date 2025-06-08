@@ -48,7 +48,7 @@ impl DatabaseUriSchema {
         Self::from_parts("postgresql", host, port, user, password, database)
     }
     /// returns a string representation of the database URL.
-    pub fn to_string(&self) -> String {
+    pub fn as_uri_string(&self) -> String {
         format!(
             "{prefix}://{user}:{password}@{host}:{port}/{database}",
             prefix = self.prefix,
@@ -196,7 +196,7 @@ impl Default for DatabaseUriSchema {
 
 impl core::fmt::Display for DatabaseUriSchema {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
-        f.write_str(&self.to_string())
+        f.write_str(&self.as_uri_string())
     }
 }
 
