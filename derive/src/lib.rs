@@ -9,7 +9,7 @@
 //! ## Macros
 //!
 //! - [`Display`]: automatically implements the `Display` trait for a struct or enum, using the
-//! `scsys` attributes to customize the output.
+//!   `scsys` attributes to customize the output.
 //! - [`VariantConstructors`]: generate functional constructors for all variants of an enum
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
