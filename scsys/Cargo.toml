@@ -14,11 +14,21 @@ repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "v{{version}}"
+
 [lib]
-crate-type = [ 
-    "cdylib", 
-    "rlib", 
-    "staticlib" 
+crate-type = [
+    "cdylib",
+    "rlib",
+    "staticlib"
 ]
 bench = true
 doc = true
@@ -36,20 +46,10 @@ scsys-util = { optional = true, workspace = true }
 
 [dev-dependencies]
 anyhow = { features = ["std"], workspace = true }
-criterion = { workspace = true }
+criterion = { features = ["plotters"], workspace = true }
 lazy_static = { workspace = true }
 serde = { features = ["std"], workspace = true }
 serde_json = { features = ["std"], workspace = true }
-
-[package.metadata.docs.rs]
-all-features = false
-features = ["full"]
-rustc-args = [ "--cfg", "docsrs" ]
-version = "v{{version}}"
-
-[package.metadata.release]
-no-dev-version = true
-tag-name = "v{{version}}"
 
 [features]
 default = [
@@ -64,6 +64,7 @@ full = [
     "default",
     "config",
     "crypto",
+    "hash",
     "json",
     "rand",
     "serde",
@@ -80,6 +81,12 @@ config = [
 crypto = [ "dep:scsys-crypto" ]
 
 derive = [ "dep:scsys-derive" ]
+
+hash = [
+    "crypto",
+    "scsys-crypto?/hash",
+    "std",
+]
 
 macros = [ "dep:scsys-macros" ]
 
@@ -124,6 +131,11 @@ anyhow = [
     "scsys-config?/anyhow",
     "scsys-crypto?/anyhow",
 
+]
+
+blake3 = [
+    "crypto",
+    "scsys-crypto?/blake3",
 ]
 
 chrono = [
@@ -195,10 +207,16 @@ required-features = ["std"]
 # ************* [Examples] *************
 [[example]]
 name = "derive"
-required-features = [ "derive", "json" ]
+required-features = [ 
+    "derive", 
+    "json",
+]
 
 
 # ************* [Unit Tests] *************
 [[test]]
 name = "derive"
-required-features = [ "derive" ]
+required-features = [ 
+    "derive", 
+    "json",
+]

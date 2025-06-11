@@ -5,6 +5,15 @@
 use scsys::time::Timestamp;
 
 fn main() -> scsys::Result<()> {
+    let mut unit = Unit::<usize>::new(42);
+    println!("Unit: {unit}");
+    let prev = unit.replace(100);
+    println!("Unit: replaced {prev} with {unit}");
+    let value = unit.take();
+    println!("Taken unit: {value}");
+    let u2 = unit.map(|x| (x + 1) * 2);
+    println!("Unit value: {}", u2.get());
+
     let params = Sample::from_value(0.5);
     println!("Params: {params}");
     let variant = Something::a();
@@ -15,6 +24,27 @@ fn main() -> scsys::Result<()> {
     println!("Variant: {:?}", variant);
     Ok(())
 }
+
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Eq,
+    Hash,
+    Ord,
+    PartialEq,
+    PartialOrd,
+    scsys::Wrapper,
+    scsys::Display,
+)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Deserialize, serde::Serialize),
+    serde(default, rename_all = "snake_case"),
+    scsys(display(json))
+)]
+pub struct Unit<T>(pub T);
 
 #[derive(
     Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::Getter, scsys::Display,

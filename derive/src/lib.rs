@@ -19,33 +19,11 @@ extern crate proc_macro;
 extern crate quote;
 extern crate syn;
 
+pub(crate) mod attrs;
 pub(crate) mod impls;
 pub(crate) mod utils;
 
-pub(crate) mod ast {
-    #[allow(unused_imports)]
-    pub use self::getter::GetterAst;
-
-    mod getter;
-}
-
-pub(crate) mod attrs {
-    #[doc(inline)]
-    pub use self::prelude::*;
-
-    pub mod display_attrs;
-    pub mod nested;
-    pub mod scsys;
-    pub mod variants;
-
-    pub(crate) mod prelude {
-        pub use super::display_attrs::*;
-        pub use super::nested::*;
-        pub use super::scsys::*;
-        pub use super::variants::*;
-    }
-}
-
+pub(crate) mod ast;
 use proc_macro::TokenStream;
 use syn::{Data, DeriveInput, parse_macro_input};
 
@@ -70,20 +48,32 @@ pub fn variant_constructors(input: TokenStream) -> TokenStream {
     }
     .into()
 }
+/// The [`Wrapper`] macro is designed for single-field structs, implementing additional methods
+/// supporting interactions with the inner value 
+#[proc_macro_derive(Wrapper, attributes(scsys))]
+pub fn wrapper(input: TokenStream) -> TokenStream {
+    // Parse the inputs into the proper struct
+    let ast = parse_macro_input!(input as DeriveInput);
 
-#[proc_macro_derive(Getter)]
+    // Build the impl
+    let res = impls::impl_wrapper(&ast);
+
+    res.into()
+}
+
+#[proc_macro_derive(Getter, attributes(scsys))]
 pub fn getter_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     impls::impl_getter(&input).into()
 }
 
-#[proc_macro_derive(Set)]
+#[proc_macro_derive(Set, attributes(scsys))]
 pub fn set_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     impls::impl_set(&input).into()
 }
 
-#[proc_macro_derive(With)]
+#[proc_macro_derive(With, attributes(scsys))]
 pub fn with_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     impls::impl_with(&input).into()

@@ -15,6 +15,7 @@ pub trait Hasher {
     fn include(&mut self, data: impl AsRef<[u8]>) -> &mut Self;
 }
 
+#[cfg(feature = "blake3")]
 mod impl_blake3 {
     use crate::hash::H256;
 
