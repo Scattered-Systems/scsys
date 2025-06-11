@@ -49,7 +49,7 @@ pub fn variant_constructors(input: TokenStream) -> TokenStream {
     .into()
 }
 /// The [`Wrapper`] macro is designed for single-field structs, implementing additional methods
-/// supporting interactions with the inner value 
+/// supporting interactions with the inner value
 #[proc_macro_derive(Wrapper, attributes(scsys))]
 pub fn wrapper(input: TokenStream) -> TokenStream {
     // Parse the inputs into the proper struct

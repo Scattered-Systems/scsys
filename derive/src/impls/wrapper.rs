@@ -54,7 +54,7 @@ fn _handle_field(
     };
     // generate the code for the wrapper methods
     quote! {
-        #methods        
+        #methods
         /// consumes the current instance and returns a new one that captures the result of the
         /// closure on the wrapped field
         #[inline]
@@ -87,7 +87,7 @@ fn _handle_field(
             #field_type: Default
         {
             ::core::mem::take(self.get_mut())
-        }        
+        }
         /// returns a new instance of the wrapper that contains a reference to the inner value
         pub const fn view(&self) -> #name<&#field_type> {
             #name::new(self.get())

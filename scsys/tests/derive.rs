@@ -45,7 +45,6 @@ fn test_wrapper() {
     assert_eq!(u2.get(), &2);
 }
 
-
 mod impls {
     #[derive(
         Clone,
@@ -64,7 +63,7 @@ mod impls {
         pub key: String,
         pub weight: usize,
     }
-    
+
     #[derive(
         Clone,
         Copy,
@@ -83,14 +82,16 @@ mod impls {
         pub key: K,
         pub weight: V,
     }
-    
-    #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::VariantConstructors)]
+
+    #[derive(
+        Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::VariantConstructors,
+    )]
     pub enum Something {
         A,
         B(usize),
         C { x: usize, y: usize },
     }
-    
+
     #[derive(
         Clone,
         Copy,
@@ -110,5 +111,5 @@ mod impls {
         serde(default, rename_all = "snake_case"),
         scsys(display(json))
     )]
-    pub struct Unit<T>(pub T);    
+    pub struct Unit<T>(pub T);
 }
