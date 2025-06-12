@@ -23,7 +23,7 @@ pub trait ApplyOnce<T> {
     where
         F: FnOnce(T) -> U;
 }
-//// The [`ApplyMut`] trait allows for in-place mapping of a mutable reference to a type `T`
+/// The [`ApplyMut`] trait allows for in-place mapping of a mutable reference to a type `T`
 pub trait ApplyMut<T> {
     type Cont<_T>;
 
