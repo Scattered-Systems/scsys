@@ -2,25 +2,46 @@
     Appellation: hash <module>
     Contrib: @FL03
 */
+//! this implements various hashing primitives and utilities for cryptographic operations.
+//!
+//! ## Features
+//!
+//! - [`blake3`](https://docs.rs/blake3/latest/blake3/index.html): enables the `blake3` hashing algorithm.
 #[doc(inline)]
-pub use self::{hasher::*, types::prelude::*};
+pub use self::{h160::H160, h256::H256, traits::prelude::*, types::prelude::*};
 
-pub mod hasher;
+/// this modules implements the [`H160`] type, which is a 20-byte hash output.
+pub mod h160;
+/// this modules implements the [`H256`] type, which is a 32-byte hash output.
+pub mod h256;
 
-pub mod types {
+pub mod traits {
+    //! this module defines various traits for the [`hash`](crate::hash) module.
     #[doc(inline)]
     pub use self::prelude::*;
 
-    pub mod h160;
-    pub mod h256;
+    pub mod hash;
+    pub mod hasher;
+    pub mod raw_hash;
+
+    pub(crate) mod prelude {
+        #[doc(inline)]
+        pub use super::hash::*;
+        #[doc(inline)]
+        pub use super::hasher::*;
+        #[doc(inline)]
+        pub use super::raw_hash::*;
+    }
+}
+
+pub mod types {
+    //! this module defines additional types for the [`hash`](crate::hash) module.
+    #[doc(inline)]
+    pub use self::prelude::*;
 
     pub(crate) mod prelude {
         #[doc(inline)]
         pub use super::aliases::*;
-        #[doc(inline)]
-        pub use super::h160::*;
-        #[doc(inline)]
-        pub use super::h256::*;
     }
 
     pub(crate) mod aliases {
@@ -36,59 +57,11 @@ pub mod types {
 
 pub(crate) mod prelude {
     #[doc(inline)]
-    pub use super::RawHash;
+    pub use super::h160::*;
+    #[doc(inline)]
+    pub use super::h256::*;
+    #[doc(inline)]
+    pub use super::traits::prelude::*;
     #[doc(inline)]
     pub use super::types::prelude::*;
-}
-
-pub trait RawHash {
-    private!();
-}
-
-pub trait SizedHash: RawHash {
-    const N: usize;
-}
-
-macro_rules! impl_raw_hash {
-    ($($t:ty),* $(,)?) => {
-        $(
-            impl_raw_hash!(@impl $t);
-        )*
-    };
-    ($($t:ty: $n:literal),* $(,)?) => {
-        $(
-            impl_raw_hash!(@sized $t => $n);
-        )*
-    };
-    (@impl $type:ty) => {
-        impl RawHash for $type {
-            seal!();
-        }
-    };
-    (@sized $type:ty => $n:literal) => {
-        impl RawHash for $type {
-            seal!();
-        }
-
-        impl SizedHash for $type {
-            const N: usize = $n;
-        }
-    };
-}
-
-impl_raw_hash! {
-    GenericHash,
-    [u8],
-}
-
-impl_raw_hash! {
-    [u8; 20]: 20,
-    [u8; 32]: 32,
-    H160: 20,
-    H256: 32,
-}
-
-#[cfg(feature = "alloc")]
-impl_raw_hash! {
-    alloc::vec::Vec<u8>,
 }

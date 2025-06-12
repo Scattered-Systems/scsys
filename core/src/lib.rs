@@ -29,10 +29,8 @@
 extern crate alloc;
 // re-import the `rand` & `rand_distr` crates if the `rand` feature is enabled
 #[cfg(feature = "rand")]
-#[doc(no_inline)]
 pub use rand;
 #[cfg(feature = "rand")]
-#[doc(no_inline)]
 pub use rand_distr;
 
 #[macro_use]
@@ -53,17 +51,24 @@ pub use self::{
     time::{Now, RawTimestamp, Timestamp},
     types::prelude::*,
 };
-
+/// this module implements various error-handling primitives and utilities
 pub mod error;
+/// this module defines the generic [`Id`] wrapper and its implementations
 pub mod id;
+/// this module provides a set of states for state-related workloads ([`State`] & [`NState`])
 pub mod state;
+/// a temporal module establishing a core set of time-related primitives and utilities such as
+/// [`Timestamp`]
 pub mod time;
 
 pub mod types {
     #[doc(inline)]
     pub use self::prelude::*;
 
+    /// this module implements the [`LinearDirection`], an enumeration over all possible
+    /// movements in one-dimensional space.
     pub mod direction;
+    pub mod stages;
 
     pub(crate) mod prelude {
         #[allow(unused_imports)]
@@ -71,6 +76,8 @@ pub mod types {
         pub use super::aliases::*;
         #[doc(inline)]
         pub use super::direction::*;
+        #[doc(inline)]
+        pub use super::stages::*;
     }
 
     pub(crate) mod aliases {
@@ -80,15 +87,10 @@ pub mod types {
         #[cfg(feature = "alloc")]
         /// Type alias for the standard result used
         pub type BoxResult<T = ()> = core::result::Result<T, BoxError>;
-        #[cfg(feature = "std")]
-        /// Type alias wrapping a locked, thread-safe structure with a [Mutex] in an [Arc]
-        pub type Arcm<T> = std::sync::Arc<std::sync::Mutex<T>>;
-        #[cfg(feature = "std")]
-        /// Type alias for [std::io::Result]
-        pub type IOResult<T = ()> = std::io::Result<T>;
     }
 }
 
+#[doc(hidden)]
 pub mod prelude {
     #[doc(no_inline)]
     pub use crate::error::*;

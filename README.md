@@ -23,51 +23,50 @@ version = "0.2.x"
 
 ### Examples
 
-#### Example 1: _Using the `Getter` derive macro_
+#### Example 1: _Using the `VariantConstructors` derive macro_
 
-The `Getter` derive macro can be used to automatically generate functional accessors for named fields within a given structure. For example, given the following structure:
-
-```rust
-#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::Getter)]
-pub struct Node<T> {
-    pub weight: T,
-}
-```
-
-we can automatically generate a getter method for the `weight` field:
+The `VariantConstructors` derive macro can be used to automatically generate functional accessors for named fields within a given structure. For example, given the following structure:
 
 ```rust
-let node = Node { weight: 42 };
-assert_eq!(node.weight(), 42);
-```
-
-#### Example 2: _Using the `VariantConstructors` derive macro_
-
-The `VariantConstructors` derive macro can be used to automatically generate constructors for the variants of an enum. For example, given the following enum:
-
-```rust
-#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::VariantConstructors)]
+#[derive(
+    Clone, 
+    Copy, 
+    Debug, 
+    Default, 
+    Eq, 
+    Hash, 
+    Ord, 
+    PartialEq, 
+    PartialOrd, 
+    scsys::VariantConstructors
+)
 pub enum Sample {
     A,
     B(usize),
-    C { x: usize, y: usize },
+    C { x: f32, y: f32 },
 }
 ```
 
-we can automatically generate a functional constructor for each variant:
+we can automatically generate a functional constructors for each of the `Sample` variants:
 
 ```rust
 let a = Sample::a();
 let b = Sample::b(42);
-let c = Sample::c(1, 2);
+let c = Sample::c(1.0, 2.0);
 assert_eq!(a, Sample::A);
 assert_eq!(b, Sample::B(42));
-assert_eq!(c, Sample::C { x: 1, y: 2 });
+assert_eq!(c, Sample::C { x: 1.0, y: 2.0 });
 ```
 
 ## Getting Started
 
 ### Prerequisites
+
+To build and run the `scsys` library, you will need to have the following tools installed on your machine:
+
+- [Rust](https://www.rust-lang.org/) (with `rustup` for managing toolchains)
+- [Cargo](https://doc.rust-lang.org/cargo/) (the Rust package manager, which comes with Rust)
+- [Git](https://git-scm.com/) (for cloning the repository)
 
 #### Rust
 
@@ -104,19 +103,19 @@ cd scsys
 Build the project using the `cargo build` command:
 
 ```bash
-cargo build --all-features --locked --release --workspace
+cargo build -r --locked --workspace --all-features
 ```
 
 Test the project using the `cargo test` command:
 
 ```bash
-cargo test --all-features --locked --release --workspace
+cargo test -r --locked --workspace --all-features
 ```
 
 Or, benchmark the project using the `cargo bench` command:
 
 ```bash
-cargo bench --all-features --verbose --workspace 
+cargo bench --verbose --workspace --all-features --
 ```
 
 ## License

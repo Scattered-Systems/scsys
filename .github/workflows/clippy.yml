@@ -4,6 +4,10 @@ concurrency:
   cancel-in-progress: false
   group: ${{ github.workflow }}-${{ github.ref }}
 
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: full
+
 on:
   pull_request:
     branches: [ main, master ]
@@ -25,15 +29,14 @@ on:
     types: [ clippy ]
   workflow_dispatch:
 
-permissions:
-  actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status 
-  contents: read
-  security-events: write
-  statuses: write
-
 jobs:
   clippy:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status 
+      contents: read
+      security-events: write
+      statuses: write
     steps:
       - 
         name: Checkout

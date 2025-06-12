@@ -1,7 +1,13 @@
+/*
+    appellation: getter <module>
+    authors: @FL03
+*/
+use proc_macro2::TokenStream;
 use quote::quote;
-use syn::{DeriveInput, spanned::Spanned};
+use syn::DeriveInput;
+use syn::spanned::Spanned;
 
-pub fn impl_getter(input: &DeriveInput) -> proc_macro2::TokenStream {
+pub fn impl_getter(input: &DeriveInput) -> TokenStream {
     let name = &input.ident;
     let generics = &input.generics;
     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
@@ -15,7 +21,7 @@ pub fn impl_getter(input: &DeriveInput) -> proc_macro2::TokenStream {
         let field_name = &field.ident;
         let field_type = &field.ty;
         quote! {
-            pub fn #field_name(&self) -> &#field_type {
+            pub const fn #field_name(&self) -> &#field_type {
                 &self.#field_name
             }
         }
@@ -28,7 +34,7 @@ pub fn impl_getter(input: &DeriveInput) -> proc_macro2::TokenStream {
     }
 }
 
-pub fn impl_set(input: &DeriveInput) -> proc_macro2::TokenStream {
+pub fn impl_set(input: &DeriveInput) -> TokenStream {
     let name = &input.ident;
     let generics = &input.generics;
     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
@@ -61,7 +67,7 @@ pub fn impl_set(input: &DeriveInput) -> proc_macro2::TokenStream {
     }
 }
 
-pub fn impl_with(input: &DeriveInput) -> proc_macro2::TokenStream {
+pub fn impl_with(input: &DeriveInput) -> TokenStream {
     let name = &input.ident;
     let generics = &input.generics;
     let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();

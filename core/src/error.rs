@@ -2,6 +2,8 @@
     Appellation: error <module>
     Contrib: @FL03
 */
+//! ths module implements various error-handling primitives and utilities
+//!
 #[cfg(feature = "alloc")]
 pub use self::std_error::StdError;
 #[doc(inline)]
@@ -17,13 +19,13 @@ mod raw_error;
 mod std_error;
 
 /// this trait is used to denote various _error kinds_ for use throughout the sdk
-pub trait ErrorKind {
+pub trait ErrorKind: Send + Sync + core::fmt::Debug + core::fmt::Display {
     private!();
 }
 
 impl<T> ErrorKind for T
 where
-    T: AsRef<str>,
+    T: Send + Sync + core::fmt::Debug + core::fmt::Display,
 {
     seal!();
 }

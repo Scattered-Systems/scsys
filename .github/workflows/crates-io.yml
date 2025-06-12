@@ -1,0 +1,56 @@
+name: crates-io
+
+concurrency:
+  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: full
+
+on:
+  repository_dispatch:
+    types: [ crates-io ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  discussions: write
+  packages: write
+
+jobs:
+  crates-io:
+    env:
+      CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+    environment:
+      name: crates-io
+      url: https://crates.io/crates/scsys
+    outputs:
+      url: https://crates.io/crates/${{ matrix.package }}
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        package: 
+          - scsys-traits
+          - scsys-util
+          - scsys-core
+          - scsys-config
+          - scsys-crypto
+          - scsys-derive
+          - scsys-macros
+          - scsys
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        uses: actions/checkout@v4
+        name: Checkout
+      - 
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        name: Setup Rust
+        with:
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - 
+        name: Publish (${{ matrix.package }})
+        run: cargo publish --locked --package ${{ matrix.package }}
+        id: publish
