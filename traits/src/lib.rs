@@ -2,6 +2,8 @@
     appellation: scsys-traits <library>
     authors: @FL03
 */
+//! # scsys-traits
+//!
 //! A collection of useful traits designed to be used throughout the ecosystem.
 //!
 #![doc(
@@ -36,14 +38,14 @@ pub mod ops {
     #[doc(inline)]
     pub use self::prelude::*;
 
-    pub mod adjust;
-    pub mod map;
+    pub mod apply;
+    pub mod incremental;
 
     pub(crate) mod prelude {
         #[doc(inline)]
-        pub use super::adjust::*;
+        pub use super::apply::*;
         #[doc(inline)]
-        pub use super::map::*;
+        pub use super::incremental::*;
     }
 }
 
