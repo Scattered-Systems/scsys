@@ -102,8 +102,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        features:  [ full ]
+        features:  [ all, default, full ]
         target: [ x86_64-unknown-linux-gnu ] # [ x86_64-unknown-linux-gnu, wasm32-unknown-unknown, wasm32-wasip1, wasm32-wasip2 ]
+        toolchain: [ stable ] # [ stable, nightly ]
     steps:
       -
         name: Checkout
@@ -114,27 +115,12 @@ jobs:
         with:
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           target: ${{ matrix.target }}
+          toolchain: ${{ matrix.toolchain }}
+          override: true
       -
+        if: matrix.features != 'default' && matrix.features != 'all'
         name: Test (${{ matrix.features }})
         run: cargo test -r --locked --workspace --target ${{ matrix.target}} --features ${{ matrix.features }}
-  test_std:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        features:  [ default, all ]
-        target: [ x86_64-unknown-linux-gnu ]
-    steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v4
-      -
-        name: Setup Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          target: ${{ matrix.target }}
       -
         if: matrix.features == 'default'
         name: Test (default)
@@ -146,13 +132,12 @@ jobs:
   test_no_std:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
     strategy:
       fail-fast: false
       matrix:
         features:  [ alloc, no_std ]
         package: [ scsys-core ]
+        toolchain: [ nightly ]
     steps:
       -
         name: Checkout
@@ -162,15 +147,19 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          toolchain: nightly
+          toolchain: ${{ matrix.toolchain }}
           override: true
       -
-        if: matrix.features != 'no_std'
-        continue-on-error: true
         name: Test (${{ matrix.features }})
-        run: cargo test -r --locked --workspace  --no-default-features --package ${{ matrix.package }} --features ${{ matrix.features }}
-      -
-        if: matrix.features == 'no_std'
+        if: matrix.toolchain == 'nightly' && matrix.features == 'alloc'
         continue-on-error: true
+        run: cargo test -r --locked --workspace  --no-default-features --package ${{ matrix.package }} --features ${{ matrix.features }}
+        env:
+          RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
+      -
         name: Test (no_std)
+        if: matrix.toolchain == 'nightly' && matrix.features == 'no_std'
+        continue-on-error: true
         run: cargo test -r --locked --workspace --no-default-features --package ${{ matrix.package }}
+        env:
+          RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
