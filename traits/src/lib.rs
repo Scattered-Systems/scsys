@@ -24,8 +24,6 @@ pub(crate) mod macros {
     pub mod seal;
 }
 
-pub mod cont;
-
 pub mod convert;
 pub mod dtype;
 pub mod named;
@@ -51,8 +49,6 @@ pub mod ops {
 
 #[doc(hidden)]
 pub mod prelude {
-    #[doc(inline)]
-    pub use crate::cont::prelude::*;
     #[doc(inline)]
     pub use crate::ops::prelude::*;
 

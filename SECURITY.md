@@ -4,11 +4,11 @@
 
 This section is used to update intrested parties as to which versions are currently supported, with respect to the current version.
 
-|  Version  | Supported          |
-| :-------- | :----------------- |
-| 0.3.0     | :white_check_mark: |
-| <=0.2.9   | :white_check_mark: |
-| <=0.2.3   | :x:                |
+|  Version       | Supported          |
+| :------------- | :----------------- |
+| 0.3.1          | :white_check_mark: |
+| >0.3.1,<=0.2.9 | :white_check_mark: |
+| <0.2.9         | :x:                |
 
 ## Reporting a Vulnerability
 

@@ -1,12 +1,22 @@
----
-title: Quickstart
----
+# Quickstart Guide `scsys`
 
 Welcome to the quickstart guide for the `scsys` library! This guide will help you get started with the library and provide you with the necessary steps to set up your development environment.
 
 ## Getting Started
 
 ### Prerequisites
+
+Before you can start using the `scsys` library, you need to have the following tools installed on your machine:
+
+- [Git](https://git-scm.com/downloads) - for version control and cloning the repository.
+- [Rust](https://www.rust-lang.org/tools/install) - the programming language used to develop the `scsys` library.
+- [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) - the Rust package manager and build system, which is included with Rust.
+
+Optionally, you may also want to install the following tools for development:
+
+- [Visual Studio Code](https://code.visualstudio.com/) - a popular code editor with Rust support.
+- [Rust Analyzer](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer) - a language server for Rust that provides features like code completion, go to definition, and more.
+- [cargo-binstall](https://github.com/cargo-bins/cargo-binstall) - a tool to streamline the installation of Rust binaries.
 
 #### Rust
 

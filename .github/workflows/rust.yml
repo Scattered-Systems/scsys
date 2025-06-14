@@ -92,7 +92,7 @@ jobs:
         id: artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: benchmarks-scsys:${{ matrix.target }}-${{ matrix.toolchain }}@${{ github.sha }}
+          name: benchmarks@${{ github.sha }}
           if-no-files-found: error
           overwrite: true
           path: target/criterion/

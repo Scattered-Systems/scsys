@@ -12,12 +12,19 @@ where
 {
     core::any::TypeId::of::<U>() == core::any::TypeId::of::<V>()
 }
-
+/// The [`TypeOf`] trait automatically provides a way to check if a type is of a specific type
+/// at compile time. This is useful for generic programming and type checking.
 pub trait TypeOf {
+    private!();
+
     fn of<T: 'static>() -> bool;
 }
-
+/// The [`IsType`] trait provides a method to check if the current type is of a specific type
+/// at runtime. This is useful for dynamic type checking in scenarios where the type may not be
+/// known at compile time.
 pub trait IsType {
+    private!();
+
     fn is<T>(&self) -> bool
     where
         T: 'static,
@@ -29,7 +36,7 @@ pub trait IsType {
 
 /// [`DType`] is a trait designed to provide additional information regarding the type of a
 /// particular value.
-pub trait DType: Any {
+pub trait DType: 'static + IsType + TypeOf {
     private!();
 
     fn type_id(&self) -> TypeId {
@@ -44,15 +51,35 @@ pub trait DType: Any {
 /*
  ************* Implementations *************
 */
+impl<T> DType for T
+where
+    T: 'static,
+{
+    seal!();
+
+    fn type_id(&self) -> TypeId {
+        Any::type_id(self)
+    }
+
+    fn type_name(&self) -> &'static str {
+        core::any::type_name::<Self>()
+    }
+}
+
 impl<T> TypeOf for T
 where
-    T: Any,
+    T: 'static,
 {
+    seal!();
+
     fn of<U: 'static>() -> bool {
         type_of::<T, U>()
     }
 }
 
-impl<T: 'static> IsType for T {}
-
-impl dyn DType {}
+impl<T> IsType for T
+where
+    T: 'static,
+{
+    seal!();
+}
