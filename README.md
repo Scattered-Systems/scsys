@@ -23,6 +23,8 @@ version = "0.2.x"
 
 ### Examples
 
+For more detailed examples, please visit the [examples](https://github.com/scattered-systems/scsys/tree/main/examples) directory in the repository. Below are some brief examples highlighting certain features of the library.
+
 #### Example 1: _Using the `VariantConstructors` derive macro_
 
 The `VariantConstructors` derive macro can be used to automatically generate functional accessors for named fields within a given structure. For example, given the following structure:

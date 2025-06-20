@@ -16,7 +16,13 @@ version.workspace = true
 
 [package.metadata.docs.rs]
 all-features = false
-rustc-args = ["--cfg", "docsrs"]
+features = ["default"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
 
 [lib]
 bench = false

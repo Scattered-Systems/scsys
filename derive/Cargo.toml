@@ -16,7 +16,13 @@ version.workspace = true
 
 [package.metadata.docs.rs]
 all-features = false
+features = ["default"]
 rustc-args = ["--cfg", "docsrs"]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
 
 [lib]
 bench = false
@@ -36,5 +42,8 @@ default = []
 nightly = ["proc-macro2/nightly"]
 
 # ************* [Unit Tests] *************
+[[test]]
+name = "gsw"
+
 [[test]]
 name = "variants"

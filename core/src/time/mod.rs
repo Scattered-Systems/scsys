@@ -18,7 +18,7 @@ mod impls {
     pub mod impl_timestamp_repr;
 }
 /// this module contains various implementations used to support `time` related features
-pub(self) mod types {
+mod types {
     #[doc(inline)]
     pub use self::prelude::*;
 
@@ -44,7 +44,7 @@ pub(crate) mod prelude {
     pub use super::{Now, RawTimestamp};
 }
 
-pub(self) mod utils {
+mod utils {
     /// [systime] is a utilitarian function that returns the current system time in milliseconds.
     #[cfg(feature = "std")]
     #[inline]

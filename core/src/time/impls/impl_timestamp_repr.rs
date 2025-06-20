@@ -4,7 +4,7 @@
 */
 use crate::time::{RawTimestamp, Timestamp};
 
-impl<'a, T> Timestamp<&'a T>
+impl<T> Timestamp<&T>
 where
     T: RawTimestamp,
 {
@@ -24,7 +24,7 @@ where
     }
 }
 
-impl<'a, T> Timestamp<&'a mut T>
+impl<T> Timestamp<&mut T>
 where
     T: RawTimestamp,
 {

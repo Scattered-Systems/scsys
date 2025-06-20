@@ -61,10 +61,16 @@ pub fn wrapper(input: TokenStream) -> TokenStream {
     res.into()
 }
 
-#[proc_macro_derive(Getter, attributes(scsys))]
+#[proc_macro_derive(Get, attributes(scsys))]
 pub fn getter_derive(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     impls::impl_getter(&input).into()
+}
+
+#[proc_macro_derive(GetMut, attributes(scsys))]
+pub fn getter_mut_derive(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+    impls::impl_getter_mut(&input).into()
 }
 
 #[proc_macro_derive(Set, attributes(scsys))]

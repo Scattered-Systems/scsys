@@ -12,15 +12,16 @@ pub(crate) mod identifier;
 
 mod impls {
     pub mod impl_id;
+    pub mod impl_id_repr;
 }
 
-pub mod traits {
+mod traits {
     //! this module implements various traits supporting the [`Id`](super::Id) type
     #[doc(inline)]
     pub use self::prelude::*;
 
-    pub mod id;
-    pub mod identifier;
+    pub(self) mod id;
+    pub(self) mod identifier;
 
     pub(crate) mod prelude {
         #[doc(inline)]
@@ -30,11 +31,11 @@ pub mod traits {
     }
 }
 
-pub mod types {
+mod types {
     #[doc(inline)]
     pub use self::multi_id::IndexId;
 
-    pub mod multi_id;
+    pub(self) mod multi_id;
 
     pub(crate) mod prelude {
         #[doc(inline)]

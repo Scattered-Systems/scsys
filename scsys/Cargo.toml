@@ -216,10 +216,15 @@ required-features = ["std"]
 
 # ************* [Examples] *************
 [[example]]
-name = "derive"
+name = "gsw"
 required-features = [
     "derive",
-    "json",
+]
+
+[[example]]
+name = "variants"
+required-features = [
+    "derive",
 ]
 
 # ************* [Unit Tests] *************
