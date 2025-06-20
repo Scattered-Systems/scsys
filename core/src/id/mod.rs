@@ -2,13 +2,13 @@
     Appellation: ids <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # Identity
-//!
-//! The identity module provides a set of traits and types for generating unique identifiers.
+//! This module focuses on the [`Id`] implementation, a generic wrapper type used to define 
+//! various identifiers. The `Id` type is equipped with additional methods and traits to 
+//! facilitate the creation and management of identifiers in a type-safe manner.
 #[doc(inline)]
-pub use self::prelude::*;
+pub use self::{identifier::Id, traits::*, types::*};
 
-pub(crate) mod identifier;
+mod identifier;
 
 mod impls {
     pub mod impl_id;
@@ -20,10 +20,10 @@ mod traits {
     #[doc(inline)]
     pub use self::prelude::*;
 
-    pub(self) mod id;
-    pub(self) mod identifier;
+    mod id;
+    mod identifier;
 
-    pub(crate) mod prelude {
+    mod prelude {
         #[doc(inline)]
         pub use super::id::*;
         #[doc(inline)]
@@ -33,11 +33,11 @@ mod traits {
 
 mod types {
     #[doc(inline)]
-    pub use self::multi_id::IndexId;
+    pub use self::prelude::*;
 
-    pub(self) mod multi_id;
+    mod multi_id;
 
-    pub(crate) mod prelude {
+    mod prelude {
         #[doc(inline)]
         pub use super::multi_id::IndexId;
     }
@@ -47,9 +47,9 @@ pub(crate) mod prelude {
     #[doc(inline)]
     pub use super::identifier::Id;
     #[doc(inline)]
-    pub use super::traits::prelude::*;
+    pub use super::traits::*;
     #[doc(inline)]
-    pub use super::types::prelude::*;
+    pub use super::types::*;
 }
 
 #[cfg(test)]
