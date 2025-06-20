@@ -35,7 +35,9 @@
 
 ### vscode
 
-**/.vscode/
+**/.vscode/*
+
+!**/.vscode/settings.json
 
 # File Extensions
 

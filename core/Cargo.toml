@@ -15,10 +15,10 @@ rust-version.workspace = true
 version.workspace = true
 
 [lib]
-crate-type = [ 
-    "cdylib", 
-    "rlib", 
-    "staticlib" 
+crate-type = [
+    "cdylib",
+    "rlib",
+    "staticlib"
 ]
 bench = false
 doc = true
@@ -69,23 +69,25 @@ approx = { workspace = true }
 [features]
 default = [ "std" ]
 
-full = [ 
+full = [
     "default",
     "anyhow",
     "chrono",
     "json",
-    "rand", 
-    "serde", 
+    "rand",
+    "serde",
     "time",
     "tracing",
 ]
 
+nightly = []
+
 # ************* [FF:Features] *************
 
-json = [ 
-    "alloc", 
+json = [
+    "alloc",
     "serde",
-    "serde_json", 
+    "serde_json",
 ]
 
 # ************* [FF:Environments] *************
@@ -107,7 +109,7 @@ std = [
 
 wasi = []
 
-wasm = [ 
+wasm = [
     "getrandom?/wasm_js",
     "uuid?/js",
     "wasm-bindgen",
@@ -117,7 +119,7 @@ wasm = [
 
 anyhow = ["dep:anyhow"]
 
-alloc = [ 
+alloc = [
     "chrono?/alloc",
     "num/alloc",
     "serde?/alloc",
@@ -125,8 +127,8 @@ alloc = [
     "time?/alloc",
 ]
 
-chrono = [ 
-    "dep:chrono", 
+chrono = [
+    "dep:chrono",
     "chrono?/clock",
     "time",
 ]
@@ -146,12 +148,12 @@ rng = [
     "uuid?/v4"
 ]
 
-serde = [ 
-    "dep:serde", 
-    "dep:serde_derive", 
+serde = [
+    "dep:serde",
+    "dep:serde_derive",
     "chrono?/serde",
     "num/serde",
-    "rand?/serde", 
+    "rand?/serde",
     "uuid?/serde",
     "time?/serde",
 ]
@@ -162,9 +164,9 @@ time = ["dep:time"]
 
 tracing = ["dep:tracing"]
 
-uuid = [ 
-    "dep:uuid", 
-    "uuid?/v3" 
+uuid = [
+    "dep:uuid",
+    "uuid?/v3"
 ]
 
 wasm-bindgen = [

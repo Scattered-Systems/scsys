@@ -16,16 +16,19 @@
 //! its overall footprint through modularization and feature-gating. These characteristics make
 //! it suitable for use both within the ecosystem and outside of it.
 //!
-#![crate_name = "scsys"]
 #![crate_type = "lib"]
+#![crate_name = "scsys"]
 #![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(all(feature = "alloc", feature = "nightly"), feature(allocator_api))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
     html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
 )]
-
-#[cfg(feature = "alloc")]
-extern crate alloc;
+#![allow(
+    clippy::module_inception,
+    clippy::needless_doctest_main,
+    clippy::should_implement_trait
+)]
 
 #[doc(inline)]
 pub use scsys_core::*;
@@ -56,6 +59,7 @@ pub use scsys_traits::prelude::*;
 #[cfg(feature = "utils")]
 pub use scsys_util as utils;
 
+#[doc(hidden)]
 pub mod prelude {
     pub use scsys_core::prelude::*;
 

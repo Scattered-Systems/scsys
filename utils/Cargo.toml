@@ -58,6 +58,8 @@ full = [
     "tracing",
 ]
 
+nightly = []
+
 # ************* [FF:Features] *************
 fs = [
     "std",

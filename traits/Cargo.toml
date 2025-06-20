@@ -26,7 +26,7 @@ tag-name = "{{version}}"
 
 [lib]
 crate-type = [
-    "cdylib", 
+    "cdylib",
     "rlib",
 ]
 bench = false
@@ -46,6 +46,8 @@ default = [
 full = [
     "default"
 ]
+
+nightly = []
 
 # ************* [FF:Environments] *************
 std = [

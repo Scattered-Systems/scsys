@@ -102,7 +102,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        features:  [ all, default, full ]
+        features:  [ default, full ]
         target: [ x86_64-unknown-linux-gnu ]
         toolchain: [ stable ]
     steps:
@@ -125,18 +125,13 @@ jobs:
         if: matrix.features == 'default'
         name: Test (default)
         run: cargo test -r --locked --workspace --target ${{ matrix.target}}
-      -
-        if: matrix.features == 'all'
-        name: Test (all-features)
-        run: cargo test -r --locked --workspace --target ${{ matrix.target}} --all-features
-  test_no_std:
+  test_nightly:
     needs: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        features:  [ alloc, no_std ]
-        package: [ scsys-core ]
+        features:  [ all, no_std, "alloc,nightly" ]
         toolchain: [ nightly ]
     steps:
       -
@@ -150,16 +145,20 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           override: true
       -
-        name: Test (${{ matrix.features }})
-        if: matrix.toolchain == 'nightly' && matrix.features == 'alloc'
+        name: Test (all)
+        if: matrix.features == 'all'
+        run: cargo test -r --locked --workspace --all-feature --features ${{ matrix.features }}
+      -
+        name: Test (no_std)
+        if: matrix.features == 'no_std'
         continue-on-error: true
-        run: cargo test -r --locked --workspace  --no-default-features --package ${{ matrix.package }} --features ${{ matrix.features }}
+        run: cargo test -r --locked --workspace --no-default-features
         env:
           RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"
       -
-        name: Test (no_std)
-        if: matrix.toolchain == 'nightly' && matrix.features == 'no_std'
+        name: Test (${{ matrix.features }})
+        if: matrix.features != 'all' && matrix.features != 'no_std'
         continue-on-error: true
-        run: cargo test -r --locked --workspace --no-default-features --package ${{ matrix.package }}
+        run: cargo test -r --locked --workspace --no-default-features --features ${{ matrix.features }}
         env:
           RUSTFLAGS: "-C panic=abort -Z panic_abort_tests"

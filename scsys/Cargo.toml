@@ -71,6 +71,16 @@ full = [
     "time",
 ]
 
+nightly = [
+    "scsys-core/nightly",
+    "scsys-config?/nightly",
+    "scsys-crypto?/nightly",
+    "scsys-derive?/nightly",
+    "scsys-macros?/nightly",
+    "scsys-traits?/nightly",
+    "scsys-util?/nightly",
+]
+
 # ************* [FF:Features] *************
 config = [
     "dep:scsys-config",
@@ -207,16 +217,15 @@ required-features = ["std"]
 # ************* [Examples] *************
 [[example]]
 name = "derive"
-required-features = [ 
-    "derive", 
+required-features = [
+    "derive",
     "json",
 ]
-
 
 # ************* [Unit Tests] *************
 [[test]]
 name = "derive"
-required-features = [ 
-    "derive", 
+required-features = [
+    "derive",
     "json",
 ]
