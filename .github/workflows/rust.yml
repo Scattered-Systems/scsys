@@ -86,7 +86,7 @@ jobs:
           override: true
       -
         name: Benchmark the workspace
-        run: cargo bench --locked --workspace --target ${{ matrix.target }} --all-features --verbose --
+        run: cargo bench --locked --workspace --target ${{ matrix.target }} --features full --verbose --
       -
         name: Upload the benchmarks
         id: artifacts
@@ -147,7 +147,7 @@ jobs:
       -
         name: Test (all)
         if: matrix.features == 'all'
-        run: cargo test -r --locked --workspace --all-feature --features ${{ matrix.features }}
+        run: cargo test -r --locked --workspace --all-features
       -
         name: Test (no_std)
         if: matrix.features == 'no_std'
