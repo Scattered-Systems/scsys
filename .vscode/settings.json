@@ -1,5 +1,5 @@
 {
-  "rust-analyzer.cargo.features": [
+  "rust-analyzer.check.features": [
     "default",
     "full"
   ]
