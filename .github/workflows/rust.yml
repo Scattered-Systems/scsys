@@ -28,9 +28,9 @@ on:
         description: 'Run benchmarks'
         required: true
         type: boolean
-      no_std:
+      nightly:
         default: false
-        description: 'Run tests with no_std feature'
+        description: 'Run tests with the nightly toolchain?'
         required: true
         type: boolean
 
@@ -43,7 +43,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [x86_64-unknown-linux-gnu] # [ x86_64-unknown-linux-gnu, x86_64-apple-darwin, x86_64-pc-windows-msvc, wasm32-unknown-unknown, wasm32-wasip1, wasm32-wasip2 ]
+        target: [ x86_64-unknown-linux-gnu ]
     steps:
       -
         name: Checkout
@@ -56,14 +56,14 @@ jobs:
           target: ${{ matrix.target }}
       -
         name: Build the workspace
-        run: cargo build -r --locked --workspace --all-features --target ${{ matrix.target }}
+        run: cargo build -r --locked --workspace --features full --target ${{ matrix.target }}
   benchmark:
     if: github.event_name == 'repository_dispatch' || github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') || github.event.inputs.benchmark == 'true'
     needs: build
     runs-on: ubuntu-latest
     outputs:
-      results: ${{ steps.artifacts.outputs.artifact-id }}
-      url: ${{ steps.artifacts.outputs.artifact-url }}
+      artifact-id: ${{ steps.artifacts.outputs.artifact-id }}
+      artifact-url: ${{ steps.artifacts.outputs.artifact-url }}
     permissions:
       contents: write
       checks: write
@@ -92,7 +92,7 @@ jobs:
         id: artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: benchmarks@${{ github.sha }}
+          name: Benchmark Report (${{ github.event.repository.name }})
           if-no-files-found: error
           overwrite: true
           path: target/criterion/
