@@ -1,10 +1,10 @@
 [package]
 build = "build.rs"
+description = "core primitives and utilities for the scsys ecosystem"
 name = "scsys-core"
 
 authors.workspace = true
 categories.workspace = true
-description.workspace = true
 edition.workspace = true
 homepage.workspace = true
 keywords.workspace = true
@@ -36,28 +36,28 @@ doctest = false
 test = true
 
 [dependencies]
-num = { workspace = true }
-num-traits = { workspace = true }
-# data & serialization
-serde = { optional = true, workspace = true }
-serde_derive = { optional = true, workspace = true }
-serde_json = { optional = true, workspace = true }
-# errors
+# error-handling
 anyhow = { optional = true, workspace = true }
 thiserror = { workspace = true }
+# mathematics
+num-traits = { workspace = true }
 # randomization
 getrandom = { optional = true, workspace = true }
 rand = { optional = true, workspace = true }
 rand_distr = { optional = true, workspace = true }
 uuid = { optional = true, workspace = true }
-# time
-chrono = { optional = true, workspace = true }
-time = { optional = true, workspace = true }
-# macros
+# serialization
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+# macros & utilities
 paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { workspace = true }
-# logging
+# time
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
+# tracing
 tracing = { optional = true, workspace = true }
 # wasm
 wasm-bindgen = { optional = true, workspace = true }
@@ -95,7 +95,6 @@ json = [
 std = [
     "alloc",
     "anyhow?/std",
-    "num/std",
     "num-traits/std",
     "rand?/std",
     "rand?/std_rng",
@@ -121,7 +120,6 @@ anyhow = ["dep:anyhow"]
 
 alloc = [
     "chrono?/alloc",
-    "num/alloc",
     "serde?/alloc",
     "serde_json?/alloc",
     "time?/alloc",
@@ -136,7 +134,6 @@ chrono = [
 rand = [
     "dep:rand",
     "dep:rand_distr",
-    "num/rand",
     "rng",
 ]
 
@@ -152,7 +149,6 @@ serde = [
     "dep:serde",
     "dep:serde_derive",
     "chrono?/serde",
-    "num/serde",
     "rand?/serde",
     "uuid?/serde",
     "time?/serde",
