@@ -12,13 +12,18 @@ pub use self::utils::{std_time, systime};
 pub use self::{timestamp::Timestamp, types::prelude::*};
 /// this module implements the [`Timestamp`] type
 pub mod timestamp;
+
+mod impls {
+    pub mod impl_timestamp;
+    pub mod impl_timestamp_repr;
+}
 /// this module contains various implementations used to support `time` related features
-pub mod types {
+pub(self) mod types {
     #[doc(inline)]
     pub use self::prelude::*;
 
-    pub mod datetime;
-    pub mod epoch;
+    pub(self) mod datetime;
+    pub(self) mod epoch;
 
     pub(crate) mod prelude {
         #[doc(inline)]

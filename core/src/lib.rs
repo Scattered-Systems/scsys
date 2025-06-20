@@ -20,10 +20,7 @@
 //!
 #![allow(clippy::module_inception)]
 #![cfg_attr(not(feature = "std"), no_std)]
-#![cfg_attr(
-    all(feature = "alloc", feature = "nightly"),
-    feature(allocator_api)
-)]
+#![cfg_attr(all(feature = "alloc", feature = "nightly"), feature(allocator_api))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
     html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
