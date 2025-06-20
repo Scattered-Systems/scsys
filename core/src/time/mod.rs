@@ -9,7 +9,7 @@
 #[cfg(feature = "std")]
 pub use self::utils::{std_time, systime};
 #[doc(inline)]
-pub use self::{timestamp::Timestamp, types::prelude::*};
+pub use self::{timestamp::Timestamp, types::*};
 /// this module implements the [`Timestamp`] type
 pub mod timestamp;
 
@@ -44,7 +44,7 @@ pub(crate) mod prelude {
     pub use super::{Now, RawTimestamp};
 }
 
-pub(crate) mod utils {
+pub(self) mod utils {
     /// [systime] is a utilitarian function that returns the current system time in milliseconds.
     #[cfg(feature = "std")]
     #[inline]
