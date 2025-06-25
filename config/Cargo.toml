@@ -41,7 +41,7 @@ scsys-core = { workspace = true }
 clap = { default-features = false, optional = true, version = "4" }
 config = { default-features = false, optional = true, version = "0.15" }
 glob = { optional = true, version = "0.3" }
-url = { optional = true, workspace = true }
+url = { default-features = false, optional = true, version = "2" } # { optional = true, workspace = true }
 # error handling
 anyhow = { optional = true, workspace = true }
 thiserror = {workspace = true }

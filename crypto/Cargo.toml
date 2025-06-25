@@ -39,10 +39,10 @@ test = true
 scsys-core = { workspace = true }
 
 # crate-specific
-blake3 = { optional = true, workspace = true }
-digest = { optional = true, workspace = true }
-generic-array = { workspace = true }
-typenum = { workspace = true }
+blake3 = { default-features = false, optional = true, version = "1" } # { optional = true, workspace = true }
+digest = { default-features = false, optional = true, version = "0.10" } # { optional = true, workspace = true }
+generic-array = { default-features = false, version = "1" } # { workspace = true }
+typenum = { default-features = false, version = "1" } # { workspace = true }
 # concurrency & parallelism
 rayon = { optional = true, workspace = true }
 # data & serialization
