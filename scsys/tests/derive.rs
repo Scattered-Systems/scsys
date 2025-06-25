@@ -55,7 +55,8 @@ mod impls {
         Ord,
         PartialEq,
         PartialOrd,
-        scsys::Getter,
+        scsys::Get,
+        scsys::GetMut,
         scsys::Set,
         scsys::With,
     )]
@@ -74,7 +75,8 @@ mod impls {
         Ord,
         PartialEq,
         PartialOrd,
-        scsys::Getter,
+        scsys::Get,
+        scsys::GetMut,
         scsys::Set,
         scsys::With,
     )]
@@ -102,8 +104,8 @@ mod impls {
         Ord,
         PartialEq,
         PartialOrd,
-        scsys::Wrapper,
         scsys::Display,
+        scsys::Wrapper,
     )]
     #[cfg_attr(
         feature = "serde",

@@ -37,15 +37,6 @@ impl<T> Id<T> {
     {
         Self::new(T::zero())
     }
-    #[cfg(feature = "rand")]
-    pub fn random() -> Self
-    where
-        rand_distr::StandardUniform: rand_distr::Distribution<T>,
-    {
-        use rand::Rng;
-        let mut rng = rand::rng();
-        Self::new(rng.random())
-    }
     /// returns an immutable reference to the inner value
     pub const fn get(&self) -> &T {
         &self.0
@@ -116,35 +107,6 @@ impl<T> Id<T> {
     /// returns a new identifier with a mutable reference to the inner value
     pub const fn view_mut(&mut self) -> Id<&mut T> {
         Id::new(self.get_mut())
-    }
-}
-
-impl Id<usize> {
-    pub fn atomic() -> Self {
-        use core::sync::atomic::{AtomicUsize, Ordering::Relaxed};
-        static COUNTER: AtomicUsize = AtomicUsize::new(1);
-        Self::new(COUNTER.fetch_add(1, Relaxed))
-    }
-    /// replaces the current id with the atomic-ally next value and returns the previous value.
-    /// see [`step`](Id::step) for more information
-    pub fn atomic_step(&mut self) -> usize {
-        use core::sync::atomic::{AtomicUsize, Ordering::Relaxed};
-        static COUNTER: AtomicUsize = AtomicUsize::new(1);
-        self.replace(COUNTER.fetch_add(1, Relaxed))
-    }
-}
-
-#[cfg(feature = "uuid")]
-impl Id<uuid::Uuid> {
-    pub fn v3(namespace: &uuid::Uuid, name: &[u8]) -> Self {
-        let id = uuid::Uuid::new_v3(namespace, name);
-        Self::new(id)
-    }
-
-    #[cfg(all(feature = "rng", feature = "uuid"))]
-    pub fn v4() -> Self {
-        let id = uuid::Uuid::new_v4();
-        Self::new(id)
     }
 }
 

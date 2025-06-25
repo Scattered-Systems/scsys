@@ -6,7 +6,8 @@
 #[cfg(feature = "alloc")]
 /// A type alias for a [`Err`] whose generic type is a [`Box`] of a trait object
 /// implementing [`core::error::Error`].
-pub type BoxErr = ErrorBase<alloc::boxed::Box<dyn core::error::Error + Send + Sync + 'static>>;
+pub type DynamicError =
+    ErrorBase<alloc::boxed::Box<dyn core::error::Error + Send + Sync + 'static>>;
 
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(

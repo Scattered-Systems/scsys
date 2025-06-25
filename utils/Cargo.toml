@@ -14,8 +14,22 @@ repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
 [lib]
-crate-type = ["cdylib", "rlib"]
+crate-type = [
+    "cdylib",
+    "rlib",
+    "staticlib",
+]
 bench = false
 doc = true
 doctest = true
@@ -39,11 +53,6 @@ strum = { workspace = true }
 # tracing
 tracing = { optional = true, workspace = true }
 
-[package.metadata.docs.rs]
-all-features = false
-features = ["full"]
-rustc-args = ["--cfg", "docsrs"]
-
 [features]
 default = [
     "std",
@@ -57,6 +66,8 @@ full = [
     "serde",
     "tracing",
 ]
+
+nightly = []
 
 # ************* [FF:Features] *************
 fs = [

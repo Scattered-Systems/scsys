@@ -3,9 +3,6 @@
     Contrib: @FL03
 */
 
-#[allow(dead_code)]
-mod old;
-
 #[allow(clippy::upper_case_acronyms)]
 /// The [`HKT`] trait defines an interface for higher-kinded types (HKT).
 pub trait HKT<T> {

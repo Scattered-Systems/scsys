@@ -62,13 +62,22 @@ default = [
 
 full = [
     "default",
-    "config",
     "crypto",
     "hash",
     "json",
     "rand",
     "serde",
     "time",
+]
+
+nightly = [
+    "scsys-core/nightly",
+    "scsys-config?/nightly",
+    "scsys-crypto?/nightly",
+    "scsys-derive?/nightly",
+    "scsys-macros?/nightly",
+    "scsys-traits?/nightly",
+    "scsys-util?/nightly",
 ]
 
 # ************* [FF:Features] *************
@@ -207,16 +216,22 @@ required-features = ["std"]
 # ************* [Examples] *************
 [[example]]
 name = "derive"
-required-features = [ 
-    "derive", 
-    "json",
+required-features = [
+    "derive",
+    "std",
+    "time"
 ]
 
+[[example]]
+name = "variants"
+required-features = [
+    "derive",
+]
 
 # ************* [Unit Tests] *************
 [[test]]
 name = "derive"
-required-features = [ 
-    "derive", 
+required-features = [
+    "derive",
     "json",
 ]

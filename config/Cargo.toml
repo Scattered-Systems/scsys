@@ -26,7 +26,7 @@ tag-name = "{{version}}"
 
 [lib]
 crate-type = [
-    "cdylib", 
+    "cdylib",
     "rlib"
 ]
 bench = false
@@ -78,6 +78,10 @@ full = [
     "glob",
     "tracing",
     "tracing-subscriber",
+]
+
+nightly = [
+    "scsys-core/nightly",
 ]
 
 # ************* [FF:Features] *************

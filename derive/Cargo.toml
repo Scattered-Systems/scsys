@@ -14,6 +14,16 @@ repository.workspace = true
 rust-version.workspace = true
 version.workspace = true
 
+[package.metadata.docs.rs]
+all-features = false
+features = ["default"]
+rustc-args = ["--cfg", "docsrs"]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
 [lib]
 bench = false
 doc = true
@@ -21,16 +31,19 @@ doctest = false
 proc-macro = true
 test = false
 
-[package.metadata.docs.rs]
-all-features = true
-rustc-args = ["--cfg", "docsrs"]
-
-
 [dependencies]
 proc-macro2 = "1"
 quote = "1"
 syn = { features = ["full"], version = "2" }
 
+[features]
+default = []
+
+nightly = ["proc-macro2/nightly"]
+
 # ************* [Unit Tests] *************
+[[test]]
+name = "gsw"
+
 [[test]]
 name = "variants"

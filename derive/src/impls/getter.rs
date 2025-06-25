@@ -3,9 +3,8 @@
     authors: @FL03
 */
 use proc_macro2::TokenStream;
-use quote::quote;
+use quote::{format_ident, quote};
 use syn::DeriveInput;
-use syn::spanned::Spanned;
 
 pub fn impl_getter(input: &DeriveInput) -> TokenStream {
     let name = &input.ident;
@@ -34,6 +33,35 @@ pub fn impl_getter(input: &DeriveInput) -> TokenStream {
     }
 }
 
+pub fn impl_getter_mut(input: &DeriveInput) -> TokenStream {
+    let name = &input.ident;
+    let generics = &input.generics;
+    let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
+
+    let fields = match &input.data {
+        syn::Data::Struct(data) => &data.fields,
+        _ => panic!("Getter can only be derived for structs"),
+    };
+
+    let getters = fields.iter().map(|field| {
+        let field_name = &field.ident;
+        let field_type = &field.ty;
+
+        let callback = format_ident!("{}_mut", field_name.as_ref().unwrap());
+        quote! {
+            pub const fn #callback(&mut self) -> &mut #field_type {
+                &mut self.#field_name
+            }
+        }
+    });
+
+    quote! {
+        impl #impl_generics #name #ty_generics #where_clause {
+            #(#getters)*
+        }
+    }
+}
+
 pub fn impl_set(input: &DeriveInput) -> TokenStream {
     let name = &input.ident;
     let generics = &input.generics;
@@ -48,10 +76,7 @@ pub fn impl_set(input: &DeriveInput) -> TokenStream {
         let field_name = &field.ident;
         let field_type = &field.ty;
 
-        let setter_name = syn::Ident::new(
-            &format!("set_{}", field_name.as_ref().unwrap()),
-            field_name.span(),
-        );
+        let setter_name = format_ident!("set_{}", field_name.as_ref().unwrap());
 
         quote! {
             pub fn #setter_name(&mut self, value: #field_type) {
@@ -81,10 +106,7 @@ pub fn impl_with(input: &DeriveInput) -> TokenStream {
         let field_name = &field.ident;
         let field_type = &field.ty;
 
-        let with_name = syn::Ident::new(
-            &format!("with_{}", field_name.as_ref().unwrap()),
-            field_name.span(),
-        );
+        let with_name = format_ident!("with_{}", field_name.as_ref().unwrap());
 
         quote! {
             pub fn #with_name(mut self, value: #field_type) -> Self {

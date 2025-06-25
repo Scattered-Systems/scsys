@@ -20,10 +20,12 @@
 //!
 #![allow(clippy::module_inception)]
 #![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(all(feature = "alloc", feature = "nightly"), feature(allocator_api))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
     html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
 )]
+#![crate_type = "lib"]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
@@ -41,6 +43,8 @@ pub(crate) mod macros {
     pub mod seal;
     #[macro_use]
     pub mod wrapper;
+    #[macro_use]
+    pub mod wrapper_ops;
 }
 
 #[doc(inline)]
@@ -51,6 +55,9 @@ pub use self::{
     time::{Now, RawTimestamp, Timestamp},
     types::prelude::*,
 };
+
+/// this module implements a set of traits and utilities for working with containers
+pub mod cont;
 /// this module implements various error-handling primitives and utilities
 pub mod error;
 /// this module defines the generic [`Id`] wrapper and its implementations
@@ -92,14 +99,11 @@ pub mod types {
 
 #[doc(hidden)]
 pub mod prelude {
-    #[doc(no_inline)]
     pub use crate::error::*;
-    #[doc(no_inline)]
+
+    pub use crate::cont::prelude::*;
     pub use crate::id::prelude::*;
-    #[doc(no_inline)]
     pub use crate::state::prelude::*;
-    #[doc(no_inline)]
     pub use crate::time::prelude::*;
-    #[doc(no_inline)]
     pub use crate::types::prelude::*;
 }
