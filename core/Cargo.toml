@@ -90,6 +90,10 @@ json = [
     "serde_json",
 ]
 
+time = [
+    "time-d"
+]
+
 # ************* [FF:Environments] *************
 
 std = [
@@ -156,7 +160,7 @@ serde = [
 
 serde_json = ["dep:serde_json"]
 
-time = ["dep:time"]
+time-d = ["dep:time"]
 
 tracing = ["dep:tracing"]
 
@@ -174,9 +178,6 @@ wasm-bindgen = [
 # ************* [Unit Tests] *************
 [[test]]
 name = "default"
-
-[[test]]
-name = "state"
 
 [[test]]
 name = "time"

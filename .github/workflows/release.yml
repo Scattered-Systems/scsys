@@ -1,4 +1,4 @@
-name: release
+name: Release
 
 on:
   release:
@@ -34,7 +34,7 @@ jobs:
         name: Publish to crates.io
         uses: peter-evans/repository-dispatch@v3
         with:
-          event-type: crates-io
+          event-type: cargo-publish
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
           token: ${{ github.token }}
   release:
