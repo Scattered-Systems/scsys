@@ -39,7 +39,26 @@ use syn::{Data, DeriveInput, parse_macro_input};
 ///
 /// #[derive(Display, serde::Deserialize, serde::Serialize)]
 /// #[scsys(json)]
-/// pub struct MyStruct {}
+/// pub struct MyStruct {
+///     pub name: String,
+///     pub age: u32,
+/// }
+///
+/// fn main() {
+///     let my_struct = MyStruct {
+///         name: "Alice".to_string(),
+///         age: 30,
+///     };
+///
+///    // This will print the struct in JSON format
+///     println!("{}", my_struct);
+/// }
+/// ```
+///
+/// #### Output:
+///
+/// ```json
+/// {"name": "Alice", "age": 30}
 /// ```
 ///
 ///

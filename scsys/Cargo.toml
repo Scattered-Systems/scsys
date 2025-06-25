@@ -62,7 +62,6 @@ default = [
 
 full = [
     "default",
-    "config",
     "crypto",
     "hash",
     "json",
