@@ -41,22 +41,17 @@ scsys-macros = { default-features = false, path = "macros", version = "0.3.2" }
 scsys-traits = { default-features = false, path = "traits", version = "0.3.2" }
 scsys-util = { default-features = false, path = "utils", version = "0.3.2" }
 
-# async
-futures = { default-features = false, version = "0.3" }
 # benchmarking
 criterion = { version = "0.6" }
 # concurrency & parallelism
 # crossbeam = { default-features = false, version = "0.8" }
 rayon = { default-features = false, version = "1" }
 rayon-core = { default-features = false, version = "1" }
-# data
+# data structures
 bytes = { default-features = false, version = "1" }
 # error handling
 anyhow = { default-features = false, version = "1" }
 thiserror = { default-features = false, version = "2" }
-# hashing
-blake3 = { default-features = false, version = "1" }
-digest = { default-features = false, version = "0.10" }
 # math
 approx = { version = "0.5" }
 num = { default-features = false, version = "0.4" }
@@ -82,9 +77,7 @@ paste = { version = "1" }
 smart-default = { version = "0.7" }
 strum = { default-features = false, features = [ "derive" ], version = "0.27" }
 # misc
-generic-array = { default-features = false, version = "1" }
-typenum = { default-features = false, version = "1" }
-url = { default-features = false, version = "2" }
+# url = { default-features = false, version = "2" }
 # logging
 tracing = { default-features = false, features = ["attributes"], version = "0.1" }
 tracing-subscriber = { default-features = false, version = "0.3" }

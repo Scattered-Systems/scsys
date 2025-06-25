@@ -11,7 +11,6 @@
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
     html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
 )]
-
 #![cfg(feature = "std")]
 #[doc(no_inline)]
 #[cfg(feature = "config")]
