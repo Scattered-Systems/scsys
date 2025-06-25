@@ -1,15 +1,15 @@
 /*
-    Appellation: derive <example>
+    Appellation: variants <example>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
 
 fn main() -> scsys::Result<()> {
-    let variant = Something::a();
-    println!("Variant: {:?}", variant);
-    let variant = Something::b(42);
-    println!("Variant: {:?}", variant);
-    let variant = Something::c(1, 2);
-    println!("Variant: {:?}", variant);
+    let a = Something::a();
+    println!("Variant: {a:?}");
+    let b = Something::b(42);
+    println!("Variant: {b:?}");
+    let c = Something::c(1, 2);
+    println!("Variant: {c:?}");
     Ok(())
 }
 

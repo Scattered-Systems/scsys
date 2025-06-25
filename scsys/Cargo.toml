@@ -216,9 +216,11 @@ required-features = ["std"]
 
 # ************* [Examples] *************
 [[example]]
-name = "gsw"
+name = "derive"
 required-features = [
     "derive",
+    "std",
+    "time"
 ]
 
 [[example]]
