@@ -6,6 +6,9 @@ use scsys::time::Timestamp;
 
 fn main() -> scsys::Result<()> {
     let params = Sample::from_value(0.5);
+    // This will print the struct in JSON format (if `serde` feature is enabled)
+    println!("{}", params);
+    // use the getter to access the value
     println!("Timestamp: {}", params.timestamp());
     Ok(())
 }
