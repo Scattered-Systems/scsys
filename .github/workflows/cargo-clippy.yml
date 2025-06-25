@@ -10,7 +10,9 @@ env:
 
 on:
   pull_request:
-    branches: [ main, $default-branch ]
+    branches:
+      - main
+      - $default-branch
     types: [ opened, reopened, synchronize ]
   push:
     branches:

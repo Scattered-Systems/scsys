@@ -1,4 +1,4 @@
-name: rust
+name: Rust
 
 concurrency:
   cancel-in-progress: false
@@ -10,15 +10,17 @@ env:
 
 on:
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
+      - $default-branch
     types: [ opened, synchronize, reopened ]
-    paths:
-      - "**/rust.yml"
-      - "**/*.rs"
-      - "**/Cargo.*"
   push:
-    branches: [ main, master ]
-    tags: [ latest, v*, "*-nightly" ]
+    branches:
+      - main
+      - $default-branch
+    tags:
+      - v*.*.*
+      - "*-nightly"
   repository_dispatch:
     types: [ rust ]
   workflow_dispatch:
