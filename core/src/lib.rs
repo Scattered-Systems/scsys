@@ -43,6 +43,8 @@ pub(crate) mod macros {
     pub mod seal;
     #[macro_use]
     pub mod wrapper;
+    #[macro_use]
+    pub mod wrapper_ops;
 }
 
 #[doc(inline)]

@@ -2,8 +2,8 @@
     Appellation: ids <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! This module focuses on the [`Id`] implementation, a generic wrapper type used to define 
-//! various identifiers. The `Id` type is equipped with additional methods and traits to 
+//! This module focuses on the [`Id`] implementation, a generic wrapper type used to define
+//! various identifiers. The `Id` type is equipped with additional methods and traits to
 //! facilitate the creation and management of identifiers in a type-safe manner.
 #[doc(inline)]
 pub use self::{identifier::Id, traits::*, types::*};
@@ -12,7 +12,13 @@ mod identifier;
 
 mod impls {
     pub mod impl_id;
+    pub mod impl_id_ops;
     pub mod impl_id_repr;
+
+    #[allow(deprecated)]
+    mod impl_id_deprecated;
+    #[cfg(feature = "rand")]
+    pub mod impl_id_rand;
 }
 
 mod traits {

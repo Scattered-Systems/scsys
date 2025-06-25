@@ -1,25 +1,27 @@
 /*
-    Appellation: impl_ops <module>
-    Contrib: @FL03
+    appellation: impl_id_ops <module>
+    authors: @FL03
 */
-use crate::state::{RawState, State};
+use crate::id::Id;
 use num_traits::{Num, One, Zero};
 
-impl<Q> One for State<Q>
+impl<T> Id<T> {}
+
+impl<T> One for Id<T>
 where
-    Q: RawState + One,
+    T: One,
 {
     fn one() -> Self {
-        State(Q::one())
+        Id(T::one())
     }
 }
 
-impl<Q> Zero for State<Q>
+impl<T> Zero for Id<T>
 where
-    Q: RawState + Zero,
+    T: Zero,
 {
     fn zero() -> Self {
-        State(Q::zero())
+        Id(T::zero())
     }
 
     fn is_zero(&self) -> bool {
@@ -27,19 +29,19 @@ where
     }
 }
 
-impl<Q> Num for State<Q>
+impl<T> Num for Id<T>
 where
-    Q: RawState + Num,
+    T: Num,
 {
-    type FromStrRadixErr = Q::FromStrRadixErr;
+    type FromStrRadixErr = T::FromStrRadixErr;
 
     fn from_str_radix(s: &str, radix: u32) -> Result<Self, Self::FromStrRadixErr> {
-        Q::from_str_radix(s, radix).map(State)
+        T::from_str_radix(s, radix).map(Id)
     }
 }
 
 impl_wrapper_binary! {
-    State::<[
+    Id::<[
         Add.add,
         Sub.sub,
         Mul.mul,
@@ -54,7 +56,7 @@ impl_wrapper_binary! {
 }
 
 impl_wrapper_unary! {
-    State::<[
+    Id::<[
         Neg.neg,
         Not.not
     ]>
