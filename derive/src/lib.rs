@@ -75,6 +75,8 @@ pub fn display(input: TokenStream) -> TokenStream {
 
     res.into()
 }
+
+#[deprecated(since = "0.3.2", note = "use the variants crate instead")]
 /// This macro automatically generates functional constructors for all enclosed variants.
 #[proc_macro_derive(VariantConstructors, attributes(scsys))]
 pub fn variant_constructors(input: TokenStream) -> TokenStream {

@@ -2,6 +2,12 @@
     Appellation: timestamp <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
+mod impl_timestamp;
+mod impl_timestamp_repr;
+
+#[allow(deprecated)]
+mod impl_deprecated;
+
 use crate::time::{Now, RawTimestamp};
 
 /// [`Timestamp`] is a generic implementation of a type that represents some point in time.
@@ -43,13 +49,14 @@ where
     T: RawTimestamp,
 {
     /// create a new instance of [`Timestamp`] with the given value.
-    pub fn new(ts: T) -> Self {
+    pub const fn new(ts: T) -> Self {
         Self(ts)
     }
-    /// a convenience method to create a new [`Timestamp`] instance with the current time.
+    /// a convenience method to get the current timestamp; requires that the inner type
+    /// implement the [`Now`] trait.
     pub fn now() -> Self
     where
-        Self: Now<Output = Self>,
+        T: Now<Output = Self>,
     {
         <Self as Now>::now()
     }
@@ -131,68 +138,22 @@ where
     }
 }
 
-#[doc(hidden)]
-#[allow(deprecated)]
-impl<T> Timestamp<T>
-where
-    T: RawTimestamp,
-{
-    #[deprecated(
-        since = "0.2.8",
-        note = "use `get` instead; this will be removed in the next major release"
-    )]
-    pub fn as_ref(&self) -> &T {
-        self.get()
-    }
-    #[deprecated(
-        since = "0.2.8",
-        note = "use `get_mut` instead; this will be removed in the next major release"
-    )]
-    pub fn as_mut(&mut self) -> &mut T {
-        self.get_mut()
-    }
-    #[deprecated(
-        since = "0.3.1",
-        note = "use `into_innter` instead; this will be removed in the next major release"
-    )]
-    pub fn value(self) -> T {
-        self.0
-    }
-}
-
 impl<T> Default for Timestamp<T>
 where
-    Self: Now<Output = Self>,
-    T: RawTimestamp,
+    T: Now<Output = Self> + RawTimestamp,
 {
     fn default() -> Self {
         Self::now()
     }
 }
 
-#[cfg(feature = "std")]
-impl Now for Timestamp<u64> {
+impl<T> Now for Timestamp<T>
+where
+    T: Now<Output = Timestamp<T>> + RawTimestamp,
+{
     type Output = Self;
 
     fn now() -> Self::Output {
-        Self::new(super::systime().as_secs())
-    }
-}
-
-#[cfg(feature = "std")]
-impl Now for Timestamp<u128> {
-    type Output = Self;
-
-    fn now() -> Self::Output {
-        Self::new(super::systime().as_millis())
-    }
-}
-
-#[cfg(feature = "chrono")]
-impl Now for Timestamp<i64> {
-    type Output = Self;
-
-    fn now() -> Self::Output {
-        Self::new(chrono::Local::now().timestamp())
+        T::now()
     }
 }

@@ -17,8 +17,6 @@ pub trait Now {
 use crate::time::Timestamp;
 #[cfg(feature = "std")]
 use crate::time::utils::systime;
-#[cfg(all(feature = "alloc", feature = "chrono"))]
-use alloc::string::String;
 
 #[cfg(feature = "std")]
 impl Now for u64 {
@@ -48,7 +46,7 @@ impl Now for i64 {
 }
 
 #[cfg(all(feature = "alloc", feature = "chrono"))]
-impl Now for String {
+impl Now for alloc::string::String {
     type Output = Timestamp<Self>;
 
     fn now() -> Self::Output {
