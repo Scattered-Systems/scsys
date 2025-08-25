@@ -2,9 +2,8 @@
     Appellation: time <module>
     Contrib: FL03 <jo3mccain@icloud.com>
 */
-//! # Time
-//!
-//! The `time` module provides a set of utilities for working with time and timestamps.
+//! The [`time`](self) module works to provide a set of common interface for working with
+//! temporal structures.
 #[doc(inline)]
 #[cfg(feature = "std")]
 pub use self::utils::*;
@@ -12,11 +11,6 @@ pub use self::utils::*;
 pub use self::{timestamp::Timestamp, traits::*, types::*};
 /// this module implements the [`Timestamp`] type
 pub mod timestamp;
-
-mod impls {
-    pub mod impl_timestamp;
-    pub mod impl_timestamp_repr;
-}
 
 mod types {
     //! this module contains various implementations used to support `time` related features
@@ -62,15 +56,18 @@ pub(crate) mod prelude {
 }
 
 mod utils {
-    #[doc(inline)]
-    pub use self::prelude::*;
-
     #[cfg(feature = "std")]
-    mod base;
-
-    mod prelude {
-        #[doc(inline)]
-        #[cfg(feature = "std")]
-        pub use super::base::*;
+    /// [systime] is a utilitarian function that returns the current system time in milliseconds.
+    #[inline]
+    pub fn systime() -> core::time::Duration {
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+    }
+    /// [systime] is a utilitarian function that returns the current system time in milliseconds.
+    #[cfg(feature = "std")]
+    #[inline]
+    pub fn std_time() -> u128 {
+        systime().as_millis()
     }
 }
