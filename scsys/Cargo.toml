@@ -53,38 +53,38 @@ serde_json = { features = ["std"], workspace = true }
 
 [features]
 default = [
-    "derive",
-    "macros",
-    "std",
-    "traits",
-    "utils",
+  "derive",
+  "macros",
+  "std",
+  "traits",
+  "utils",
 ]
 
 full = [
-    "default",
-    "crypto",
-    "hash",
-    "json",
-    "rand",
-    "serde",
-    "time",
+  "default",
+  "crypto",
+  "hash",
+  "json",
+  "rand",
+  "serde",
+  "time",
 ]
 
 nightly = [
-    "scsys-core/nightly",
-    "scsys-config?/nightly",
-    "scsys-crypto?/nightly",
-    "scsys-derive?/nightly",
-    "scsys-macros?/nightly",
-    "scsys-traits?/nightly",
-    "scsys-util?/nightly",
+  "scsys-core/nightly",
+  "scsys-config?/nightly",
+  "scsys-crypto?/nightly",
+  "scsys-derive?/nightly",
+  "scsys-macros?/nightly",
+  "scsys-traits?/nightly",
+  "scsys-util?/nightly",
 ]
 
 # ************* [FF:Features] *************
 config = [
-    "dep:scsys-config",
-    "scsys-config?/default",
-    "std"
+  "dep:scsys-config",
+  "scsys-config?/default",
+  "std"
 ]
 
 crypto = [ "dep:scsys-crypto" ]
@@ -92,12 +92,26 @@ crypto = [ "dep:scsys-crypto" ]
 derive = [ "dep:scsys-derive" ]
 
 hash = [
-    "crypto",
-    "scsys-crypto?/hash",
-    "std",
+  "crypto",
+  "scsys-crypto?/hash",
+  "std",
+]
+
+json = [
+  "alloc",
+  "scsys-core/json",
+  "scsys-config?/json",
+  "scsys-crypto?/json",
+  "scsys-util?/json",
 ]
 
 macros = [ "dep:scsys-macros" ]
+
+time = [
+  "scsys-core/time",
+  "scsys-crypto?/time",
+  "std",
+]
 
 traits = [ "dep:scsys-traits" ]
 
@@ -105,105 +119,80 @@ utils = [ "dep:scsys-util" ]
 
 # ************* [FF:Environments] *************
 std = [
-    "scsys-core/std",
-    "scsys-crypto?/std",
-    "scsys-traits?/std",
-    "scsys-util?/std",
+  "alloc",
+  "scsys-core/std",
+  "scsys-crypto?/std",
+  "scsys-traits?/std",
+  "scsys-util?/std",
 ]
 
 wasi = [
-    "scsys-core/wasi",
-    "scsys-config?/wasi",
-    "scsys-crypto?/wasi",
-    "scsys-traits?/wasi",
-    "scsys-util?/wasi",
+  "alloc",
+  "scsys-core/wasi",
+  "scsys-config?/wasi",
+  "scsys-crypto?/wasi",
+  "scsys-traits?/wasi",
+  "scsys-util?/wasi",
 ]
 
 wasm = [
-    "scsys-core/wasm",
-    "scsys-config?/wasm",
-    "scsys-crypto?/wasm",
-    "scsys-traits?/wasm",
-    "scsys-util?/wasm",
+  "alloc",
+  "wasm-bindgen",
+  "scsys-core/wasm",
+  "scsys-config?/wasm",
+  "scsys-crypto?/wasm",
+  "scsys-traits?/wasm",
+  "scsys-util?/wasm",
 ]
 
 # ************* [FF:Dependencies] *************
 alloc = [
-    "scsys-core/alloc",
-    "scsys-crypto?/alloc",
-    "scsys-traits?/alloc",
-    "scsys-util?/alloc",
-]
-
-anyhow = [
-    "scsys-core/anyhow",
-    "scsys-config?/anyhow",
-    "scsys-crypto?/anyhow",
-
+  "scsys-core/alloc",
+  "scsys-crypto?/alloc",
+  "scsys-traits?/alloc",
+  "scsys-util?/alloc",
 ]
 
 blake3 = [
-    "crypto",
-    "scsys-crypto?/blake3",
+  "crypto",
+  "scsys-crypto?/blake3",
 ]
 
 chrono = [
-    "scsys-core/chrono",
-    "scsys-crypto?/chrono",
-]
-
-json = [
-    "alloc",
-    "scsys-core/json",
-    "scsys-config?/json",
-    "scsys-crypto?/json",
-    "scsys-util?/json",
-    "serde",
-    "serde_json",
+  "scsys-core/chrono",
+  "scsys-crypto?/chrono",
 ]
 
 rand = [
-    "scsys-core/rand",
-    "scsys-crypto?/rand",
+  "scsys-core/rand",
+  "scsys-crypto?/rand",
 ]
 
 rng = [
-    "scsys-core/rng",
-    "scsys-crypto?/rng",
+  "scsys-core/rng",
+  "scsys-crypto?/rng",
 ]
 
 serde = [
-    "scsys-core/serde",
-    "scsys-crypto?/serde",
-    "scsys-util?/serde",
-]
-
-serde_json = [
-    "scsys-core/serde_json",
-    "scsys-config?/serde_json",
-    "scsys-crypto?/serde_json",
-    "scsys-util?/serde_json",
-]
-
-time = [
-    "scsys-core/time",
-    "scsys-crypto?/time",
+  "scsys-core/serde",
+  "scsys-crypto?/serde",
+  "scsys-util?/serde",
 ]
 
 tracing = [
-    "scsys-core/tracing",
-    "scsys-config?/tracing",
-    "scsys-crypto?/tracing",
-    "scsys-util?/tracing",
+  "scsys-core/tracing",
+  "scsys-config?/tracing",
+  "scsys-crypto?/tracing",
+  "scsys-util?/tracing",
 ]
 
 tracing-subscriber = [
-    "scsys-config?/tracing-subscriber",
-    "tracing",
+  "scsys-config?/tracing-subscriber",
+  "tracing",
 ]
 
 wasm-bindgen = [
-    "scsys-core/wasm-bindgen",
+  "scsys-core/wasm-bindgen",
 ]
 
 # ************* [Benchmarks] *************
@@ -217,21 +206,12 @@ required-features = ["std"]
 [[example]]
 name = "derive"
 required-features = [
-    "derive",
-    "std",
-    "time"
-]
-
-[[example]]
-name = "variants"
-required-features = [
-    "derive",
+  "derive",
+  "std",
+  "time"
 ]
 
 # ************* [Unit Tests] *************
 [[test]]
 name = "derive"
-required-features = [
-    "derive",
-    "json",
-]
+required-features = ["derive", "json"]

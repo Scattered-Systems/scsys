@@ -16,7 +16,7 @@ resolver = "3"
 
 [workspace.package]
 authors = [
-    "FL03 <jo3mccain@icloud.com> (https://github.com/FL03)",
+    "FL03 <joe@pzzld.org> (https://github.com/FL03)",
     "Scattered-Systems <support@scsys.io> (https://github.com/scattered-systems)"
 ]
 categories = [  ]
@@ -42,7 +42,7 @@ scsys-traits = { default-features = false, path = "traits", version = "0.3.2" }
 scsys-util = { default-features = false, path = "utils", version = "0.3.2" }
 
 # benchmarking
-criterion = { version = "0.6" }
+criterion = { version = "0.7" }
 # concurrency & parallelism
 # crossbeam = { default-features = false, version = "0.8" }
 rayon = { default-features = false, version = "1" }

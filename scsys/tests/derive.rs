@@ -24,13 +24,6 @@ fn test_gsw() {
 }
 
 #[test]
-fn test_variant_constructors() {
-    assert_eq!(Something::a(), Something::A);
-    assert_eq!(Something::b(1), Something::B(1));
-    assert_eq!(Something::c(1, 2), Something::C { x: 1, y: 2 });
-}
-
-#[test]
 fn test_wrapper() {
     let mut unit = Unit::<usize>::new(42);
     assert_eq!(unit.get(), &42);
@@ -83,15 +76,6 @@ mod impls {
     pub struct Generic<K, V> {
         pub key: K,
         pub weight: V,
-    }
-
-    #[derive(
-        Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, scsys::VariantConstructors,
-    )]
-    pub enum Something {
-        A,
-        B(usize),
-        C { x: usize, y: usize },
     }
 
     #[derive(
