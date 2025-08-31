@@ -26,9 +26,9 @@ tag-name = "{{version}}"
 
 [lib]
 crate-type = [
-    "cdylib",
-    "rlib",
-    "staticlib"
+  "cdylib",
+  "rlib",
+  "staticlib"
 ]
 bench = false
 doc = true
@@ -70,14 +70,14 @@ approx = { workspace = true }
 default = [ "std" ]
 
 full = [
-    "default",
-    "anyhow",
-    "chrono",
-    "json",
-    "rand",
-    "serde",
-    "time",
-    "tracing",
+  "default",
+  "anyhow",
+  "chrono",
+  "json",
+  "rand",
+  "serde",
+  "time",
+  "tracing",
 ]
 
 nightly = []
@@ -85,37 +85,41 @@ nightly = []
 # ************* [FF:Features] *************
 
 json = [
-    "alloc",
-    "serde",
-    "serde_json",
+  "alloc",
+  "serde",
+  "serde_json",
 ]
 
 time = [
-    "time-d"
+  "std",
+  "time-0"
 ]
 
 # ************* [FF:Environments] *************
 
 std = [
-    "alloc",
-    "anyhow?/std",
-    "num-traits/std",
-    "rand?/std",
-    "rand?/std_rng",
-    "serde?/std",
-    "strum/std",
-    "thiserror/std",
-    "time?/std",
-    "tracing?/std",
-    "uuid?/std",
+  "alloc",
+  "anyhow?/std",
+  "num-traits/std",
+  "rand?/std",
+  "rand?/std_rng",
+  "serde?/std",
+  "strum/std",
+  "thiserror/std",
+  "time?/std",
+  "tracing?/std",
+  "uuid?/std",
 ]
 
-wasi = []
+wasi = [
+  "alloc"
+]
 
 wasm = [
-    "getrandom?/wasm_js",
-    "uuid?/js",
-    "wasm-bindgen",
+  "alloc",
+  "wasm-bindgen",
+  "getrandom?/wasm_js",
+  "uuid?/js",
 ]
 
 # ************* [FF:Dependencies] *************
@@ -123,56 +127,55 @@ wasm = [
 anyhow = ["dep:anyhow"]
 
 alloc = [
-    "chrono?/alloc",
-    "serde?/alloc",
-    "serde_json?/alloc",
-    "time?/alloc",
+  "chrono?/alloc",
+  "serde?/alloc",
+  "serde_json?/alloc",
+  "time?/alloc",
 ]
 
 chrono = [
-    "dep:chrono",
-    "chrono?/clock",
-    "time",
+  "dep:chrono",
+  "chrono?/clock",
 ]
 
 rand = [
-    "dep:rand",
-    "dep:rand_distr",
-    "rng",
+  "dep:rand",
+  "dep:rand_distr",
+  "rng",
 ]
 
 rng = [
-    "dep:getrandom",
-    "rand?/small_rng",
-    "rand?/thread_rng",
-    "uuid?/rng",
-    "uuid?/v4"
+  "dep:getrandom",
+  "rand?/small_rng",
+  "rand?/thread_rng",
+  "uuid?/rng",
+  "uuid?/v4"
 ]
 
 serde = [
-    "dep:serde",
-    "dep:serde_derive",
-    "chrono?/serde",
-    "rand?/serde",
-    "uuid?/serde",
-    "time?/serde",
+  "dep:serde",
+  "dep:serde_derive",
+  "chrono?/serde",
+  "rand?/serde",
+  "uuid?/serde",
+  "time?/serde",
 ]
 
 serde_json = ["dep:serde_json"]
 
-time-d = ["dep:time"]
+time-0 = ["dep:time"]
 
 tracing = ["dep:tracing"]
 
 uuid = [
-    "dep:uuid",
-    "uuid?/v3"
+  "dep:uuid",
+  "uuid?/v3"
 ]
 
 wasm-bindgen = [
-    "dep:wasm-bindgen",
-    "chrono?/wasmbind",
-    "time?/wasm-bindgen",
+  "dep:wasm-bindgen",
+  "chrono?/wasmbind",
+  "time?/wasm-bindgen",
 ]
 
 # ************* [Unit Tests] *************

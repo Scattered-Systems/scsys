@@ -44,6 +44,3 @@ nightly = ["proc-macro2/nightly"]
 # ************* [Unit Tests] *************
 [[test]]
 name = "gsw"
-
-[[test]]
-name = "variants"
