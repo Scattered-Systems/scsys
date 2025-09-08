@@ -25,14 +25,15 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [lib]
-crate-type = [
-    "cdylib",
-    "rlib"
-]
+crate-type = ["cdylib", "rlib"]
 bench = false
 doc = true
 doctest = true
 test = true
+
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"
 
 [dependencies]
 # sdk
@@ -58,26 +59,26 @@ tracing-subscriber = { optional = true, workspace = true }
 
 [features]
 default = [
-    "std",
-    "config",
-    "async",
-    "convert-case",
-    "ini",
-    "json",
-    "json5",
-    "ron",
-    "toml",
-    "url",
-    "yaml",
+  "std",
+  "config",
+  "async",
+  "convert-case",
+  "ini",
+  "json",
+  "json5",
+  "ron",
+  "toml",
+  "url",
+  "yaml",
 ]
 
 full = [
-    "default",
-    "anyhow",
-    "clap",
-    "glob",
-    "tracing",
-    "tracing-subscriber",
+  "default",
+  "anyhow",
+  "clap",
+  "glob",
+  "tracing",
+  "tracing-subscriber",
 ]
 
 nightly = [
@@ -90,10 +91,10 @@ convert-case = ["config?/convert-case"]
 ini = ["config?/ini"]
 
 json = [
-    "config?/json",
-    "scsys-core/json",
-    "serde",
-    "serde_json",
+  "config?/json",
+  "scsys-core/json",
+  "serde",
+  "serde_json",
 ]
 
 json5 = ["config?/json5"]
@@ -106,79 +107,72 @@ yaml = ["config?/yaml"]
 
 # ************* [FF:Environments] *************
 std = [
-    "anyhow?/std",
-    "clap?/std",
-    "scsys-core/std",
-    "serde?/std",
-    "serde_json?/std",
-    "strum/std",
-    "thiserror/std",
-    "tracing?/std",
-    "tracing-subscriber?/std",
-    "url?/std",
+  "anyhow?/std",
+  "clap?/std",
+  "scsys-core/std",
+  "serde?/std",
+  "serde_json?/std",
+  "strum/std",
+  "thiserror/std",
+  "tracing?/std",
+  "tracing-subscriber?/std",
+  "url?/std",
 ]
 
 wasi = [
-    "scsys-core/wasi",
+  "scsys-core/wasi",
 ]
 
 wasm = [
-    "scsys-core/wasm",
+  "scsys-core/wasm",
 ]
 
 # ************* [FF:Dependencies] *************
-anyhow = [
-    "dep:anyhow",
-    "scsys-core/anyhow",
-]
+anyhow = ["dep:anyhow"]
 
 async = ["config?/async"]
 
 clap = [
-    "dep:clap",
-    "clap?/color",
-    "clap?/derive",
-    "clap?/error-context",
-    "clap?/env",
-    "clap?/help",
-    "clap?/string",
-    "clap?/suggestions",
-    "clap?/usage",
-    "std",
+  "dep:clap",
+  "clap?/color",
+  "clap?/derive",
+  "clap?/error-context",
+  "clap?/env",
+  "clap?/help",
+  "clap?/string",
+  "clap?/suggestions",
+  "clap?/usage",
+  "std",
 ]
 
 config = [
-    "dep:config",
-    "std",
+  "dep:config",
+  "std",
 ]
 
 glob = ["dep:glob"]
 
 serde = [
-    "dep:serde",
-    "dep:serde_derive",
-    "scsys-core/serde",
-    "tracing-subscriber?/serde",
-    "url?/serde",
+  "dep:serde",
+  "dep:serde_derive",
+  "scsys-core/serde",
+  "tracing-subscriber?/serde",
+  "url?/serde",
 ]
 
 serde_json = ["dep:serde_json"]
 
 tracing = [
-    "dep:tracing",
-    "scsys-core/tracing",
+  "dep:tracing",
+  "scsys-core/tracing",
 ]
 
 tracing-subscriber = [
-    "dep:tracing-subscriber",
-    "tracing",
-    "tracing-subscriber?/ansi",
-    "tracing-subscriber?/env-filter",
-    "tracing-subscriber?/fmt",
+  "dep:tracing-subscriber",
+  "tracing",
+  "tracing-subscriber?/ansi",
+  "tracing-subscriber?/env-filter",
+  "tracing-subscriber?/fmt",
 ]
 
 url = ["dep:url"]
-
-# ************* [Unit Tests] *************
-[[test]]
-name = "default"

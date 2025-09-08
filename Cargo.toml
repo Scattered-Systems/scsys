@@ -1,23 +1,24 @@
 [workspace]
 default-members = [
-    "scsys",
+  "scsys",
 ]
 members = [
-    "core",
-    "scsys",
-    "config",
-    "crypto",
-    "derive",
-    "macros",
-    "traits",
-    "utils",
+  "core",
+  "scsys",
+  "config",
+  "crypto",
+  "derive",
+  "macros",
+  "time",
+  "traits",
+  "utils",
 ]
 resolver = "3"
 
 [workspace.package]
 authors = [
-    "FL03 <joe@pzzld.org> (https://github.com/FL03)",
-    "Scattered-Systems <support@scsys.io> (https://github.com/scattered-systems)"
+  "FL03 <joe@pzzld.org> (https://github.com/FL03)",
+  "Scattered-Systems <support@scsys.io> (https://github.com/scattered-systems)"
 ]
 categories = [  ]
 description = "scsys is a collection of primitives and utilities for use throughout the ecosystem."
@@ -38,11 +39,12 @@ scsys-config = { default-features = false, path = "config", version = "0.3.2" }
 scsys-crypto = { default-features = false, path = "crypto", version = "0.3.2" }
 scsys-derive = { default-features = false, path = "derive", version = "0.3.2" }
 scsys-macros = { default-features = false, path = "macros", version = "0.3.2" }
+scsys-time = { default-features = false, path = "time", version = "0.3.2" }
 scsys-traits = { default-features = false, path = "traits", version = "0.3.2" }
 scsys-util = { default-features = false, path = "utils", version = "0.3.2" }
 
-# benchmarking
-criterion = { version = "0.7" }
+# custom
+contained = { default-features = false, features = ["derive", "macros"], version = "0.2.1" }
 # concurrency & parallelism
 # crossbeam = { default-features = false, version = "0.8" }
 rayon = { default-features = false, version = "1" }

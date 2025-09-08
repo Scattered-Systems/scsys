@@ -4,24 +4,18 @@ concurrency:
   cancel-in-progress: false
   group: ${{ github.workflow }}-${{ github.ref }}
 
-env:
-  CARGO_TERM_COLOR: always
-  RUST_BACKTRACE: full
-
 on:
   pull_request:
-    branches: [ main, master, $default-branch ]
-    types: [ opened, reopened, synchronize, ready_for_review ]
+    branches: [ main, master ]
+    types: [ opened, reopened, synchronize ]
     paths:
       - ".github/workflows/cargo-clippy.yml"
       - "**.rs"
       - "**/Cargo.toml"
       - "**/Cargo.lock"
   push:
-    branches: [ main, master, $default-branch ]
-    tags:
-      - v*.*.*
-      - "*-nightly"
+    branches: [ main, master ]
+    tags: [ latest, v*.*.*, "*-nightly" ]
   release:
     types: [ created, edited ]
   repository_dispatch:
@@ -37,7 +31,7 @@ jobs:
       security-events: write
       statuses: write
     steps:
-      -
+      - 
         name: Checkout
         uses: actions/checkout@v5
       -
@@ -46,14 +40,12 @@ jobs:
         with:
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           components: clippy, rustfmt
-          override: true
-          toolchain: nightly
       - 
         name: Setup cargo-binstall
-        uses: cargo-bins/cargo-binstall@v1.15.3
+        uses: cargo-bins/cargo-binstall@v1.15.1
       -
         name: Setup the for sarif output
-        run: cargo binstall -qy --force clippy-sarif sarif-fmt
+        run: cargo binstall -qy clippy-sarif sarif-fmt
       -
         name: cargo clippy
         continue-on-error: true

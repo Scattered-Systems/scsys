@@ -1,7 +1,7 @@
 [package]
 build = "build.rs"
-description = "core primitives and utilities for the scsys ecosystem"
-name = "scsys-core"
+description = "temporal abstractions, primitives, and utilities for the scsys ecosystem"
+name = "scsys-time"
 
 authors.workspace = true
 categories.workspace = true
@@ -35,18 +35,19 @@ doc = true
 doctest = false
 test = true
 
+[[test]]
+name = "default"
+
+[[test]]
+name = "time"
+required-features = ["std", "time"]
+
 [dependencies]
-# custom
-scsys-time = { optional = true, workspace = true }
+contained = { workspace = true }
 # error-handling
 thiserror = { workspace = true }
 # mathematics
 num-traits = { workspace = true }
-# randomization
-getrandom = { optional = true, workspace = true }
-rand = { optional = true, workspace = true }
-rand_distr = { optional = true, workspace = true }
-uuid = { optional = true, workspace = true }
 # serialization
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
@@ -56,126 +57,89 @@ paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { workspace = true }
 # time
-# tracing
-tracing = { optional = true, workspace = true }
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
 # wasm
 wasm-bindgen = { optional = true, workspace = true }
-
-[dev-dependencies]
-anyhow = { workspace = true }
-approx = { workspace = true }
 
 [features]
 default = [ 
   "std",
-  "time",
+  "time"
 ]
 
 full = [
   "default",
+  "chrono",
   "json",
-  "rand",
   "serde",
-  "tracing",
+  "time",
 ]
+
+nightly = []
 
 # ************* [FF:Features] *************
 
 json = [
   "alloc",
-  "scsys-time?/json",
   "serde",
   "serde_json",
 ]
 
-nightly = [
-  "scsys-time?/nightly",
-]
-
 time = [
-  "alloc",
-  "dep:scsys-time",
+  "std",
+  "time-0"
 ]
 
 # ************* [FF:Environments] *************
 
 std = [
   "alloc",
-  "scsys-time?/std",
+  "contained/std",
   "num-traits/std",
-  "rand?/std",
-  "rand?/std_rng",
   "serde?/std",
   "strum/std",
   "thiserror/std",
-  "tracing?/std",
-  "uuid?/std",
+  "time?/std",
 ]
 
 wasi = [
-  "alloc",
-  "scsys-time?/wasi",
+  "alloc"
 ]
 
 wasm = [
   "alloc",
-  "scsys-time?/wasm",
+  "chrono?/js-sys",
   "wasm-bindgen",
-  "getrandom?/wasm_js",
-  "uuid?/js",
 ]
 
 # ************* [FF:Dependencies] *************
-
 alloc = [
-  "scsys-time?/alloc",
+  "chrono?/alloc",
+  "contained/alloc",
   "serde?/alloc",
   "serde_json?/alloc",
+  "time?/alloc",
 ]
 
 chrono = [
-  "scsys-time?/chrono",
-]
-
-rand = [
-  "dep:rand",
-  "dep:rand_distr",
-  "rng",
-]
-
-rng = [
-  "dep:getrandom",
-  "rand?/small_rng",
-  "rand?/thread_rng",
-  "uuid?/rng",
-  "uuid?/v4"
+  "dep:chrono",
+  "chrono?/clock",
 ]
 
 serde = [
   "dep:serde",
   "dep:serde_derive",
-  "scsys-time?/serde",
-  "rand?/serde",
-  "uuid?/serde",
+  "chrono?/serde",
+  "time?/serde",
 ]
 
-serde_json = [
-  "dep:serde_json",  
-  "scsys-time?/serde_json",
-]
+serde_json = ["dep:serde_json"]
 
-tracing = ["dep:tracing"]
-
-uuid = [
-  "dep:uuid",
-  "uuid?/v3"
-]
+time-0 = ["dep:time"]
 
 wasm-bindgen = [
-  "dep:wasm-bindgen",  
-  "scsys-time?/wasm-bindgen",
+  "dep:wasm-bindgen",
+  "chrono?/wasmbind",
+  "time?/wasm-bindgen",
 ]
-
-# ************* [Unit Tests] *************
-[[test]]
-name = "default"
