@@ -25,15 +25,14 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [lib]
-crate-type = [
-  "cdylib",
-  "rlib",
-  "staticlib"
-]
+crate-type = ["cdylib", "rlib", "staticlib"]
 bench = false
 doc = true
 doctest = false
 test = true
+
+[[test]]
+name = "default"
 
 [dependencies]
 # custom
@@ -175,7 +174,3 @@ wasm-bindgen = [
   "dep:wasm-bindgen",  
   "scsys-time?/wasm-bindgen",
 ]
-
-# ************* [Unit Tests] *************
-[[test]]
-name = "default"
