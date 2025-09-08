@@ -4,15 +4,17 @@
     Contrib: @FL03
 */
 #[allow(unused_imports)]
+use core::time::Duration;
 
-/// [systime] is a utilitarian function that returns the current system time in milliseconds.
+/// the [`systime`] function returns the current system timestamp as a [`Duration`] allowing
+/// users to convert the object into their desired units.
 #[inline]
-pub fn systime() -> core::time::Duration {
+pub fn systime() -> Duration {
     std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap()
 }
-/// [systime] is a utilitarian function that returns the current system time in milliseconds.
+/// the [`std_time`] function returns the current system time in milliseconds as an [`u128`].
 #[inline]
 pub fn std_time() -> u128 {
     systime().as_millis()

@@ -1,11 +1,18 @@
 /*
-    Appellation: scsys-core <library>
-    Contrib: FL03 <jo3mccain@icloud.com>
+    Appellation: scsys-time <library>
+    Created At: 2025.09.08:18:11:37
+    Contrib: @FL03
 */
-//! Time-related abstractions, utilities, and implementations supporting various aspects of the
-//! project.
-//! 
-//! - [`Timestamp`] - A generic timestamp wrapper supporting various backend and representations
+//! The [`time`](self) module focuses on implementing various time-related features and utilities.
+//! It provides a generic [`Timestamp`] along with supporting traits and types to facilitate
+//! time management.
+//!
+//! ## Traits
+//!
+//! The crate defines several key traits to support time functionalities:
+//!
+//! - [`RawTimestamp`] - A marker trait denoting compatible raw timestamp types
+//! - [`Now`] - A trait for obtaining the current time
 //!
 #![allow(
     non_snake_case,
@@ -13,7 +20,8 @@
     clippy::missing_safety_doc,
     clippy::needless_doctest_main,
     clippy::upper_case_acronyms
-)]#![cfg_attr(not(feature = "std"), no_std)]
+)]
+#![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(all(feature = "alloc", feature = "nightly"), feature(allocator_api))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
@@ -33,8 +41,14 @@ pub(crate) mod macros {
 #[cfg(feature = "std")]
 pub use self::utils::*;
 #[doc(inline)]
-pub use self::{timestamp::Timestamp, traits::*, types::*};
+pub use self::{
+    error::{Error, Result},
+    timestamp::Timestamp,
+    traits::*,
+    types::*,
+};
 
+pub mod error;
 pub mod timestamp;
 
 pub mod types {
@@ -59,13 +73,13 @@ pub mod traits {
     pub use self::prelude::*;
 
     mod now;
-    mod timestamp;
+    mod raw_timestamp;
 
     mod prelude {
         #[doc(inline)]
         pub use super::now::*;
         #[doc(inline)]
-        pub use super::timestamp::*;
+        pub use super::raw_timestamp::*;
     }
 }
 

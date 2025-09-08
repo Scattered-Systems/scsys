@@ -13,43 +13,55 @@ pub trait Now {
 /*
  ************* Implementations *************
 */
-#[cfg(any(feature = "chrono", feature = "std"))]
-use crate::Timestamp;
-#[cfg(feature = "std")]
-use crate::utils::systime;
 
-#[cfg(feature = "std")]
-impl Now for u64 {
-    type Output = Timestamp<Self>;
+#[cfg(all(feature = "alloc", feature = "chrono"))]
+mod impl_alloc {
+    use super::Now;
+    use crate::Timestamp;
+    use alloc::string::String;
 
-    fn now() -> Self::Output {
-        Timestamp::new(systime().as_secs())
-    }
-}
+    impl Now for String {
+        type Output = Timestamp<Self>;
 
-#[cfg(feature = "std")]
-impl Now for u128 {
-    type Output = Timestamp<Self>;
-
-    fn now() -> Self::Output {
-        Timestamp::new(systime().as_millis())
+        fn now() -> Self::Output {
+            Timestamp::new(chrono::Local::now().to_rfc3339())
+        }
     }
 }
 
 #[cfg(feature = "chrono")]
-impl Now for i64 {
-    type Output = Timestamp<Self>;
+mod impl_chrono {
+    use super::Now;
+    use crate::timestamp::Timestamp;
 
-    fn now() -> Self::Output {
-        Timestamp::new(chrono::Local::now().timestamp())
+    impl Now for i64 {
+        type Output = Timestamp<Self>;
+
+        fn now() -> Self::Output {
+            Timestamp::new(chrono::Local::now().timestamp())
+        }
     }
 }
 
-#[cfg(all(feature = "alloc", feature = "chrono"))]
-impl Now for alloc::string::String {
-    type Output = Timestamp<Self>;
+#[cfg(feature = "std")]
+mod impl_std {
+    use super::Now;
+    use crate::timestamp::Timestamp;
+    use crate::utils::systime;
 
-    fn now() -> Self::Output {
-        Timestamp::new(chrono::Local::now().to_rfc3339())
+    impl Now for u128 {
+        type Output = Timestamp<Self>;
+
+        fn now() -> Self::Output {
+            Timestamp::new(systime().as_millis())
+        }
+    }
+
+    impl Now for u64 {
+        type Output = Timestamp<Self>;
+
+        fn now() -> Self::Output {
+            Timestamp::new(systime().as_secs())
+        }
     }
 }

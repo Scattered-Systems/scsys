@@ -59,7 +59,7 @@ pub(crate) mod macros {
 
 #[doc(inline)]
 pub use self::{
-    error::*,
+    error::{Error, Result},
     id::Id,
     state::{NState, State, StateBase, StateRepr, Stateful},
     types::prelude::*,
