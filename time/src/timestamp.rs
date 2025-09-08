@@ -8,7 +8,7 @@ mod impl_timestamp_repr;
 #[allow(deprecated)]
 mod impl_deprecated;
 
-use crate::time::{Now, RawTimestamp};
+use crate::traits::{Now, RawTimestamp};
 
 /// [`Timestamp`] is a generic implementation of a type that represents some point in time.
 ///

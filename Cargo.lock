@@ -353,6 +353,51 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7c74b8349d32d297c9134b8c88677813a227df8f779daa29bfc29c183fe3dca6"
 
 [[package]]
+name = "contained"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "70a7deea2c9978ac8b167e4d38650ea92698cabfa762b3ded81897c4498169d5"
+dependencies = [
+ "contained-core",
+ "contained-derive",
+ "contained-macros",
+]
+
+[[package]]
+name = "contained-core"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fac53e80372754417915d990f0447d13fe10712f4efce3bec57c70f6331989ad"
+dependencies = [
+ "paste",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "contained-derive"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d2d032ef76eea90f09abcedb2b43d63f0e379ba42c704c9c93f4de6fbcb27cf8"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "contained-macros"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "28ada650c5f59f598eb5a86b7f9c8aeea18c417a50885b891238518afffe5557"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "convert_case"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1224,19 +1269,18 @@ version = "0.3.2"
 dependencies = [
  "anyhow",
  "approx",
- "chrono",
  "getrandom 0.3.3",
  "num-traits",
  "paste",
  "rand",
  "rand_distr",
+ "scsys-time",
  "serde",
  "serde_derive",
  "serde_json",
  "smart-default",
  "strum",
  "thiserror",
- "time",
  "tracing",
  "uuid",
  "wasm-bindgen",
@@ -1287,6 +1331,24 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "scsys-time"
+version = "0.3.2"
+dependencies = [
+ "chrono",
+ "contained",
+ "num-traits",
+ "paste",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "smart-default",
+ "strum",
+ "thiserror",
+ "time",
+ "wasm-bindgen",
 ]
 
 [[package]]

@@ -18,22 +18,32 @@
 //! - [`Timestamp`] (requires the `time` feature): a generic _timestamp_ type implementing
 //!   [`Now`]
 //!
-#![allow(clippy::module_inception)]
+#![allow(
+    non_snake_case,
+    clippy::module_inception,
+    clippy::missing_safety_doc,
+    clippy::needless_doctest_main,
+    clippy::upper_case_acronyms
+)]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(all(feature = "alloc", feature = "nightly"), feature(allocator_api))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
     html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
 )]
-#![crate_type = "lib"]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
+
 // re-import the `rand` & `rand_distr` crates if the `rand` feature is enabled
 #[cfg(feature = "rand")]
 pub use rand;
 #[cfg(feature = "rand")]
 pub use rand_distr;
+
+#[doc(inline)]
+#[cfg(feature = "time")]
+pub use scsys_time as time;
 
 #[macro_use]
 pub(crate) mod macros {
@@ -52,9 +62,11 @@ pub use self::{
     error::*,
     id::Id,
     state::{NState, State, StateBase, StateRepr, Stateful},
-    time::{Now, RawTimestamp, Timestamp},
     types::prelude::*,
 };
+
+#[cfg(feature = "time")]
+pub use scsys_time::{Now, RawTimestamp, Timestamp};
 
 /// this module implements a set of traits and utilities for working with containers
 pub mod cont;
@@ -64,9 +76,6 @@ pub mod error;
 pub mod id;
 /// this module provides a set of states for state-related workloads ([`State`] & [`NState`])
 pub mod state;
-/// a temporal module establishing a core set of time-related primitives and utilities such as
-/// [`Timestamp`]
-pub mod time;
 
 pub mod types {
     #[doc(inline)]
@@ -99,11 +108,11 @@ pub mod types {
 
 #[doc(hidden)]
 pub mod prelude {
-    pub use crate::error::*;
+    #[cfg(feature = "time")]
+    pub use scsys_time::prelude::*;
 
     pub use crate::cont::prelude::*;
     pub use crate::id::prelude::*;
     pub use crate::state::prelude::*;
-    pub use crate::time::prelude::*;
     pub use crate::types::prelude::*;
 }

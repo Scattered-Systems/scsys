@@ -26,9 +26,9 @@ tag-name = "v{{version}}"
 
 [lib]
 crate-type = [
-    "cdylib",
-    "rlib",
-    "staticlib"
+  "cdylib",
+  "rlib",
+  "staticlib"
 ]
 bench = true
 doc = true
@@ -46,7 +46,7 @@ scsys-util = { optional = true, workspace = true }
 
 [dev-dependencies]
 anyhow = { features = ["std"], workspace = true }
-criterion = { features = ["plotters"], workspace = true }
+criterion = { features = ["plotters"], version = "0.7" }
 lazy_static = { workspace = true }
 serde = { features = ["std"], workspace = true }
 serde_json = { features = ["std"], workspace = true }
