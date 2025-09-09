@@ -109,7 +109,7 @@ impl core::fmt::Display for Scope {
 }
 
 impl core::str::FromStr for Scope {
-    type Err = crate::ConfigError;
+    type Err = crate::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(Self::new(s))

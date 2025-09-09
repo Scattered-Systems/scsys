@@ -28,7 +28,7 @@ impl NetworkAddr {
     }
     /// tries returning a new instance from the given [`url`](url::Url)
     #[cfg(feature = "url")]
-    pub fn try_from_url(url: url::Url) -> Result<Self, crate::ConfigError> {
+    pub fn try_from_url(url: url::Url) -> Result<Self, crate::Error> {
         let addr = Self {
             host: url
                 .host_str()
@@ -39,7 +39,7 @@ impl NetworkAddr {
         Ok(addr)
     }
     #[cfg(feature = "url")]
-    pub fn parse_url(url: &str) -> Result<Self, crate::ConfigError> {
+    pub fn parse_url(url: &str) -> Result<Self, crate::Error> {
         // parse the string into a URL
         let url = url::Url::parse(url)?;
         // try returning a new instance from the parsed URL
@@ -109,7 +109,7 @@ impl core::fmt::Display for NetworkAddr {
 }
 
 impl core::str::FromStr for NetworkAddr {
-    type Err = crate::ConfigError;
+    type Err = crate::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         #[cfg(feature = "url")]
@@ -141,7 +141,7 @@ impl From<NetworkAddr> for core::net::SocketAddr {
 
 #[cfg(feature = "url")]
 impl TryFrom<url::Url> for NetworkAddr {
-    type Error = crate::ConfigError;
+    type Error = crate::Error;
 
     fn try_from(url: url::Url) -> Result<Self, Self::Error> {
         let host = url.host_str().ok_or(url::ParseError::EmptyHost)?;
