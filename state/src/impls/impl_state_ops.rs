@@ -56,8 +56,8 @@ contained::binary_wrapper! {
     }
 }
 
-contained::impl_wrapper_unary! {
-    State {
+contained::unary_wrapper! {
+    impl State {
         Neg.neg,
         Not.not,
     }
