@@ -45,7 +45,7 @@ scsys-traits = { default-features = false, path = "traits", version = "0.3.2" }
 scsys-util = { default-features = false, path = "utils", version = "0.3.2" }
 
 # custom
-contained = { default-features = false, features = ["derive", "macros"], version = "0.2.1" }
+contained = { default-features = false, features = ["derive", "macros"], version = "0.2.2" }
 # concurrency & parallelism
 # crossbeam = { default-features = false, version = "0.8" }
 rayon = { default-features = false, version = "1" }

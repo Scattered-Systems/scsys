@@ -53,8 +53,8 @@ contained::binary_wrapper! {
     }
 }
 
-contained::impl_wrapper_unary! {
-    Id {
+contained::unary_wrapper! {
+    impl Id {
         Neg.neg,
         Not.not
     }

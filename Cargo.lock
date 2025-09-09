@@ -354,9 +354,9 @@ checksum = "7c74b8349d32d297c9134b8c88677813a227df8f779daa29bfc29c183fe3dca6"
 
 [[package]]
 name = "contained"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "70a7deea2c9978ac8b167e4d38650ea92698cabfa762b3ded81897c4498169d5"
+checksum = "6a0a9ba5ab57000eeb80eb10b61b1f6a537efd57375049050b6d20a32fc601cd"
 dependencies = [
  "contained-core",
  "contained-derive",
@@ -365,11 +365,10 @@ dependencies = [
 
 [[package]]
 name = "contained-core"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fac53e80372754417915d990f0447d13fe10712f4efce3bec57c70f6331989ad"
+checksum = "864867f1a5d3cbb62643bd141eeb6e37aa4d7fe9bc742b35fbe1cfebb1546eb8"
 dependencies = [
- "paste",
  "serde",
  "serde_json",
  "thiserror",
@@ -377,9 +376,9 @@ dependencies = [
 
 [[package]]
 name = "contained-derive"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d2d032ef76eea90f09abcedb2b43d63f0e379ba42c704c9c93f4de6fbcb27cf8"
+checksum = "5a0d713fb46a1a26564417a4a1d1c0fd40597a6c2409cd2cb0ea32be74ba38bd"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -388,9 +387,9 @@ dependencies = [
 
 [[package]]
 name = "contained-macros"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "28ada650c5f59f598eb5a86b7f9c8aeea18c417a50885b891238518afffe5557"
+checksum = "31a65fefd06ee0347d67c0d43ada8679ad0d6becf75c826be7f0fb3f3cc98aa7"
 dependencies = [
  "proc-macro2",
  "quote",
