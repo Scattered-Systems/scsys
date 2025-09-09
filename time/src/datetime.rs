@@ -22,6 +22,3 @@ pub struct DateTime {
     pub date: Date,
     pub time: Time,
 }
-
-#[cfg(test)]
-mod tests {}

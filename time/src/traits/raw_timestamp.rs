@@ -7,10 +7,27 @@
 pub trait RawTimestamp {
     private!();
 }
+/// The [`TimestampRepr`] trait provides a way of associating a raw timestamp type with its
+/// corresponding value type.
+pub trait TimestampRepr {
+    type Value;
+
+    private! {}
+}
 
 /*
  ************* Implementations *************
 */
+use crate::timestamp::Timestamp;
+
+impl<T> TimestampRepr for Timestamp<T>
+where
+    T: RawTimestamp,
+{
+    type Value = T;
+
+    seal!();
+}
 
 impl<T> RawTimestamp for &T
 where
