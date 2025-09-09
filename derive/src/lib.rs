@@ -11,6 +11,15 @@
 //! - [`Display`]: automatically implements the `Display` trait for a struct or enum, using the
 //!   `scsys` attributes to customize the output.
 //! - [`VariantConstructors`]: generate functional constructors for all variants of an enum
+#![allow(
+    non_snake_case,
+    clippy::module_inception,
+    clippy::missing_safety_doc,
+    clippy::needless_doctest_main,
+    clippy::upper_case_acronyms
+)]
+#![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(all(feature = "alloc", feature = "nightly"), feature(allocator_api))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/logo.png",
     html_favicon_url = "https://raw.githubusercontent.com/scattered-systems/.github/main/assets/favicon.ico"
