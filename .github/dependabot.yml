@@ -11,6 +11,7 @@ updates:
       - /core
       - /derive
       - /macros
+      - /state
       - /time
       - /traits
       - /utils

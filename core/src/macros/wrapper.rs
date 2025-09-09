@@ -3,6 +3,7 @@
     Contrib: @FL03
 */
 
+#[deprecated(since = "0.3.2", note = "use `contained::fmt_wrapper` instead")]
 ///
 ///
 /// ### Example

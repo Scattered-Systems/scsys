@@ -1,8 +1,11 @@
 /*
     Appellation: impl_state <module>
+    Created At: 2025.09.08:19:31:38
     Contrib: @FL03
 */
-use crate::state::{RawState, State};
+use crate::state::State;
+
+use crate::traits::RawState;
 use core::mem::MaybeUninit;
 
 impl<Q> State<&Q>
@@ -186,6 +189,16 @@ where
     }
 }
 
-fmt_wrapper! {
-    State<Q>(Binary, Debug, Display, LowerExp, UpperExp, LowerHex, UpperHex, Octal, Pointer)
+contained::fmt_wrapper! {
+    impl State<Q> {
+        Binary,
+        Debug,
+        Display,
+        LowerExp,
+        UpperExp,
+        LowerHex,
+        UpperHex,
+        Octal,
+        Pointer,
+    }
 }

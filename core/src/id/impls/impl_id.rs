@@ -78,16 +78,16 @@ where
     }
 }
 
-crate::fmt_wrapper! {
-    Id<T>(
-        Binary,
+contained::fmt_wrapper! {
+    impl Id<T> {
         Debug,
         Display,
         LowerExp,
+        UpperExp,
         LowerHex,
+        UpperHex,
+        Binary,
         Octal,
         Pointer,
-        UpperExp,
-        UpperHex
-    )
+    }
 }

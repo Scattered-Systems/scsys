@@ -39,6 +39,7 @@ scsys-config = { default-features = false, path = "config", version = "0.3.2" }
 scsys-crypto = { default-features = false, path = "crypto", version = "0.3.2" }
 scsys-derive = { default-features = false, path = "derive", version = "0.3.2" }
 scsys-macros = { default-features = false, path = "macros", version = "0.3.2" }
+scsys-state = { default-features = false, path = "state", version = "0.3.2" }
 scsys-time = { default-features = false, path = "time", version = "0.3.2" }
 scsys-traits = { default-features = false, path = "traits", version = "0.3.2" }
 scsys-util = { default-features = false, path = "utils", version = "0.3.2" }

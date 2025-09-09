@@ -4,16 +4,20 @@
     Contrib: @FL03
 */
 //! ths module implements various error-handling primitives and utilities
-//!
 #[cfg(feature = "alloc")]
 use alloc::{boxed::Box, string::String};
 
-/// a type alias for a [`Result`] type pre-configured with the [`Error`] type
+/// a type alias for a [`Result`](core::result::Result) that uses the custom [`Error`] type
 pub type Result<T = ()> = core::result::Result<T, Error>;
 
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum Error {
+    #[error(transparent)]
+    StateError(#[from] scsys_state::error::Error),
+    #[error(transparent)]
+    #[cfg(feature = "time")]
+    TimeError(#[from] scsys_time::error::Error),
     #[cfg(feature = "alloc")]
     #[error(transparent)]
     BoxError(#[from] Box<dyn core::error::Error + Send + Sync + 'static>),
