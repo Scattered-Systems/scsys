@@ -202,7 +202,7 @@ impl core::fmt::Display for DatabaseUriSchema {
 
 #[cfg(feature = "url")]
 impl core::str::FromStr for DatabaseUriSchema {
-    type Err = crate::ConfigError;
+    type Err = crate::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut schema: DatabaseUriSchema = Self::default();

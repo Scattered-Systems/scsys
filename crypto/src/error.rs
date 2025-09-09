@@ -2,38 +2,25 @@
     Appellation: error <module>
     Contrib: @FL03
 */
-/// a type alias for a [`Result`] type configured to use the [`CryptoError`] type
-pub type CryptoResult<T = ()> = core::result::Result<T, CryptoError>;
+//! this module provides error handling utilities for the `scsys-crypto` crate
+
+/// a type alias for a [`Result`](core::result::Result) with the error type fixed to [`Error`]
+pub type Result<T = ()> = core::result::Result<T, Error>;
+
 /// a custom error type for the `scsys-crypto` crate
 #[derive(Debug, thiserror::Error)]
-pub enum CryptoError {
-    #[cfg(feature = "anyhow")]
+pub enum Error {
     #[error(transparent)]
-    AnyError(#[from] anyhow::Error),
-    #[cfg(feature = "alloc")]
-    #[error(transparent)]
-    BoxError(#[from] alloc::boxed::Box<dyn core::error::Error + Send + Sync + 'static>),
-    #[cfg(feature = "std")]
-    #[error(transparent)]
-    IoError(#[from] std::io::Error),
-    #[cfg(feature = "json")]
-    #[error(transparent)]
-    JsonError(#[from] serde_json::Error),
-    #[cfg(feature = "alloc")]
-    #[error("Unknown error: {0}")]
-    Unknown(alloc::string::String),
+    CoreError(scsys_core::error::Error),
+    #[error("An unhashable object was provided")]
+    Unhashable,
 }
 
-#[cfg(feature = "alloc")]
-impl From<alloc::string::String> for CryptoError {
-    fn from(value: alloc::string::String) -> Self {
-        Self::Unknown(value)
-    }
-}
-
-#[cfg(feature = "alloc")]
-impl From<&str> for CryptoError {
-    fn from(value: &str) -> Self {
-        Self::Unknown(value.to_string())
+impl From<Error> for scsys_core::error::Error {
+    fn from(err: Error) -> Self {
+        match err {
+            Error::CoreError(e) => e,
+            e => scsys_core::error::Error::box_error(e),
+        }
     }
 }

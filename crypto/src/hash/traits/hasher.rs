@@ -10,7 +10,7 @@ pub trait Hasher {
     /// reset the hasher to its initial state
     fn clean(&mut self) -> &mut Self;
     /// finalize the hash and return the result
-    fn finish(&self) -> crate::CryptoResult<Self::Output>;
+    fn finish(&self) -> crate::Result<Self::Output>;
     /// update the hasher with new data
     fn include(&mut self, data: impl AsRef<[u8]>) -> &mut Self;
 }
@@ -29,7 +29,7 @@ impl Hasher for blake3::Hasher {
         self.reset()
     }
 
-    fn finish(&self) -> crate::CryptoResult<Self::Output> {
+    fn finish(&self) -> crate::Result<Self::Output> {
         // finalize the `blake3` hasher
         let hash = self.finalize();
         // convert the hash into the defined type before returning it

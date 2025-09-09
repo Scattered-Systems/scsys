@@ -42,16 +42,8 @@ pub mod traits {
     }
 }
 
-// pub mod types {
-//     #[doc(inline)]
-//     pub use self::prelude::*;
-
-//     pub(crate) mod prelude {
-//     }
-
-// }
-
 pub mod utils {
+    //! core utilities for the [`crypto`](crate) modules
     #[doc(inline)]
     pub use self::prelude::*;
 
@@ -64,8 +56,6 @@ pub mod utils {
 }
 
 pub mod prelude {
-    #[doc(inline)]
-    pub use crate::error::*;
 
     #[cfg(feature = "hash")]
     #[doc(no_inline)]
