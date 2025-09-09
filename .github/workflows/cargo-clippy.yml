@@ -54,7 +54,7 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
       - 
         name: Setup cargo-binstall
-        uses: cargo-bins/cargo-binstall@v1.15.3
+        uses: cargo-bins/cargo-binstall@v1.15.4
       -
         name: Install clippy-sarif and sarif-fmt
         run: cargo binstall -qy --force clippy-sarif sarif-fmt
