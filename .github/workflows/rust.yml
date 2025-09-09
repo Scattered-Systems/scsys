@@ -35,13 +35,14 @@ on:
         required: true
         type: boolean
 
-permissions:
-  actions: read
-  contents: write
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -89,6 +90,9 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -120,6 +124,9 @@ jobs:
   test_nightly:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
     strategy:
       fail-fast: false
       matrix:

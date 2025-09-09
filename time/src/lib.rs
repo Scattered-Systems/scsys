@@ -7,9 +7,7 @@
 //! It provides a generic [`Timestamp`] along with supporting traits and types to facilitate
 //! time management.
 //!
-//! ## Traits
-//!
-//! The crate defines several key traits to support time functionalities:
+//! Additionally, the crate defines several key traits to support time functionalities:
 //!
 //! - [`RawTimestamp`] - A marker trait denoting compatible raw timestamp types
 //! - [`Now`] - A trait for obtaining the current time
@@ -36,40 +34,29 @@ compile_error!(
     "Either feature \"alloc\" or feature \"std\" must be enabled for the `time` crate to compile."
 );
 
-#[macro_use]
-pub(crate) mod macros {
-    #[macro_use]
-    pub mod seal;
-}
+#[doc(inline)]
+pub use self::{
+    epoch::Epoch,
+    error::{Error, Result},
+    timestamp::Timestamp,
+    traits::*,
+};
 
 #[doc(inline)]
 #[cfg(feature = "std")]
 pub use self::utils::*;
-#[doc(inline)]
-pub use self::{
-    error::{Error, Result},
-    timestamp::Timestamp,
-    traits::*,
-    types::*,
-};
 
+pub mod epoch;
 pub mod error;
 pub mod timestamp;
 
-pub mod types {
-    //! this module contains various implementations used to support `time` related features
-    #[doc(inline)]
-    pub use self::prelude::*;
+#[doc(hidden)]
+pub mod datetime;
 
-    mod datetime;
-    mod epoch;
-
-    mod prelude {
-        #[doc(inline)]
-        pub use super::datetime::*;
-        #[doc(inline)]
-        pub use super::epoch::*;
-    }
+#[macro_use]
+pub(crate) mod macros {
+    #[macro_use]
+    pub mod seal;
 }
 
 pub mod traits {
@@ -79,12 +66,15 @@ pub mod traits {
 
     mod now;
     mod raw_timestamp;
+    mod temporal;
 
     mod prelude {
         #[doc(inline)]
         pub use super::now::*;
         #[doc(inline)]
         pub use super::raw_timestamp::*;
+        #[doc(hidden)]
+        pub use super::temporal::*;
     }
 }
 
@@ -111,6 +101,9 @@ pub mod utils {
 
 #[doc(hidden)]
 pub mod prelude {
+    pub use crate::epoch::Epoch;
     pub use crate::timestamp::Timestamp;
     pub use crate::traits::*;
+    #[cfg(feature = "std")]
+    pub use crate::utils::*;
 }
