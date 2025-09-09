@@ -6,6 +6,7 @@ use super::Timestamp;
 use crate::traits::RawTimestamp;
 
 #[doc(hidden)]
+#[allow(clippy::should_implement_trait)]
 impl<T> Timestamp<T>
 where
     T: RawTimestamp,
