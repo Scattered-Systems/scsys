@@ -1,7 +1,7 @@
 [package]
 build = "build.rs"
-description = "temporal abstractions, primitives, and utilities for the scsys ecosystem"
-name = "scsys-time"
+description = "generic state implementations and utilities for the scsys ecosystem"
+name = "scsys-state"
 
 authors.workspace = true
 categories.workspace = true
@@ -25,7 +25,7 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [lib]
-crate-type = ["cdylib", "rlib", "staticlib"]
+crate-type = ["cdylib", "rlib","staticlib"]
 bench = false
 doc = true
 doctest = true
@@ -35,15 +35,20 @@ test = true
 name = "default"
 
 [[test]]
-name = "time"
-required-features = ["std", "time"]
+name = "state"
+required-features = []
 
 [dependencies]
+# custom
 contained = { workspace = true }
 # error-handling
 thiserror = { workspace = true }
 # mathematics
 num-traits = { workspace = true }
+# randomization
+getrandom = { optional = true, workspace = true }
+rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
 # serialization
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
@@ -52,26 +57,24 @@ serde_json = { optional = true, workspace = true }
 paste = { workspace = true }
 smart-default = { workspace = true }
 strum = { workspace = true }
-# time
-chrono = { optional = true, workspace = true }
-time = { optional = true, workspace = true }
 # wasm
 wasm-bindgen = { optional = true, workspace = true }
 
 [features]
 default = [ 
   "std",
-  "time",
 ]
 
 full = [
   "default",
-  "chrono",
   "json",
+  "rand",
   "serde",
 ]
 
-nightly = []
+nightly = [
+  "rand?/nightly",
+]
 
 # ************* [FF:Features] *************
 
@@ -87,10 +90,12 @@ std = [
   "alloc",
   "contained/std",
   "num-traits/std",
+  "getrandom?/std",
+  "rand?/std",
+  "rand_distr?/std",
   "serde?/std",
   "strum/std",
   "thiserror/std",
-  "time?/std",
 ]
 
 wasi = [
@@ -99,41 +104,34 @@ wasi = [
 
 wasm = [
   "alloc",
-  "chrono?/js-sys",
+  "getrandom?/wasm_js",
   "wasm-bindgen",
 ]
 
 # ************* [FF:Dependencies] *************
 alloc = [
-  "chrono?/alloc",
   "contained/alloc",
   "serde?/alloc",
   "serde_json?/alloc",
-  "time?/alloc",
-]
-
-chrono = [
-  "dep:chrono",
-  "chrono?/clock",
 ]
 
 rand = [
-  "time?/rand",
+  "dep:rand",
+  "dep:rand_distr",
+  "rng",
+]
+
+rng = [
+  "dep:getrandom",
 ]
 
 serde = [
   "dep:serde",
   "dep:serde_derive",
-  "chrono?/serde",
-  "time?/serde",
+  "rand?/serde",
+  "rand_distr?/serde",
 ]
 
 serde_json = ["dep:serde_json"]
 
-time = ["dep:time"]
-
-wasm-bindgen = [
-  "dep:wasm-bindgen",
-  "chrono?/wasmbind",
-  "time?/wasm-bindgen",
-]
+wasm-bindgen = ["dep:wasm-bindgen"]

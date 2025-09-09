@@ -14,9 +14,6 @@
 //! suited for use outside of the ecosystem as well providing useful primitives such as:
 //!
 //! - [`Id`](id::Id) - a generic identifier type
-//! - [`State`] and [`StateBase`]: dual approaches w.r.t. state management
-//! - [`Timestamp`] (requires the `time` feature): a generic _timestamp_ type implementing
-//!   [`Now`]
 //!
 #![allow(
     non_snake_case,
@@ -42,6 +39,8 @@ pub use rand;
 pub use rand_distr;
 
 #[doc(inline)]
+pub use scsys_state as state;
+#[doc(inline)]
 #[cfg(feature = "time")]
 pub use scsys_time as time;
 
@@ -53,18 +52,17 @@ pub(crate) mod macros {
     pub mod seal;
     #[macro_use]
     pub mod wrapper;
-    #[macro_use]
-    pub mod wrapper_ops;
 }
 
 #[doc(inline)]
 pub use self::{
     error::{Error, Result},
     id::Id,
-    state::{NState, State, StateBase, StateRepr, Stateful},
     types::prelude::*,
 };
 
+#[doc(inline)]
+pub use scsys_state::{NState, State, StateBase, StateRepr, Stateful};
 #[cfg(feature = "time")]
 pub use scsys_time::{Now, RawTimestamp, Timestamp};
 
@@ -74,8 +72,6 @@ pub mod cont;
 pub mod error;
 /// this module defines the generic [`Id`] wrapper and its implementations
 pub mod id;
-/// this module provides a set of states for state-related workloads ([`State`] & [`NState`])
-pub mod state;
 
 pub mod types {
     #[doc(inline)]

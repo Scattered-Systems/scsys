@@ -1,8 +1,11 @@
 /*
-    Appellation: impl_ops <module>
+    Appellation: impl_state_ops <module>
+    Created At: 2025.09.08:19:31:32
     Contrib: @FL03
 */
-use crate::state::{RawState, State};
+use crate::state::State;
+
+use crate::traits::RawState;
 use num_traits::{Num, One, Zero};
 
 impl<Q> One for State<Q>
@@ -38,24 +41,24 @@ where
     }
 }
 
-impl_wrapper_binary! {
-    State::<[
+contained::binary_wrapper! {
+    impl State {
         Add.add,
-        Sub.sub,
-        Mul.mul,
         Div.div,
+        Mul.mul,
+        Sub.sub,
         Rem.rem,
         BitAnd.bitand,
         BitOr.bitor,
         BitXor.bitxor,
         Shl.shl,
-        Shr.shr
-    ]>
+        Shr.shr,
+    }
 }
 
-impl_wrapper_unary! {
-    State::<[
+contained::impl_wrapper_unary! {
+    State {
         Neg.neg,
-        Not.not
-    ]>
+        Not.not,
+    }
 }

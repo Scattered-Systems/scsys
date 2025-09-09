@@ -35,8 +35,10 @@ test = true
 name = "default"
 
 [dependencies]
-# custom
+scsys-state = { workspace = true }
 scsys-time = { optional = true, workspace = true }
+# custom
+contained = { workspace = true }
 # error-handling
 thiserror = { workspace = true }
 # mathematics
@@ -82,17 +84,19 @@ full = [
 
 json = [
   "alloc",
+  "scsys-state/json",
   "scsys-time?/json",
   "serde",
   "serde_json",
 ]
 
 nightly = [
+  "scsys-state/nightly",
   "scsys-time?/nightly",
 ]
 
 time = [
-  "alloc",
+  "std",
   "dep:scsys-time",
 ]
 
@@ -100,6 +104,8 @@ time = [
 
 std = [
   "alloc",
+  "contained/std",
+  "scsys-state/std",
   "scsys-time?/std",
   "num-traits/std",
   "rand?/std",
@@ -113,11 +119,13 @@ std = [
 
 wasi = [
   "alloc",
+  "scsys-state/wasi",
   "scsys-time?/wasi",
 ]
 
 wasm = [
   "alloc",
+  "scsys-state/wasm",
   "scsys-time?/wasm",
   "wasm-bindgen",
   "getrandom?/wasm_js",
@@ -127,6 +135,8 @@ wasm = [
 # ************* [FF:Dependencies] *************
 
 alloc = [
+  "contained/alloc",
+  "scsys-state/alloc",
   "scsys-time?/alloc",
   "serde?/alloc",
   "serde_json?/alloc",
@@ -139,11 +149,14 @@ chrono = [
 rand = [
   "dep:rand",
   "dep:rand_distr",
+  "scsys-state/rand",
+  "scsys-time?/rand",
   "rng",
 ]
 
 rng = [
   "dep:getrandom",
+  "scsys-state/rng",
   "rand?/small_rng",
   "rand?/thread_rng",
   "uuid?/rng",
@@ -153,6 +166,7 @@ rng = [
 serde = [
   "dep:serde",
   "dep:serde_derive",
+  "scsys-state/serde",
   "scsys-time?/serde",
   "rand?/serde",
   "uuid?/serde",
@@ -160,6 +174,7 @@ serde = [
 
 serde_json = [
   "dep:serde_json",  
+  "scsys-state/serde_json",
   "scsys-time?/serde_json",
 ]
 
@@ -172,5 +187,6 @@ uuid = [
 
 wasm-bindgen = [
   "dep:wasm-bindgen",  
+  "scsys-state/wasm-bindgen",
   "scsys-time?/wasm-bindgen",
 ]

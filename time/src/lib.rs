@@ -31,6 +31,11 @@
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
+#[cfg(not(any(feature = "alloc", feature = "std")))]
+compile_error!(
+    "Either feature \"alloc\" or feature \"std\" must be enabled for the `time` crate to compile."
+);
+
 #[macro_use]
 pub(crate) mod macros {
     #[macro_use]

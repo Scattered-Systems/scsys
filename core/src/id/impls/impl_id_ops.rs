@@ -5,8 +5,6 @@
 use crate::id::Id;
 use num_traits::{Num, One, Zero};
 
-impl<T> Id<T> {}
-
 impl<T> One for Id<T>
 where
     T: One,
@@ -40,8 +38,8 @@ where
     }
 }
 
-impl_wrapper_binary! {
-    Id::<[
+contained::binary_wrapper! {
+    impl Id {
         Add.add,
         Sub.sub,
         Mul.mul,
@@ -52,12 +50,12 @@ impl_wrapper_binary! {
         BitXor.bitxor,
         Shl.shl,
         Shr.shr
-    ]>
+    }
 }
 
-impl_wrapper_unary! {
-    Id::<[
+contained::impl_wrapper_unary! {
+    Id {
         Neg.neg,
         Not.not
-    ]>
+    }
 }
