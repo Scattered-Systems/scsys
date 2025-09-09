@@ -13,8 +13,8 @@ on:
     branches: [ main, master, $default-branch ]
     types: [ opened, reopened, synchronize, ready_for_review ]
     paths:
-      - ".github/workflows/cargo-clippy.yml"
-      - "**.rs"
+      - ".github/workflows/rust.yml"
+      - "**/*.rs"
       - "**/Cargo.toml"
       - "**/Cargo.lock"
   push:
@@ -34,6 +34,10 @@ on:
         description: 'Run tests with the nightly toolchain?'
         required: true
         type: boolean
+
+permissions:
+  actions: read
+  contents: write
 
 jobs:
   build:
@@ -56,7 +60,7 @@ jobs:
         name: Build the workspace
         run: cargo build -r --locked --workspace --features full --target ${{ matrix.target }}
   benchmark:
-    if: github.event_name == 'repository_dispatch' || github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') || github.event.inputs.benchmark == 'true'
+    if: github.event.inputs.benchmark || github.event_name == 'repository_dispatch' || github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     needs: build
     runs-on: ubuntu-latest
     outputs:
@@ -64,8 +68,8 @@ jobs:
       id: ${{ steps.benchmark.outputs.id }}
       url: ${{ steps.benchmark.outputs.url }}
     permissions:
+      actions: read
       contents: write
-      checks: write
     steps:
       -
         name: Checkout
