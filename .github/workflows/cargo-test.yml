@@ -1,0 +1,70 @@
+name: cargo-test
+
+concurrency:
+  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  push:
+    tags: [ latest, v* ]
+    paths:
+      - "**/*.rs"
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
+  repository_dispatch:
+    types: [ cargo-test ]
+  workflow_dispatch:
+    inputs:
+      target:
+        default: x86_64-unknown-linux-gnu
+        description: "Select the target to compile for"
+        required: false
+        type: string
+      toolchain:
+        default: stable
+        description: "Select a toolchain to test (stable, nightly)"
+        required: true
+        type: choice
+        options: [ stable, nightly ]
+
+jobs:
+  test:
+    name: Test the workspace
+    runs-on: ubuntu-latest
+    env:
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: full
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        features: [ full, default ]
+        include:
+          - target: ${{ github.event.inputs.target || 'x86_64-unknown-linux-gnu' }}
+            toolchain: ${{ github.event.inputs.toolchain || 'stable' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.client_payload.ref  || github.ref }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup the job
+        run: |
+          if [[ "${{ matrix.toolchain }}" == "nightly" ]]; then
+            echo "RUSTFLAGS='-C panic=abort -Z panic_abort_tests'" >> $GITHUB_ENV
+          fi
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          target: ${{ matrix.target }}
+          toolchain: ${{ matrix.toolchain }}
+          override: true
+      - name: cargo test (${{ matrix.features }})
+        run: |
+          cargo test --release --locked --workspace \
+            --features ${{ matrix.features }} \
+            --target ${{ matrix.target }}

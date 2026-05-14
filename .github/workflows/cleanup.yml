@@ -2,17 +2,17 @@ name: cleanup
 
 on:
   pull_request:
-    types:
-      - closed
+    types: [ closed ]
 
 jobs:
   cache_cleanup:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       actions: write
+      contents: read
+      pull-requests: read
     steps:
-      -
-        name: Cleanup
+      - name: Cleanup
         run: |
           echo "Fetching list of cache keys"
           cacheKeysForPR=$(gh cache list --ref $BRANCH --limit 100 --json id --jq '.[].id')

@@ -1,0 +1,175 @@
+name: cargo-build
+
+concurrency:
+  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  push:
+    tags: [latest, v*, "*-nightly"]
+    paths:
+      - "**/*.rs"
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
+  repository_dispatch:
+    types: [cargo-build]
+  workflow_dispatch:
+    inputs:
+      target:
+        default: x86_64-unknown-linux-gnu
+        description: "Select the target to compile for"
+        required: false
+        type: choice
+        options:
+          [
+            x86_64-unknown-linux-gnu,
+            wasm32-unknown-unknown,
+            wasm32-wasip1,
+            wasm32-wasip2,
+          ]
+      toolchain:
+        default: stable
+        description: "Select a toolchain to test (stable, nightly)"
+        required: true
+        type: choice
+        options: [stable, nightly]
+
+jobs:
+  workspace:
+    name: Build the workspace
+    runs-on: ubuntu-latest
+    env:
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: full
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        features: [full, default]
+        include:
+          - target: ${{ github.event.inputs.target || 'x86_64-unknown-linux-gnu' }}
+            toolchain: ${{ github.event.inputs.toolchain || 'stable' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.client_payload.ref  || github.ref }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup the job
+        run: |
+          if [[ "${{ matrix.toolchain }}" == "nightly" ]]; then
+            echo "RUSTFLAGS='-C panic=abort -Z panic_abort_tests'" >> $GITHUB_ENV
+          fi
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          target: ${{ matrix.target }}
+          toolchain: ${{ matrix.toolchain }}
+          override: true
+      - name: cargo build (${{ matrix.features }})
+        run: |
+          cargo build --release --lib --locked --workspace \
+            --features ${{ matrix.features }} \
+            --target ${{ matrix.target }}
+  bin:
+    name: Build (bins)
+    runs-on: ubuntu-latest
+    env:
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: full
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        features: [full, default]
+        include:
+          - target: ${{ github.event.inputs.target || 'x86_64-unknown-linux-gnu' }}
+            toolchain: ${{ github.event.inputs.toolchain || 'stable' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.client_payload.ref  || github.ref }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup the job
+        run: |
+          if [[ "${{ matrix.toolchain }}" == "nightly" ]]; then
+            echo "RUSTFLAGS='-C panic=abort -Z panic_abort_tests'" >> $GITHUB_ENV
+          fi
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          target: ${{ matrix.target }}
+          toolchain: ${{ matrix.toolchain }}
+          override: true
+      - name: cargo build (${{ matrix.features }})
+        run: |
+          cargo build -r --bins --locked --workspace \
+            --features ${{ matrix.features }} \
+            --target ${{ matrix.target }}
+  wasi:
+    name: WebAssembly Components
+    runs-on: ubuntu-latest
+    env:
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: full
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [axiom-cmp-bms, axiom-cmp-quad]
+        target: [wasm32-wasip1, wasm32-wasip2]
+        include:
+          - features: "default,wasi"
+            target: wasm32-wasip2
+            toolchain: ${{ github.event.inputs.toolchain || 'stable' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.client_payload.ref  || github.ref }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup dependencies
+        run: sudo apt-get install -y pkg-config libssl-dev build-essential
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          target: ${{ matrix.target }}
+          toolchain: ${{ matrix.toolchain }}
+          override: true
+      - name: Setup cargo-component
+        if: matrix.target == 'wasm32-wasip1'
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-component
+      - name: Build
+        if: matrix.target == 'wasm32-wasip1'
+        run: |
+          cargo component build -r --locked --workspace \
+            --package ${{ matrix.package }} \
+            --features ${{ matrix.features }} \
+            --target ${{ matrix.target }}
+      - name: Build
+        if: matrix.target == 'wasm32-wasip2'
+        run: |
+          cargo build -r --locked --workspace \
+            --package ${{ matrix.package }} \
+            --features ${{ matrix.features }} \
+            --target ${{ matrix.target }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: components-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/*.wasm
