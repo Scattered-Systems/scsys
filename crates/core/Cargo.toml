@@ -106,6 +106,7 @@ alloc = [
 
 std = [
   "alloc",
+  "anyhow/std",
   "contained/std",
   "scsys-state/std",
   "scsys-time?/std",
