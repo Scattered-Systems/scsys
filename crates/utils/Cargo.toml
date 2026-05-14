@@ -26,14 +26,6 @@ tag-name = "{{version}}"
 
 [lib]
 bench = false
-crate-type = [
-  "cdylib",
-  "rlib",
-  "staticlib",
-]
-doc = true
-doctest = true
-test = true
 
 [dev-dependencies]
 anyhow = { workspace = true }

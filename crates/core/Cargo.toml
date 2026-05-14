@@ -25,11 +25,7 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [lib]
-crate-type = ["cdylib", "rlib", "staticlib"]
 bench = false
-doc = true
-doctest = false
-test = true
 
 [[test]]
 name = "default"
@@ -40,8 +36,10 @@ scsys-time = { optional = true, workspace = true }
 # custom
 contained = { workspace = true }
 # error-handling
+anyhow = { workspace = true }
 thiserror = { workspace = true }
 # mathematics
+approx = { optional = true, workspace = true }
 num-traits = { workspace = true }
 # randomization
 getrandom = { optional = true, workspace = true }
@@ -63,9 +61,6 @@ tracing = { optional = true, workspace = true }
 wasm-bindgen = { optional = true, workspace = true }
 
 [dev-dependencies]
-anyhow = { workspace = true }
-approx = { workspace = true }
-
 [features]
 default = [ 
   "std",
@@ -100,7 +95,14 @@ time = [
   "dep:scsys-time",
 ]
 
-# ************* [FF:Environments] *************
+# ********* [FF] Standard Library *********
+alloc = [
+  "contained/alloc",
+  "scsys-state/alloc",
+  "scsys-time?/alloc",
+  "serde?/alloc",
+  "serde_json?/alloc",
+]
 
 std = [
   "alloc",
@@ -116,6 +118,8 @@ std = [
   "tracing?/std",
   "uuid?/std",
 ]
+
+# ************* [FF:Targets] *************
 
 wasi = [
   "alloc",
@@ -134,13 +138,7 @@ wasm = [
 
 # ************* [FF:Dependencies] *************
 
-alloc = [
-  "contained/alloc",
-  "scsys-state/alloc",
-  "scsys-time?/alloc",
-  "serde?/alloc",
-  "serde_json?/alloc",
-]
+approx = ["dep:approx"]
 
 chrono = [
   "scsys-time?/chrono",

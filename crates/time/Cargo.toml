@@ -25,11 +25,7 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [lib]
-crate-type = ["cdylib", "rlib", "staticlib"]
 bench = false
-doc = true
-doctest = true
-test = true
 
 [[test]]
 name = "default"

@@ -25,15 +25,7 @@ no-dev-version = true
 tag-name = "v{{version}}"
 
 [lib]
-crate-type = [
-  "cdylib",
-  "rlib",
-  "staticlib"
-]
 bench = true
-doc = true
-doctest = true
-test = true
 
 [dependencies]
 scsys-core = { workspace = true }

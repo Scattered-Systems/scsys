@@ -26,13 +26,6 @@ tag-name = "{{version}}"
 
 [lib]
 bench = false
-crate-type = [
-  "cdylib",
-  "rlib",
-]
-doc = true
-doctest = true
-test = true
 
 [dependencies]
 # sdk

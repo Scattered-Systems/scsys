@@ -112,7 +112,7 @@ fi
 # ------ doc/build/test/bench
 
 if $DO_DOC; then
-    step "cargo doc --locked --workspace --no-deps --document-private-items"
+    step "cargo doc"
     cargo doc --locked --workspace --no-deps --document-private-items
     echo "   open target/doc/axiom/all.html"
 fi
@@ -120,11 +120,12 @@ fi
 if $DO_BUILD; then
     step "cargo build"
     cargo build -r --workspace --locked --bins
+    echo "  built project executables"
 fi
 
 if $DO_TEST; then
-    step "cargo test --workspace --features full"
-    cargo test --lib --workspace --features full
+    step "cargo test"
+    cargo test --lib --workspace && cargo test --lib --workspace --features full
 fi
 
 echo "✓ done"

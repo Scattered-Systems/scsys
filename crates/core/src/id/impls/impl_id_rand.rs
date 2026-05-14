@@ -3,6 +3,7 @@
     authors: @FL03
 */
 use crate::id::Id;
+use rand::{Rng, RngExt};
 use rand_distr::uniform::{SampleRange, SampleUniform};
 use rand_distr::{Distribution, StandardNormal, StandardUniform};
 
@@ -12,9 +13,7 @@ impl<T> Id<T> {
     where
         StandardUniform: Distribution<T>,
     {
-        use rand::Rng;
-        let mut rng = rand::rng();
-        Self::new(rng.random())
+        Self::random_with(&mut rand::rng(), StandardUniform)
     }
 
     pub fn random_between<R>(range: R) -> Self
@@ -27,10 +26,9 @@ impl<T> Id<T> {
     /// generate a random index from a value of type `T` using the provided [`Rng`](rand::Rng)
     pub fn random_with<R, Dist>(rng: &mut R, distr: Dist) -> Self
     where
-        R: ?Sized + rand::RngCore,
+        R: ?Sized + Rng,
         Dist: Distribution<T>,
     {
-        use rand::Rng;
         // generate a random u128 and cast it to usize
         let rid = rng.sample(distr);
         // cast the random u128 to usize

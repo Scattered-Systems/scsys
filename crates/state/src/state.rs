@@ -59,7 +59,7 @@ where
     where
         rand_distr::StandardUniform: rand_distr::Distribution<Q>,
     {
-        use rand::Rng;
+        use rand::RngExt;
         let mut rng = rand::rng();
         Self::new(rng.random())
     }
@@ -67,9 +67,9 @@ where
     pub fn random_with<R, Dist>(rng: &mut R, distr: Dist) -> Self
     where
         Dist: rand_distr::Distribution<Q>,
-        R: rand::RngCore,
+        R: rand::Rng,
     {
-        use rand::Rng;
+        use rand::RngExt;
         // sample a value using the given rng configured with the given distribution
         let value = rng.sample(distr);
         // return a new instance of the state with the sampled value
