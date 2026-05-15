@@ -15,7 +15,7 @@
       {
         packages.default = rustPlatform.buildRustPackage {
           pname = "scsys";
-          version = "0.2.5";
+          version = "0.3.3";
           src = "./.";
           # If Cargo.lock doesn't exist yet, remove or comment out this block:
           cargoLock = {
@@ -26,7 +26,6 @@
 
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [
-            pkgs.cargo-binstall
             pkgs.cargo-watch
             pkgs.cargo-nextest
             pkgs.clippy
@@ -34,7 +33,8 @@
           ];
           shellHook = ''
             echo "Welcome to the dev shell!"
-            # Add any additional environment setup here
+            cargo install cargo-binstall
+            cargo binstall -y wasm-pack
           '';
         };
       }
