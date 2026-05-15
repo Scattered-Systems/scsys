@@ -33,8 +33,7 @@
 ///     }
 /// }
 ///
-/// #[test]
-/// fn test_sample_gsw_impls() {
+/// fn main() {
 ///     let mut sample = Sample::<&str>::default().with_a(10).with_store(vec![1, 2, 3]);
 ///     sample.set_b(3.14).set_c("hello");
 ///     assert_eq!(sample.a(), 10);

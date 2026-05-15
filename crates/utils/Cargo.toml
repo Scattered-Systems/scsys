@@ -17,7 +17,7 @@ version.workspace = true
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
-rustc-args = [ "--cfg", "docsrs" ]
+rustc-args = ["--cfg", "docsrs"]
 version = "v{{version}}"
 
 [package.metadata.release]
@@ -25,15 +25,7 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [lib]
-crate-type = [
-    "cdylib",
-    "rlib",
-    "staticlib",
-]
 bench = false
-doc = true
-doctest = true
-test = true
 
 [dev-dependencies]
 anyhow = { workspace = true }
@@ -43,7 +35,9 @@ serde_json = { workspace = true }
 # math
 num-traits = { workspace = true }
 # random
+getrandom = { optional = true, workspace = true }
 rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
 # serialization
 serde = { optional = true, workspace = true }
 serde_derive = { optional = true, workspace = true }
@@ -52,75 +46,97 @@ serde_json = { optional = true, workspace = true }
 strum = { workspace = true }
 # tracing
 tracing = { optional = true, workspace = true }
+# wasm
+wasm-bindgen = { optional = true, workspace = true }
 
 [features]
 default = [
-    "std",
-    "fs",
+  "std",
+  "fs",
 ]
 
 full = [
-    "default",
-    "json",
-    "rand",
-    "serde",
-    "tracing",
+  "default",
+  "json",
+  "rand",
+  "serde",
+  "tracing",
 ]
 
-nightly = []
+
 
 # ************* [FF:Features] *************
 fs = [
-    "std",
+  "std",
 ]
 
-# ************* [FF:Environments] *************
+# ********* [FF] Standard Library *********
+alloc = [
+  "serde?/alloc",
+  "serde_json?/alloc",
+]
+
 std = [
-    "alloc",
-    "num-traits/std",
-    "rand?/std",
-    "rand?/std_rng",
-    "serde?/std",
-    "strum/std",
-    "tracing?/std",
+  "alloc",
+  "num-traits/std",
+  "rand?/default",
+  "rand_distr?/std",
+  "serde?/std",
+  "strum/std",
+  "tracing?/std",
+  "wasm-bindgen?/std",
 ]
 
-wasi = []
+# ********* [FF] Targets *********
+nightly = []
 
-wasm = []
+wasi = [
+  "std"
+]
+
+wasm = [
+  "std",
+  "wasm_bindgen",
+  "getrandom?/wasm_js",
+]
 
 # ************* [FF:Dependencies] *************
-alloc = [
-    "serde?/alloc",
-    "serde_json?/alloc",
-]
 
 json = [
-    "alloc",
-    "serde",
-    "serde_json",
+  "alloc",
+  "serde",
+  "serde_json",
 ]
 
 rand = [
-    "dep:rand",
-    "rng",
+  "dep:rand",
+  "dep:rand_distr",
+  "rng",
 ]
 
 rng = [
-    "rand?/small_rng",
-    "rand?/thread_rng",
+  "dep:getrandom",
+  "getrandom?/sys_rng",
+  "rand?/sys_rng",
 ]
 
 serde = [
-    "dep:serde",
-    "dep:serde_derive",
-    "serde?/derive",
-    "rand?/serde",
+  "dep:serde",
+  "dep:serde_derive",
+  "serde?/derive",
+  "rand?/serde",
+  "rand_distr?/serde",
+  "wasm-bindgen?/serde-serialize",
 ]
 
-serde_json = ["dep:serde_json"]
+serde_json = [
+  "dep:serde_json",
+  "wasm-bindgen?/serde_json",
+]
 
 tracing = ["dep:tracing"]
+
+wasm_bindgen = ["dep:wasm-bindgen"]
 
 # ************* [Unit Tests] *************
 [[test]]

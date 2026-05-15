@@ -17,7 +17,7 @@ version.workspace = true
 [package.metadata.docs.rs]
 all-features = false
 features = ["full"]
-rustc-args = [ "--cfg", "docsrs" ]
+rustc-args = ["--cfg", "docsrs"]
 version = "v{{version}}"
 
 [package.metadata.release]
@@ -25,33 +25,25 @@ no-dev-version = true
 tag-name = "{{version}}"
 
 [lib]
-crate-type = [
-    "cdylib",
-    "rlib",
-]
 bench = false
-doc = true
-doctest = true
-test = true
 
 [dependencies]
 num-traits = { workspace = true }
 
-
 [features]
 default = [
-    "std",
+  "std",
 ]
 
 full = [
-    "default"
+  "default",
 ]
 
 nightly = []
 
 # ************* [FF:Environments] *************
 std = [
-    "alloc",
+  "alloc",
 ]
 
 wasi = []
@@ -60,7 +52,6 @@ wasm = []
 
 # ************* [FF:Dependencies] *************
 alloc = []
-
 
 # ************* [Unit Tests] *************
 [[test]]

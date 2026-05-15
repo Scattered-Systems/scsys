@@ -1,0 +1,210 @@
+[package]
+build = "build.rs"
+description = "cryptographic primitives and utilities for the scsys ecosystem"
+name = "scsys-crypto"
+
+authors.workspace = true
+categories.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = ["--cfg", "docsrs"]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
+[lib]
+bench = false
+
+[dependencies]
+# sdk
+scsys-core = { workspace = true }
+
+# crate-specific
+blake3 = { default-features = false, optional = true, version = "1" }    # { optional = true, workspace = true }
+digest = { default-features = false, optional = true, version = "0.11" } # { optional = true, workspace = true }
+generic-array = { default-features = false, version = "1" }              # { workspace = true }
+typenum = { default-features = false, version = "1" }                    # { workspace = true }
+# concurrency & parallelism
+rayon = { optional = true, workspace = true }
+# data & serialization
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+# errors
+anyhow = { optional = true, workspace = true }
+thiserror = { workspace = true }
+# randomization
+getrandom = { optional = true, workspace = true }
+rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
+uuid = { optional = true, workspace = true }
+# time
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
+# macros
+paste = { workspace = true }
+smart-default = { workspace = true }
+strum = { workspace = true }
+# logging
+tracing = { optional = true, workspace = true }
+
+[features]
+default = [
+  "blake3",
+  "hash",
+  "std",
+]
+
+full = [
+  "default",
+  "chrono",
+  "rayon",
+  "json",
+  "rand",
+  "serde",
+  "time",
+  "tracing",
+  "uuid",
+]
+
+nightly = [
+  "scsys-core/nightly",
+]
+
+# ************* [FF:Features] *************
+hash = [
+  "digest",
+]
+
+json = [
+  "alloc",
+  "serde",
+  "serde_json",
+]
+
+# ************* [FF:Environments] *************
+
+wasi = [
+  "scsys-core/wasi",
+]
+
+wasm = [
+  "scsys-core/wasm",
+  "chrono?/wasmbind",
+  "getrandom?/wasm_js",
+  "time?/wasm-bindgen",
+  "uuid?/js",
+]
+
+# ********* [FF] Standard Library *********
+alloc = [
+  "chrono?/alloc",
+  "digest?/alloc",
+  "generic-array/alloc",
+  "scsys-core/alloc",
+  "serde?/alloc",
+  "serde_json?/alloc",
+  "time?/alloc",
+]
+
+std = [
+  "alloc",
+  "blake3?/std",
+  "digest?/default",
+  "rand?/default",
+  "rand_distr?/std",
+  "serde?/std",
+  "strum/std",
+  "thiserror/std",
+  "time?/std",
+  "tracing?/std",
+  "uuid?/std",
+]
+
+# ************* [FF:Dependencies] *************
+
+blake3 = ["dep:blake3"]
+
+chrono = [
+  "dep:chrono",
+  "chrono?/clock",
+  "scsys-core/chrono",
+  "time",
+]
+
+digest = [
+  "dep:digest",
+  "blake3?/digest",
+]
+
+rand = [
+  "dep:rand",
+  "dep:rand_distr",
+  "scsys-core/rand",
+  "rng",
+]
+
+rayon = [
+  "dep:rayon",
+  "blake3?/rayon",
+]
+
+rng = [
+  "dep:getrandom",
+  "getrandom?/sys_rng",
+  "rand?/sys_rng",
+  "scsys-core/rng",
+  "uuid?/v4",
+]
+
+serde = [
+  "dep:serde",
+  "dep:serde_derive",
+  "chrono?/serde",
+  "generic-array/serde",
+  "rand?/serde",
+  "scsys-core/serde",
+  "uuid?/serde",
+  "time?/serde",
+]
+
+serde_json = [
+  "dep:serde_json",
+  "scsys-core/serde_json",
+]
+
+time = [
+  "dep:time",
+  "scsys-core/time",
+]
+
+tracing = [
+  "dep:tracing",
+  "scsys-core/tracing",
+]
+
+uuid = [
+  "dep:uuid",
+  "scsys-core/uuid",
+  "uuid?/v3",
+]
+
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"
+
+[[test]]
+name = "h256"
+required-features = ["hash", "rand", "std"]

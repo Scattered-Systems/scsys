@@ -5,9 +5,10 @@
 **/.artifacts/data/
 **/.docker/data/
 
+
 **/.cache/
 **/.cache-*/
-**/.direnv/*
+**/.direnv
 **/.temp/
 **/.tmp/
 

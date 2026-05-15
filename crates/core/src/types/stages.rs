@@ -78,6 +78,7 @@ where
     }
 }
 
+#[allow(clippy::derivable_impls)]
 impl Default for Stage {
     fn default() -> Self {
         Self::Before

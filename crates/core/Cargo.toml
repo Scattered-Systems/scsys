@@ -1,0 +1,191 @@
+[package]
+build = "build.rs"
+description = "core primitives and utilities for the scsys ecosystem"
+name = "scsys-core"
+
+authors.workspace = true
+categories.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
+[lib]
+bench = false
+
+[[test]]
+name = "default"
+
+[dependencies]
+scsys-state = { workspace = true }
+scsys-time = { optional = true, workspace = true }
+# custom
+contained = { workspace = true }
+# error-handling
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+# mathematics
+approx = { optional = true, workspace = true }
+num-traits = { workspace = true }
+# randomization
+getrandom = { optional = true, workspace = true }
+rand = { optional = true, workspace = true }
+rand_distr = { optional = true, workspace = true }
+uuid = { optional = true, workspace = true }
+# serialization
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+# macros & utilities
+paste = { workspace = true }
+smart-default = { workspace = true }
+strum = { workspace = true }
+# time
+# tracing
+tracing = { optional = true, workspace = true }
+# wasm
+wasm-bindgen = { optional = true, workspace = true }
+
+[dev-dependencies]
+[features]
+default = [ 
+  "std",
+  "time",
+]
+
+full = [
+  "default",
+  "json",
+  "rand",
+  "serde",
+  "tracing",
+]
+
+# ************* [FF:Features] *************
+
+json = [
+  "alloc",
+  "scsys-state/json",
+  "scsys-time?/json",
+  "serde",
+  "serde_json",
+]
+
+nightly = [
+  "scsys-state/nightly",
+  "scsys-time?/nightly",
+]
+
+time = [
+  "std",
+  "dep:scsys-time",
+]
+
+# ********* [FF] Standard Library *********
+alloc = [
+  "contained/alloc",
+  "scsys-state/alloc",
+  "scsys-time?/alloc",
+  "serde?/alloc",
+  "serde_json?/alloc",
+]
+
+std = [
+  "alloc",
+  "anyhow/std",
+  "contained/std",
+  "scsys-state/std",
+  "scsys-time?/std",
+  "num-traits/std",
+  "rand?/std",
+  "rand?/std_rng",
+  "serde?/std",
+  "strum/std",
+  "thiserror/std",
+  "tracing?/std",
+  "uuid?/std",
+]
+
+# ************* [FF:Targets] *************
+
+wasi = [
+  "alloc",
+  "scsys-state/wasi",
+  "scsys-time?/wasi",
+]
+
+wasm = [
+  "alloc",
+  "scsys-state/wasm",
+  "scsys-time?/wasm",
+  "wasm-bindgen",
+  "getrandom?/wasm_js",
+  "uuid?/js",
+]
+
+# ************* [FF:Dependencies] *************
+
+approx = ["dep:approx"]
+
+chrono = [
+  "scsys-time?/chrono",
+]
+
+rand = [
+  "dep:rand",
+  "dep:rand_distr",
+  "scsys-state/rand",
+  "scsys-time?/rand",
+  "rng",
+]
+
+rng = [
+  "dep:getrandom",
+  "scsys-state/rng",
+  "getrandom?/sys_rng",
+  "rand?/sys_rng",
+  "uuid?/rng",
+  "uuid?/v4"
+]
+
+serde = [
+  "dep:serde",
+  "dep:serde_derive",
+  "scsys-state/serde",
+  "scsys-time?/serde",
+  "rand?/serde",
+  "uuid?/serde",
+]
+
+serde_json = [
+  "dep:serde_json",  
+  "scsys-state/serde_json",
+  "scsys-time?/serde_json",
+]
+
+tracing = ["dep:tracing"]
+
+uuid = [
+  "dep:uuid",
+  "uuid?/v3"
+]
+
+wasm-bindgen = [
+  "dep:wasm-bindgen",  
+  "scsys-state/wasm-bindgen",
+  "scsys-time?/wasm-bindgen",
+]

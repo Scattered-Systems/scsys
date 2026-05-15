@@ -1,0 +1,135 @@
+[package]
+build = "build.rs"
+description = "temporal abstractions, primitives, and utilities for the scsys ecosystem"
+name = "scsys-time"
+
+authors.workspace = true
+categories.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = [ "--cfg", "docsrs" ]
+version = "v{{version}}"
+
+[package.metadata.release]
+no-dev-version = true
+tag-name = "{{version}}"
+
+[lib]
+bench = false
+
+[[test]]
+name = "default"
+
+[[test]]
+name = "time"
+required-features = ["std", "time"]
+
+[dependencies]
+contained = { workspace = true }
+# error-handling
+thiserror = { workspace = true }
+# mathematics
+num-traits = { workspace = true }
+# serialization
+serde = { optional = true, workspace = true }
+serde_derive = { optional = true, workspace = true }
+serde_json = { optional = true, workspace = true }
+# macros & utilities
+paste = { workspace = true }
+smart-default = { workspace = true }
+strum = { workspace = true }
+# time
+chrono = { optional = true, workspace = true }
+time = { optional = true, workspace = true }
+# wasm
+wasm-bindgen = { optional = true, workspace = true }
+
+[features]
+default = [ 
+  "std",
+  "time",
+]
+
+full = [
+  "default",
+  "chrono",
+  "json",
+  "serde",
+]
+
+nightly = []
+
+# ************* [FF:Features] *************
+
+json = [
+  "alloc",
+  "serde",
+  "serde_json",
+]
+
+# ************* [FF:Environments] *************
+
+std = [
+  "alloc",
+  "contained/std",
+  "num-traits/std",
+  "serde?/std",
+  "strum/std",
+  "thiserror/std",
+  "time?/std",
+]
+
+wasi = [
+  "alloc"
+]
+
+wasm = [
+  "alloc",
+  "chrono?/js-sys",
+  "wasm-bindgen",
+]
+
+# ************* [FF:Dependencies] *************
+alloc = [
+  "chrono?/alloc",
+  "contained/alloc",
+  "serde?/alloc",
+  "serde_json?/alloc",
+  "time?/alloc",
+]
+
+chrono = [
+  "dep:chrono",
+  "chrono?/clock",
+]
+
+rand = [
+  "time?/rand",
+]
+
+serde = [
+  "dep:serde",
+  "dep:serde_derive",
+  "chrono?/serde",
+  "time?/serde",
+]
+
+serde_json = ["dep:serde_json"]
+
+time = ["dep:time"]
+
+wasm-bindgen = [
+  "dep:wasm-bindgen",
+  "chrono?/wasmbind",
+  "time?/wasm-bindgen",
+]

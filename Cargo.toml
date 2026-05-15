@@ -1,51 +1,43 @@
 [workspace]
 default-members = [
-  "scsys",
+  "crates/scsys",
 ]
 members = [
-  "core",
-  "scsys",
-  "config",
-  "crypto",
-  "derive",
-  "macros",
-  "time",
-  "traits",
-  "utils",
+  "crates/*"
 ]
 resolver = "3"
 
 [workspace.package]
 authors = [
   "FL03 <joe@pzzld.org> (https://github.com/FL03)",
-  "Scattered-Systems <support@scsys.io> (https://github.com/scattered-systems)"
+  "Scattered-Systems <support@scsys.io> (https://github.com/scattered-systems)",
 ]
-categories = [  ]
+categories = []
 description = "scsys is a collection of primitives and utilities for use throughout the ecosystem."
 edition = "2024"
 homepage = "https://github.com/scattered-systems/scsys/wiki"
-keywords = [ "primitives", "scsys", "toolkit", "utilities" ]
+keywords = ["primitives", "scsys", "toolkit", "utilities"]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys.git"
-rust-version = "1.85.0"
-version = "0.3.2"
+rust-version = "1.95.0"
+version = "0.3.3"
 
 [workspace.dependencies]
 # sdk
-scsys = { default-features = false, path = "scsys", version = "0.3.2" }
-scsys-core = { default-features = false, path = "core", version = "0.3.2" }
-scsys-config = { default-features = false, path = "config", version = "0.3.2" }
-scsys-crypto = { default-features = false, path = "crypto", version = "0.3.2" }
-scsys-derive = { default-features = false, path = "derive", version = "0.3.2" }
-scsys-macros = { default-features = false, path = "macros", version = "0.3.2" }
-scsys-state = { default-features = false, path = "state", version = "0.3.2" }
-scsys-time = { default-features = false, path = "time", version = "0.3.2" }
-scsys-traits = { default-features = false, path = "traits", version = "0.3.2" }
-scsys-util = { default-features = false, path = "utils", version = "0.3.2" }
+scsys = { default-features = false, path = "crates/scsys", version = "0.3.3" }
+scsys-config = { default-features = false, path = "crates/config", version = "0.3.3" }
+scsys-core = { default-features = false, path = "crates/core", version = "0.3.3" }
+scsys-crypto = { default-features = false, path = "crates/crypto", version = "0.3.3" }
+scsys-derive = { default-features = false, path = "crates/derive", version = "0.3.3" }
+scsys-macros = { default-features = false, path = "crates/macros", version = "0.3.3" }
+scsys-state = { default-features = false, path = "crates/state", version = "0.3.3" }
+scsys-time = { default-features = false, path = "crates/time", version = "0.3.3" }
+scsys-traits = { default-features = false, path = "crates/traits", version = "0.3.3" }
+scsys-util = { default-features = false, path = "crates/utils", version = "0.3.3" }
 
 # custom
-contained = { default-features = false, features = ["derive", "macros"], version = "0.2.2" }
+contained = { default-features = false, features = ["derive", "macros"], version = "0.2" }
 # concurrency & parallelism
 # crossbeam = { default-features = false, version = "0.8" }
 rayon = { default-features = false, version = "1" }
@@ -61,14 +53,14 @@ num = { default-features = false, version = "0.4" }
 num-complex = { default-features = false, version = "0.4" }
 num-traits = { default-features = false, version = "0.2" }
 # randomization
-getrandom = { default-features = false, version = "0.3" }
-rand = { default-features = false, version = "0.9" }
-rand_distr = { default-features = false, version = "0.5" }
+getrandom = { default-features = false, version = "0.4" }
+rand = { default-features = false, version = "0.10" }
+rand_distr = { default-features = false, version = "0.6" }
 uuid = { default-features = false, version = "1" }
 # serialization
-bincode = { default-features = false, features = [ "derive" ], version = "2" }
-bincode_derive = { version = "2" }
-serde = { default-features = false, features = [ "derive" ], version = "1" }
+bincode = { default-features = false, features = [], version = "3" }
+bincode_derive = { version = "3" }
+serde = { default-features = false, features = ["derive"], version = "1" }
 serde_derive = { version = "1" }
 serde_json = { default-features = false, version = "1" }
 # time
@@ -78,7 +70,7 @@ time = { default-features = false, version = "0.3" }
 lazy_static = { version = "1" }
 paste = { version = "1" }
 smart-default = { version = "0.7" }
-strum = { default-features = false, features = [ "derive" ], version = "0.27" }
+strum = { default-features = false, features = ["derive"], version = "0.28" }
 # misc
 # url = { default-features = false, version = "2" }
 # logging
@@ -93,9 +85,9 @@ debug = true
 debug-assertions = true
 incremental = true
 lto = "thin"
-opt-level = 2
+opt-level = 0
 overflow-checks = true
-panic = "abort"
+panic = "unwind"
 rpath = true
 strip = "symbols"
 
@@ -105,8 +97,13 @@ debug = false
 debug-assertions = false
 incremental = false
 lto = true
-opt-level = "z"
+opt-level = 3
 overflow-checks = false
 panic = "abort"
 rpath = false
 strip = "debuginfo"
+
+[profile.wasm-release]
+inherits = "release"
+opt-level = "z"
+strip = true
